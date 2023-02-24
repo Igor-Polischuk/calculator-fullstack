@@ -1,0 +1,91 @@
+.calculator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding-top: 100px;
+    padding-bottom: 50px;
+
+    &__field {
+        display: flex;
+        width: 100%;
+        gap: 10px;
+    }
+
+    &__input {
+        padding: 10px 20px;
+        width: 100%;
+        box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 5%);
+        background-color: transparent;
+        backdrop-filter: blur(1px);
+        border: 2px solid $blue-3;
+        border-radius: 5px;
+        color: $text-dark;
+        transition: 1s;
+
+        &:focus {
+            backdrop-filter: blur(5px);
+        }
+
+    }
+
+    &__result {
+        // display: none;
+        width: 100%;
+        padding: 15px 30px;
+        color: $text-dark;
+        background-color: $accent-color;
+        box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 10%);
+        border-radius: 15px;
+        border: 1px solid $gray;
+
+        &-answer {
+            text-align: center;
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: 15px;
+
+        &__number {
+            max-width: 250px;
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-auto-rows: auto;
+            grid-auto-columns: auto;
+            // grid-template-columns: repeat(3, 1fr);
+            // grid-template-rows: repeat(3, 1fr);
+            gap: 15px;
+
+            .zero {
+                grid-column-start: 1;
+                grid-column-end: 3;
+                width: 100%;
+            }
+        }
+
+        &__actions {
+            display: grid;
+            grid-template-rows: auto auto auto auto;
+            grid-auto-rows: auto;
+            grid-auto-columns: auto;
+            gap: 15px;
+
+        }
+
+        &__scope {
+            display: grid;
+            grid-template-rows: repeat(2, 1fr);
+            gap: 15px;
+
+            & .button {
+                height: 100%;
+            }
+        }
+    }
+
+}

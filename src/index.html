@@ -1,12 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
 </head>
+
 <body>
-    
+    <div class="bg__grid"></div>
+    <div class="container calculator">
+        <div class="calculator__field">
+            <input type="text" class="calculator__input" id="" placeholder="Enter what you want to calculate">
+            <button class="button button--get-res">=</button>
+        </div>
+        <div class="calculator__result">
+            <p>Result:</p>
+            <p class="calculator__result-answer" id="res-view">2 + 2 = <span>4</span></p>
+        </div>
+        <div class="calculator__buttons">
+            <div class="calculator__buttons__number">
+                <button data-btn class="button button--number">1</button>
+                <button data-btn class="button button--number">2</button>
+                <button data-btn class="button button--number">3</button>
+                <button data-btn class="button button--number">4</button>
+                <button data-btn class="button button--number">5</button>
+                <button data-btn class="button button--number">6</button>
+                <button data-btn class="button button--number">7</button>
+                <button data-btn class="button button--number">8</button>
+                <button data-btn class="button button--number">9</button>
+                <button data-btn class="button button--number zero">0</button>
+                <button data-btn class="button button--number">.</button>
+            </div>
+            <div class="calculator__buttons__actions">
+                <button data-btn class="button button--action">+</button>
+                <button data-btn class="button button--action">-</button>
+                <button data-btn class="button button--action">*</button>
+                <button data-btn class="button button--action">/</button>
+            </div>
+            <div class="calculator__buttons__scope">
+                <button data-btn class="button button--action">(</button>
+                <button data-btn class="button button--action">)</button>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
