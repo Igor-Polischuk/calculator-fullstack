@@ -33,8 +33,11 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
-            'styles': path.resolve(__dirname, 'src/styles/'),
-            'app': path.resolve(__dirname, 'src/ts/'),
+            '@styles': path.resolve(__dirname, 'src/styles/'),
+            "@customTypes": path.resolve(__dirname, 'ts/interfaces'),
+            "@models": path.resolve(__dirname, 'ts/models'),
+            "@controllers": path.resolve(__dirname, 'ts/controllers'),
+            "@views": path.resolve(__dirname, 'ts/views'),
         }
     },
     optimization: {
