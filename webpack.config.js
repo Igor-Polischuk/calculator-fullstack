@@ -34,10 +34,10 @@ module.exports = {
         alias: {
             '@': path.resolve(__dirname, 'src'),
             '@styles': path.resolve(__dirname, 'src/styles/'),
-            "@customTypes": path.resolve(__dirname, 'ts/interfaces'),
-            "@models": path.resolve(__dirname, 'ts/models'),
-            "@controllers": path.resolve(__dirname, 'ts/controllers'),
-            "@views": path.resolve(__dirname, 'ts/views'),
+            "@customTypes": path.resolve(__dirname, 'src/ts/interfaces'),
+            "@models": path.resolve(__dirname, 'src/ts/models'),
+            "@controllers": path.resolve(__dirname, 'src/ts/controllers'),
+            "@views": path.resolve(__dirname, 'src/ts/views'),
         }
     },
     optimization: {

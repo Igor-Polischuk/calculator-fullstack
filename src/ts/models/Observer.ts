@@ -1,6 +1,6 @@
 import { IObserver, ISubscriber } from '@customTypes/Observer';
 
-export class Observer implements IObserver {
+export class Observer<N> implements IObserver<N> {
 
     constructor(
         private observers: ISubscriber[] = []
@@ -11,9 +11,9 @@ export class Observer implements IObserver {
     };
 
     unsubscribe<T extends ISubscriber>(observer: T) {
-        this.observers.filter(o => o !== observer)
+        this.observers = this.observers.filter(o => o !== observer)
     };
-    notify <T>(data: T) {
+    notify (data: N) {
         this.observers.forEach(observer => {
             observer.update(data)
         })

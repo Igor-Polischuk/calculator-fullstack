@@ -1,8 +1,8 @@
 import { IObserver, ISubscriber } from "./Observer";
 
 export interface ICalculatorModel {
-    expressionChanel: IObserver
-    resultChanel: IObserver
+    expressionChanel: IObserver<string>
+    resultChanel: IObserver<number>
     setResult: (result: number) => void
     setExpression: (expression: string) => void
 }

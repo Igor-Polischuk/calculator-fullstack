@@ -2,12 +2,10 @@ import { ICalculatorModel } from "@customTypes/ICalculator";
 import { Observer } from "./Observer";
 
 export class CalculatorModel implements ICalculatorModel {
-    constructor(
-        public expressionChanel = new Observer(),
-        public resultChanel = new Observer(),
-        private result: number,
-        private expression: string
-    ) { }
+    public expressionChanel = new Observer<string>()
+    public resultChanel = new Observer<number>()
+    private result: number = NaN
+    private expression: string = ''
 
     setResult(res: number) {
         this.result = res
@@ -16,6 +14,6 @@ export class CalculatorModel implements ICalculatorModel {
 
     setExpression(expression: string) {
         this.expression = expression
-        this.resultChanel.notify(expression)
+        this.expressionChanel.notify(expression)
     }
 }

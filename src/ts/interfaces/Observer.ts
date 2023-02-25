@@ -1,9 +1,9 @@
-export interface IObserver{
+export interface IObserver<N>{
     subscribe: <T extends ISubscriber>(observer: T) => void 
     unsubscribe: <T extends ISubscriber>(observer: T) => void 
-    notify: <T>(data: T) => void
+    notify: (data: N) => void
 }
 
 export interface ISubscriber{
-    update: <T>(data: T) => void
+    update: Function
 }
