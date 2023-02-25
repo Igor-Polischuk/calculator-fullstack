@@ -35,3 +35,17 @@ input {
     right: 0;
     z-index: -1;
 }
+
+.cats{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    
+    img{
+        max-width: 150px;
+    }
+}
