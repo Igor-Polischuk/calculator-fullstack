@@ -6,9 +6,8 @@ const calculatorModel = new CalculatorModel()
 const calculatorView = new CalculatorView()
 const calculatorController = new CalculatorController()
 
-calculatorModel.expressionChanel.subscribe(calculatorController)
-calculatorModel.resultChanel.subscribe(calculatorView)
+calculatorModel.observers.resultObserver.subscribe(calculatorView)
+calculatorModel.observers.expressionObserver.subscribe(calculatorController)
 
-calculatorModel.resultChanel.notify(15)
-calculatorModel.expressionChanel.unsubscribe(calculatorController)
-calculatorModel.expressionChanel.notify('3 * 5')
+calculatorModel.observers.expressionObserver.notifyAll('dsd')
+calculatorModel.observers.resultObserver.notifyAll(132)
