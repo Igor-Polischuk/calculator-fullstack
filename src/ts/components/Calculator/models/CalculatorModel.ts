@@ -1,5 +1,5 @@
 import { ICalculatorModel } from "@customTypes/ICalculator";
-import { Observer } from "./Observer";
+import { Observer } from "../../Observer";
 
 export class CalculatorModel implements ICalculatorModel {
     public expressionChanel = new Observer<string>()
