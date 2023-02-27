@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./src/ts",
     "paths": {
-      "@customTypes/*":  ["ts/interfaces/*"],
-      "@models/*":  ["ts/models/*"],
-      "@controllers/*":  ["ts/controllers/*"],
-      "@views/*":  ["ts/views/*"],
+      "@customTypes/*":  ["interfaces/*"],
+      "@components/*":  ["components/*"],
+      
     },
     "outDir": "./dist/",
     "noImplicitAny": true,
