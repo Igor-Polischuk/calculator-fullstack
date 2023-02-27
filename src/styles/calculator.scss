@@ -3,9 +3,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 30px;
-    padding-top: 100px;
-    padding-bottom: 50px;
+    gap: 10px;
+    // padding-top: 100px;
+    // padding-bottom: 50px;
+    margin-top: 50px;
+    padding: 40px 20px;
+    // border-radius: 20px;
+    // box-shadow: 0px 0px 10px 1px $gray;
+    // background: $accent-color;
 
     &__field {
         display: flex;
@@ -33,7 +38,7 @@
     &__result {
         // display: none;
         width: 100%;
-        padding: 15px 30px;
+        padding: 5px 20px;
         color: $text-dark;
         background-color: $accent-color;
         box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 10%);
@@ -79,10 +84,12 @@
 
         &__scope {
             display: grid;
-            grid-template-rows: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
             gap: 15px;
 
-            & .button {
+            .button--get-res{
+                grid-row-start: 3;
+                grid-row-end: 5;
                 height: 100%;
             }
         }
