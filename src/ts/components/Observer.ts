@@ -8,7 +8,11 @@ export class Observer implements IObserver{
     protected observers: IObservers = {}
 
     subscribe(event: string, callback: Function) {
-        this.observers[event].push(callback)
+        if(Array.isArray(this.observers[event])){
+            this.observers[event].push(callback)
+        }else{
+            this.observers[event] = [callback]
+        }
     };
 
     unsubscribe(event: string, callback: Function) {

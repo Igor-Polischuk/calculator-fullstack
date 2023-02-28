@@ -8,9 +8,11 @@ export class CalculatorModel extends Observer implements ICalculatorModel{
 
     setResult(res: number) {
         this.result = res;
+        this.notifyAll('result', res)
     }
 
     setExpression(expression: string) {
         this.expression = expression;
+        this.notifyAll('expression', expression)
     }
 }

@@ -1,6 +1,7 @@
-import { IObserver } from "./IObserver";
+import { IObserver } from "./IObserver"
 
-export interface ICalculatorModel {
+
+export interface ICalculatorModel extends IObserver {
     setResult: (result: number) => void
     setExpression: (expression: string) => void
 }

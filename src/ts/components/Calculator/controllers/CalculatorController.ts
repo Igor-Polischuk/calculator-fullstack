@@ -1,7 +1,12 @@
-import { ICalculatorController } from "@customTypes/ICalculator";
+import { ICalculatorController, ICalculatorModel } from "@customTypes/ICalculator";
 
 export class CalculatorController implements ICalculatorController{
-    update(expression: string){
-        console.log('controller motifyed', expression);
+    constructor (public model: ICalculatorModel){
+        this.model.subscribe('result', this.calculate)
+    }
+
+    private calculate(expression: string){
+        console.log('calculate: ', expression);
+        this.model.setResult(20)
     }
 }
