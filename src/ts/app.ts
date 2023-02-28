@@ -6,8 +6,8 @@ const calculatorModel = new CalculatorModel()
 const calculatorView = new CalculatorView()
 const calculatorController = new CalculatorController()
 
-calculatorModel.observers.resultObserver.subscribe(calculatorView)
-calculatorModel.observers.expressionObserver.subscribe(calculatorController)
+// calculatorModel.observers.resultObserver.subscribe(calculatorView)
+// calculatorModel.observers.expressionObserver.subscribe(calculatorController)
 
-calculatorModel.observers.expressionObserver.notifyAll('dsd')
-calculatorModel.observers.resultObserver.notifyAll(132)
+// calculatorModel.observers.expressionObserver.notifyAll('dsd')
+// calculatorModel.observers.resultObserver.notifyAll(132)

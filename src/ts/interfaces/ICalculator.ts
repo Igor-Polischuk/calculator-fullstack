@@ -1,11 +1,10 @@
-import { IObserver, ISubscriber, IObserverConfig } from "./IObserver";
+import { IObserver } from "./IObserver";
 
 export interface ICalculatorModel {
-    observers: IObserverConfig
     setResult: (result: number) => void
     setExpression: (expression: string) => void
 }
 
-export interface ICalculatorView extends ISubscriber {}
+export interface ICalculatorView {}
 
-export interface ICalculatorController extends ISubscriber {}
+export interface ICalculatorController {}

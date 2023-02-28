@@ -1,21 +1,20 @@
-import { IObserver, ISubscriber } from '@customTypes/IObserver';
+import { IObserver } from '@customTypes/IObserver';
 
-export class Observer<N> implements IObserver<N> {
+interface IObservers {
+    [event: string]: Function[]
+}
 
-    constructor(
-        private observers: ISubscriber[] = []
-    ) {}
+export class Observer implements IObserver{
+    protected observers: IObservers = {}
 
-    subscribe<T extends ISubscriber>(observer: T) {
-        this.observers.push(observer)
+    subscribe(event: string, callback: Function) {
+        this.observers[event].push(callback)
     };
 
-    unsubscribe<T extends ISubscriber>(observer: T) {
-        this.observers = this.observers.filter(o => o !== observer)
+    unsubscribe(event: string, callback: Function) {
+        this.observers[event] = this.observers[event].filter(fn => fn !== callback)
     };
-    notifyAll (data: N) {
-        this.observers.forEach(observer => {
-            observer.update(data)
-        })
+    protected notifyAll (event: string, newData: any) {
+        this.observers[event].forEach(fn => fn(newData))
     }
 }
