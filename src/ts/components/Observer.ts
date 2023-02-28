@@ -16,7 +16,9 @@ export class Observer implements IObserver{
     };
 
     unsubscribe(event: string, callback: Function) {
-        this.observers[event] = this.observers[event].filter(fn => fn !== callback)
+        if(Array.isArray(this.observers[event])){
+            this.observers[event] = this.observers[event].filter(fn => fn !== callback)
+        }
     };
     protected notifyAll (event: string, newData: any) {
         this.observers[event].forEach(fn => fn(newData))
