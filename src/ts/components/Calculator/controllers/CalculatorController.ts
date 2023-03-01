@@ -1,4 +1,4 @@
-import { ICalculatorController, ICalculatorModel } from "@customTypes/ICalculator";
+import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
 
 export class CalculatorController implements ICalculatorController{
     constructor (public model: ICalculatorModel){

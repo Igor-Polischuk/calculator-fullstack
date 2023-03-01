@@ -2,8 +2,8 @@ import {CalculatorModel, CalculatorController, CalculatorView} from '@components
 import '@styles/styles.scss';
 
 
-const calculatorModel = new CalculatorModel()
-const calculatorView = new CalculatorView(calculatorModel)
-const calculatorController = new CalculatorController(calculatorModel)
+// const calculatorModel = new CalculatorModel()
+// new CalculatorView(calculatorModel)
+// new CalculatorController(calculatorModel)
 
 

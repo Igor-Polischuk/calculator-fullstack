@@ -1,8 +1,8 @@
-import { Observer } from "@components/Observer";
-import { ICalculatorModel } from "@customTypes/ICalculator";
+import { Observer } from "@utilities/Observer/Observer";
+import { AllowedEvents, ICalculatorModel } from "../types/ICalculator";
 
 
-export class CalculatorModel extends Observer implements ICalculatorModel{
+export class CalculatorModel extends Observer<AllowedEvents> implements ICalculatorModel{
     private result: number | null = null;
     private expression: string | null = null;
 

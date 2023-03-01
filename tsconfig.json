@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./src/ts",
     "paths": {
-      "@customTypes/*":  ["interfaces/*"],
       "@components/*":  ["components/*"],
+      "@utilities/*":  ["utilities/*"],
       
     },
     "outDir": "./dist/",
