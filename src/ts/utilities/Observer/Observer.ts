@@ -1,17 +1,22 @@
-import { IEventMap, IObserver, IObserverCallback, IObserverCallbacks } from './IObserver';
+import { IEventMap, IObserver, IObserverCallback, IObserverCallbacks, ISubscribeOptions } from './IObserver';
 
 
 // type AllowedEventsKey<T extends IEventMap> = keyof T & string
 
 export class Observer<AllowedEvents extends IEventMap> implements IObserver<IEventMap>{
-    protected observers: IObserverCallbacks  = {}
+    protected observers: IObserverCallbacks = {}
 
-   subscribe<K extends keyof AllowedEvents & string>(event: K, callback: IObserverCallback<AllowedEvents[K]>) {
+    subscribe<Keys extends keyof AllowedEvents & string>({ 
+        event, 
+        handler, 
+        context = undefined }: ISubscribeOptions<Keys, IObserverCallback<AllowedEvents[Keys]>>) {
+        const fn = context ? handler.bind(context) : handler
         if (Array.isArray(this.observers[event])) {
-            this.observers[event].push(callback)
+            this.observers[event].push(fn)
         } else {
-            this.observers[event] = [callback]
+            this.observers[event] = [fn]
         }
+        return fn
     };
 
     unsubscribe<K extends keyof AllowedEvents & string>(event: K, callback: IObserverCallback<AllowedEvents[K]>) {

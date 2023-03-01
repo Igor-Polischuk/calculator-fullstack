@@ -3,11 +3,16 @@ import { CalculatorObserverEvents } from "../calculator-events";
 
 export class CalculatorController implements ICalculatorController{
     constructor (public model: ICalculatorModel){
-        this.model.subscribe(CalculatorObserverEvents.EXPRESSION, this.calculate.bind(this))
+        this.model.subscribe({
+            event: CalculatorObserverEvents.EXPRESSION,
+            handler: (data) => {
+                this.calculate(data)
+            }
+        })
     }
 
     private calculate(expression: string){
-        console.log('calculate: ', expression);
+        console.log('calculate: ', this);
         this.model.setResult(20)
     }
 }
