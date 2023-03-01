@@ -12,7 +12,8 @@ export class CalculatorController implements ICalculatorController{
     }
 
     private calculate(expression: string){
-        console.log('calculate: ', this);
+        console.log('calculate');
+        // console.log('calculate: ', this);
         this.model.setResult(20)
     }
 }

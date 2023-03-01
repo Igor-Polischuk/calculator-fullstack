@@ -12,7 +12,8 @@ export class CalculatorView implements ICalculatorView{
     }
 
     private renderResult(newResult: number){
-        console.log('view ',this);
+        console.log('view');
+        // console.log('view ',this);
         this.model.unsubscribe(CalculatorObserverEvents.RESULT, this.a)
     }
 }
