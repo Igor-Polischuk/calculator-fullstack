@@ -1,19 +1,17 @@
 import { ICalculatorModel, ICalculatorView } from "@components/Calculator/types/ICalculator";
-import { CalculatorObserverEvents } from "../calculator-events";
+import { CalculatorObserverEvent } from "../calculator-event";
 
 export class CalculatorView implements ICalculatorView{
-    private a: any
     constructor (public model: ICalculatorModel){
-        this.a = this.model.subscribe({
-            event: CalculatorObserverEvents.RESULT,
-            handler: this.renderResult,
-            context: this
+        this.model.subscribe(CalculatorObserverEvent.Result, (result) => {
+            this.renderResult(result)
+        })
+        this.model.subscribe(CalculatorObserverEvent.Expression, (res) => {
+
         })
     }
 
     private renderResult(newResult: number){
         console.log('view');
-        // console.log('view ',this);
-        this.model.unsubscribe(CalculatorObserverEvents.RESULT, this.a)
     }
 }

@@ -2,11 +2,10 @@ import { CalculatorController } from "./controllers/CalculatorController";
 import { CalculatorView } from "./views/CalculatorView";
 import { CalculatorModel } from "./models/CalculatorModel";
 
-export default function(){
+export function initCalculator(){
     const calculatorModel = new CalculatorModel()
     new CalculatorController(calculatorModel)
     new CalculatorView(calculatorModel)
-
     // calculatorModel.setResult(10)
     // calculatorModel.setResult(10)
     // calculatorModel.setResult(10)

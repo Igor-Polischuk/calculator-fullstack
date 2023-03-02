@@ -1,9 +1,9 @@
 import { IObserver } from "@utilities/Observer/IObserver"
-import { CalculatorObserverEvents } from "../calculator-events";
+import { CalculatorObserverEvent } from "../calculator-event";
 
 export type AllowedEvents = {
-    [CalculatorObserverEvents.RESULT]: number;
-    [CalculatorObserverEvents.EXPRESSION]: string;
+    [CalculatorObserverEvent.Result]: number;
+    [CalculatorObserverEvent.Expression]: string;
 };
 
 export interface ICalculatorModel extends IObserver<AllowedEvents> {

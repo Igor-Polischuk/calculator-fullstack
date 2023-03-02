@@ -1,4 +1,4 @@
-import { CalculatorObserverEvents } from "../calculator-events";
+import { CalculatorObserverEvent} from "../calculator-event";
 import { Observer } from "@utilities/Observer/Observer";
 import { AllowedEvents, ICalculatorModel } from "../types/ICalculator";
 
@@ -9,11 +9,11 @@ export class CalculatorModel extends Observer<AllowedEvents> implements ICalcula
 
     setResult(res: number) {
         this.result = res;
-        this.notifyAll(CalculatorObserverEvents.RESULT, res)
+        this.notifyAll(CalculatorObserverEvent.Result, res)
     }
 
     setExpression(expression: string) {
         this.expression = expression;
-        this.notifyAll(CalculatorObserverEvents.EXPRESSION, expression)
+        this.notifyAll(CalculatorObserverEvent.Expression, expression)
     }
 }

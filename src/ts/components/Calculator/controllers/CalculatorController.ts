@@ -1,13 +1,10 @@
 import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
-import { CalculatorObserverEvents } from "../calculator-events";
+import { CalculatorObserverEvent } from "../calculator-event";
 
 export class CalculatorController implements ICalculatorController{
     constructor (public model: ICalculatorModel){
-        this.model.subscribe({
-            event: CalculatorObserverEvents.EXPRESSION,
-            handler: (data) => {
-                this.calculate(data)
-            }
+        this.model.subscribe(CalculatorObserverEvent.Expression, (expression) => {
+            this.calculate(expression);
         })
     }
 
