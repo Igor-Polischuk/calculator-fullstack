@@ -6,9 +6,6 @@ export class CalculatorView implements ICalculatorView{
         this.model.subscribe(CalculatorObserverEvent.Result, (result) => {
             this.renderResult(result)
         })
-        this.model.subscribe(CalculatorObserverEvent.Expression, (res) => {
-
-        })
     }
 
     private renderResult(newResult: number){
