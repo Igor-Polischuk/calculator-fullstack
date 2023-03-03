@@ -1,5 +1,6 @@
 import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
+import { checkBrackets } from "./helpers/checkBrackets";
 
 export class CalculatorController implements ICalculatorController{
     constructor (public model: ICalculatorModel){
@@ -9,8 +10,6 @@ export class CalculatorController implements ICalculatorController{
     }
 
     private calculate(expression: string){
-        console.log('calculate');
-        // console.log('calculate: ', this);
-        this.model.setResult(20)
+        if (!checkBrackets(expression)) throw new Error('Incorrect order of brackets')
     }
 }

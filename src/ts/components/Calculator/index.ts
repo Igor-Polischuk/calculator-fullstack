@@ -6,12 +6,6 @@ export function initCalculator(){
     const calculatorModel = new CalculatorModel()
     new CalculatorController(calculatorModel)
     new CalculatorView(calculatorModel)
-    // calculatorModel.setResult(10)
-    // calculatorModel.setResult(10)
-    // calculatorModel.setResult(10)
-    calculatorModel.setExpression('5 + 5')
-    calculatorModel.setExpression('5 + 5')
-    calculatorModel.setExpression('5 + 5')
     calculatorModel.setExpression('5 + 5')
 }
 
