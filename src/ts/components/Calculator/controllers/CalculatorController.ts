@@ -1,28 +1,34 @@
 import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
 import { calculatorCongig, Priority } from "./calculator-config";
-import { checkBrackets } from "./helpers/checkBrackets";
+import { checkBrackets, getExpressionsFromBrackets } from "./helpers/checkBrackets";
 
 export class CalculatorController implements ICalculatorController {
     private calculatorCongig = calculatorCongig
     constructor(public model: ICalculatorModel) {
         this.model.subscribe(CalculatorObserverEvent.Expression, (expression) => {
-            this.calculate(expression);
+            const result = this.calculate(expression);
+            console.log(result);
+            
+            model.setResult(result)
         })
     }
-
+    //8 + 2 * (3 + (5 - 3)) - 10 / 2 * (6 - 4)
     private calculate(exp: string) {
         let expression = exp.replace(/\s/g, '')
-        // console.log(expression);
         if (!checkBrackets(expression)) throw new Error('Incorrect order of brackets')
-
-        this.getResult('2+2*2')
-        this.getResult('1*2+3+4*6')
+        const expressionsInBrackets = getExpressionsFromBrackets(expression)
+        console.log(expression);
+        console.log(expressionsInBrackets);
+        
+        expressionsInBrackets.forEach(bracketExpression => {
+            const resOfExpresiionInBrackets = this.calculate(bracketExpression)
+            expression = expression.replace(`(${bracketExpression})`, resOfExpresiionInBrackets.toString())
+        })
+        return +this.getResult(expression)
     }
 
     getResult(expression: string) {
-        console.log(expression);
-        
         const actionsExp = new RegExp(Object.keys(calculatorCongig).map(i => `\\${i}`).join('|'), 'g')
         const actionsQueue = expression.match(actionsExp)
         const queueByPrecedence = actionsQueue?.reduce<{[precedence: number]: string[]}>((obj, action) => {
@@ -30,7 +36,6 @@ export class CalculatorController implements ICalculatorController {
             obj[currentPriority] ? obj[currentPriority].push(action) : obj[currentPriority] = [action]
             return obj
         }, {})
-        console.log(queueByPrecedence);
         
         let res = expression
         if(queueByPrecedence){
@@ -48,7 +53,7 @@ export class CalculatorController implements ICalculatorController {
             })
         }
 
-        
+        return res
     }
 
 }
