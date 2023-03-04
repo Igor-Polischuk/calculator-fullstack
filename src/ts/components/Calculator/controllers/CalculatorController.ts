@@ -6,21 +6,33 @@ import { checkBrackets, getExpressionsFromBrackets } from "./helpers/checkBracke
 export class CalculatorController implements ICalculatorController {
     private calculatorCongig = calculatorCongig
     constructor(public model: ICalculatorModel) {
-        this.model.subscribe(CalculatorObserverEvent.Expression, (expression) => {
+        this.model.subscribe(CalculatorObserverEvent.Expression, this.updateResutl.bind(this))
+    }
+
+    private updateResutl(expression: string) {
+        try {
             const result = this.calculate(expression);
             console.log(result);
+            this.model.setResult(result)
+        } catch (error) {
+            if (error instanceof Error && typeof error.message === 'string') {
+                console.log(error.message);
+            } else {
+                console.log('An error occurred:', error);
+            }
 
-            model.setResult(result)
-        })
+        }
     }
 
     private calculate(exp: string) {
         let expression = exp.replace(/\s/g, '')
         expression = this.calculateExpressionInBrackets(expression)
-        return +this.getResult(expression)
+        const result = +this.getResult(expression)
+        if (isNaN(+this.getResult(expression))) throw new Error('expression format is incorrect')
+        return result
     }
 
-    getResult(expression: string): number {
+    private getResult(expression: string): number {
         const queueByPrecedence = this.getQueueByPrecedence(expression)
 
         let res = expression
@@ -37,7 +49,7 @@ export class CalculatorController implements ICalculatorController {
         return +res
     }
 
-    private getQueueByPrecedence(expression: string){
+    private getQueueByPrecedence(expression: string) {
         const actionsExp = new RegExp(Object.keys(calculatorCongig).map(i => `\\${i}`).join('|'), 'g')
         const actionsQueue = expression.match(actionsExp)
         return actionsQueue?.reduce<{ [precedence: number]: string[] }>((obj, action) => {
@@ -47,10 +59,10 @@ export class CalculatorController implements ICalculatorController {
         }, {})
     }
 
-    private calculateExpressionInBrackets(exp: string){
+    private calculateExpressionInBrackets(exp: string) {
         let expression = exp
         if (expression.includes('(')) {
-            if (!checkBrackets(expression)) throw new Error('Incorrect order of brackets')
+            if (!checkBrackets(expression)) throw new Error('incorrect order of brackets')
             const expressionsInBrackets = getExpressionsFromBrackets(expression)
             expressionsInBrackets.forEach(bracketExpression => {
                 const resOfExpresiionInBrackets = this.calculate(bracketExpression)

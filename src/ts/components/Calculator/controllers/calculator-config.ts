@@ -1,4 +1,4 @@
-interface IPriority{
+interface IPriority {
     [priority: string]: number
 }
 
@@ -9,12 +9,12 @@ export const Priority: IPriority = {
 }
 
 interface ICalculatorCongig {
-  [action: string]: {
-    priority: number;
-    reg: RegExp;
-    calculate: (...args: number[]) => number;
-    doAction: (expression: string) => string;
-  };
+    [action: string]: {
+        priority: number;
+        reg: RegExp;
+        calculate: (...args: number[]) => number;
+        doAction: (expression: string) => string;
+    };
 }
 
 export const calculatorCongig: ICalculatorCongig = {
@@ -39,7 +39,10 @@ export const calculatorCongig: ICalculatorCongig = {
     '/': {
         priority: Priority.Medium,
         reg: /\d+(\.\d+)?\/[-]?\d+(\.\d+)?/,
-        calculate: (a: number, b: number) => a / b,
+        calculate: (a: number, b: number) => {
+            if (b === 0) throw new Error("division by zero")
+            return a / b
+        },
         doAction(expression: string) { return commonActions(expression, '/', this.reg, this.calculate) }
     }
 }
