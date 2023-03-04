@@ -8,19 +8,16 @@ export function checkBrackets(expression: string): boolean {
 }
 
 export function getExpressionsFromBrackets(expression: string): string[] {
+    const res: string[] = []
     let bracketsCount = 0
     let openBracketIndex = -1
-    let closenBracketIndex = -1
-    const res: string[] = []
-    for (let i = 0; i <= expression.length; i++) {
-        const char = expression[i]
+    expression.split('').forEach((char, i) => {
         char === '(' ? bracketsCount++ : char === ')' ? bracketsCount-- : null;
-        if (char === '(' && bracketsCount === 1) {
+        if (char === '(' && bracketsCount === 1){
             openBracketIndex = i
-        } else if (char === ')' && bracketsCount === 0) {
-            closenBracketIndex = i
-            res.push(expression.slice(openBracketIndex + 1, closenBracketIndex))
+        }else if(char === ')'  && bracketsCount === 0){
+            res.push(expression.slice(openBracketIndex + 1, i))
         }
-    }
+    })
     return res
 }

@@ -6,10 +6,11 @@ export function initCalculator(){
     const calculatorModel = new CalculatorModel()
     new CalculatorController(calculatorModel)
     new CalculatorView(calculatorModel)
-    calculatorModel.setExpression('8 + 2 * (3 + (5 - 3)) - 10 / 2 * (6 - 4)')
-    calculatorModel.setExpression('2 +  (1 + (3 + 2 * (4 + 5)))')
-    calculatorModel.setExpression('8+2*(3+(5 -3))-10/2*(6-4)')
-    calculatorModel.setExpression('3*5*((2+2*2)-5*1)*2')
+    // calculatorModel.setExpression('8 + 2 * (3 + (5 - 3)) - 10 / 2 * (6 - 4)')
+    // calculatorModel.setExpression('2 +  (1 + (3 + 2 * (4 + 5)))')
+    // calculatorModel.setExpression('8+2*(3+(5 -3))-10/2*(6-4)')
+    // calculatorModel.setExpression('3*5*((2+2*2)-5*1)*2')
+    calculatorModel.setExpression('0.2+(0.5 - 0.4)')
 }
 
 export {CalculatorController, CalculatorModel, CalculatorView}
