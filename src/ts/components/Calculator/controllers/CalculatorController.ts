@@ -1,6 +1,7 @@
 import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
-import { calculatorCongig, Priority } from "./calculator-config";
+import { calculatorCongig } from "./config/calculator-config";
+import { Priority } from "./config/priority";
 import { checkBrackets, getExpressionsFromBrackets } from "./helpers/checkBrackets";
 
 export class CalculatorController implements ICalculatorController {
@@ -12,7 +13,7 @@ export class CalculatorController implements ICalculatorController {
     private updateResutl(expression: string) {
         try {
             const result = this.calculate(expression);
-            console.log(result);
+            console.log(`${expression} = ${result}`);
             this.model.setResult(result)
         } catch (error) {
             if (error instanceof Error && typeof error.message === 'string') {
@@ -27,14 +28,16 @@ export class CalculatorController implements ICalculatorController {
     private calculate(exp: string) {
         let expression = exp.replace(/\s/g, '')
         expression = this.calculateExpressionInBrackets(expression)
+        
         const result = +this.getResult(expression)
+        
         if (isNaN(+this.getResult(expression))) throw new Error('expression format is incorrect')
         return result
     }
 
     private getResult(expression: string): number {
         const queueByPrecedence = this.getQueueByPrecedence(expression)
-
+        
         let res = expression
         if (queueByPrecedence) {
             Object.keys(Priority)
@@ -50,8 +53,12 @@ export class CalculatorController implements ICalculatorController {
     }
 
     private getQueueByPrecedence(expression: string) {
-        const actionsExp = new RegExp(Object.keys(calculatorCongig).map(i => `\\${i}`).join('|'), 'g')
+        const actionsExp = new RegExp(
+            Object.keys(calculatorCongig)
+            .map(i => i.length === 1 ? `\\${i}` : i)
+            .join('|'), 'g')
         const actionsQueue = expression.match(actionsExp)
+        
         return actionsQueue?.reduce<{ [precedence: number]: string[] }>((obj, action) => {
             const currentPriority = this.calculatorCongig[action].priority
             obj[currentPriority] ? obj[currentPriority].push(action) : obj[currentPriority] = [action]
@@ -61,6 +68,7 @@ export class CalculatorController implements ICalculatorController {
 
     private calculateExpressionInBrackets(exp: string) {
         let expression = exp
+        
         if (expression.includes('(')) {
             if (!checkBrackets(expression)) throw new Error('incorrect order of brackets')
             const expressionsInBrackets = getExpressionsFromBrackets(expression)

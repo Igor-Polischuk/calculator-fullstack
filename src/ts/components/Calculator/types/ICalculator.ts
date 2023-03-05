@@ -11,6 +11,15 @@ export interface ICalculatorModel extends IObserver<AllowedEvents> {
     setExpression: (expression: string) => void
 }
 
-export interface ICalculatorView {}
+export interface IAction {
+    readonly priority: number;
+    doAction: (expression: string) => string;
+}
 
-export interface ICalculatorController {}
+export interface ICalculatorCongig {
+    [action: string]: IAction
+}
+
+export interface ICalculatorView { }
+
+export interface ICalculatorController { }
