@@ -3,6 +3,23 @@ import { getActionsReg, getAllowedSymbolsReg } from "../helpers/reg"
 import { Error } from "./error"
 import { bracketsValidator } from "./validators/bracketsValidator"
 
+
+export function validate(exp: string) {
+    let expression = exp.replace(/\s/g, '')
+    const validator = new Validator(expression)
+    const result = validator
+    .expressionStartValidate()
+    .expressionEndValidate()
+    .bracketsValidate()
+    .unknownActions()
+    .actio0nQueue()
+    .zeroDivisionValidate()
+    .pointValidate()
+    .validationResult()
+    console.log(result);
+    return result
+}
+
 interface IValidationResult {
     isValid: boolean
     failedValidation: {
@@ -12,7 +29,6 @@ interface IValidationResult {
         }
     }
 }
-
 class Validator {
     private result: IValidationResult = {
         isValid: true,
@@ -95,18 +111,3 @@ class Validator {
     }
 }
 
-export function validate(exp: string) {
-    let expression = exp.replace(/\s/g, '')
-    const validator = new Validator(expression)
-    const result = validator
-        .expressionStartValidate()
-        .expressionEndValidate()
-        .bracketsValidate()
-        .unknownActions()
-        .actio0nQueue()
-        .zeroDivisionValidate()
-        .pointValidate()
-        .validationResult()
-    console.log(result);
-    return result
-}

@@ -1,5 +1,4 @@
 import { IAction } from "@components/Calculator/types/ICalculator";
-import { Priority } from "./priority";
 import { getNumberReg } from "../helpers/reg";
 
 export class Action implements IAction {

@@ -1,13 +1,13 @@
 import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
-import { calculatorCongig } from "./config/calculator-config";
+import { calculatorConfig } from "./config/calculator-config";
 import { Priority } from "./config/priority";
 import { getActionsReg } from "./helpers/reg";
 import { getExpressionsFromBrackets } from "./helpers/checkBrackets";
 import { validate } from "./validation/validate";
 
 export class CalculatorController implements ICalculatorController {
-    private calculatorCongig = calculatorCongig
+    private calculatorCongig = calculatorConfig
     constructor(public model: ICalculatorModel) {
         this.model.subscribe(CalculatorObserverEvent.Expression, this.calculateExpression.bind(this))
     }
