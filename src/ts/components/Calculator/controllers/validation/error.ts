@@ -1,12 +1,14 @@
 export enum Error {
-    BracketError = 'Incorrect brackets order',
-    UnexpectedClosingBracketError = 'Unexpected closing bracket',
-    UnclosedBracketError = 'Unclosed opening bracket',
-    ZeroDivisionError = 'Division by Zero',
+    BracketError = 'incorrect brackets order',
+    UnexpectedClosingBracketError = 'unexpected closing bracket',
+    UnclosedBracketError = 'unclosed opening bracket',
+    ZeroDivisionError = 'division by Zero',
     UnexpectedActionError = 'Unexpected action or function',
-    lineStartError = 'incorrect start of expression',
-    lineEndtError = 'incorrect end of expression',
+    LineStartError = 'incorrect start of expression',
+    LineEndtError = 'incorrect end of expression',
     IncorectActionQueueError = 'incorect actions queueu',
     UnknownSymbolError = 'uknown sybols',
-    IncorrectFunctinNameError = 'incorrect function name'
+    IncorrectFunctinNameError = 'incorrect function name',
+    NumberPointError = 'number with several points',
+    PointError = 'point in incorrect place',
 }

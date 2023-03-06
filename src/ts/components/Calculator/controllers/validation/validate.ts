@@ -1,4 +1,4 @@
-import { calculatorCongig } from "../config/calculator-config"
+import { calculatorConfig } from "../config/calculator-config"
 import { getActionsReg, getAllowedSymbolsReg } from "../helpers/reg"
 import { Error } from "./error"
 import { bracketsValidator } from "./validators/bracketsValidator"
@@ -22,11 +22,17 @@ class Validator {
 
     bracketsValidate() {
         bracketsValidator(this.expression, this.setValidationFail.bind(this))
+        const checkOpen = this.expression.match(/[\*\+\/\-\^]\)[\d+|\w+]/);
+        const checkClosen = this.expression.match(/[\d+|\w+]\([\*\+\/\-\^]/);
+        console.log(checkOpen);
+        
+        if (checkClosen) this.setValidationFail('bracketsValidate', Error.BracketError, checkClosen.index)
+        if (checkOpen) this.setValidationFail('bracketsValidate', Error.BracketError, checkOpen.index)
         return this
     }
 
     zeroDivisionValidate() {
-        const match = this.expression.match(/\/0/)
+        const match = this.expression.match(/\/0+(?!\.\d)/)  
         match && this.setValidationFail('zeroDivision', Error.ZeroDivisionError, match?.index)
         return this
     }
@@ -36,7 +42,7 @@ class Validator {
         if (unknown) this.setValidationFail('unknownSymbols', Error.UnknownSymbolError, unknown.index)
         const expressionFunctions = this.expression.match(/[a-zA-Z]+/g)
         expressionFunctions?.forEach(funcName => {
-            if (!Object.keys(calculatorCongig).includes(funcName)) {
+            if (!Object.keys(calculatorConfig).includes(funcName)) {
                 this.setValidationFail('incorrectFunctionName', Error.IncorrectFunctinNameError, this.expression.indexOf(funcName))
             }
         })
@@ -55,19 +61,23 @@ class Validator {
 
     expressionStartValidate(){
         const correctStart = this.expression.match(/^[\d\w+\-(]+/)
-        if (!correctStart) this.setValidationFail('wrongStart', Error.lineStartError, 0)
+        if (!correctStart) this.setValidationFail('wrongStart', Error.LineStartError, 0)
         return this
     }
 
     expressionEndValidate(){
-        if (!/[\d)]$/.test(this.expression)) this.setValidationFail('wrongEnd', Error.lineEndtError, this.expression.length - 1)
+        if (!/[\d)]$/.test(this.expression)) this.setValidationFail('wrongEnd', Error.LineEndtError, this.expression.length - 1)
         return this
     }
 
     pointValidate(){
-        const incorectPoint = this.expression.match(/(?<!\d)\.(?!\d)/g)
-        if(incorectPoint) this.setValidationFail('pointError', Error.UnexpectedClosingBracketError, incorectPoint.index)
-        
+        this.expression.split('').forEach((char, i) => {
+            if(char === '.' && (isNaN(+this.expression[i-1]) || isNaN(+this.expression[i+1]))){
+                this.setValidationFail('pointError', Error.PointError, i)
+            }
+        })
+        const numberWithSeveralPoints = this.expression.match(/\d+(\.\d+){2,}/)
+        if(numberWithSeveralPoints) this.setValidationFail('numberPointError', Error.NumberPointError, numberWithSeveralPoints.index)
         return this
     }
 

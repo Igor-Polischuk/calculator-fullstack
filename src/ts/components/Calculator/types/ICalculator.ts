@@ -19,7 +19,7 @@ export interface IAction {
     };
 }
 
-export interface ICalculatorCongig {
+export interface ICalculatorConfig {
     [action: string]: IAction
 }
 

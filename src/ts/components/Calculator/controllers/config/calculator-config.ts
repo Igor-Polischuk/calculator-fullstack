@@ -1,10 +1,10 @@
 import { Priority } from './priority';
-import { ICalculatorCongig } from "@components/Calculator/types/ICalculator";
+import { ICalculatorConfig } from "@components/Calculator/types/ICalculator";
 import { Action } from "./Action";
 import { getFunctionRegWithParam, getNumberBetweenRegWithSymbol } from "../helpers/reg";
 
 
-export const calculatorCongig: ICalculatorCongig = {
+export const calculatorConfig: ICalculatorConfig = {
     '+': new Action({
         action: '+',
         priority: Priority.Low,
