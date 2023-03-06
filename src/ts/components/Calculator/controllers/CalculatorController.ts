@@ -51,7 +51,8 @@ export class CalculatorController implements ICalculatorController {
                 .sort((a, b) => Priority[b] - Priority[a])
                 .forEach((priority) => {
                     queueByPrecedence[Priority[priority]]?.forEach((action) => {
-                        res = this.calculatorCongig[action].doAction(res);
+                        const {evaluatedExpression, result} = this.calculatorCongig[action].doAction(res);
+                        res = res.replace(evaluatedExpression, result.toString())
                     });
                 });
         }

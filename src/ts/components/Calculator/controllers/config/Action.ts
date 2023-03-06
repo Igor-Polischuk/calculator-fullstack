@@ -22,48 +22,15 @@ export class Action implements IAction {
 
     public doAction(expression: string) {
         const matches = expression.match(this.reg)
-        if (!matches) return expression
+        if (!matches) return {
+            evaluatedExpression: expression,
+            result: +expression
+        }
         const expressionParts = matches[0].split(this.action).filter(num => getNumberReg().test(num)).map(i => +i)
         const res = this.calculate(...expressionParts)
-        return expression.replace(matches[0], res.toString())
-    }
-}
-
-export class LowPriorityAction extends Action {
-    constructor(config: {
-        action: string
-        reg: RegExp
-        calculate: (...args: number[]) => number
-    }) {
-        super({
-            ...config,
-            priority: Priority.Low,
-        });
-    }
-}
-
-export class HightPriorityAction extends Action {
-    constructor(config: {
-        action: string
-        reg: RegExp
-        calculate: (...args: number[]) => number
-    }) {
-        super({
-            ...config,
-            priority: Priority.Hight,
-        });
-    }
-}
-
-export class MediumPriorityAction extends Action {
-    constructor(config: {
-        action: string
-        reg: RegExp
-        calculate: (...args: number[]) => number
-    }) {
-        super({
-            ...config,
-            priority: Priority.Medium,
-        });
+        return {
+            evaluatedExpression: matches[0],
+            result: res
+        }
     }
 }

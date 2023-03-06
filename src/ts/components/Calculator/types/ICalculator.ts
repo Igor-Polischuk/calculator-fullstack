@@ -13,7 +13,10 @@ export interface ICalculatorModel extends IObserver<AllowedEvents> {
 
 export interface IAction {
     readonly priority: number;
-    doAction: (expression: string) => string;
+    doAction: (expression: string) => {
+        evaluatedExpression: string
+        result: number
+    };
 }
 
 export interface ICalculatorCongig {
