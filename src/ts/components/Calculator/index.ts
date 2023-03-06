@@ -11,8 +11,9 @@ export function initCalculator(){
     calculatorModel.setExpression('8+2*(3+(5 -3))-10/2*(6-4)') //8
     calculatorModel.setExpression('3*5*((2+2*2)-5*1)*2') //30
     calculatorModel.setExpression('((10 - 5) * sqrt(sqrt16))^3') //1000
-    calculatorModel.setExpression('sqrt25') //5
-    calculatorModel.setExpression('sin(6876868856)') //5
+    // calculatorModel.setExpression('())2/0') //5
+    calculatorModel.setExpression('3*22.3*(2-5/3)*0.52-(sqrt10)') //30
+    // calculatorModel.setExpression('(*10)') //30
 }
 
 export {CalculatorController, CalculatorModel, CalculatorView}

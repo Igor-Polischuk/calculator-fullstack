@@ -1,7 +1,6 @@
 import { ICalculatorCongig } from "@components/Calculator/types/ICalculator";
 import { HightPriorityAction, MediumPriorityAction, LowPriorityAction, Action } from "./Action";
-import { Priority } from "./priority";
-import { getFunctionRegWithParam, getNumberBetweenRegWithSymbol } from "./reg";
+import { getFunctionRegWithParam, getNumberBetweenRegWithSymbol } from "../helpers/reg";
 
 
 export const calculatorCongig: ICalculatorCongig = {
