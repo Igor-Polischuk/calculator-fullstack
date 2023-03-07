@@ -14,7 +14,7 @@ export class CalculatorController implements ICalculatorController {
 
     private calculateExpression(expression: string) {
         try {
-            if (!validate(expression).isValid) {
+            if (validate(expression).length > 0) {
                 throw new Error()
             }
             const result = this.calculate(expression);

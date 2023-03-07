@@ -1,6 +1,6 @@
 import { Error } from "../error";
 
-export function bracketsValidator(expression: string, setFail: (name: string, message: string, where?: number) => void) {
+export function bracketsValidator(expression: string) {
     const stack = [];
     for (let i = 0; i < expression.length; i++) {
         const char = expression[i];
@@ -8,13 +8,19 @@ export function bracketsValidator(expression: string, setFail: (name: string, me
             stack.push(i);
         } else if (char === ")") {
             if (stack.length === 0) {
-                setFail('bracketsValidation', Error.UnexpectedClosingBracketError, i) 
+                return {
+                    message: Error.UnexpectedClosingBracketError,
+                    where: i
+                }
             }
             stack.pop();
         }
     }
     
     if (stack.length !== 0) {
-        setFail('bracketsValidation', Error.UnclosedBracketError, expression.lastIndexOf('('))
+        return {
+            message: Error.UnclosedBracketError,
+            where: expression.lastIndexOf('(')
+        }
     }
 }
