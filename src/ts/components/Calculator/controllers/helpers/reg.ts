@@ -7,7 +7,7 @@ const getNumberReg = () => /\d+(\.\d+)?/g
 export function getActionsReg() {
     return new RegExp(
         Object.keys(calculatorConfig)
-            .map(i => i.length === 1 ? `\\${i}` : i)
+            .map(i => i.length === 1 ? `\\d\\${i}` : i)
             .join('|'), 'g')
 }
 
