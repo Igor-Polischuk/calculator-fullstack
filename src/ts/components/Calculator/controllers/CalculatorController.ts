@@ -57,20 +57,20 @@ export class CalculatorController implements ICalculatorController {
                 return res.replace(evaluatedExpression, result.toString())
             }, acc)
         }, expression)
-
+        
         return +result
     }
 
     private getQueueByPrecedence(expression: string) {
         const actionsExp = getActionsReg()
         const actionsQueue = expression.match(actionsExp)?.map(i => i.replace(/\d+/g, ''))
-
+        
         const queueByPrecedence = actionsQueue?.reduce<{ [precedence: number]: string[] }>((obj, action) => {
             const currentPriority = this.calculatorCongig[action].priority
             obj[currentPriority] ? obj[currentPriority].push(action) : obj[currentPriority] = [action]
             return obj
         }, {})
-
+        
         return queueByPrecedence
     }
 }
