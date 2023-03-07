@@ -1,3 +1,4 @@
+import { Reg } from './../Reg';
 import { Error } from "../error";
 
 export function bracketsValidator(expression: string) {
@@ -22,5 +23,18 @@ export function bracketsValidator(expression: string) {
             message: Error.UnclosedBracketError,
             where: expression.lastIndexOf('(')
         }
+    }
+
+    const wrongOpenBracketSiblings = expression.match(Reg.OpenBracketsAdjacentSymbols)
+    const wrongClosedracketSiblings = expression.match(Reg.ClosenBracketsAdjacentSymbols)
+    
+    if (wrongOpenBracketSiblings) return {
+        message: Error.BracketAdjacentCharactersError,
+        where: wrongOpenBracketSiblings.index
+    }
+
+    if (wrongClosedracketSiblings) return {
+        message: Error.BracketAdjacentCharactersError,
+        where: wrongClosedracketSiblings.index
     }
 }

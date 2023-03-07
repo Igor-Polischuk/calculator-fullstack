@@ -43,5 +43,5 @@ export const calculatorConfig: ICalculatorConfig = {
         priority: Priority.Hight,
         reg: getFunctionRegWithParam('sqrt'),
         calculate: (a: number) => Math.sqrt(a)
-    }),
+    })
 }

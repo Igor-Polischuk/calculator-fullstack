@@ -52,7 +52,7 @@ export class CalculatorController implements ICalculatorController {
             const currentActions = queueByPrecedence[Priority[priorityIndex]]
             if (!currentActions) return acc
 
-            return currentActions.reduce<string>((res, action) => {
+            return currentActions.reduce<string>((res: string, action: string) => {
                 const { evaluatedExpression, result } = this.calculatorCongig[action].doAction(res)
                 return res.replace(evaluatedExpression, result.toString())
             }, acc)

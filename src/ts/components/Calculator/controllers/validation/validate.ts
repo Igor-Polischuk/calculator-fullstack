@@ -31,8 +31,8 @@ function validateExpression(expression: string, validators: Ivalidators): IError
         const validateResult = validateFunction(expression)
         if (validateResult) errors.push(validateResult)
     })
-    console.log(errors);
-
+    // console.log(errors);
+    
     return errors
 }
 
