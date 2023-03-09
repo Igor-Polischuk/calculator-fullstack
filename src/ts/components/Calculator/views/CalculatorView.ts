@@ -9,6 +9,6 @@ export class CalculatorView implements ICalculatorView{
     }
 
     private renderResult(newResult: number){
-        console.log('view');
+        // console.log('view');
     }
 }
