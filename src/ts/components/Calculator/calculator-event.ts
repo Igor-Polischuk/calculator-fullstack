@@ -1,4 +1,5 @@
 export enum CalculatorObserverEvent {
     Result = 'result',
-    Expression = 'expression'
+    Expression = 'expression',
+    Error = 'error'
 }

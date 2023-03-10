@@ -3,9 +3,9 @@
     align-items: center;
     justify-content: center;
     padding: 15px;
-    border-radius: 16px;
+    border-radius: 5px;
     cursor: pointer;
-    width: 50px;
+    width: 75px;
     height: 50px;
     color: #fff;
     background-color: $accent-color;
@@ -14,8 +14,8 @@
     transition: background-color 0.4s;
     font-size: 24px;
 
-    &:hover {
-        // background-color: darken($light-blue, $amount: 10%)
+    @media (max-width: 450px) {
+        width: 55px;
     }
 
     &--get-res {
@@ -33,15 +33,14 @@
         transition: background-color 0.4s;
 
         &:hover {
-            background-color: darken($light-blue, $amount: 10%)
+            background-color: darken($blue-1, 15%)
         }
     }
 
-    // &--number{
-    //     background-color: $blue;
-    //     transition: background-color 0.4s;
-    //     &:hover{
-    //         background-color: darken($blue, 20%)
-    //     }
-    // }
+    &--number{
+        transition: background-color 0.2s;
+        &:hover{
+            background-color: darken($accent-color, 10%)
+        }
+    }
 }
