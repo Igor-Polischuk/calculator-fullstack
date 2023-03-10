@@ -25,13 +25,11 @@ export function validate(exp: string) {
 }
 
 function validateExpression(expression: string, validators: Ivalidators): IError[] {
-    const errors: IError[] = []
-    Object.keys(validators).forEach(validatorName => {
+    const errors = Object.keys(validators).map(validatorName => {
         const validateFunction = validators[validatorName]
         const validateResult = validateFunction(expression)
-        if (validateResult) errors.push(validateResult)
-    })
-    // console.log(errors);
+        return validateResult ? validateResult : []
+    }).flat()
     
     return errors
 }
