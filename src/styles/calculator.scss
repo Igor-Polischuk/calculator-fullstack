@@ -19,7 +19,7 @@
     }
 
     &__input {
-        padding: 10px 20px;
+        padding: 10px;
         width: 100%;
         box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 5%);
         background-color: transparent;
@@ -28,6 +28,7 @@
         border-radius: 5px;
         color: $text-dark;
         transition: 1s;
+        font-size: 16px;
 
         &:focus {
             backdrop-filter: blur(5px);
@@ -36,7 +37,11 @@
     }
 
     &__result {
-        // display: none;
+        opacity: 0;
+        visibility: hidden;
+        text-align: center;
+        font-style: italic;
+        transition: 0.3s;
         width: 100%;
         padding: 5px 20px;
         color: $text-dark;
@@ -48,13 +53,18 @@
         &-answer {
             text-align: center;
         }
+
+        &.visible {
+            opacity: 1;
+            visibility: visible;
+        }
     }
 
     &__buttons {
         display: flex;
         justify-content: center;
         width: 100%;
-        gap: 15px;
+        gap: 10px;
 
         &__number {
             max-width: 250px;
@@ -64,7 +74,7 @@
             grid-auto-columns: auto;
             // grid-template-columns: repeat(3, 1fr);
             // grid-template-rows: repeat(3, 1fr);
-            gap: 15px;
+            gap: 10px;
 
             .zero {
                 grid-column-start: 1;
@@ -78,16 +88,16 @@
             grid-template-rows: auto auto auto auto;
             grid-auto-rows: auto;
             grid-auto-columns: auto;
-            gap: 15px;
+            gap: 10px;
 
         }
 
         &__scope {
             display: grid;
             grid-template-rows: repeat(4, 1fr);
-            gap: 15px;
+            gap: 10px;
 
-            .button--get-res{
+            .button--get-res {
                 grid-row-start: 3;
                 grid-row-end: 5;
                 height: 100%;
