@@ -2,7 +2,7 @@ import { removeSpaces } from '@utilities/removeSpaces';
 import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
 import { calculatorConfig } from "./config/calculator-config";
-import { Priority } from "./config/priority";
+import { Priority, weightOfPriority } from "./config/priority";
 import { getActionsReg } from "./helpers/reg";
 import { getExpressionsFromBrackets } from "./helpers/checkBrackets";
 import { validate } from "./validation/validate";
@@ -38,26 +38,28 @@ export class CalculatorController implements ICalculatorController {
         if (expressionsInBrackets.length === 0) return this.evaluateExpression(expression)
 
         const bracketsExpression = expressionsInBrackets[0]
-        const ValueOfExpressionInBrackets = this.calculate(bracketsExpression)
-        const expressionWithoutBracket = expression.replace(`(${bracketsExpression})`, ValueOfExpressionInBrackets.toString())
+        const resultOfBracketExpression = this.calculate(bracketsExpression)
+        const expressionWithoutBracket = expression.replace(`(${bracketsExpression})`, resultOfBracketExpression.toString())
         return this.calculate(expressionWithoutBracket)
     }
 
     private evaluateExpression(expression: string): number {
         const queueByPrecedence = this.getQueueByPrecedence(expression)
-        if (!queueByPrecedence) return Number.parseFloat(expression)
-        const priorityValues = Object.keys(Priority).sort((a, b) => Priority[b] - Priority[a])
-
-        const result = priorityValues.reduce<string>((acc, priorityIndex) => {
-            const currentActions = queueByPrecedence[Priority[priorityIndex]]
-            if (!currentActions) return acc
+        if (!queueByPrecedence) {
+            return +expression
+        }
+        
+        const result = weightOfPriority.reduce<string>((expressionAccumulator, priorityWeight) => {
+            const priority = Priority[priorityWeight]
+            const currentActions = queueByPrecedence[priority]
+            if (!currentActions) return expressionAccumulator
 
             return currentActions.reduce<string>((res: string, action: string) => {
                 const { evaluatedExpression, result } = this.calculatorCongig[action].doAction(res)
                 return res.replace(evaluatedExpression, result.toString())
-            }, acc)
+            }, expressionAccumulator)
         }, expression)
-        
+
         return +result
     }
 
@@ -67,10 +69,11 @@ export class CalculatorController implements ICalculatorController {
         
         const queueByPrecedence = actionsQueue?.reduce<{ [precedence: number]: string[] }>((obj, action) => {
             const currentPriority = this.calculatorCongig[action].priority
-            obj[currentPriority] ? obj[currentPriority].push(action) : obj[currentPriority] = [action]
+            const currentActionsArray = obj[currentPriority] || []
+            obj[currentPriority] = [...currentActionsArray, action]
             return obj
         }, {})
-        
+
         return queueByPrecedence
     }
 }
