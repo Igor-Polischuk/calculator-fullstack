@@ -1,13 +1,9 @@
+import { IError } from "@components/Calculator/types/ICalculator"
 import { removeSpaces } from "@utilities/removeSpaces"
 import { actio0nQueueValidator, bracketsValidator, expressionEndValidator, expressionStartValidator, pointValidate, unknownActionsvalidator, zeroDivisionValidator } from "./validators/"
 
 interface Ivalidators {
     [validatorName: string]: (expression: string) => IError | undefined
-}
-
-interface IError {
-    message: string
-    where: number | undefined
 }
 
 export function validate(exp: string) {
@@ -31,8 +27,6 @@ function validateExpression(expression: string, validators: Ivalidators): IError
         const validateResult = validateFunction(expression)
         if (validateResult) errors.push(validateResult)
     })
-    // console.log(errors);
-    
     return errors
 }
 

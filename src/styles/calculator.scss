@@ -4,22 +4,19 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    // padding-top: 100px;
-    // padding-bottom: 50px;
     margin-top: 50px;
     padding: 40px 20px;
-    // border-radius: 20px;
-    // box-shadow: 0px 0px 10px 1px $gray;
-    // background: $accent-color;
 
     &__field {
         display: flex;
         width: 100%;
         gap: 10px;
+        position: relative;
     }
 
     &__input {
         padding: 10px;
+        padding-right: 30px;
         width: 100%;
         box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 5%);
         background-color: transparent;
@@ -27,8 +24,29 @@
         border: 2px solid $blue-3;
         border-radius: 5px;
         color: $text-dark;
-        transition: 1s;
+        transition: 0.3s;
         font-size: 16px;
+
+        &.error{
+            border-color: $red;
+            border-width: 1px;
+        }
+
+        &-clear{
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background-color: $blue-2;
+            color: $white;
+            top: 30%;
+            right: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+        }
 
         &:focus {
             backdrop-filter: blur(5px);
@@ -97,11 +115,11 @@
             grid-template-rows: repeat(4, 1fr);
             gap: 10px;
 
-            .button--get-res {
-                grid-row-start: 3;
-                grid-row-end: 5;
-                height: 100%;
-            }
+            // .button--get-res {
+            //     grid-row-start: 3;
+            //     grid-row-end: 5;
+            //     height: 100%;
+            // }
         }
     }
 

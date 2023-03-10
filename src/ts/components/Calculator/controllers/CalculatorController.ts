@@ -14,20 +14,13 @@ export class CalculatorController implements ICalculatorController {
     }
 
     private calculateExpression(expression: string) {
-        try {
-            if (validate(expression).length > 0) {
-                throw new Error()
-            }
+        const validationResult = validate(expression)
+        if (validationResult.length > 0) {
+            this.model.setError(validationResult)
+        } else {
             const result = this.calculate(expression);
             console.log(`${expression} = ${result}`);
             this.model.setResult(result)
-        } catch (error) {
-            if (error instanceof Error && typeof error.message === 'string') {
-                console.error(`${error.message}: ${expression}`);
-            } else {
-                console.log('An error occurred:', error);
-            }
-
         }
     }
 
@@ -38,8 +31,8 @@ export class CalculatorController implements ICalculatorController {
         if (expressionsInBrackets.length === 0) return this.evaluateExpression(expression)
 
         const bracketsExpression = expressionsInBrackets[0]
-        const ValueOfExpressionInBrackets = this.calculate(bracketsExpression)
-        const expressionWithoutBracket = expression.replace(`(${bracketsExpression})`, ValueOfExpressionInBrackets.toString())
+        const valueOfExpressionInBrackets = this.calculate(bracketsExpression)
+        const expressionWithoutBracket = expression.replace(`(${bracketsExpression})`, valueOfExpressionInBrackets.toString())
         return this.calculate(expressionWithoutBracket)
     }
 
@@ -47,7 +40,6 @@ export class CalculatorController implements ICalculatorController {
         const queueByPrecedence = this.getQueueByPrecedence(expression)
         if (!queueByPrecedence) return Number.parseFloat(expression)
         const priorityValues = Object.keys(Priority).sort((a, b) => Priority[b] - Priority[a])
-
         const result = priorityValues.reduce<string>((acc, priorityIndex) => {
             const currentActions = queueByPrecedence[Priority[priorityIndex]]
             if (!currentActions) return acc
@@ -57,20 +49,20 @@ export class CalculatorController implements ICalculatorController {
                 return res.replace(evaluatedExpression, result.toString())
             }, acc)
         }, expression)
-        
+
         return +result
     }
 
     private getQueueByPrecedence(expression: string) {
         const actionsExp = getActionsReg()
         const actionsQueue = expression.match(actionsExp)?.map(i => i.replace(/\d+/g, ''))
-        
+
         const queueByPrecedence = actionsQueue?.reduce<{ [precedence: number]: string[] }>((obj, action) => {
             const currentPriority = this.calculatorCongig[action].priority
             obj[currentPriority] ? obj[currentPriority].push(action) : obj[currentPriority] = [action]
             return obj
         }, {})
-        
+
         return queueByPrecedence
     }
 }
