@@ -16,7 +16,10 @@ body {
     max-width: fit-content;
     padding: 0 20px;
     margin: 0 auto;
-    display: flex;
+
+    @media (max-width: 375px) {
+        padding: 0 10px;
+    }
 }
 
 button,
@@ -37,7 +40,7 @@ input {
     z-index: -1;
 }
 
-.cats{
+.cats {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -46,13 +49,13 @@ input {
     justify-content: space-between;
     padding: 0 10px;
     z-index: -1;
-    
-    img{
+
+    img {
         max-width: 150px;
     }
 }
 
-.error{
+.error {
     color: $red;
     font-weight: bold;
 }
