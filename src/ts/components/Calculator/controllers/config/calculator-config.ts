@@ -1,30 +1,30 @@
 import { Priority } from './priority';
 import { ICalculatorConfig } from "@components/Calculator/types/ICalculator";
-import { Action } from "./Action";
+import { Operation } from "./Operation";
 import { getFunctionRegWithParam, getNumberBetweenRegWithSymbol } from "../helpers/reg";
 
 
 export const calculatorConfig: ICalculatorConfig = {
-    '+': new Action({
-        action: '+',
+    '+': new Operation({
+        operation: '+',
         priority: Priority.Low,
         reg: getNumberBetweenRegWithSymbol('+'),
         calculate: (a: number, b: number) => a + b
     }),
-    '-': new Action({
-        action: '-',
+    '-': new Operation({
+        operation: '-',
         priority: Priority.Low,
         reg: getNumberBetweenRegWithSymbol('-'),
         calculate: (a: number, b: number) => a - b
     }),
-    '*': new Action({
-        action: '*',
+    '*': new Operation({
+        operation: '*',
         priority: Priority.Medium,
         reg: getNumberBetweenRegWithSymbol('*'),
         calculate: (a: number, b: number) => a * b
     }),
-    '/': new Action({
-        action: '/',
+    '/': new Operation({
+        operation: '/',
         priority: Priority.Medium,
         reg: getNumberBetweenRegWithSymbol('/'),
         calculate: (a: number, b: number) => {
@@ -32,14 +32,14 @@ export const calculatorConfig: ICalculatorConfig = {
             return a / b
         }
     }),
-    '^': new Action({
-        action: '^',
+    '^': new Operation({
+        operation: '^',
         priority: Priority.Hight,
         reg: getNumberBetweenRegWithSymbol('^'),
         calculate: (a: number, b: number) => Math.pow(a, b)
     }),
-    'sqrt': new Action({
-        action: 'sqrt',
+    'sqrt': new Operation({
+        operation: 'sqrt',
         priority: Priority.Hight,
         reg: getFunctionRegWithParam('sqrt'),
         calculate: (a: number) => Math.sqrt(a)

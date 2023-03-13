@@ -5,6 +5,7 @@ import { CalculatorObserverEvent } from "../calculator-event";
 export class CalculatorView implements ICalculatorView {
     private mathInput: HTMLInputElement | null = null;
     private resultEl: HTMLDivElement | null = null;
+    private expression = ''
 
     constructor(public model: ICalculatorModel,
         private wasNewResult = false) {
@@ -12,50 +13,60 @@ export class CalculatorView implements ICalculatorView {
     }
 
     private init() {
-        this.mathInput = document.querySelector<HTMLInputElement>('#math-input');
         this.resultEl = document.querySelector<HTMLDivElement>('#result-output');
         this.listenBtns()
+        this.listenInput()
         this.model.subscribe(CalculatorObserverEvent.Result, (result) => {
             this.renderResult(result)
         })
         this.model.subscribe(CalculatorObserverEvent.Error, (errors) => {
             this.renderErrors(errors)
         })
+    }
+
+    private listenInput() {
+        this.mathInput = document.querySelector<HTMLInputElement>('#math-input');
+
         const clearInput = document.querySelector<HTMLSpanElement>('.calculator__input-clear')
         this.mathInput?.addEventListener('input', () => {
             if (!(this.mathInput && clearInput)) return
-            this.mathInput.value.length === 0 ? clearInput.style.display = '' : clearInput.style.display = 'flex'
+            this.expression = this.mathInput.value
+            this.expression.length === 0 ? clearInput.style.display = '' : clearInput.style.display = 'flex'
         })
 
-        clearInput?.addEventListener('click', () => this.updateInputValue(''))
-
+        clearInput?.addEventListener('click', () => {
+            this.updateInputValue('')
+            // this.hideResult()
+        })
     }
+    // private hideResult() {
+    //     if(!this.resultEl) return
+    //     this.resultEl.classList.remove('visible')
+    //     this.resultEl.innerHTML = ''
+    // }
 
     private renderResult(newResult: number) {
         if (!(this.mathInput && this.resultEl)) return
         this.mathInput.classList.remove('error')
         this.wasNewResult = true
         this.resultEl.classList.add('visible')
-        const expression = this.formatExpression(this.mathInput.value)
+        const expression = this.formatExpression(this.expression)
+
         this.resultEl.innerHTML = `${expression} = <b>${newResult}</b>`
-        this.mathInput.value = newResult.toString()
+        this.updateInputValue(newResult.toString())
     }
 
     private renderErrors(errors: IError[]) {
         if (!(this.mathInput && this.resultEl)) return
-        console.log(errors);
-        let errorString = ''
         const errorsIndex = errors.map(err => err.where)
-        this.mathInput?.value.split('').forEach((char, i) => {
-            if (errorsIndex.includes(i)) {
-                errorString += `<span class='error'>${char}</span>`
-            } else {
-                errorString += char
-            }
-        })
+        const expressionArr = this.expression.split('')
+        const errorInfo = expressionArr.reduce<string>((errorAcc, char, i) => {
+            return errorAcc += errorsIndex.includes(i) ? `<span class='error'>${char}</span>` : char
+        }, '')
+
         this.mathInput.classList.add('error')
         this.resultEl.classList.add('visible')
-        this.resultEl.innerHTML = errorString
+        this.resultEl.innerHTML = errorInfo
     }
 
     private listenBtns() {
@@ -71,7 +82,7 @@ export class CalculatorView implements ICalculatorView {
                         this.updateInputValue(button.innerText)
                         this.wasNewResult = false
                     } else {
-                        const newValue = this.mathInput.value + button.innerText
+                        const newValue = this.expression + button.innerText
                         this.updateInputValue(newValue)
                     }
 
@@ -80,22 +91,21 @@ export class CalculatorView implements ICalculatorView {
         })
         actionBtns.forEach(button => {
             button.addEventListener('click', () => {
-                if (!this.mathInput) return
-                const newValue = this.mathInput.value + button.dataset.btnAction
+                const newValue = this.expression + button.dataset.btnAction
                 this.updateInputValue(newValue)
                 this.wasNewResult = false
             })
         })
         removeBtn?.addEventListener('click', () => {
             if (!this.mathInput) return
-            const lastSymbolIndex = this.mathInput.value.length - 1
+            const lastSymbolIndex = this.expression.length - 1
             const newValue = this.mathInput.value.slice(0, lastSymbolIndex)
             this.updateInputValue(newValue)
+            this.wasNewResult = false
         })
         resultBtn?.addEventListener('click', () => {
-            if (this.mathInput) {
-                this.model.setExpression(this.mathInput.value)
-            }
+            this.model.setExpression(this.expression)
+
         })
     }
 

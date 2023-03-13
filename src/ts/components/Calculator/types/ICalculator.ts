@@ -13,16 +13,16 @@ export interface ICalculatorModel extends IObserver<AllowedEvents> {
     setError: (errors: IError[]) => void
 }
 
-export interface IAction {
+export interface IOperation {
     readonly priority: number;
-    doAction: (expression: string) => {
+    calculateOperation: (expression: string) => {
         evaluatedExpression: string
-        result: number
+        result: string
     };
 }
 
 export interface ICalculatorConfig {
-    [action: string]: IAction
+    [action: string]: IOperation
 }
 
 export interface IError {

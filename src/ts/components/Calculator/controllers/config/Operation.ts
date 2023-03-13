@@ -1,34 +1,34 @@
-import { IAction } from "@components/Calculator/types/ICalculator";
+import { IOperation } from "@components/Calculator/types/ICalculator";
 import { getNumberReg } from "../helpers/reg";
 
-export class Action implements IAction {
+export class Operation implements IOperation {
     private action: string
     private reg: RegExp
     private calculate: (...args: number[]) => number
     readonly priority: number
 
     constructor(config: {
-        action: string
+        operation: string
         reg: RegExp
         priority: number
         calculate: (...args: number[]) => number
     }) {
-        this.action = config.action
+        this.action = config.operation
         this.reg = config.reg
         this.calculate = config.calculate
         this.priority = config.priority
     }
 
-    public doAction(expression: string) {
+    public calculateOperation(expression: string) {
         const matches = expression.match(this.reg)
         if (!matches) return {
             evaluatedExpression: expression,
-            result: +expression
+            result: expression
         }
         const result = this.action.length === 1 ? this.binaryActionCalculate(matches[0]) : this.functionValueCalculate(matches[0])
         return {
             evaluatedExpression: matches[0],
-            result
+            result: result.toString()
         }
     }
 
