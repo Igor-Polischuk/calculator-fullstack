@@ -1,13 +1,12 @@
 import { IError } from "@components/Calculator/types/ICalculator"
-import { removeSpaces } from "@utilities/removeSpaces"
+import { removeSpaces } from "@utilities/formatText/removeSpaces"
 import { actio0nQueueValidator, bracketsValidator, expressionEndValidator, expressionStartValidator, pointValidate, unknownActionsvalidator, zeroDivisionValidator } from "./validators/"
 
 interface Ivalidators {
     [validatorName: string]: (expression: string) => IError | undefined
 }
 
-export function validate(exp: string) {
-    const erxpression = removeSpaces(exp)
+export function validate(erxpression: string) {
     const validateResult = validateExpression(erxpression, {
         bracketsValidator,
         zeroDivisionValidator,

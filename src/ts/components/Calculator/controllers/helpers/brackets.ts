@@ -12,3 +12,7 @@ export function getExpressionsFromBrackets(expression: string): string[] {
     })
     return res
 }
+
+export function isBrackets(expression: string){
+    return expression.includes('(') || expression.includes(')')
+}
