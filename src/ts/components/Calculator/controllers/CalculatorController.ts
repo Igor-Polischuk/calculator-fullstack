@@ -11,7 +11,7 @@ export class CalculatorController implements ICalculatorController {
         this.model.subscribe(CalculatorObserverEvent.Expression, this.calculateExpression.bind(this))
     }
 
-    private calculateExpression(inputExpression: string) {
+    private calculateExpression(inputExpression: string): void {
         const validationResult = validate(inputExpression)
         if (validationResult.length > 0) {
             this.model.setError(validationResult)
@@ -39,7 +39,7 @@ export class CalculatorController implements ICalculatorController {
 
     private evaluateExpression(expression: string): number {
         const operationQueueByPrecedence = this.getQueueByPrecedence(expression)
-        if (!operationQueueByPrecedence) {
+        if (operationQueueByPrecedence.length === 0) {
             return Number(expression)
         }
         const result = this.calculateByPriority(expression, operationQueueByPrecedence)
@@ -67,7 +67,7 @@ export class CalculatorController implements ICalculatorController {
     private getQueueByPrecedence(expression: string): string[][] {
         const actionsQueue = this.getActionsQueue(expression)
 
-        const operationQueueByPrecedence = actionsQueue?.reduce<string[][]>((operationQueueByPriority, operation) => {
+        const operationQueueByPrecedence = actionsQueue.reduce<string[][]>((operationQueueByPriority, operation) => {
             const currentPriority = calculatorConfig[operation].priority
             const currentOperationList = operationQueueByPriority[currentPriority] || []
             const updatedOperationList = [...currentOperationList, operation]
@@ -77,7 +77,7 @@ export class CalculatorController implements ICalculatorController {
             return updatedQueueByPriority
         }, [])
 
-        return operationQueueByPrecedence || []
+        return operationQueueByPrecedence
     }
 
     private getActionsQueue(expression: string): string[] {
@@ -86,7 +86,9 @@ export class CalculatorController implements ICalculatorController {
                 .map(i => i.length === 1 ? `\\d\\${i}` : i)
                 .join('|'), 'g')
 
-        return expression.match(actionsExp)?.map(operation => operation.replace(/\d+/g, '')) || []
+
+        const actionsArray = expression.match(actionsExp)
+        return actionsArray ? actionsArray.map(operation => operation.replace(/\d+/g, '')) : []
     }
 
     private wrapExpressionInBrackets(bracketsExpression: string) {
