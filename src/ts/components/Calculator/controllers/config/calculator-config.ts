@@ -28,7 +28,7 @@ export const calculatorConfig: ICalculatorConfig = {
         priority: Priority.Medium,
         reg: getNumberBetweenRegWithSymbol('/'),
         calculate: (a: number, b: number) => {
-            if (b === 0) throw new Error('division by zero error')
+            if (b === 0) throw new Error(`division by zero error: ${a}/${b}`)
             return a / b
         }
     }),
@@ -42,6 +42,9 @@ export const calculatorConfig: ICalculatorConfig = {
         operation: 'sqrt',
         priority: Priority.Hight,
         reg: getFunctionRegWithParam('sqrt'),
-        calculate: (a: number) => Math.sqrt(a)
+        calculate: (a: number) => {
+            if (a < 0) throw new Error(`negative number under the root: ${a}`)
+            return Math.sqrt(a)
+        }
     })
 }

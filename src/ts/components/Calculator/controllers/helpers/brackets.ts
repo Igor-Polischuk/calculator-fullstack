@@ -13,6 +13,6 @@ export function getExpressionsFromBrackets(expression: string): string[] {
     return res
 }
 
-export function isBrackets(expression: string){
+export function hasBrackets(expression: string){
     return expression.includes('(') || expression.includes(')')
 }
