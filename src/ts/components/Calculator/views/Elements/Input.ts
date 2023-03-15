@@ -1,26 +1,29 @@
+interface IInputConfig {
+    classNames: string[],
+    parentNode: Element,
+    value?: string,
+    placeholder?: string
+    type?: string
+    clearBtn?: boolean
+}
+
 export class Input {
     private parrentNode: Element
     private input: HTMLInputElement
     private classNames: string[]
 
-    constructor(config: {
-        classNames: string[],
-        parrentNode: Element,
-        value?: string,
-        placeholder?: string
-        type?: string
-    }) {
-        this.classNames = config.classNames
-        this.parrentNode = config.parrentNode
+    constructor({classNames, parentNode, value = '', placeholder = '', clearBtn = true, type = 'text'}: IInputConfig ) {
+        this.classNames = classNames
+        this.parrentNode = parentNode
 
         this.input = document.createElement('input')
-        this.input.placeholder = config.placeholder || ''
-        this.input.type = config.type || 'text'
+        this.input.placeholder = placeholder
+        this.input.type = type
         this.input.classList.add(...this.classNames)
         this.parrentNode.appendChild(this.input)
-        this.input.value = config.value || ''
+        this.input.value = value 
 
-        this.addClearBtn()
+        clearBtn && this.addClearBtn()
     }
 
     set value(newValue: string) {
@@ -30,6 +33,10 @@ export class Input {
 
     get value() {
         return this.input.value
+    }
+
+    get domEl(){
+        return this.input
     }
 
     onInput(callback: (e: Event) => void) {
