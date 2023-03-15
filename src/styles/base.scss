@@ -9,6 +9,7 @@
 body {
     background-color: $bg-volor;
     font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
 }
 
 .container {
@@ -16,6 +17,9 @@ body {
     max-width: fit-content;
     padding: 0 20px;
     margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 
     @media (max-width: 375px) {
         padding: 0 10px;

@@ -4,8 +4,9 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 50px;
-    padding: 40px 20px;
+    padding: 20px;
+    background-color: $accent-color;
+    border-radius: 5px;
 
     @media (max-width: 375px) {
         padding: 20px 5px;
@@ -19,7 +20,7 @@
     }
 
     &__input {
-        padding: 10px;
+        padding: 7px;
         padding-right: 30px;
         width: 100%;
         box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 5%);
@@ -29,7 +30,7 @@
         border-radius: 5px;
         color: $text-dark;
         transition: 0.3s;
-        font-size: 16px;
+        font-size: 21px;
 
         &.error{
             border-color: $red;
@@ -89,7 +90,6 @@
         gap: 10px;
 
         &__number {
-            max-width: 250px;
             display: grid;
             grid-template-columns: auto auto auto;
             grid-auto-rows: auto;
@@ -110,7 +110,7 @@
             grid-auto-rows: auto;
             grid-auto-columns: auto;
             gap: 10px;
-            grid-auto-flow: column;
+            grid-auto-flow: column dense;
         }
 
         &__scope {

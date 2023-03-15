@@ -5,14 +5,14 @@
     padding: 15px;
     border-radius: 5px;
     cursor: pointer;
-    width: 75px;
+    width: 95px;
     height: 50px;
     color: #fff;
     background-color: $accent-color;
     border: 1px solid $gray;
     color: $blue-2;
     transition: background-color 0.4s;
-    font-size: 24px;
+    font-size: 28px;
 
     @media (max-width: 450px) {
         width: 55px;
@@ -21,10 +21,8 @@
     &--get-res {
         background: #19ACFF;
         box-shadow: -9px 10px 203px rgba(0, 163, 255, 0.4), inset -3px 4px 11px #B0DFFF;
-        border-radius: 6px;
         color: $white;
         border: none;
-        font-size: 16px;
     }
 
     &--action {

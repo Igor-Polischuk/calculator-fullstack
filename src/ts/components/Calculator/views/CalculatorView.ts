@@ -10,11 +10,12 @@ export class CalculatorView implements ICalculatorView {
 
     constructor(private model: ICalculatorModel) {
         model.subscribe(CalculatorObserverEvent.Result, this.renderResult.bind(this))
+        this.mathInput.domEl.focus()
         this.conectButtons()
     }
 
     private renderResult(newResult: number) {
-
+        this.mathInput.value = newResult.toString()
     }
 
     private conectButtons() {
