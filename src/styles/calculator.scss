@@ -32,11 +32,6 @@
         transition: 0.3s;
         font-size: 21px;
 
-        &.error{
-            border-color: $red;
-            border-width: 1px;
-        }
-
         &-clear{
             position: absolute;
             display: flex;
@@ -53,17 +48,12 @@
             display: none;
         }
 
-        &:focus {
-            backdrop-filter: blur(5px);
-        }
-
     }
 
     &__result {
-        opacity: 0;
-        visibility: hidden;
         text-align: center;
         font-style: italic;
+        font-size: 18px;
         transition: 0.3s;
         width: 100%;
         padding: 5px 20px;
@@ -72,14 +62,22 @@
         box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 10%);
         border-radius: 5px;
         border: 1px solid $gray;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-20px);
 
-        &-answer {
-            text-align: center;
+        .error{
+            color: $red;
         }
 
         &.visible {
             opacity: 1;
             visibility: visible;
+            transform: translateY(0);
+        }
+
+        .showup{
+            animation: showup 0.2s ease-in-out 1;
         }
     }
 
@@ -126,4 +124,14 @@
         }
     }
 
+}
+
+@keyframes showup {
+    from{
+        opacity: 0;
+        transform: translateY(-30px);
+    }to{
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
