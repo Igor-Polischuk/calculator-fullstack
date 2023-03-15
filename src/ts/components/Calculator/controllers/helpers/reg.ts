@@ -13,8 +13,8 @@ export function getActionsReg() {
 
 export function getAllowedSymbolsReg() {
     const calculatorKeys = Object.keys(calculatorConfig).map(key => {
-        if (key === 'sqrt') {
-          return 'sqrt';
+        if (key.length > 1) {
+          return key;
         } else {
           return '\\' + key;
         }

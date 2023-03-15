@@ -4,6 +4,9 @@ import { Reg } from "../Reg";
 export function expressionEndValidator(expression: string){
         if (!Reg.CorrectLineEnd.test(expression)) return {
             message: Error.LineEndtError,
-            where: expression.length - 1
+            meta: {
+                errorIndex: expression.length - 1,
+                description: `an expression cannot end with ${expression[expression.length - 1]}`
+            }
         }
 }

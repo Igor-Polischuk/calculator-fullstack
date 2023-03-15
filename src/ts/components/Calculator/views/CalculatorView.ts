@@ -24,7 +24,7 @@ export class CalculatorView implements ICalculatorView {
         // this.listenInput()
         this.initNumbersBtn()
         this.model.subscribe(CalculatorObserverEvent.Result, (result) => {
-            // this.renderResult(result)
+            this.renderResult(result)
         })
         this.model.subscribe(CalculatorObserverEvent.Error, (errors) => {
             this.renderErrors(errors)
@@ -46,28 +46,28 @@ export class CalculatorView implements ICalculatorView {
     //     })
     // }
 
-    // private renderResult(newResult: number) {
-    //     if (!(this.mathInput && this.resultEl)) return
-    //     this.mathInput.classList.remove('error')
-    //     this.wasNewResult = true
-    //     this.resultEl.classList.add('visible')
-    //     const expression = this.formatExpression(this.expression)
+    private renderResult(newResult: number) {
+        if (!(this.mathInput && this.resultEl)) return
+        // this.mathInput.classList.remove('error')
+        this.wasNewResult = true
+        this.resultEl.classList.add('visible')
+        const expression = this.formatExpression(this.expression)
 
-    //     this.resultEl.innerHTML = `${expression} = <b>${newResult}</b>`
-    //     this.updateInputValue(newResult.toString())
-    // }
+        this.resultEl.innerHTML = `${expression} = <b>${newResult}</b>`
+        // this.updateInputValue(newResult.toString())
+    }
 
     private renderErrors(errors: IError[]) {
-        if (!(this.mathInput && this.resultEl)) return
-        const errorsIndex = errors.map(err => err.where)
-        const expressionArr = this.expression.split('')
-        const errorInfo = expressionArr.reduce<string>((errorAcc, char, i) => {
-            return errorAcc += errorsIndex.includes(i) ? `<span class='error'>${char}</span>` : char
-        }, '')
+        // if (!(this.mathInput && this.resultEl)) return
+        // const errorsIndex = errors.map(err => err.where)
+        // const expressionArr = this.expression.split('')
+        // const errorInfo = expressionArr.reduce<string>((errorAcc, char, i) => {
+        //     return errorAcc += errorsIndex.includes(i) ? `<span class='error'>${char}</span>` : char
+        // }, '')
 
-        // this.mathInput.classList.add('error')
-        this.resultEl.classList.add('visible')
-        this.resultEl.innerHTML = errorInfo
+        // // this.mathInput.classList.add('error')
+        // this.resultEl.classList.add('visible')
+        // this.resultEl.innerHTML = errorInfo
     }
 
     private initNumbersBtn() {

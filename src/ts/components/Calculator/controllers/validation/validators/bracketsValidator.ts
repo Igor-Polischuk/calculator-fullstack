@@ -11,7 +11,9 @@ export function bracketsValidator(expression: string) {
             if (stack.length === 0) {
                 return {
                     message: Error.UnexpectedClosingBracketError,
-                    where: i
+                    meta: {
+                        errorIndex: i
+                    }
                 }
             }
             stack.pop();
@@ -21,7 +23,9 @@ export function bracketsValidator(expression: string) {
     if (stack.length !== 0) {
         return {
             message: Error.UnclosedBracketError,
-            where: expression.lastIndexOf('(')
+            meta: {
+                errorIndex: expression.lastIndexOf('(')
+            }
         }
     }
 
@@ -30,11 +34,15 @@ export function bracketsValidator(expression: string) {
     
     if (wrongOpenBracketSiblings) return {
         message: Error.BracketAdjacentCharactersError,
-        where: wrongOpenBracketSiblings.index
+        meta: {
+            errorIndex: wrongOpenBracketSiblings.index
+        }
     }
 
     if (wrongClosedracketSiblings) return {
         message: Error.BracketAdjacentCharactersError,
-        where: wrongClosedracketSiblings.index
+        meta: {
+            errorIndex: wrongClosedracketSiblings.index
+        }
     }
 }

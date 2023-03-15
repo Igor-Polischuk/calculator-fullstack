@@ -6,7 +6,9 @@ export function actio0nQueueValidator(expression: string) {
     if (actionsInRow) {
         return {
             message: Error.IncorectActionQueueError,
-            where: actionsInRow?.index
+            meta: {
+                errorIndex: actionsInRow?.index
+            }
         }
     }
 }

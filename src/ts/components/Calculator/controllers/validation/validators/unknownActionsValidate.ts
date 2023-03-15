@@ -8,7 +8,10 @@ export function unknownActionsvalidator(expression: string) {
     const unknown = expression.match(getAllowedSymbolsReg())
     if (unknown) return {
         message: Error.UnknownSymbolError,
-        where: unknown.index
+        meta: {
+            errorIndex: unknown.index,
+            description: `unknown symbol ${unknown[0]}`
+        }
     }
     const expressionFunctions = expression.match(Reg.AllWords)
 
@@ -17,7 +20,10 @@ export function unknownActionsvalidator(expression: string) {
         const actionName = expressionFunctions[i]
         if (!Object.keys(calculatorConfig).includes(actionName)) return {
             message: Error.IncorrectFunctinNameError,
-            where: expression.indexOf(actionName)
+            meta: {
+                errorIndex: expression.indexOf(actionName),
+                description: `the function is not written correctly ${actionName}`
+            }
         }
 
 

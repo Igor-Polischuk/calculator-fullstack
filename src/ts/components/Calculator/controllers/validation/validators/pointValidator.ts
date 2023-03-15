@@ -7,13 +7,19 @@ export function pointValidate(expression: string) {
         if (char === '.' && (isNaN(+expression[i - 1]) || isNaN(+expression[i + 1]))) {
             return {
                 message: Error.PointError,
-                where: i
+                meta: {
+                    errorIndex: i,
+                    description: `a point can not be in this place ${expression[i - 1]}${expression[i]}${expression[i + 1]}}`
+                }
             }
         }
     }
     const numberWithSeveralPoints = expression.match(Reg.DoublePointInNumber)
     if (numberWithSeveralPoints) return {
         message: Error.NumberPointError,
-        where: numberWithSeveralPoints.index
+        meta: {
+            errorIndex: numberWithSeveralPoints.index,
+            description: `number cannot includes several points ${numberWithSeveralPoints[0]}`
+        }
     }
 }

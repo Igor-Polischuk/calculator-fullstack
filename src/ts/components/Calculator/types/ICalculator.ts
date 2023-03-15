@@ -21,13 +21,14 @@ export interface IOperation {
     };
 }
 
-export interface ICalculatorConfig {
-    [action: string]: IOperation
-}
+export type ICalculatorConfig = Record<string, IOperation> 
 
 export interface IError {
     message: string
-    where: number | undefined
+    meta: {
+        errorIndex?: number,
+        description?: string
+    }    
 }
 
 export interface ICalculatorView { }

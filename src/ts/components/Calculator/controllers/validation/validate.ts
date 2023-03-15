@@ -1,5 +1,4 @@
 import { IError } from "@components/Calculator/types/ICalculator"
-import { removeSpaces } from "@utilities/formatText/removeSpaces"
 import { actio0nQueueValidator, bracketsValidator, expressionEndValidator, expressionStartValidator, pointValidate, unknownActionsvalidator, zeroDivisionValidator } from "./validators/"
 
 interface Ivalidators {

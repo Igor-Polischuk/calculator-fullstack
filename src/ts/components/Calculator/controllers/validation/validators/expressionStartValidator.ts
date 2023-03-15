@@ -5,6 +5,9 @@ export function expressionStartValidator(expression: string) {
     const correctStart = expression.match(Reg.CorrectLineStart)
     if (!correctStart) return {
         message: Error.LineStartError,
-        where: 0
+        meta: {
+            errorIndex: 0,
+            description: `an expression cannot start with ${expression[0]}`
+        }
     }
 }
