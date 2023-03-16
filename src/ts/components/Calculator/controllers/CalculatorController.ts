@@ -1,7 +1,7 @@
 import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
-import { allowedActions, calculatorConfig, searchAllowedOperationsRegStr } from "./config/calculator-config";
-import { getExpressionsFromBrackets, formatExpression, hasBrackets } from "./helpers";
+import { calculatorConfig, searchAllowedOperationsRegStr } from "./config/calculator-config";
+import { formatExpression, hasBrackets, getMostNestedParentheses } from "./helpers";
 import { validate } from "./validation/validate";
 
 export class CalculatorController implements ICalculatorController {
@@ -16,7 +16,7 @@ export class CalculatorController implements ICalculatorController {
 
         if (validationErrors.length > 0) {
             console.log(validationErrors);
-            
+
             this.model.setError(validationErrors)
         } else {
             const result = this.calculate(expression);
@@ -27,24 +27,16 @@ export class CalculatorController implements ICalculatorController {
     }
 
     private calculate(expression: string): number {
-        if (!hasBrackets(expression)) {
-            return this.calculateUnbracketedExpression(expression);
-        }
-
-        const bracketedExpressions = getExpressionsFromBrackets(expression)
-        const unbracketedExpression = bracketedExpressions.reduce<string>((expressionAcc, currentBracketExpression) => {
-            const currentBracketExpressionResult = this.calculateExpressionWithoutTerms(currentBracketExpression).toString()
-            const currentBracketedExpressionInParens = this.wrapExpressionInBrackets(currentBracketExpression)
-            return expressionAcc.replace(currentBracketedExpressionInParens, currentBracketExpressionResult)
+        const bracketsExpressions = getMostNestedParentheses(expression)
+        const calculatedMostNestedBrackets = bracketsExpressions.reduce<string>((expressionAcc, currentBracketExpression) => {
+            const unbracketExpression = this.unwrapExpressionTerms(currentBracketExpression)
+            const currentBracketExpressionResult = this.calculateUnbracketedExpression(unbracketExpression).toString()
+            return expressionAcc.replace(currentBracketExpression, currentBracketExpressionResult)
         }, expression)
 
-        return this.calculateUnbracketedExpression(unbracketedExpression);
-    }
-
-    private calculateExpressionWithoutTerms(expression: string) {
-        return hasBrackets(expression) ?
-            this.calculate(expression) :
-            this.calculateUnbracketedExpression(expression)
+        return hasBrackets(calculatedMostNestedBrackets) 
+        ? this.calculate(calculatedMostNestedBrackets) 
+        : this.calculateUnbracketedExpression(calculatedMostNestedBrackets)
     }
 
     private calculateUnbracketedExpression(expression: string): number {
@@ -59,7 +51,6 @@ export class CalculatorController implements ICalculatorController {
     }
     private getOrderedOperations(expression: string): string[] {
         const operationsInExpression = this.getOperationsFromExpression(expression)
-
         const orderedOperations = [...operationsInExpression];
         return orderedOperations.sort((a, b) => calculatorConfig[b].priority - calculatorConfig[a].priority)
     }
@@ -70,7 +61,7 @@ export class CalculatorController implements ICalculatorController {
         return operationsList ?? []
     }
 
-    private wrapExpressionInBrackets(bracketsExpression: string) {
-        return `(${bracketsExpression})`
+    private unwrapExpressionTerms(expression: string) {
+        return expression.slice(1, expression.length - 1)
     }
 }

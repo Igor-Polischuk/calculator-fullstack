@@ -1,4 +1,4 @@
-import { getExpressionsFromBrackets, hasBrackets } from "./brackets";
+import { hasBrackets, getMostNestedParentheses } from "./brackets";
 import { formatExpression } from "./formatExpression";
 
-export { getExpressionsFromBrackets, hasBrackets, formatExpression }
+export { hasBrackets, formatExpression, getMostNestedParentheses }
