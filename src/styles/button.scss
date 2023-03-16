@@ -5,14 +5,14 @@
     padding: 15px;
     border-radius: 5px;
     cursor: pointer;
-    width: 95px;
-    height: 50px;
+    width: 70px;
+    height: 45px;
     color: #fff;
     background-color: $accent-color;
     border: 1px solid $gray;
     color: $blue-2;
     transition: background-color 0.4s;
-    font-size: 28px;
+    font-size: 24px;
 
     @media (max-width: 450px) {
         width: 55px;
@@ -29,7 +29,7 @@
         background-color: $blue-1;
         color: $blue-3;
         transition: background-color 0.4s;
-
+        // border: none;
         &:hover {
             background-color: darken($blue-1, 15%)
         }
@@ -40,5 +40,13 @@
         &:hover{
             background-color: darken($accent-color, 10%)
         }
+    }
+
+    &__small{
+        background: transparent;
+        font-size: 34px;
+        color: $blue-2;
+        font-style: italic;
+        font-weight: 300;
     }
 }

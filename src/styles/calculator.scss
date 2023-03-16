@@ -32,7 +32,7 @@
         transition: 0.3s;
         font-size: 21px;
 
-        &-clear{
+        &-clear {
             position: absolute;
             display: flex;
             align-items: center;
@@ -66,7 +66,7 @@
         visibility: hidden;
         transform: translateY(-20px);
 
-        .error{
+        .error {
             color: $red;
         }
 
@@ -76,16 +76,27 @@
             transform: translateY(0);
         }
 
-        .showup{
+        .showup {
             animation: showup 0.2s ease-in-out 1;
         }
     }
 
     &__buttons {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         width: 100%;
         gap: 10px;
+
+        &__header{
+            display: grid;
+            grid-template-columns: repeat(6, auto);
+        }
+
+        &__main {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
 
         &__number {
             display: grid;
@@ -109,28 +120,26 @@
             grid-auto-columns: auto;
             gap: 10px;
             grid-auto-flow: column dense;
+
+            .button--get-res {
+                grid-row-start: 3;
+                grid-row-end: 5;
+                height: 100%;
+            }
         }
 
-        &__scope {
-            display: grid;
-            grid-template-rows: repeat(4, 1fr);
-            gap: 10px;
 
-            // .button--get-res {
-            //     grid-row-start: 3;
-            //     grid-row-end: 5;
-            //     height: 100%;
-            // }
-        }
     }
 
 }
 
 @keyframes showup {
-    from{
+    from {
         opacity: 0;
         transform: translateY(-30px);
-    }to{
+    }
+
+    to {
         opacity: 1;
         transform: translateY(0);
     }

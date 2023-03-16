@@ -34,18 +34,18 @@ export class CalculatorView implements ICalculatorView {
     }
 
     private conectButtons() {
-        const { numpudButtons, operationsButton, resultBtn, removeSymbolBtn } = getCalculatorButtons()
+        const { numpudButtons, operationsButton, } = getCalculatorButtons()
         this.attachButtonHandlers(numpudButtons)
         this.attachButtonHandlers(operationsButton)
 
-        removeSymbolBtn.onClick(() => {
-            this.mathInput.value = this.mathInput.value.slice(0, -1)            
-        })
+        // removeSymbolBtn.onClick(() => {
+        //     this.mathInput.value = this.mathInput.value.slice(0, -1)            
+        // })
 
-        resultBtn.onClick(() => {
-            if(this.mathInput.value.trim().length === 0) return
-            this.model.setExpression(this.mathInput.value)
-        })
+        // resultBtn.onClick(() => {
+        //     if(this.mathInput.value.trim().length === 0) return
+        //     this.model.setExpression(this.mathInput.value)
+        // })
     }
 
     private attachButtonHandlers(btns: Button[]) {

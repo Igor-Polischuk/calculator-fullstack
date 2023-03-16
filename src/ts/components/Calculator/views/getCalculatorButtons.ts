@@ -3,50 +3,55 @@ import { Button } from "./Elements/Button"
 export function getCalculatorButtons() {
     const numpudButtons = getNumpudButtons()
     const operationsButton = getCommonOpeationsButtons()
-    const { removeSymbolBtn, resultBtn } = getServiceBtn()
+    // const { resultBtn } = getServiceBtn()
     return {
         numpudButtons,
         operationsButton,
-        resultBtn,
-        removeSymbolBtn
+        // removeSymbolBtn
     }
 }
 
 function getServiceBtn() {
-    const parentNode = document.querySelector('.calculator__buttons__actions')!
+    const parentNode = document.querySelector('#common-actions')!
 
-    const removeSymbolBtn = new Button({
-        text: '←',
-        classNames: ['button', 'button--action'],
-        parentNode
-    })
+    // const removeSymbolBtn = new Button({
+    //     text: '←',
+    //     classNames: ['button', 'button--action'],
+    //     parentNode
+    // })
     const resultBtn = new Button({
         text: '=',
         classNames: ['button', 'button--get-res'],
         parentNode
     })
-    return { removeSymbolBtn, resultBtn }
+    return { resultBtn }
 }
 
 function getNumpudButtons() {
     const parentNode = document.querySelector('.calculator__buttons__number')!
     const numpudButtonsText = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
     const classNames = ['button', 'button--number']
-    const zeroClassNames = [...classNames, 'zero']
-    return numpudButtonsText.map(text => {
+    const newbtn = numpudButtonsText.map(text => {
         return new Button({
             parentNode,
-            classNames: text === '0' ? zeroClassNames : classNames,
+            classNames: classNames,
             text,
             meta: {
                 action: text
             }
         })
     })
+    const resultBtn = new Button({
+        text: '=',
+        classNames: ['button', 'button--get-res'],
+        parentNode
+    })
+
+    return newbtn
 }
 
 function getCommonOpeationsButtons() {
-    const parentNode = document.querySelector('.calculator__buttons__actions')!
+    const parentNode = document.querySelector('#common-actions')!
     const operations = [
         {
             text: '+',
@@ -63,14 +68,6 @@ function getCommonOpeationsButtons() {
         {
             text: '÷',
             action: '/'
-        },
-        {
-            text: '(',
-            action: '('
-        },
-        {
-            text: ')',
-            action: ')'
         },
     ]
 
