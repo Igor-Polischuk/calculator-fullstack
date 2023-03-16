@@ -1,27 +1,24 @@
+import { IInput } from './interfaces';
+import { MyElement } from './Element';
 interface IInputConfig {
     classNames: string[],
-    parentNode: Element,
     value?: string,
     placeholder?: string
     type?: string
     clearBtn?: boolean
 }
 
-export class Input {
-    private parrentNode: Element
+export class Input extends MyElement implements IInput {
     private input: HTMLInputElement
-    private classNames: string[]
 
-    constructor({classNames, parentNode, value = '', placeholder = '', clearBtn = true, type = 'text'}: IInputConfig ) {
+    constructor({ classNames, value = '', placeholder = '', clearBtn = true, type = 'text' }: IInputConfig) {
+        super({ classNames })
         this.classNames = classNames
-        this.parrentNode = parentNode
 
         this.input = document.createElement('input')
         this.input.placeholder = placeholder
         this.input.type = type
-        this.input.classList.add(...this.classNames)
-        this.parrentNode.appendChild(this.input)
-        this.input.value = value 
+        this.input.value = value
 
         clearBtn && this.addClearBtn()
     }
@@ -35,7 +32,7 @@ export class Input {
         return this.input.value
     }
 
-    get domEl(){
+    get domEl() {
         return this.input
     }
 
@@ -48,7 +45,7 @@ export class Input {
         const btn = document.createElement('span')
         btn.innerHTML = '×'
         btn.classList.add(...standartClasses)
-        this.parrentNode.appendChild(btn)
+        this.parentNode?.appendChild(btn)
         this.onInput(() => {
             btn.style.display = this.value.length > 0 ? 'flex' : 'none'
         })

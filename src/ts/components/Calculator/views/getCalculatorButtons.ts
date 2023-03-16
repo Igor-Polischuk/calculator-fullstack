@@ -1,39 +1,44 @@
-import { Button } from "./Elements/Button"
+import { Button } from "../../Elements/Button"
 
-export function getCalculatorButtons() {
+export function getCalculatorButtons(): Button[] {
     const numpudButtons = getNumpudButtons()
     const operationsButton = getCommonOpeationsButtons()
-    // const { resultBtn } = getServiceBtn()
-    return {
-        numpudButtons,
-        operationsButton,
-        // removeSymbolBtn
-    }
+    const { resultBtn, removeSymbolBtn, clearBtn } = getServiceBtn()
+    const calculatorKeyboard = [
+        operationsButton['pi'],  operationsButton['e'], operationsButton['('], operationsButton[')'], removeSymbolBtn, clearBtn,
+        operationsButton['sin'], operationsButton['sqrt'], numpudButtons[7], numpudButtons[8], numpudButtons[9], operationsButton['+'],
+        operationsButton['cos'], operationsButton['^'], numpudButtons[4], numpudButtons[5], numpudButtons[6], operationsButton['-'],
+        operationsButton['tg'], operationsButton['!'], numpudButtons[1], numpudButtons[2], numpudButtons[3], operationsButton['*'],
+        operationsButton['ctg'], operationsButton['%'], numpudButtons[0], numpudButtons[10], resultBtn, operationsButton['/'],
+    ]
+    return calculatorKeyboard
 }
 
 function getServiceBtn() {
-    const parentNode = document.querySelector('#common-actions')!
+    const clearBtn = new Button({
+        text: 'AC',
+        classNames: ['button', 'button--action'],
+        meta: {purpose: 'clearInput'}
+    })
 
-    // const removeSymbolBtn = new Button({
-    //     text: '←',
-    //     classNames: ['button', 'button--action'],
-    //     parentNode
-    // })
+    const removeSymbolBtn = new Button({
+        text: '←',
+        classNames: ['button', 'button--action'],
+        meta: {purpose: 'removeSymbol'}
+    })
     const resultBtn = new Button({
         text: '=',
         classNames: ['button', 'button--get-res'],
-        parentNode
+        meta: {purpose: 'getResult'}
     })
-    return { resultBtn }
+    return { resultBtn, removeSymbolBtn, clearBtn }
 }
 
 function getNumpudButtons() {
-    const parentNode = document.querySelector('.calculator__buttons__number')!
-    const numpudButtonsText = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.']
+    const numpudButtonsText = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
     const classNames = ['button', 'button--number']
-    const newbtn = numpudButtonsText.map(text => {
+    return numpudButtonsText.map(text => {
         return new Button({
-            parentNode,
             classNames: classNames,
             text,
             meta: {
@@ -41,13 +46,6 @@ function getNumpudButtons() {
             }
         })
     })
-    const resultBtn = new Button({
-        text: '=',
-        classNames: ['button', 'button--get-res'],
-        parentNode
-    })
-
-    return newbtn
 }
 
 function getCommonOpeationsButtons() {
@@ -55,7 +53,6 @@ function getCommonOpeationsButtons() {
     const operations = [
         {
             text: '+',
-            action: '+'
         },
         {
             text: '−',
@@ -69,16 +66,56 @@ function getCommonOpeationsButtons() {
             text: '÷',
             action: '/'
         },
+        {
+            text: '(',
+        },
+        {
+            text: ')',
+        },
+        {
+            text: 'π',
+            action: 'pi'
+        },
+        {
+            text: 'e',
+        },
+        {
+            text: 'sin',
+        },
+        {
+            text: 'cos',
+        },
+        {
+            text: 'tg',
+        },
+        {
+            text: 'ctg',
+        },
+        {
+            text: '√',
+            action: 'sqrt'
+        },
+        {
+            text: '^',
+            action: '^'
+        },
+        {
+            text: 'n!',
+            action: '!'
+        },
+        {
+            text: '%',
+        },
     ]
 
-    return operations.map(operation => {
-        return new Button({
-            parentNode,
+    return operations.reduce<Record<string, Button>>((buttonsObj, operation) => {
+        buttonsObj[operation.action || operation.text] = new Button({
             text: operation.text,
             classNames: ['button', 'button--action'],
             meta: {
-                action: operation.action
+                action: operation.action || operation.text
             }
         })
-    })
+        return { ...buttonsObj }
+    }, {})
 }
