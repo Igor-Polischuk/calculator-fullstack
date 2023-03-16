@@ -1,6 +1,6 @@
 import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
-import { calculatorConfig } from "./config/calculator-config";
+import { allowedActions, calculatorConfig, searchAllowedOperationsRegStr } from "./config/calculator-config";
 import { getExpressionsFromBrackets, formatExpression, hasBrackets } from "./helpers";
 import { validate } from "./validation/validate";
 
@@ -15,10 +15,12 @@ export class CalculatorController implements ICalculatorController {
         const validationErrors = validate(expression)
 
         if (validationErrors.length > 0) {
+            console.log(validationErrors);
+            
             this.model.setError(validationErrors)
         } else {
             const result = this.calculate(expression);
-            
+
             console.log(`${inputExpression} = ${result}`);
             this.model.setResult(result)
         }
@@ -47,14 +49,10 @@ export class CalculatorController implements ICalculatorController {
 
     private calculateUnbracketedExpression(expression: string): number {
         const orderedOperations = this.getOrderedOperations(expression)
-        console.log(orderedOperations);
-        
         const result = orderedOperations.reduce<string>((resultAcc: string, operation: string) => {
             const { evaluatedExpression, result } = calculatorConfig[operation].calculateOperation(resultAcc)
             const resultString = result.toString()
-            console.log(evaluatedExpression, result);
-            console.log(resultAcc.replace(evaluatedExpression, resultString));
-            
+
             return resultAcc.replace(evaluatedExpression, resultString)
         }, expression)
         return Number(result)
@@ -67,24 +65,9 @@ export class CalculatorController implements ICalculatorController {
     }
 
     private getOperationsFromExpression(expression: string): string[] {
-        const actionsExp = RegExp(
-            Object.keys(calculatorConfig)
-                .map(action => {
-                    if (action === '-'){
-                        return `\\d\\${action}`
-                    }else if (action.length === 1){
-                        return `\\${action}`
-                    }else {
-                        return action
-                    }
-                })
-                .join('|'), 'g')
-
-
-        const operationsList = expression.match(actionsExp)
-        console.log(operationsList);
-        
-        return operationsList ? operationsList.map(operation => operation.replace(/\d+/g, '')) : []
+        const actionsExp = RegExp(searchAllowedOperationsRegStr, 'g')
+        const operationsList = expression[0] === '-' ? expression.slice(1).match(actionsExp) : expression.match(actionsExp)
+        return operationsList ?? []
     }
 
     private wrapExpressionInBrackets(bracketsExpression: string) {

@@ -28,11 +28,8 @@ export class Operation implements IOperation {
         const [evaluatedExpression] = matches
         const numbersInExpression = evaluatedExpression.match(getNumberReg())
         const numbers = numbersInExpression?.map(number => +number) ?? []
-        console.log(evaluatedExpression, numbers);
         
         const result = this.calculate(...numbers)
-        console.log(result);
-        
         return {
                 evaluatedExpression,
                 result: result

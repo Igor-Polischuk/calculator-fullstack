@@ -37,12 +37,6 @@ export const calculatorConfig: ICalculatorConfig = {
         reg: getNumberBetweenRegWithSymbol('^'),
         calculate: (a: number, b: number) => Math.pow(a, b)
     }),
-    '!': new Operation({
-        operation: '!',
-        priority: Priority.Hight,
-        reg: /\d+\!/,
-        calculate: factorial
-    }),
     'sqrt': new Operation({
         operation: 'sqrt',
         priority: Priority.Hight,
@@ -53,17 +47,6 @@ export const calculatorConfig: ICalculatorConfig = {
     })
 }
 
-function factorial(n: number): number {
-    let answer = 1;
-    if (n == 0 || n == 1) {
-        return answer;
-    }
-    else if (n > 1) {
-        for (var i = n; i >= 1; i--) {
-            answer = answer * i;
-        }
-        return answer;
-    }
 
-    return -1
-}
+export const allowedActions = Object.keys(calculatorConfig)
+export const searchAllowedOperationsRegStr = allowedActions.map(action => action.length === 1 ? `\\${action}` : action).join('|')
