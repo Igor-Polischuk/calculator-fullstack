@@ -17,7 +17,7 @@ export interface IOperation {
     readonly priority: number;
     calculateOperation: (expression: string) => {
         evaluatedExpression: string
-        result: string
+        result: number
     };
 }
 

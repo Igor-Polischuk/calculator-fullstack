@@ -9,12 +9,13 @@ export class CalculatorController implements ICalculatorController {
         this.model.subscribe(CalculatorObserverEvent.Expression, this.calculateExpression.bind(this))
     }
 
+
     private calculateExpression(inputExpression: string): void {
         const expression = formatExpression(inputExpression)
-        const validationResult = validate(expression)
+        const validationErrors = validate(expression)
 
-        if (validationResult.length > 0) {
-            this.model.setError(validationResult)
+        if (validationErrors.length > 0) {
+            this.model.setError(validationErrors)
         } else {
             const result = this.calculate(expression);
             
@@ -30,15 +31,15 @@ export class CalculatorController implements ICalculatorController {
 
         const bracketedExpressions = getExpressionsFromBrackets(expression)
         const unbracketedExpression = bracketedExpressions.reduce<string>((expressionAcc, currentBracketExpression) => {
-            const currentBracketExpressionResult = this.evaluateExpressionBasedOnBrackets(currentBracketExpression).toString()
+            const currentBracketExpressionResult = this.calculateExpressionWithoutTerms(currentBracketExpression).toString()
             const currentBracketedExpressionInParens = this.wrapExpressionInBrackets(currentBracketExpression)
             return expressionAcc.replace(currentBracketedExpressionInParens, currentBracketExpressionResult)
         }, expression)
 
-        return this.evaluateExpressionBasedOnBrackets(unbracketedExpression);
+        return this.calculateUnbracketedExpression(unbracketedExpression);
     }
 
-    private evaluateExpressionBasedOnBrackets(expression: string) {
+    private calculateExpressionWithoutTerms(expression: string) {
         return hasBrackets(expression) ?
             this.calculate(expression) :
             this.calculateUnbracketedExpression(expression)
@@ -46,13 +47,18 @@ export class CalculatorController implements ICalculatorController {
 
     private calculateUnbracketedExpression(expression: string): number {
         const orderedOperations = this.getOrderedOperations(expression)
+        console.log(orderedOperations);
+        
         const result = orderedOperations.reduce<string>((resultAcc: string, operation: string) => {
             const { evaluatedExpression, result } = calculatorConfig[operation].calculateOperation(resultAcc)
-            return resultAcc.replace(evaluatedExpression, result)
+            const resultString = result.toString()
+            console.log(evaluatedExpression, result);
+            console.log(resultAcc.replace(evaluatedExpression, resultString));
+            
+            return resultAcc.replace(evaluatedExpression, resultString)
         }, expression)
         return Number(result)
     }
-
     private getOrderedOperations(expression: string): string[] {
         const operationsInExpression = this.getOperationsFromExpression(expression)
 
@@ -63,11 +69,21 @@ export class CalculatorController implements ICalculatorController {
     private getOperationsFromExpression(expression: string): string[] {
         const actionsExp = RegExp(
             Object.keys(calculatorConfig)
-                .map(action => action.length === 1 ? `\\d\\${action}` : action)
+                .map(action => {
+                    if (action === '-'){
+                        return `\\d\\${action}`
+                    }else if (action.length === 1){
+                        return `\\${action}`
+                    }else {
+                        return action
+                    }
+                })
                 .join('|'), 'g')
 
 
         const operationsList = expression.match(actionsExp)
+        console.log(operationsList);
+        
         return operationsList ? operationsList.map(operation => operation.replace(/\d+/g, '')) : []
     }
 

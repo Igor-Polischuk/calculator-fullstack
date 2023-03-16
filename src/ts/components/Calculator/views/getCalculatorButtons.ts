@@ -3,7 +3,7 @@ import { Button } from "./Elements/Button"
 export function getCalculatorButtons() {
     const numpudButtons = getNumpudButtons()
     const operationsButton = getCommonOpeationsButtons()
-    const {removeSymbolBtn, resultBtn} = getServiceBtn()
+    const { removeSymbolBtn, resultBtn } = getServiceBtn()
     return {
         numpudButtons,
         operationsButton,
@@ -16,16 +16,16 @@ function getServiceBtn() {
     const parentNode = document.querySelector('.calculator__buttons__actions')!
 
     const removeSymbolBtn = new Button({
-        text: '←', 
+        text: '←',
         classNames: ['button', 'button--action'],
         parentNode
     })
     const resultBtn = new Button({
-        text: '=', 
+        text: '=',
         classNames: ['button', 'button--get-res'],
         parentNode
     })
-    return {removeSymbolBtn, resultBtn}
+    return { removeSymbolBtn, resultBtn }
 }
 
 function getNumpudButtons() {
@@ -37,7 +37,10 @@ function getNumpudButtons() {
         return new Button({
             parentNode,
             classNames: text === '0' ? zeroClassNames : classNames,
-            text
+            text,
+            meta: {
+                action: text
+            }
         })
     })
 }

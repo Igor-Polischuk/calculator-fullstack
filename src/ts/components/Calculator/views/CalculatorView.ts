@@ -35,8 +35,8 @@ export class CalculatorView implements ICalculatorView {
 
     private conectButtons() {
         const { numpudButtons, operationsButton, resultBtn, removeSymbolBtn } = getCalculatorButtons()
-        this.attachButtonHandlers(numpudButtons, 'text')
-        this.attachButtonHandlers(operationsButton, 'action')
+        this.attachButtonHandlers(numpudButtons)
+        this.attachButtonHandlers(operationsButton)
 
         removeSymbolBtn.onClick(() => {
             this.mathInput.value = this.mathInput.value.slice(0, -1)            
@@ -48,10 +48,10 @@ export class CalculatorView implements ICalculatorView {
         })
     }
 
-    private attachButtonHandlers(btns: Button[], metaTag: string) {
+    private attachButtonHandlers(btns: Button[]) {
         btns.forEach(numButton => {
             numButton.onClick(() => {
-                const newInputValue = this.mathInput.value + numButton.metaData[metaTag]
+                const newInputValue = this.mathInput.value + numButton.metaData.action
                 this.mathInput.value = newInputValue
             })
         })

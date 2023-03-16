@@ -23,25 +23,20 @@ export class Operation implements IOperation {
         const matches = expression.match(this.reg)
         if (!matches) return {
             evaluatedExpression: expression,
-            result: expression
+            result: +expression
         }
-        const result = this.action.length === 1 ? this.binaryActionCalculate(matches[0]) : this.functionValueCalculate(matches[0])
+        const [evaluatedExpression] = matches
+        const numbersInExpression = evaluatedExpression.match(getNumberReg())
+        const numbers = numbersInExpression?.map(number => +number) ?? []
+        console.log(evaluatedExpression, numbers);
+        
+        const result = this.calculate(...numbers)
+        console.log(result);
+        
         return {
-            evaluatedExpression: matches[0],
-            result: result.toString()
-        }
-    }
+                evaluatedExpression,
+                result: result
+            }
 
-    functionValueCalculate(expression: string): number {
-        const matchNumber = expression.match(getNumberReg())
-        if (!matchNumber) return +expression
-        const number = +matchNumber[0]
-        return this.calculate(number)
-    }
-
-    binaryActionCalculate(expression: string): number {
-        const firstNumber = parseFloat(expression)
-        const secondNumber = +expression.replace(firstNumber.toString(), '').split('').slice(1).join('')
-        return this.calculate(firstNumber, secondNumber)
     }
 }

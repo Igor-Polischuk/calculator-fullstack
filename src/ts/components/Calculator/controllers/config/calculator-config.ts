@@ -28,7 +28,6 @@ export const calculatorConfig: ICalculatorConfig = {
         priority: Priority.Medium,
         reg: getNumberBetweenRegWithSymbol('/'),
         calculate: (a: number, b: number) => {
-            if (b === 0) throw new Error(`division by zero error: ${a}/${b}`)
             return a / b
         }
     }),
@@ -38,13 +37,33 @@ export const calculatorConfig: ICalculatorConfig = {
         reg: getNumberBetweenRegWithSymbol('^'),
         calculate: (a: number, b: number) => Math.pow(a, b)
     }),
+    '!': new Operation({
+        operation: '!',
+        priority: Priority.Hight,
+        reg: /\d+\!/,
+        calculate: factorial
+    }),
     'sqrt': new Operation({
         operation: 'sqrt',
         priority: Priority.Hight,
         reg: getFunctionRegWithParam('sqrt'),
         calculate: (a: number) => {
-            if (a < 0) throw new Error(`negative number under the root: ${a}`)
             return Math.sqrt(a)
         }
     })
+}
+
+function factorial(n: number): number {
+    let answer = 1;
+    if (n == 0 || n == 1) {
+        return answer;
+    }
+    else if (n > 1) {
+        for (var i = n; i >= 1; i--) {
+            answer = answer * i;
+        }
+        return answer;
+    }
+
+    return -1
 }
