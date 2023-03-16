@@ -1,7 +1,8 @@
 import { Priority } from './priority';
 import { ICalculatorConfig } from "@components/Calculator/types/ICalculator";
-import { Operation } from "./Operation";
-import { getFunctionRegWithParam, getNumberBetweenRegWithSymbol } from "../helpers/reg";
+import { Constant, MathFuction, Operation } from "./Operation";
+import { getFunctionRegWithParam, getNumberBetweenRegWithSymbol, numbersLeftToSymbol } from "../helpers/reg";
+import { factorial } from '@utilities/factorial';
 
 
 export const calculatorConfig: ICalculatorConfig = {
@@ -37,16 +38,37 @@ export const calculatorConfig: ICalculatorConfig = {
         reg: getNumberBetweenRegWithSymbol('^'),
         calculate: (a: number, b: number) => Math.pow(a, b)
     }),
-    'sqrt': new Operation({
-        operation: 'sqrt',
+    '!': new Operation({
+        operation: '!',
         priority: Priority.Hight,
-        reg: getFunctionRegWithParam('sqrt'),
-        calculate: (a: number) => {
-            return Math.sqrt(a)
-        }
-    })
+        reg: numbersLeftToSymbol('!'),
+        calculate: factorial
+    }),
+    'sqrt': new MathFuction({
+        name: 'sqrt',
+        func: Math.sqrt
+    }),
+    'sin': new MathFuction({
+        name: 'sin',
+        func: Math.sin
+    }),
+    'cos': new MathFuction({
+        name: 'cos',
+        func: Math.cos
+    }),
+    'tg': new MathFuction({
+        name: 'tg',
+        func: Math.tan
+    }),
+    'ctg': new MathFuction({
+        name: 'ctg',
+        func: (a: number) => 1 / Math.tan(a)
+    }),
+    'pi': new Constant('pi', Math.PI),
+    'e': new Constant('e', Math.E),
 }
 
 
 export const allowedActions = Object.keys(calculatorConfig)
 export const searchAllowedOperationsRegStr = allowedActions.map(action => action.length === 1 ? `\\${action}` : action).join('|')
+

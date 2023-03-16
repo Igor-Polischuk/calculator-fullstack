@@ -1,5 +1,6 @@
 import { IOperation } from "@components/Calculator/types/ICalculator";
-import { getNumberReg } from "../helpers/reg";
+import { getFunctionRegWithParam, getNumberReg } from "../helpers/reg";
+import { Priority } from "./priority";
 
 export class Operation implements IOperation {
     private action: string
@@ -25,6 +26,8 @@ export class Operation implements IOperation {
             evaluatedExpression: expression,
             result: +expression
         }
+        
+        
         const [evaluatedExpression] = matches
         const numbersInExpression = evaluatedExpression.match(getNumberReg())
         const numbers = numbersInExpression?.map(number => +number) ?? []
@@ -35,5 +38,27 @@ export class Operation implements IOperation {
                 result: result
             }
 
+    }
+}
+
+export class MathFuction extends Operation{
+    constructor(config: {name: string, func: (...args: number[]) => number}){
+        super({
+            operation: config.name,
+            reg: getFunctionRegWithParam(config.name),
+            priority: Priority.Hight,
+            calculate: config.func
+        });
+    }
+}
+
+export class Constant extends Operation{
+    constructor(name: string,  value: number){
+        super({
+            operation: name,
+            reg: new RegExp(name),
+            priority: Priority.Constant,
+            calculate: () => value
+        });
     }
 }

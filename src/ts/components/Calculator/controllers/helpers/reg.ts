@@ -3,6 +3,7 @@ import { calculatorConfig } from "../config/calculator-config";
 const getNumberBetweenRegWithSymbol = (symbol: string) => new RegExp(`[-]?\\d+(\\.\\d+)?[\\${symbol}][-]?\\d+(\\.\\d+)?`);
 const getFunctionRegWithParam = (func: string) => new RegExp(`${func}[-]?\\d+(\\.\\d+)?`);
 const getNumberReg = () => /(?<!\d)-?\d+(\.\d+)?/g
+const numbersLeftToSymbol = (symbol: string) => new RegExp(`[-]?\\d+(\\.\\d+)?${symbol}`)
 
 export function getActionsReg() {
     return new RegExp(
@@ -23,4 +24,4 @@ export function getAllowedSymbolsReg() {
       return new RegExp(`[^${calculatorKeys.join('|')}|\\d+|\\.|\(|)]`,);
 }
 
-export { getFunctionRegWithParam, getNumberReg, getNumberBetweenRegWithSymbol }
+export { getFunctionRegWithParam, getNumberReg, getNumberBetweenRegWithSymbol, numbersLeftToSymbol }

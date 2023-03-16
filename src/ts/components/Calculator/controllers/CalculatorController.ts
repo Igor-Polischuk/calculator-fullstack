@@ -1,3 +1,4 @@
+import { factorial } from '@utilities/factorial';
 import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
 import { calculatorConfig, searchAllowedOperationsRegStr } from "./config/calculator-config";
