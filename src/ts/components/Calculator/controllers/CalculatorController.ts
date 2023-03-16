@@ -1,5 +1,5 @@
 import { factorial } from '@utilities/factorial';
-import { ICalculatorController, ICalculatorModel } from "@components/Calculator/types/ICalculator";
+import { ICalculatorController, ICalculatorModel, IError } from "@components/Calculator/types/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
 import { calculatorConfig, searchAllowedOperationsRegStr } from "./config/calculator-config";
 import { formatExpression, hasBrackets, getMostNestedParentheses } from "./helpers";
@@ -20,10 +20,14 @@ export class CalculatorController implements ICalculatorController {
 
             this.model.setError(validationErrors)
         } else {
-            const result = this.calculate(expression);
+            try {
+                const result = this.calculate(expression);
 
-            console.log(`${inputExpression} = ${result}`);
-            this.model.setResult(result)
+                console.log(`${inputExpression} = ${result}`);
+                this.model.setResult(result)
+            } catch (error) {
+                this.model.setError([error as IError])
+            }
         }
     }
 
@@ -35,9 +39,9 @@ export class CalculatorController implements ICalculatorController {
             return expressionAcc.replace(currentBracketExpression, currentBracketExpressionResult)
         }, expression)
 
-        return hasBrackets(calculatedMostNestedBrackets) 
-        ? this.calculate(calculatedMostNestedBrackets) 
-        : this.calculateUnbracketedExpression(calculatedMostNestedBrackets)
+        return hasBrackets(calculatedMostNestedBrackets)
+            ? this.calculate(calculatedMostNestedBrackets)
+            : this.calculateUnbracketedExpression(calculatedMostNestedBrackets)
     }
 
     private calculateUnbracketedExpression(expression: string): number {

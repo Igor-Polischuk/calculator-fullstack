@@ -9,13 +9,13 @@ import { GridContainer } from '@components/Elements/GridContainer';
 
 export class CalculatorView implements ICalculatorView {
     private mathInput = getMathInput()
-    private resultBlock = new BlockElement({classNames: ['calculator__result']})
+    private resultBlock = new BlockElement({ classNames: ['calculator__result'] })
     private buttons: Button[] = []
 
     constructor(private model: ICalculatorModel) {
         model.subscribe(CalculatorObserverEvent.Result, this.renderResult.bind(this))
         model.subscribe(CalculatorObserverEvent.Error, this.renderError.bind(this))
-        
+
         this.mathInput.domEl.focus()
         this.conectButtons()
         this.renderHTML()
@@ -28,14 +28,16 @@ export class CalculatorView implements ICalculatorView {
         this.mathInput.value = newResult.toString()
     }
 
-    private renderError(error: IError[]){
+    private renderError(error: IError[]) {
         this.resultBlock.domEl.classList.add('visible')
         const errorIndices = error.map(err => err.meta.errorIndex!)
+        const onlyMessegeErrors = error.filter(error => !error.meta.errorIndex )
         const errorString = this.mathInput.value.split('').reduce<string>((errAcc, char, i) => {
-
             return errAcc + ((errorIndices.includes(i)) ? `<span class='error'>${char}</span>` : char)
-        }, '')        
-        this.resultBlock.domEl.innerHTML = errorString
+        }, '')
+        this.resultBlock.domEl.innerHTML = onlyMessegeErrors.length > 0 
+        ?  `<span class='error'>${onlyMessegeErrors[0].message}</span>`
+        : errorString
     }
 
     private conectButtons() {
@@ -45,18 +47,18 @@ export class CalculatorView implements ICalculatorView {
         const [resultBtn] = this.buttons.filter(button => button.metaData.purpose === 'getResult')
         const [removeSymbolBtn] = this.buttons.filter(button => button.metaData.purpose === 'removeSymbol')
         const [clearBtn] = this.buttons.filter(button => button.metaData.purpose === 'clearInput')
-        
+
         resultBtn.onClick(() => {
-            if(this.mathInput.value.trim().length === 0) return
+            if (this.mathInput.value.trim().length === 0) return
             this.model.setExpression(this.mathInput.value)
         })
 
         removeSymbolBtn.onClick(() => {
-            this.mathInput.value = this.mathInput.value.slice(0, -1)            
+            this.mathInput.value = this.mathInput.value.slice(0, -1)
         })
 
         clearBtn.onClick(() => {
-            this.mathInput.value = ''          
+            this.mathInput.value = ''
         })
     }
 
@@ -69,21 +71,21 @@ export class CalculatorView implements ICalculatorView {
         })
     }
 
-    private renderHTML(){
+    private renderHTML() {
         const root = document.querySelector('.container')!
         const calculatorBlock = new BlockElement({
             classNames: ['calculator']
         })
 
-        const inputBlock = new BlockElement({classNames: ['calculator__field']})
+        const inputBlock = new BlockElement({ classNames: ['calculator__field'] })
         inputBlock.append(this.mathInput)
 
-        const buttonsBlock = new GridContainer({colums: 6, gap: 10})
+        const buttonsBlock = new GridContainer({ colums: 6, gap: 10 })
         console.log(this.buttons);
-        
+
         buttonsBlock.append(...this.buttons)
         console.log(buttonsBlock);
-        
+
         calculatorBlock.insert(root)
         calculatorBlock.append(inputBlock, this.resultBlock, buttonsBlock)
     }
