@@ -17,7 +17,7 @@ export class Button extends MyElement implements IButton{
         this.text = config.text
         this.meta = config.meta ? {...config.meta} : {text: this.text}
         this.button = document.createElement('button')
-        this.button.innerText = this.text
+        this.button.innerHTML= this.text
     }
 
     onClick(callback: (e: MouseEvent) => void) {

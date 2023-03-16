@@ -96,7 +96,7 @@ function getCommonOpeationsButtons() {
             action: 'sqrt'
         },
         {
-            text: '^',
+            text: '<span>x<sup>y</sup></span>',
             action: '^'
         },
         {

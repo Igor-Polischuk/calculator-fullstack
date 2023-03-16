@@ -40,6 +40,12 @@ export const calculatorConfig: ICalculatorConfig = {
         reg: getNumberBetweenRegWithSymbol('^'),
         calculate: (a: number, b: number) => Math.pow(a, b)
     }),
+    '%': new Operation({
+        operation: '%',
+        priority: Priority.Low,
+        reg: getNumberBetweenRegWithSymbol('%'),
+        calculate: (percent: number, value: number) => value * (1 + percent / 100)
+    }),
     '!': new Operation({
         operation: '!',
         priority: Priority.Hight,
