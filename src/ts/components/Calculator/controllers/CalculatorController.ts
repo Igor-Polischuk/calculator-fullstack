@@ -12,22 +12,14 @@ export class CalculatorController implements ICalculatorController {
 
     private calculateExpression(inputExpression: string): void {
         const expression = formatExpression(inputExpression)
-        const validationErrors = validate(expression)
-
-        if (validationErrors.length > 0) {
-            console.log(validationErrors);
-            this.model.setError(validationErrors)
-            return
-        }
         try {
+            validate(expression)
             const result = this.calculate(expression);
-
             console.log(`${inputExpression} = ${result}`);
             this.model.setResult(result)
         } catch (error) {
-            this.model.setError([error as IError])
+            this.model.setError(error as IError[])
         }
-
     }
 
     private calculate(expression: string): number {

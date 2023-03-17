@@ -15,7 +15,9 @@ export function validate(erxpression: string) {
         expressionEndValidator,
         expressionStartValidator
     })
-    return validateResult
+    if (validateResult.length > 0){
+        throw validateResult
+    }
 }
 
 function validateExpression(expression: string, validators: Ivalidators): IError[] {
