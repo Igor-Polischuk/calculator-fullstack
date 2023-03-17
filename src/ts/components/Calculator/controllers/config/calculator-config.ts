@@ -7,25 +7,21 @@ import { exceptions } from './exceptions';
 
 export const calculatorConfig: ICalculatorConfig = {
     '+': new Operation({
-        operation: '+',
         priority: Priority.Low,
         reg: getNumberBetweenRegWithSymbol('+'),
         calculate: (a: number, b: number) => a + b
     }),
     '-': new Operation({
-        operation: '-',
         priority: Priority.Low,
         reg: getNumberBetweenRegWithSymbol('-'),
         calculate: (a: number, b: number) => a - b
     }),
     '*': new Operation({
-        operation: '*',
         priority: Priority.Medium,
         reg: getNumberBetweenRegWithSymbol('*'),
         calculate: (a: number, b: number) => a * b
     }),
     '/': new Operation({
-        operation: '/',
         priority: Priority.Medium,
         reg: getNumberBetweenRegWithSymbol('/'),
         calculate: (a: number, b: number) => {
@@ -34,19 +30,16 @@ export const calculatorConfig: ICalculatorConfig = {
         exceptionHandler: exceptions.zeroDivision
     }),
     '^': new Operation({
-        operation: '^',
         priority: Priority.Hight,
         reg: getNumberBetweenRegWithSymbol('^'),
         calculate: (a: number, b: number) => Math.pow(a, b)
     }),
     '%': new Operation({
-        operation: '%',
         priority: Priority.Low,
         reg: getNumberBetweenRegWithSymbol('%'),
         calculate: (percent: number, value: number) => value * (1 + percent / 100)
     }),
     '!': new Operation({
-        operation: '!',
         priority: Priority.Hight,
         reg: numbersLeftToSymbol('!'),
         calculate: factorial,
