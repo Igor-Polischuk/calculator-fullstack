@@ -14,11 +14,10 @@ export interface ICalculatorModel extends IObserver<AllowedEvents> {
 }
 
 export interface IOperation {
-    readonly priority: number;
-    calculateOperation: (expression: string) => {
-        evaluatedExpression: string
-        result: number
-    };
+    readonly reg: RegExp
+    calculate: (...args: number[]) => number
+    checkException: (numbers: number[]) => void
+    readonly priority: number
 }
 
 export type ICalculatorConfig = Record<string, IOperation> 

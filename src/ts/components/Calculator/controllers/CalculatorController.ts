@@ -1,7 +1,7 @@
 import { ICalculatorController, ICalculatorModel, IError } from "@components/Calculator/interfaces/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
 import { calculatorConfig, searchAllowedOperationsRegStr } from "./config/calculator-config";
-import { formatExpression, hasBrackets, getMostNestedParentheses } from "./services";
+import { formatExpression, hasBrackets, getMostNestedParentheses, getNumbersFromString } from "./services";
 import { validate } from "./validation/validate";
 
 export class CalculatorController implements ICalculatorController {
@@ -46,10 +46,15 @@ export class CalculatorController implements ICalculatorController {
     private calculateUnbracketedExpression(expression: string): number {
         const orderedOperations = this.getOrderedOperations(expression)
         const result = orderedOperations.reduce<string>((resultAcc: string, operation: string) => {
-            const { evaluatedExpression, result } = calculatorConfig[operation].calculateOperation(resultAcc)
-            const resultString = result.toString()
+            const currentOperationObj = calculatorConfig[operation]
+            const matchedExpressionWithOperation = resultAcc.match(currentOperationObj.reg)
+            if (!matchedExpressionWithOperation) return resultAcc
+            const [expressionWithCurrentOperation] = matchedExpressionWithOperation
+            const numbersOperand = getNumbersFromString(expressionWithCurrentOperation)
 
-            return resultAcc.replace(evaluatedExpression, resultString)
+            currentOperationObj.checkException(numbersOperand)
+            const calculationResult = currentOperationObj.calculate(...numbersOperand).toString()
+            return resultAcc.replace(expressionWithCurrentOperation, calculationResult)
         }, expression)
         return Number(result)
     }
