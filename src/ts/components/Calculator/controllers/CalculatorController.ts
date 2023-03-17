@@ -12,6 +12,8 @@ export class CalculatorController implements ICalculatorController {
 
     private calculateExpression(inputExpression: string): void {
         const expression = formatExpression(inputExpression)
+        console.log(expression);
+        
         try {
             validate(expression)
             const result = this.calculate(expression);
