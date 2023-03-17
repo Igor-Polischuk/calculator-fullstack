@@ -36,7 +36,6 @@ export class Operation implements IOperation {
         const [evaluatedExpression] = matches
         const numbersInExpression = evaluatedExpression.match(getNumberReg())
         const numbers = numbersInExpression?.map(number => +number) ?? []
-        console.log(this);
         
         this.checkException(numbers)
 
