@@ -6,39 +6,39 @@ import { Priority } from "./priority";
 export class Operation implements IOperation {
     readonly reg: RegExp
     readonly calculate: (...args: number[]) => number
-    private exceptionHandler: ((...args: number[]) => boolean) | undefined
-    private exceptionMessege: string | undefined
+    private exceptionHandler: exceptionObj[] = []
     readonly priority: number
 
     constructor(config: {
         reg: RegExp
         priority: number
         calculate: (...args: number[]) => number,
-        exceptionHandler?: exceptionObj
+        exceptionHandler?: exceptionObj[]
     }) {
         this.reg = config.reg
         this.calculate = config.calculate
-        this.exceptionHandler = config.exceptionHandler?.checkException
-        this.exceptionMessege = config.exceptionHandler?.exceptionText
+        this.exceptionHandler = config.exceptionHandler || []
         this.priority = config.priority
     }
 
     checkException(numbers: number[]): void {
-        if (!this.exceptionHandler) return
-        const isCorrect = this.exceptionHandler(...numbers)
+        if (this.exceptionHandler.length === 0) return
 
-        if (isCorrect) {
-            const error: IError = {
-                message: this.exceptionMessege!,
-                meta: {}
+        this.exceptionHandler.forEach(exception => {
+            const isException = exception.checkException(...numbers)
+            if (isException){
+                const error: IError = {
+                    message: `${exception.exceptionText}`,
+                    meta: {}
+                }
+                throw [error]
             }
-            throw error
-        }
+        })
     }
 }
 
 export class MathFuction extends Operation {
-    constructor(config: { name: string, func: (...args: number[]) => number, exceptionHandler?: exceptionObj }) {
+    constructor(config: { name: string, func: (...args: number[]) => number, exceptionHandler?: exceptionObj[] }) {
         super({
             reg: getFunctionRegWithParam(config.name),
             priority: Priority.Hight,

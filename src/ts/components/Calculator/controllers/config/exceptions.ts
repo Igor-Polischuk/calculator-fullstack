@@ -5,16 +5,17 @@ export interface exceptionObj {
 type exceptionsType = Record<string, exceptionObj>
 
 export const exceptions: exceptionsType = {
-    'zeroDivision': {
+    zeroDivision: {
         checkException: (a: number, b: number) => b === 0,
         exceptionText: 'Zero division'
     },
-    'sqrtIncorrectParam': {
+    negativeNumber: {
         checkException: (a: number) => a < 0,
-        exceptionText: 'Negative number under sqrt'
+        exceptionText: 'Negative number'
     },
-    'factorial': {
-        checkException: (a: number) => a < 0 || !Number.isInteger(a),
-        exceptionText: 'the factorial can be calculated only for positive integers'
+    notInteger: {
+        checkException: (a: number) => !Number.isInteger(a),
+        exceptionText: 'number isn\'t integers'
     },
 }
+

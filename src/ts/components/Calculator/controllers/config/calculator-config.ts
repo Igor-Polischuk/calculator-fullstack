@@ -27,7 +27,7 @@ export const calculatorConfig: ICalculatorConfig = {
         calculate: (a: number, b: number) => {
             return a / b
         },
-        exceptionHandler: exceptions.zeroDivision
+        exceptionHandler: [exceptions.zeroDivision]
     }),
     '^': new Operation({
         priority: Priority.Hight,
@@ -43,12 +43,12 @@ export const calculatorConfig: ICalculatorConfig = {
         priority: Priority.Hight,
         reg: numbersLeftToSymbol('!'),
         calculate: factorial,
-        exceptionHandler: exceptions.factorial
+        exceptionHandler: [exceptions.negativeNumber, exceptions.notInteger]
     }),
     'sqrt': new MathFuction({
         name: 'sqrt',
         func: Math.sqrt,
-        exceptionHandler: exceptions.sqrtIncorrectParam
+        exceptionHandler: [exceptions.negativeNumber]
     }),
     'sin': new MathFuction({
         name: 'sin',
