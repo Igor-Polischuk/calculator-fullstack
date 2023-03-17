@@ -6,10 +6,10 @@ export function getCalculatorButtons(): Button[] {
     const { resultBtn, removeSymbolBtn, clearBtn } = getServiceBtn()
     const calculatorKeyboard = [
         operationsButton['pi'],  operationsButton['e'], operationsButton['('], operationsButton[')'], removeSymbolBtn, clearBtn,
-        operationsButton['sin'], operationsButton['sqrt'], numpudButtons[7], numpudButtons[8], numpudButtons[9], operationsButton['+'],
-        operationsButton['cos'], operationsButton['^'], numpudButtons[4], numpudButtons[5], numpudButtons[6], operationsButton['-'],
-        operationsButton['tg'], operationsButton['!'], numpudButtons[1], numpudButtons[2], numpudButtons[3], operationsButton['*'],
-        operationsButton['ctg'], operationsButton['%'], numpudButtons[0], numpudButtons[10], resultBtn, operationsButton['/'],
+        operationsButton['sin'], operationsButton['sqrt'], numpudButtons[7], numpudButtons[8], numpudButtons[9], operationsButton['/'],
+        operationsButton['cos'], operationsButton['^'], numpudButtons[4], numpudButtons[5], numpudButtons[6], operationsButton['*'],
+        operationsButton['tg'], operationsButton['!'], numpudButtons[1], numpudButtons[2], numpudButtons[3], operationsButton['-'],
+        operationsButton['ctg'], operationsButton['%'], numpudButtons[0], numpudButtons[10], resultBtn, operationsButton['+'],
     ]
     return calculatorKeyboard
 }
@@ -49,7 +49,6 @@ function getNumpudButtons() {
 }
 
 function getCommonOpeationsButtons() {
-    const parentNode = document.querySelector('#common-actions')!
     const operations = [
         {
             text: '+',

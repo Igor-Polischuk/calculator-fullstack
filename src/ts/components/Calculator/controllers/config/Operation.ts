@@ -1,5 +1,5 @@
-import { IError, IOperation } from "@components/Calculator/types/ICalculator";
-import { getFunctionRegWithParam, getNumberReg } from "../helpers/reg";
+import { IError, IOperation } from "@components/Calculator/interfaces/ICalculator";
+import { getFunctionRegWithParam, getNumberReg } from "../services/regExpressions";
 import { exceptionObj } from "./exceptions";
 import { Priority } from "./priority";
 

@@ -1,5 +1,5 @@
 import { Error } from "../error";
-import { Reg } from "../Reg";
+import { Reg } from "../validation_reg-exp";
 
 export function expressionEndValidator(expression: string){
         if (!Reg.CorrectLineEnd.test(expression)) return {

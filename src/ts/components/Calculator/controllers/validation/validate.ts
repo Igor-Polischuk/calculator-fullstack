@@ -1,4 +1,4 @@
-import { IError } from "@components/Calculator/types/ICalculator"
+import { IError } from "@components/Calculator/interfaces/ICalculator"
 import { actio0nQueueValidator, bracketsValidator, expressionEndValidator, expressionStartValidator, pointValidate, unknownActionsvalidator, zeroDivisionValidator } from "./validators/"
 
 interface Ivalidators {

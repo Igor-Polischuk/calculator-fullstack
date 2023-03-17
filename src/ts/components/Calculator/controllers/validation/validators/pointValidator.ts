@@ -1,4 +1,4 @@
-import { Reg } from './../Reg';
+import { Reg } from '../validation_reg-exp';
 import { Error } from "../error"
 
 export function pointValidate(expression: string) {

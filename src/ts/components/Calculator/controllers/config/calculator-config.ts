@@ -1,8 +1,7 @@
 import { Priority } from './priority';
-import { ICalculatorConfig } from "@components/Calculator/types/ICalculator";
+import { ICalculatorConfig } from "@components/Calculator/interfaces/ICalculator";
 import { Constant, MathFuction, Operation } from "./Operation";
-import { getFunctionRegWithParam, getNumberBetweenRegWithSymbol, numbersLeftToSymbol } from "../helpers/reg";
-import { factorial } from '@utilities/factorial';
+import { getNumberBetweenRegWithSymbol, numbersLeftToSymbol, factorial } from "../services";
 import { exceptions } from './exceptions';
 
 
@@ -32,7 +31,7 @@ export const calculatorConfig: ICalculatorConfig = {
         calculate: (a: number, b: number) => {
             return a / b
         },
-        exceptionHandler: exceptions['zeroDivision']
+        exceptionHandler: exceptions.zeroDivision
     }),
     '^': new Operation({
         operation: '^',
@@ -51,12 +50,12 @@ export const calculatorConfig: ICalculatorConfig = {
         priority: Priority.Hight,
         reg: numbersLeftToSymbol('!'),
         calculate: factorial,
-        exceptionHandler: exceptions['factorial']
+        exceptionHandler: exceptions.factorial
     }),
     'sqrt': new MathFuction({
         name: 'sqrt',
         func: Math.sqrt,
-        exceptionHandler: exceptions['sqrtIncorrectParam']
+        exceptionHandler: exceptions.sqrtIncorrectParam
     }),
     'sin': new MathFuction({
         name: 'sin',

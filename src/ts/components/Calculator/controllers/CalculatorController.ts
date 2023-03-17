@@ -1,8 +1,7 @@
-import { factorial } from '@utilities/factorial';
-import { ICalculatorController, ICalculatorModel, IError } from "@components/Calculator/types/ICalculator";
+import { ICalculatorController, ICalculatorModel, IError } from "@components/Calculator/interfaces/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
 import { calculatorConfig, searchAllowedOperationsRegStr } from "./config/calculator-config";
-import { formatExpression, hasBrackets, getMostNestedParentheses } from "./helpers";
+import { formatExpression, hasBrackets, getMostNestedParentheses } from "./services";
 import { validate } from "./validation/validate";
 
 export class CalculatorController implements ICalculatorController {
@@ -17,18 +16,18 @@ export class CalculatorController implements ICalculatorController {
 
         if (validationErrors.length > 0) {
             console.log(validationErrors);
-
             this.model.setError(validationErrors)
-        } else {
-            try {
-                const result = this.calculate(expression);
-
-                console.log(`${inputExpression} = ${result}`);
-                this.model.setResult(result)
-            } catch (error) {
-                this.model.setError([error as IError])
-            }
+            return
         }
+        try {
+            const result = this.calculate(expression);
+
+            console.log(`${inputExpression} = ${result}`);
+            this.model.setResult(result)
+        } catch (error) {
+            this.model.setError([error as IError])
+        }
+
     }
 
     private calculate(expression: string): number {

@@ -1,6 +1,6 @@
-import { Reg } from './../Reg';
+import { Reg } from '../validation_reg-exp';
 import { calculatorConfig } from "../../config/calculator-config"
-import { getAllowedSymbolsReg } from "../../helpers/reg"
+import { getAllowedSymbolsReg } from "../../services/regExpressions"
 import { Error } from "../error"
 
 

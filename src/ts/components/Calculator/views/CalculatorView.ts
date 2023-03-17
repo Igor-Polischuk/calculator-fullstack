@@ -1,7 +1,7 @@
 import { BlockElement } from './../../Elements/BlockElement';
 import { Button } from '../../Elements/Button';
-import { IError } from '../types/ICalculator';
-import { ICalculatorModel, ICalculatorView } from "@components/Calculator/types/ICalculator";
+import { IError } from '../interfaces/ICalculator';
+import { ICalculatorModel, ICalculatorView } from "@components/Calculator/interfaces/ICalculator";
 import { CalculatorObserverEvent } from "../calculator-event";
 import { getMathInput } from './getMathInput';
 import { getCalculatorButtons } from './getCalculatorButtons';
@@ -16,9 +16,9 @@ export class CalculatorView implements ICalculatorView {
         model.subscribe(CalculatorObserverEvent.Result, this.renderResult.bind(this))
         model.subscribe(CalculatorObserverEvent.Error, this.renderError.bind(this))
 
-        this.mathInput.domEl.focus()
         this.conectButtons()
         this.renderHTML()
+        this.mathInput.domEl.focus()
     }
 
     private renderResult(newResult: number) {
@@ -81,10 +81,7 @@ export class CalculatorView implements ICalculatorView {
         inputBlock.append(this.mathInput)
 
         const buttonsBlock = new GridContainer({ colums: 6, gap: 10 })
-        console.log(this.buttons);
-
         buttonsBlock.append(...this.buttons)
-        console.log(buttonsBlock);
 
         calculatorBlock.insert(root)
         calculatorBlock.append(inputBlock, this.resultBlock, buttonsBlock)
