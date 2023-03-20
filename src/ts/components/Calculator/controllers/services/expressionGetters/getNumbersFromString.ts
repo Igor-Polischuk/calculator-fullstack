@@ -1,4 +1,4 @@
-import { getNumberReg } from "./regExpressions"
+import { getNumberReg } from "../regularExp/regExpressions"
 
 export function getNumbersFromString(str: string): number[] {
     const numbersInString= str.match(getNumberReg())

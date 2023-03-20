@@ -1,7 +1,20 @@
-import { hasBrackets, getMostNestedParentheses } from "./bracketsFunctions";
-import { factorial } from "./factorial";
-import { formatExpression } from "./formatExpression";
-import { getNumbersFromString } from "./getNumbersFromString";
-import { getNumberBetweenRegWithSymbol, numbersLeftToSymbol } from "./regExpressions";
+import { hasBrackets } from "./brackets/hasBrackets";
+import { getMostNestedParentheses } from "./brackets/getMostNestedParentheses";
+import { factorial } from "./math/factorial";
+import { formatExpression } from "./formatting/formatExpression";
+import { getNumbersFromString } from "./expressionGetters/getNumbersFromString";
+import { getOperationsFromExpression } from "./expressionGetters/getOperationsFromExpression";
+import { getNumberBetweenRegWithSymbol, numbersLeftToSymbol } from "./regularExp/regExpressions";
+import { unwrapExpressionTerms } from "./formatting/unwrapExpressionTerms";
 
-export { hasBrackets, formatExpression, getMostNestedParentheses, factorial, getNumberBetweenRegWithSymbol, numbersLeftToSymbol, getNumbersFromString }
+export {
+    hasBrackets,
+    formatExpression,
+    getMostNestedParentheses,
+    factorial,
+    getNumberBetweenRegWithSymbol,
+    numbersLeftToSymbol,
+    getNumbersFromString,
+    unwrapExpressionTerms,
+    getOperationsFromExpression
+}

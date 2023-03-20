@@ -1,5 +1,5 @@
 import { IError, IOperation } from "@components/Calculator/interfaces/ICalculator";
-import { getFunctionRegWithParam, getNumberReg } from "../services/regExpressions";
+import { getFunctionRegWithParam, getNumberReg } from "../services/regularExp/regExpressions";
 import { exceptionObj } from "./exceptions";
 import { Priority } from "./priority";
 
@@ -7,6 +7,7 @@ export class Operation implements IOperation {
     readonly reg: RegExp
     readonly calculate: (...args: number[]) => number
     private exceptionHandler: exceptionObj[] = []
+    // private exceptionMessege: string | undefined
     readonly priority: number
 
     constructor(config: {

@@ -1,4 +1,4 @@
-import { calculatorConfig } from "../config/calculator-config";
+import { calculatorConfig } from "../../config/calculator-config";
 
 const getNumberBetweenRegWithSymbol = (symbol: string) => new RegExp(`(?<!\\d)-?\\d+(\\.\\d+)?[\\${symbol}][-]?\\d+(\\.\\d+)?`);
 const getFunctionRegWithParam = (func: string) => new RegExp(`${func}[-]?\\d+(\\.\\d+)?`);
