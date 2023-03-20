@@ -1,12 +1,12 @@
 import { IError, IOperation } from "@components/Calculator/interfaces/ICalculator";
 import { getFunctionRegWithParam, getNumberReg } from "../services/regularExp/regExpressions";
-import { exceptionObj } from "./exceptions";
+import { IExceptionObj } from "./exceptions";
 import { Priority } from "./priority";
 
 export class Operation implements IOperation {
     readonly reg: RegExp
     readonly calculate: (...args: number[]) => number
-    private exceptionHandler: exceptionObj[] = []
+    private exceptionHandler: IExceptionObj[] = []
     // private exceptionMessege: string | undefined
     readonly priority: number
 
@@ -14,7 +14,7 @@ export class Operation implements IOperation {
         reg: RegExp
         priority: number
         calculate: (...args: number[]) => number,
-        exceptionHandler?: exceptionObj[]
+        exceptionHandler?: IExceptionObj[]
     }) {
         this.reg = config.reg
         this.calculate = config.calculate
@@ -29,7 +29,7 @@ export class Operation implements IOperation {
             const isException = exception.checkException(...numbers)
             if (isException){
                 const error: IError = {
-                    message: `${exception.exceptionText}`,
+                    message: `${exception.exceptionMessage}`,
                     meta: {}
                 }
                 throw [error]
@@ -39,7 +39,7 @@ export class Operation implements IOperation {
 }
 
 export class MathFuction extends Operation {
-    constructor(config: { name: string, func: (...args: number[]) => number, exceptionHandler?: exceptionObj[] }) {
+    constructor(config: { name: string, func: (...args: number[]) => number, exceptionHandler?: IExceptionObj[] }) {
         super({
             reg: getFunctionRegWithParam(config.name),
             priority: Priority.Hight,

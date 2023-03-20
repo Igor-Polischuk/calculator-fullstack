@@ -3,7 +3,7 @@ import { CalculatorObserverEvent } from '../calculator-event';
 import { calculatorConfig } from './config/calculator-config';
 import {
   formatExpression, hasBrackets, getMostNestedParentheses,
-  getNumbersFromString, unwrapExpressionTerms, getOperationsFromExpression,
+  getNumbersFromString, unwrapBracketInExpression, getOperationsFromExpression,
 } from './services';
 import { validate } from './validation/validate';
 
@@ -21,6 +21,8 @@ export class CalculatorController implements ICalculatorController {
       console.log(`${inputExpression} = ${result}`);
       this.model.setResult(result);
     } catch (error) {
+      console.log(error);
+      
       this.model.setError(error as IError[]);
     }
   }
@@ -29,7 +31,7 @@ export class CalculatorController implements ICalculatorController {
     const bracketsExpressions = getMostNestedParentheses(expression);
     const calculatedMostNestedBrackets = bracketsExpressions.reduce<string>(
       (expressionAcc, currentBracketExpression) => {
-        const unbracketExpression = unwrapExpressionTerms(currentBracketExpression);
+        const unbracketExpression = unwrapBracketInExpression(currentBracketExpression);
         const currentBracketExpressionResult = this.calculateUnbracketedExpression(unbracketExpression).toString();
         return expressionAcc.replace(currentBracketExpression, currentBracketExpressionResult);
       }, expression);
@@ -41,6 +43,7 @@ export class CalculatorController implements ICalculatorController {
 
   private calculateUnbracketedExpression(expression: string): number {
     const expressionOperators = getOperationsFromExpression(expression);
+    //todo
     const orderedOperations = expressionOperators.sort(
       (a, b) => calculatorConfig[b].priority - calculatorConfig[a].priority,
     );

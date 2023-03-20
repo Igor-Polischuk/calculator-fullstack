@@ -5,7 +5,7 @@ import { formatExpression } from "./formatting/formatExpression";
 import { getNumbersFromString } from "./expressionGetters/getNumbersFromString";
 import { getOperationsFromExpression } from "./expressionGetters/getOperationsFromExpression";
 import { getNumberBetweenRegWithSymbol, numbersLeftToSymbol } from "./regularExp/regExpressions";
-import { unwrapExpressionTerms } from "./formatting/unwrapExpressionTerms";
+import { unwrapBracketInExpression } from "./formatting/unwrapExpressionTerms";
 
 export {
     hasBrackets,
@@ -15,6 +15,6 @@ export {
     getNumberBetweenRegWithSymbol,
     numbersLeftToSymbol,
     getNumbersFromString,
-    unwrapExpressionTerms,
+    unwrapBracketInExpression,
     getOperationsFromExpression
 }

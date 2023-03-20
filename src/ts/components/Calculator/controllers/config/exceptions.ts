@@ -1,21 +1,21 @@
-export interface exceptionObj {
+export interface IExceptionObj {
     checkException: (...args: number[]) => boolean,
-    exceptionText: string
+    exceptionMessage: string
 }
-type exceptionsType = Record<string, exceptionObj>
+type ExceptionsType = Record<string, IExceptionObj>
 
-export const exceptions: exceptionsType = {
+export const exceptions: ExceptionsType = {
     zeroDivision: {
         checkException: (a: number, b: number) => b === 0,
-        exceptionText: 'Zero division'
+        exceptionMessage: 'Zero division'
     },
     negativeNumber: {
         checkException: (a: number) => a < 0,
-        exceptionText: 'Negative number'
+        exceptionMessage: 'Negative number'
     },
     notInteger: {
         checkException: (a: number) => !Number.isInteger(a),
-        exceptionText: 'number isn\'t integers'
+        exceptionMessage: 'number isn\'t integer'
     },
 }
 
