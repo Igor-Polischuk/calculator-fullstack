@@ -6,9 +6,12 @@ export function calculationValidation(expression: string): IError | undefined {
     if(Number(expression)){
         return
     }
+
+    
     const expressionWithoutBrackets = unwrapBracketInExpression(expression)
     const expressionOperators = getOperationsFromExpression(expressionWithoutBrackets);
-
+    console.log(expressionOperators);
+    
     const functionActions = expressionOperators.filter(operation => operation.length > 1).reverse()
     const binaryAcrions = expressionOperators.filter(operation => operation.length === 1)
 

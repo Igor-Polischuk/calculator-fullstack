@@ -43,7 +43,9 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private calculateUnbracketedExpression(expression: string): number {
-    const expressionOperators = getOperationsFromExpression(expression);
+    const expressionOperators = getOperationsFromExpression(expression)
+    console.log(expressionOperators);
+    //2+3*4-5/6^7+sin8*cos9-10+11*12/13-sin14+cos15*16+17-18/19^20+sin21*cos22-23+24*25/26-sin27+cos28*29
     //todo
     const orderedOperations = expressionOperators.sort(
       (a, b) => calculatorConfig[b].priority - calculatorConfig[a].priority,
