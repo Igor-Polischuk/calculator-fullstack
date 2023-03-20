@@ -1,4 +1,5 @@
 import { ICalculatorController, ICalculatorModel, IError } from '@components/Calculator/interfaces/ICalculator';
+import { formatDecimal } from '@utilities/formatDecimal';
 import { CalculatorObserverEvent } from '../calculator-event';
 import { calculatorConfig } from './config/calculator-config';
 import {
@@ -60,6 +61,9 @@ export class CalculatorController implements ICalculatorController {
       const calculationResult = currentOperationObj.calculate(...numbersOperand).toString()
       return resultAcc.replace(expressionWithCurrentOperation, calculationResult)
     }, expression)
-    return Number(result)
+
+    const formatedResult = formatDecimal(+result, 10)
+
+    return formatedResult
   }
 }
