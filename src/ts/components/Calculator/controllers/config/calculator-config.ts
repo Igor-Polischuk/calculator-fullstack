@@ -3,6 +3,7 @@ import { ICalculatorConfig } from "@components/Calculator/interfaces/ICalculator
 import { Constant, MathFuction, Operation } from "./Operation";
 import { getNumberBetweenRegWithSymbol, numbersLeftToSymbol, factorial } from "../services";
 import { exceptions } from './exceptions';
+import { eReg } from '../services/regularExp/regExpressions';
 
 
 export const calculatorConfig: ICalculatorConfig = {
@@ -67,7 +68,7 @@ export const calculatorConfig: ICalculatorConfig = {
         func: (a: number) => 1 / Math.tan(a)
     }),
     'pi': new Constant('pi', Math.PI),
-    'e': new Constant('e', Math.E),
+    'e': new Constant('e', Math.E, eReg()),
 }
 
 

@@ -50,9 +50,9 @@ export class MathFuction extends Operation {
 }
 
 export class Constant extends Operation {
-    constructor(name: string, value: number) {
+    constructor(name: string, value: number, reg?: RegExp) {
         super({
-            reg: new RegExp(name),
+            reg: reg ? reg : new RegExp(name),
             priority: Priority.Constant,
             calculate: () => value
         });

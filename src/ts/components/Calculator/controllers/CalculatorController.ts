@@ -4,10 +4,13 @@ import { CalculatorObserverEvent } from '../calculator-event';
 import { calculatorConfig } from './config/calculator-config';
 import {
   formatExpression, hasBrackets, getMostNestedParentheses,
-  getNumbersFromString, unwrapBracketInExpression, getOperationsFromExpression,
+  getNumbersFromString, unwrapBracketInExpression, getOperationsFromExpression, getNumberBetweenRegWithSymbol,
 } from './services';
 import { validate } from './validation/validate';
 
+    //2+3*4-5/6^7+sin8*cos9-10+11*12/13-sin14+cos15*16+17-18/19^20+sin21*cos22-23+24*25/26-sin27+cos28*29 = -12.524865745452113
+    //2 + 3 * 4 - 5 / (6 ** 7) + Math.sin(8) * Math.cos(9) - 10 + 11 * 12 / 13 - Math.sin(14) + Math.cos(15) * 16 + 17 - 18 / (19 ** 20) + Math.sin(21) * Math.cos(22) - 23 + 24 * 25 /26 - Math.sin(27) + Math.cos(28)*29;
+    
 export class CalculatorController implements ICalculatorController {
   constructor(public model: ICalculatorModel) {
     this.model.subscribe(CalculatorObserverEvent.Expression, this.calculateExpression.bind(this));
@@ -20,10 +23,10 @@ export class CalculatorController implements ICalculatorController {
       validate(expression);
       const result = this.calculateExpressionWithBrackets(expression);
       console.log(`${inputExpression} = ${result}`);
-      this.model.setResult(result);
+      const roundedResult = formatDecimal(result, 5)
+      this.model.setResult(roundedResult);
     } catch (error) {
       console.log(error);
-      
       this.model.setError(error as IError[]);
     }
   }
@@ -34,6 +37,8 @@ export class CalculatorController implements ICalculatorController {
       (expressionAcc, currentBracketExpression) => {
         const unbracketExpression = unwrapBracketInExpression(currentBracketExpression);
         const currentBracketExpressionResult = this.calculateUnbracketedExpression(unbracketExpression).toString();
+        console.log(currentBracketExpression, currentBracketExpressionResult);
+        
         return expressionAcc.replace(currentBracketExpression, currentBracketExpressionResult);
       }, expression);
 
@@ -44,8 +49,7 @@ export class CalculatorController implements ICalculatorController {
 
   private calculateUnbracketedExpression(expression: string): number {
     const expressionOperators = getOperationsFromExpression(expression)
-    console.log(expressionOperators);
-    //2+3*4-5/6^7+sin8*cos9-10+11*12/13-sin14+cos15*16+17-18/19^20+sin21*cos22-23+24*25/26-sin27+cos28*29
+    console.log(expressionOperators)
     //todo
     const orderedOperations = expressionOperators.sort(
       (a, b) => calculatorConfig[b].priority - calculatorConfig[a].priority,
@@ -61,11 +65,12 @@ export class CalculatorController implements ICalculatorController {
 
       currentOperationObj.checkException(numbersOperand);
       const calculationResult = currentOperationObj.calculate(...numbersOperand).toString()
+      console.log(expressionWithCurrentOperation, calculationResult);
+      
       return resultAcc.replace(expressionWithCurrentOperation, calculationResult)
     }, expression)
-
-    const formatedResult = formatDecimal(+result, 10)
-
-    return formatedResult
+    console.log(result);
+    
+    return Number(result)
   }
 }

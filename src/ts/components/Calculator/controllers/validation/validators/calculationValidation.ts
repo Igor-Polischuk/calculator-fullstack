@@ -6,18 +6,18 @@ export function calculationValidation(expression: string): IError | undefined {
     if(Number(expression)){
         return
     }
-
+    
     
     const expressionWithoutBrackets = unwrapBracketInExpression(expression)
     const expressionOperators = getOperationsFromExpression(expressionWithoutBrackets);
-    console.log(expressionOperators);
     
-    const functionActions = expressionOperators.filter(operation => operation.length > 1).reverse()
-    const binaryAcrions = expressionOperators.filter(operation => operation.length === 1)
+    const functionActions = expressionOperators.filter(operation => operation.length > 1 || operation === 'e').reverse()
+    const binaryAcrions = expressionOperators.filter(operation => operation.length === 1 && operation !== 'e')
 
     const checkedFunctionsActions = replaceActionToZero(expressionWithoutBrackets, functionActions)
+    
     const checkedBinaryActions = replaceActionToZero(checkedFunctionsActions, binaryAcrions)
-
+    
     if (checkedBinaryActions == '0') {
         return undefined
     }
