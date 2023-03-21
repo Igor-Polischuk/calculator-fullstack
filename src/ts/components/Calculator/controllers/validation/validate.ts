@@ -1,15 +1,14 @@
 import { IError } from "@components/Calculator/interfaces/ICalculator"
-import { bracketsValidator, calculationValidation, pointValidate, zeroDivisionValidator } from "./validators/"
+import { bracketsValidator, calculationValidation, zeroDivisionValidator } from "./validators/"
 
-interface Ivalidators {
+interface IValidators {
     [validatorName: string]: (expression: string) => IError | undefined
 }
 
-export function validate(erxpression: string) {
-    const validateResult = validateExpression(erxpression, {
+export function validate(expression: string) {
+    const validateResult = validateExpression(expression, {
         bracketsValidator,
         zeroDivisionValidator,
-        pointValidate,
         calculationValidation,
     })
     if (validateResult.length > 0) {
@@ -17,7 +16,7 @@ export function validate(erxpression: string) {
     }
 }
 
-function validateExpression(expression: string, validators: Ivalidators): IError[] {
+function validateExpression(expression: string, validators: IValidators): IError[] {
     const errors = Object.keys(validators).map(validatorName => {
         const validateFunction = validators[validatorName]
         const validateResult = validateFunction(expression)

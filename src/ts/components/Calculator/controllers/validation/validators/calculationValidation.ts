@@ -1,43 +1,32 @@
+import { ExpressionProcessor } from '../../services/processing/ExpressionProcessor';
 import { calculatorConfig } from "../../config/calculator-config";
-import { getOperationsFromExpression, unwrapBracketInExpression } from "../../services";
 import { IError } from "@components/Calculator/interfaces/ICalculator"
 
 export function calculationValidation(expression: string): IError | undefined {
-    if(Number(expression)){
+    if (Number(expression)) {
         return
     }
-    
-    
-    const expressionWithoutBrackets = unwrapBracketInExpression(expression)
-    const expressionOperators = getOperationsFromExpression(expressionWithoutBrackets);
-    
-    const functionActions = expressionOperators.filter(operation => operation.length > 1 || operation === 'e').reverse()
-    const binaryAcrions = expressionOperators.filter(operation => operation.length === 1 && operation !== 'e')
 
-    const checkedFunctionsActions = replaceActionToZero(expressionWithoutBrackets, functionActions)
-    
-    const checkedBinaryActions = replaceActionToZero(checkedFunctionsActions, binaryAcrions)
-    
-    if (checkedBinaryActions == '0') {
-        return undefined
+    const expressionProcessor = new ExpressionProcessor(validateUnbracketedExpression)
+    const replacingResult = expressionProcessor.processBracketedExpression(expression)
+
+    if (replacingResult === '0') {
+        return
     }
 
     return {
         message: 'unresolved expression format',
         meta: {
-            description: `wrong entry in: ${checkedBinaryActions.replace('0', '..')}`
+            description: `wrong entry in: ${replacingResult.replace('0', '___')}`
         }
     }
-
 }
 
-function replaceActionToZero(expression: string, operations: string[]) {
-    return operations.reduce<string>((resultAcc, operation) => {
-        const currentOperationObj = calculatorConfig[operation];
-        const matchedExpressionWithOperation: RegExpMatchArray | null = resultAcc.match(currentOperationObj.reg)
-        if (!matchedExpressionWithOperation) {
-            return resultAcc
-        }
-        return resultAcc.replace(matchedExpressionWithOperation[0], '0')
-    }, expression)
+function validateUnbracketedExpression(resultAcc: string, operation: string): string {
+    const currentOperationObj = calculatorConfig[operation];
+    const matchedExpressionWithOperation = resultAcc.match(currentOperationObj.reg)
+    if (!matchedExpressionWithOperation) {
+        return resultAcc
+    }
+    return resultAcc.replace(matchedExpressionWithOperation[0], '0')
 }
