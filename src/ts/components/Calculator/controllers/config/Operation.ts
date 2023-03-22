@@ -7,7 +7,6 @@ export class Operation implements IOperation {
     readonly reg: RegExp
     readonly calculate: (...args: number[]) => number
     private exceptionHandler: IExceptionObj[] = []
-    // private exceptionMessege: string | undefined
     readonly priority: number
 
     constructor(config: {
@@ -38,7 +37,7 @@ export class Operation implements IOperation {
     }
 }
 
-export class MathFuction extends Operation {
+export class MathFunction extends Operation {
     constructor(config: { name: string, func: (...args: number[]) => number, exceptionHandler?: IExceptionObj[] }) {
         super({
             reg: getFunctionRegWithParam(config.name),

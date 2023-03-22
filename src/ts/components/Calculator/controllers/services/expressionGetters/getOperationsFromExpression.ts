@@ -5,6 +5,6 @@ export function getOperationsFromExpression(expression: string): string[] {
   const operations = expression
     .replace(getMinusNumberReg(), '')
     .match(RegExp(searchAllowedOperationsRegStr, 'g'))
-  return operations ?? []
+  return operations || []
 }
 

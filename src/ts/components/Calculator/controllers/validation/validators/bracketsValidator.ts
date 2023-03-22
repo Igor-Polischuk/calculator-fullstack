@@ -30,7 +30,7 @@ export function bracketsValidator(expression: string) {
     }
 
     const wrongOpenBracketSiblings = expression.match(Reg.OpenBracketsAdjacentSymbols)
-    const wrongClosedracketSiblings = expression.match(Reg.ClosenBracketsAdjacentSymbols)
+    const wrongClosedBracketSiblings = expression.match(Reg.ClosedBracketsAdjacentSymbols)
     
     if (wrongOpenBracketSiblings) return {
         message: Error.BracketAdjacentCharactersError,
@@ -39,10 +39,10 @@ export function bracketsValidator(expression: string) {
         }
     }
 
-    if (wrongClosedracketSiblings) return {
+    if (wrongClosedBracketSiblings) return {
         message: Error.BracketAdjacentCharactersError,
         meta: {
-            errorIndex: wrongClosedracketSiblings.index
+            errorIndex: wrongClosedBracketSiblings.index
         }
     }
 }
