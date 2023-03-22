@@ -4,10 +4,8 @@ import { hasBrackets } from "../brackets/hasBrackets";
 import { getOperationsFromExpression } from "../expressionGetters/getOperationsFromExpression";
 import { unwrapBracketInExpression } from "../formatting/unwrapExpressionTerms";
 
-type unbracketedExpressionProcessor = (resultAcc: string, operation: string) => string
-
 export class ExpressionProcessor {
-    constructor(private callback: unbracketedExpressionProcessor) { }
+    constructor() { }
 
     processBracketedExpression(expression: string): string {
         const bracketsExpressions = getMostNestedParentheses(expression);
@@ -25,10 +23,14 @@ export class ExpressionProcessor {
     private processUnbracketedExpression(expression: string): string {
         const expressionOperators = this.getOperationsOrderFromExpression(expression)
         const result = expressionOperators.reduce<string>((expressionAcc, operation) => {
-            return this.callback(expressionAcc, operation)
+            return this.descendantProcessor(expressionAcc, operation)
         }, expression)
 
         return result
+    }
+
+    protected descendantProcessor(resultAcc: string, operation: string): string {
+        throw new Error('there is no override')
     }
 
     private getOperationsOrderFromExpression(expression: string) {
