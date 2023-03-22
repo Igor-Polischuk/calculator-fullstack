@@ -1,14 +1,14 @@
-import { ExpressionValidation } from '../../services/processing/ExpressionValidation';
 import { calculatorConfig } from "../../config/calculator-config";
 import { IError } from "@components/Calculator/interfaces/ICalculator"
+import { processExpression } from "../../services/processing/processExpression";
 
 export function calculationValidation(expression: string): IError | undefined {
     if (Number(expression)) {
         return
     }
 
-    const expressionValidation = new ExpressionValidation()
-    const replacingResult = expressionValidation.processBracketedExpression(expression)
+    const expressionValidation = processExpression(validateUnbracketedExpression)
+    const replacingResult = expressionValidation(expression)
 
     if (replacingResult === '0') {
         return
