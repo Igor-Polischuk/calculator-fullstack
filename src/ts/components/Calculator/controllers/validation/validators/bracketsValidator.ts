@@ -1,4 +1,5 @@
-import { Reg } from '../validation_reg-exp';
+
+import { regexPatterns } from "../../regex";
 import { Error } from "../error";
 
 export function bracketsValidator(expression: string) {
@@ -29,8 +30,8 @@ export function bracketsValidator(expression: string) {
         }
     }
 
-    const wrongOpenBracketSiblings = expression.match(Reg.OpenBracketsAdjacentSymbols)
-    const wrongClosedBracketSiblings = expression.match(Reg.ClosedBracketsAdjacentSymbols)
+    const wrongOpenBracketSiblings = expression.match(regexPatterns.OPEN_BRACKETS_ADJACENT_SYMBOLS)
+    const wrongClosedBracketSiblings = expression.match(regexPatterns.CLOSED_BRACKETS_ADJACENT_SYMBOLS)
     
     if (wrongOpenBracketSiblings) return {
         message: Error.BracketAdjacentCharactersError,

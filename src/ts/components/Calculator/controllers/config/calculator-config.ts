@@ -1,30 +1,30 @@
 import { Priority } from './priority';
 import { ICalculatorConfig } from "@components/Calculator/interfaces/ICalculator";
 import { Constant, MathFunction, Operation } from "./Operation";
-import { getNumberBetweenRegWithSymbol, numbersLeftToSymbol, factorial } from "../services";
+import {factorial } from "../services";
 import { exceptions } from './exceptions';
-import { eReg } from '../services/regularExp/regExpressions';
+import { regexPatterns, regularWithParam } from '../regex';
 
 
 export const calculatorConfig: ICalculatorConfig = {
     '+': new Operation({
         priority: Priority.Low,
-        reg: getNumberBetweenRegWithSymbol('+'),
+        reg: regularWithParam.getNumberBetweenRegWithSymbol('+'),
         calculate: (a: number, b: number) => a + b
     }),
     '-': new Operation({
         priority: Priority.Low,
-        reg: getNumberBetweenRegWithSymbol('-'),
+        reg: regularWithParam.getNumberBetweenRegWithSymbol('-'),
         calculate: (a: number, b: number) => a - b
     }),
     '*': new Operation({
         priority: Priority.Medium,
-        reg: getNumberBetweenRegWithSymbol('*'),
+        reg: regularWithParam.getNumberBetweenRegWithSymbol('*'),
         calculate: (a: number, b: number) => a * b
     }),
     '/': new Operation({
         priority: Priority.Medium,
-        reg: getNumberBetweenRegWithSymbol('/'),
+        reg: regularWithParam.getNumberBetweenRegWithSymbol('/'),
         calculate: (a: number, b: number) => {
             return a / b
         },
@@ -32,17 +32,17 @@ export const calculatorConfig: ICalculatorConfig = {
     }),
     '^': new Operation({
         priority: Priority.Hight,
-        reg: getNumberBetweenRegWithSymbol('^'),
+        reg: regularWithParam.getNumberBetweenRegWithSymbol('^'),
         calculate: (a: number, b: number) => Math.pow(a, b)
     }),
     '%': new Operation({
         priority: Priority.Low,
-        reg: getNumberBetweenRegWithSymbol('%'),
+        reg: regularWithParam.getNumberBetweenRegWithSymbol('%'),
         calculate: (percent: number, value: number) => value * (1 + percent / 100) - value
     }),
     '!': new Operation({
         priority: Priority.Hight,
-        reg: numbersLeftToSymbol('!'),
+        reg: regularWithParam.numbersLeftToSymbol('!'),
         calculate: factorial,
         exceptionHandler: [exceptions.negativeNumber, exceptions.notInteger]
     }),
@@ -68,7 +68,7 @@ export const calculatorConfig: ICalculatorConfig = {
         func: (a: number) => 1 / Math.tan(a)
     }),
     'pi': new Constant('pi', Math.PI),
-    'e': new Constant('e', Math.E, eReg()),
+    'e': new Constant('e', Math.E, regexPatterns.E_CONST_REG),
 }
 
 

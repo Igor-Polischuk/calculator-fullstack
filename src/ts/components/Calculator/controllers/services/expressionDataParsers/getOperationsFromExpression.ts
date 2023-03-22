@@ -1,9 +1,9 @@
 import { searchAllowedOperationsRegStr } from '../../config/calculator-config';
-import { getMinusNumberReg, getNumberReg } from '../regularExp/regExpressions';
+import { regexPatterns } from '../../regex';
 
 export function getOperationsFromExpression(expression: string): string[] {
   const operations = expression
-    .replace(getMinusNumberReg(), '')
+    .replace(regexPatterns.MINUS_IN_NUMBER_REG, '')
     .match(RegExp(searchAllowedOperationsRegStr, 'g'))
   return operations || []
 }

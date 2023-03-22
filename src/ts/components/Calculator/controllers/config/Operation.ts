@@ -1,5 +1,5 @@
 import { IError, IOperation } from "@components/Calculator/interfaces/ICalculator";
-import { getFunctionRegWithParam, getNumberReg } from "../services/regularExp/regExpressions";
+import { regularWithParam } from "../regex";
 import { IExceptionObj } from "./exceptions";
 import { Priority } from "./priority";
 
@@ -40,7 +40,7 @@ export class Operation implements IOperation {
 export class MathFunction extends Operation {
     constructor(config: { name: string, func: (...args: number[]) => number, exceptionHandler?: IExceptionObj[] }) {
         super({
-            reg: getFunctionRegWithParam(config.name),
+            reg: regularWithParam.getFunctionRegWithParam(config.name),
             priority: Priority.Hight,
             calculate: config.func,
             exceptionHandler: config.exceptionHandler

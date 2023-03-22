@@ -1,7 +1,7 @@
 import { calculatorConfig } from "../../config/calculator-config";
 import { getMostNestedParentheses } from "../brackets/getMostNestedParentheses";
 import { hasBrackets } from "../brackets/hasBrackets";
-import { getOperationsFromExpression } from "../expressionGetters/getOperationsFromExpression";
+import { getOperationsFromExpression } from "../expressionDataParsers/getOperationsFromExpression";
 import { unwrapBracketInExpression } from "../formatting/unwrapExpressionTerms";
 
 

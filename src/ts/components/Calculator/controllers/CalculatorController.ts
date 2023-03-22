@@ -2,7 +2,7 @@ import { ICalculatorController, ICalculatorModel, IError } from '@components/Cal
 import { formatDecimal } from '@utilities/formatDecimal';
 import { CalculatorObserverEvent } from '../calculator-event';
 import { calculatorConfig } from './config/calculator-config';
-import { formatExpression, getNumbersFromString } from './services';
+import { formatExpression, getNumbersFromExpression } from './services';
 import { processExpression } from './services/processing/processExpression';
 import { validate } from './validation/validate';
 
@@ -39,7 +39,7 @@ export class CalculatorController implements ICalculatorController {
       return resultAcc
     }
     const [expressionWithCurrentOperation] = matchedExpressionWithOperation
-    const numbersOperand = getNumbersFromString(expressionWithCurrentOperation)
+    const numbersOperand = getNumbersFromExpression(expressionWithCurrentOperation)
 
     currentOperationObj.checkException(numbersOperand);
     const calculationResult = currentOperationObj.calculate(...numbersOperand).toString()
