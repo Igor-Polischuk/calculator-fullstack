@@ -19,6 +19,8 @@ export class CalculatorView implements ICalculatorView {
         model.subscribe(CalculatorObserverEvent.Result, (result) => {
             this.calculator.renderResult(result)
         })
-        // model.subscribe(CalculatorObserverEvent.Error, this.renderError.bind(this))
+        model.subscribe(CalculatorObserverEvent.Error, (error) => {
+            this.calculator.renderError(error)
+        })
     }
 }

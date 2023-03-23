@@ -25,7 +25,7 @@ export function bracketsValidator(expression: string) {
         return {
             message: Error.UnclosedBracketError,
             meta: {
-                errorIndex: expression.lastIndexOf('(')
+                errorIndex: expression.lastIndexOf('(') - 1
             }
         }
     }

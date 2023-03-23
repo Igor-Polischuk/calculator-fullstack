@@ -1,3 +1,4 @@
+import { IError } from './../../interfaces/ICalculator';
 import { ResultBlock } from './ResultBlock/result-block';
 import { BlockElement } from "@components/Elements/BlockElement";
 import { Observer } from "@utilities/Observer/Observer";
@@ -25,6 +26,10 @@ export class Calculator extends Observer<CalculatorEvents>{
         this.resultBlock.showResult(result, this.calculatorInput.inputText)
         const resultStr = result.toString()
         this.calculatorInput.update(resultStr)
+    }
+
+    renderError(errors: IError[]){
+        this.resultBlock.showError(errors, this.calculatorInput.inputText)
     }
 
     get container(){
