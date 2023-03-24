@@ -1,6 +1,6 @@
 import { Calculator } from './components/calculator';
 import { ICalculatorModel, ICalculatorView } from "@components/Calculator/interfaces/ICalculator";
-import { CalculatorModelEvent } from "../calculator-event";
+import { CalculatorModelEvent } from "../calculator-model-event";
 
 
 export class CalculatorView implements ICalculatorView {

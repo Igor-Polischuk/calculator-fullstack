@@ -1,5 +1,5 @@
 import { IObserver } from "@utilities/Observer/IObserver"
-import { CalculatorModelEvent } from "../calculator-event";
+import { CalculatorModelEvent } from "../calculator-model-event";
 
 export type ModelAllowedEvents = {
     [CalculatorModelEvent.ResultChanged]: number;

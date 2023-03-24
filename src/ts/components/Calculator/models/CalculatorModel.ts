@@ -1,5 +1,5 @@
 import { IError } from '../interfaces/ICalculator';
-import { CalculatorModelEvent} from "../calculator-event";
+import { CalculatorModelEvent} from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
 import { ModelAllowedEvents, ICalculatorModel } from "../interfaces/ICalculator";
 
