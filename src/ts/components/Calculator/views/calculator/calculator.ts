@@ -4,13 +4,8 @@ import { DivElement } from "@components/Elements/DivElement";
 import { Observer } from "@utilities/Observer/Observer";
 import { CalculatorInput } from "./CalculatorInput/CalculatorInput";
 import { CalculatorKeyboard } from "./CalculatorKeyboard/CalculatorKeyboard";
-import { ViewEvent } from '../view-observer-events';
 
-type CalculatorEvents = {
-    [ViewEvent.EnteredExpressionChanged]: string
-}
-
-export class Calculator extends Observer<CalculatorEvents>{
+export class Calculator{
     private calculatorBlock = new DivElement({
         classNames: 'calculator'
     })
@@ -23,12 +18,14 @@ export class Calculator extends Observer<CalculatorEvents>{
         keyboardValueHandler: (value) => this.calculatorInput.update(value)
     })
 
-    constructor() {
-        super()
+    private newExpressionHandler: (expression: string) => void
+
+    constructor(config: { newExpressionHandler: (expression: string) => void }) {
         this.calculatorBlock.append(
             this.calculatorInput.element,
             this.resultBlock.element,
             this.calculatorKeyboard.element)
+        this.newExpressionHandler = config.newExpressionHandler
     }
 
     renderResult(result: number) {
@@ -48,6 +45,7 @@ export class Calculator extends Observer<CalculatorEvents>{
 
     private setExpression() {
         const expression = this.calculatorInput.inputText
-        this.notifyAll(ViewEvent.EnteredExpressionChanged, expression)
+        this.newExpressionHandler(expression)
+        // this.notifyAll(ViewEvent.EnteredExpressionChanged, expression)
     }
 }
