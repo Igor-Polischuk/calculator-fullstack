@@ -14,33 +14,39 @@ export class Calculator extends Observer<CalculatorEvents>{
     private calculatorBlock = new DivElement({
         classNames: 'calculator'
     })
+
     private calculatorInput = new CalculatorInput()
+    private resultBlock = new CalculatorResultDisplay()
+
     private calculatorKeyboard = new CalculatorKeyboard({
         resultBtnHandler: this.setExpression.bind(this),
         keyboardValueHandler: (value) => this.calculatorInput.update(value)
     })
-    private resultBlock = new CalculatorResultDisplay()
-    constructor(){
+
+    constructor() {
         super()
-        this.calculatorBlock.append(this.calculatorInput.element, this.resultBlock.element, this.calculatorKeyboard.element)
+        this.calculatorBlock.append(
+            this.calculatorInput.element,
+            this.resultBlock.element,
+            this.calculatorKeyboard.element)
     }
 
-    renderResult(result: number){
+    renderResult(result: number) {
         this.resultBlock.showResult(result, this.calculatorInput.inputText)
         const resultStr = result.toString()
         this.calculatorInput.update(resultStr)
         this.calculatorKeyboard.setValue(resultStr)
     }
 
-    renderError(errors: IError[]){
+    renderError(errors: IError[]) {
         this.resultBlock.showError(errors, this.calculatorInput.inputText)
     }
 
-    get element(){
+    get element() {
         return this.calculatorBlock
     }
 
-    private setExpression(){
+    private setExpression() {
         const expression = this.calculatorInput.inputText
         this.notifyAll(ViewEvent.EnteredExpressionChanged, expression)
     }

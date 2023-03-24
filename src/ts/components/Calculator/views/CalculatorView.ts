@@ -1,4 +1,4 @@
-import { Calculator } from './components/calculator';
+import { Calculator } from './calculator/calculator';
 import { ICalculatorModel, ICalculatorView } from "@components/Calculator/interfaces/ICalculator";
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { ViewEvent } from './view-observer-events';
