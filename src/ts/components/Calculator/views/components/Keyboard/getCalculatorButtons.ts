@@ -1,15 +1,15 @@
 import { Button } from "../../../../Elements/Button"
 
 export function getCalculatorButtons(): Button[] {
-    const numpudButtons = getNumpudButtons()
-    const operationsButton = getCommonOpeationsButtons()
+    const numpadButtons = getNumpadButtons()
+    const operationsButton = getCommonOperationsButtons()
     const { resultBtn, removeSymbolBtn, clearBtn } = getServiceBtn()
     const calculatorKeyboard = [
         operationsButton['pi'],  operationsButton['e'], operationsButton['('], operationsButton[')'], removeSymbolBtn, clearBtn,
-        operationsButton['sin'], operationsButton['sqrt'], numpudButtons[7], numpudButtons[8], numpudButtons[9], operationsButton['/'],
-        operationsButton['cos'], operationsButton['^'], numpudButtons[4], numpudButtons[5], numpudButtons[6], operationsButton['*'],
-        operationsButton['tg'], operationsButton['!'], numpudButtons[1], numpudButtons[2], numpudButtons[3], operationsButton['-'],
-        operationsButton['ctg'], operationsButton['%'], numpudButtons[0], numpudButtons[10], resultBtn, operationsButton['+'],
+        operationsButton['sin'], operationsButton['sqrt'], numpadButtons[7], numpadButtons[8], numpadButtons[9], operationsButton['/'],
+        operationsButton['cos'], operationsButton['^'], numpadButtons[4], numpadButtons[5], numpadButtons[6], operationsButton['*'],
+        operationsButton['tg'], operationsButton['!'], numpadButtons[1], numpadButtons[2], numpadButtons[3], operationsButton['-'],
+        operationsButton['ctg'], operationsButton['%'], numpadButtons[0], numpadButtons[10], resultBtn, operationsButton['+'],
     ]
     return calculatorKeyboard
 }
@@ -17,27 +17,27 @@ export function getCalculatorButtons(): Button[] {
 function getServiceBtn() {
     const clearBtn = new Button({
         text: 'AC',
-        classNames: ['button', 'button--action'],
+        classNames: 'button button--action',
         meta: {purpose: 'clearInput'}
     })
 
     const removeSymbolBtn = new Button({
         text: '←',
-        classNames: ['button', 'button--action'],
+        classNames: 'button button--action',
         meta: {purpose: 'removeSymbol'}
     })
     const resultBtn = new Button({
         text: '=',
-        classNames: ['button', 'button--get-res'],
+        classNames: 'button button--get-res',
         meta: {purpose: 'getResult'}
     })
     return { resultBtn, removeSymbolBtn, clearBtn }
 }
 
-function getNumpudButtons() {
-    const numpudButtonsText = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
-    const classNames = ['button', 'button--number']
-    return numpudButtonsText.map(text => {
+function getNumpadButtons() {
+    const numpadButtonsText = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.']
+    const classNames = 'button button--number'
+    return numpadButtonsText.map(text => {
         return new Button({
             classNames: classNames,
             text,
@@ -48,7 +48,7 @@ function getNumpudButtons() {
     })
 }
 
-function getCommonOpeationsButtons() {
+function getCommonOperationsButtons() {
     const operations = [
         {
             text: '+',
@@ -110,7 +110,7 @@ function getCommonOpeationsButtons() {
     return operations.reduce<Record<string, Button>>((buttonsObj, operation) => {
         buttonsObj[operation.action || operation.text] = new Button({
             text: operation.text,
-            classNames: ['button', 'button--action'],
+            classNames: 'button button--action',
             meta: {
                 action: operation.action || operation.text
             }

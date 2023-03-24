@@ -3,7 +3,7 @@ import { IButton } from "./interfaces";
 
 interface IButtonConfig {
     text: string,
-    classNames: string[],
+    classNames: string,
     meta?: Record<string, string>,
 }
 

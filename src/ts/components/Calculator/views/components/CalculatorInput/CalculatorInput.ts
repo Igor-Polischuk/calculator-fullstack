@@ -4,7 +4,7 @@ import { getMathInput } from "./getMathInput";
 export class CalculatorInput{
     private className = 'calculator__field'
     private input = getMathInput()
-    private inputBlock = new DivElement({ classNames: [this.className] })
+    private inputBlock = new DivElement({ classNames: this.className })
 
     constructor (){
         this.inputBlock.append(this.input)

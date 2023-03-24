@@ -2,7 +2,7 @@ import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
 
 export class ResultBlock {
-    private resultBlock = new DivElement({ classNames: ['calculator__result'] })
+    private resultBlock = new DivElement({ classNames: 'calculator__result' })
     constructor() {
 
     }

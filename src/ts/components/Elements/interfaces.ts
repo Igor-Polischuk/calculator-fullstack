@@ -1,6 +1,6 @@
 export interface IBaseElementConfig {
     parentNode?: Element,
-    classNames?: string[]
+    classNames?: string
 }
 
 export interface IBaseElement {

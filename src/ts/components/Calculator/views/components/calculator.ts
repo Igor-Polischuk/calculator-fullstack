@@ -12,7 +12,7 @@ type CalculatorEvents = {
 
 export class Calculator extends Observer<CalculatorEvents>{
     private calculatorBlock = new DivElement({
-        classNames: ['calculator']
+        classNames: 'calculator'
     })
     private calculatorKeyboard = new CalculatorKeyboard(this.setExpression.bind(this))
     private calculatorInput = new CalculatorInput()

@@ -1,7 +1,7 @@
 import { DivElement } from './DivElement';
 
 interface IGridContainerConfig {
-    classNames?: string[]
+    classNames?: string
     rows?: number,
     columns?: number
     columnsWidth?: number

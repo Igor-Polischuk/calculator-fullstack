@@ -1,7 +1,7 @@
 import { IInput } from './interfaces';
 import { BaseElement } from './BaseElement';
 interface IInputConfig {
-    classNames: string[],
+    classNames: string,
     value?: string,
     placeholder?: string
     type?: string
