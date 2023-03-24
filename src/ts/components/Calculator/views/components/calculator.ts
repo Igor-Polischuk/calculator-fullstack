@@ -3,22 +3,23 @@ import { ResultBlock } from './ResultBlock/ResultBlock';
 import { DivElement } from "@components/Elements/DivElement";
 import { Observer } from "@utilities/Observer/Observer";
 import { CalculatorInput } from "./CalculatorInput/CalculatorInput";
-import { Keyboard } from "./Keyboard/Keyboard";
+import { CalculatorKeyboard } from "./Keyboard/Keyboard";
+import { ViewEvent } from '../view-observer-events';
 
 type CalculatorEvents = {
-    expression: string
+    [ViewEvent.EnteredExpressionChanged]: string
 }
 
 export class Calculator extends Observer<CalculatorEvents>{
     private calculatorBlock = new DivElement({
         classNames: ['calculator']
     })
-    private calculatorKeyboard = new Keyboard(this.setExpression.bind(this))
+    private calculatorKeyboard = new CalculatorKeyboard(this.setExpression.bind(this))
     private calculatorInput = new CalculatorInput()
     private resultBlock = new ResultBlock()
     constructor(){
         super()
-        this.calculatorKeyboard.subscribe('value', (value) => this.calculatorInput.update(value))
+        this.calculatorKeyboard.subscribe(ViewEvent.KeyboardValueChanged, (value) => this.calculatorInput.update(value))
         this.calculatorBlock.append(this.calculatorInput.element, this.resultBlock.element, this.calculatorKeyboard.element)
     }
 
@@ -39,6 +40,6 @@ export class Calculator extends Observer<CalculatorEvents>{
 
     private setExpression(){
         const expression = this.calculatorInput.inputText
-        this.notifyAll('expression', expression)
+        this.notifyAll(ViewEvent.EnteredExpressionChanged, expression)
     }
 }

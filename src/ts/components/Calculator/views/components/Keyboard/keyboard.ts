@@ -1,13 +1,14 @@
+import { ViewEvent } from './../../view-observer-events';
 import { Observer } from '@utilities/Observer/Observer';
 import { Button } from '@components/Elements/Button';
 import { GridContainer } from '@components/Elements/GridContainer';
 import { getCalculatorButtons } from './getCalculatorButtons';
 
 type KeyboardEvents = {
-    value: string
+    [ViewEvent.KeyboardValueChanged]: string
 }
 
-export class Keyboard extends Observer<KeyboardEvents>{
+export class CalculatorKeyboard extends Observer<KeyboardEvents>{
     private keyboard = new GridContainer({ columns: 6, gap: 10 })
     private buttons = getCalculatorButtons()
     private keyboardValue = ''
@@ -29,7 +30,7 @@ export class Keyboard extends Observer<KeyboardEvents>{
 
     setValue(value: string){
         this.keyboardValue = value
-        this.notifyAll('value', this.keyboardValue)
+        this.notifyAll(ViewEvent.KeyboardValueChanged, this.keyboardValue)
     }
 
     private listenButtons() {
