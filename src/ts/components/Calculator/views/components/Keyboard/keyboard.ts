@@ -11,11 +11,14 @@ type KeyboardEvents = {
 export class CalculatorKeyboard extends Observer<KeyboardEvents>{
     private keyboard = new GridContainer({ columns: 6, gap: 10 })
     private buttons = getCalculatorButtons()
+    
     private keyboardValue = ''
     constructor(
         private resultHandlerBTN: () => void
     ){
         super()
+        console.log(this.buttons);
+            
         this.listenButtons()
         this.keyboard.append(...this.buttons)
     }

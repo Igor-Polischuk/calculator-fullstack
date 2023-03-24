@@ -1,7 +1,7 @@
 import { Priority } from './priority';
 import { ICalculatorConfig } from "@components/Calculator/interfaces/ICalculator";
 import { Constant, MathFunction, Operation } from "./Operation";
-import {factorial } from "../services";
+import { factorial } from "../services";
 import { exceptions } from './exceptions';
 import { regexPatterns, regularWithParam } from '../regex';
 
@@ -20,7 +20,8 @@ export const calculatorConfig: ICalculatorConfig = {
     '*': new Operation({
         priority: Priority.Medium,
         reg: regularWithParam.getNumberBetweenRegWithSymbol('*'),
-        calculate: (a: number, b: number) => a * b
+        calculate: (a: number, b: number) => a * b,
+        text: '×'
     }),
     '/': new Operation({
         priority: Priority.Medium,
@@ -28,12 +29,14 @@ export const calculatorConfig: ICalculatorConfig = {
         calculate: (a: number, b: number) => {
             return a / b
         },
-        exceptionHandler: [exceptions.zeroDivision]
+        exceptionHandler: [exceptions.zeroDivision],
+        text: '÷'
     }),
     '^': new Operation({
         priority: Priority.Hight,
         reg: regularWithParam.getNumberBetweenRegWithSymbol('^'),
-        calculate: (a: number, b: number) => Math.pow(a, b)
+        calculate: (a: number, b: number) => Math.pow(a, b),
+        text: '<span>x<sup>y</sup></span>'
     }),
     '%': new Operation({
         priority: Priority.Low,
@@ -49,7 +52,8 @@ export const calculatorConfig: ICalculatorConfig = {
     'sqrt': new MathFunction({
         name: 'sqrt',
         func: Math.sqrt,
-        exceptionHandler: [exceptions.negativeNumber]
+        exceptionHandler: [exceptions.negativeNumber],
+        text: '√'
     }),
     'sin': new MathFunction({
         name: 'sin',
@@ -67,8 +71,16 @@ export const calculatorConfig: ICalculatorConfig = {
         name: 'ctg',
         func: (a: number) => 1 / Math.tan(a)
     }),
-    'pi': new Constant('pi', Math.PI),
-    'e': new Constant('e', Math.E, regexPatterns.E_CONST),
+    'pi': new Constant({
+        name: 'pi',
+        value: Math.PI,
+        text: 'π'
+    }),
+    'e': new Constant({
+        name: 'e',
+        value: Math.E,
+        reg: regexPatterns.E_CONST
+    }),
 }
 
 

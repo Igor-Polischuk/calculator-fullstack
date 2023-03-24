@@ -18,6 +18,7 @@ export interface IOperation {
     calculate: (...args: number[]) => number
     checkException: (numbers: number[]) => void
     readonly priority: number
+    readonly text?: string
 }
 
 export type ICalculatorConfig = Record<string, IOperation> 

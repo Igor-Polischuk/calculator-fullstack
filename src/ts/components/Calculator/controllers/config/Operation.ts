@@ -8,17 +8,19 @@ export class Operation implements IOperation {
     readonly calculate: (...args: number[]) => number
     private exceptionHandler: IExceptionObj[] = []
     readonly priority: number
-
+    readonly text
     constructor(config: {
         reg: RegExp
         priority: number
         calculate: (...args: number[]) => number,
-        exceptionHandler?: IExceptionObj[]
+        exceptionHandler?: IExceptionObj[],
+        text?: string
     }) {
         this.reg = config.reg
         this.calculate = config.calculate
         this.exceptionHandler = config.exceptionHandler || []
         this.priority = config.priority
+        this.text = config.text
     }
 
     checkException(numbers: number[]): void {
@@ -40,22 +42,24 @@ export class Operation implements IOperation {
 }
 
 export class MathFunction extends Operation {
-    constructor(config: { name: string, func: (...args: number[]) => number, exceptionHandler?: IExceptionObj[] }) {
+    constructor(config: { name: string, func: (...args: number[]) => number, exceptionHandler?: IExceptionObj[], text?: string }) {
         super({
             reg: regularWithParam.getFunctionRegWithParam(config.name),
             priority: Priority.Hight,
             calculate: config.func,
-            exceptionHandler: config.exceptionHandler
+            exceptionHandler: config.exceptionHandler,
+            text: config.text
         });
     }
 }
 
 export class Constant extends Operation {
-    constructor(name: string, value: number, reg?: RegExp) {
+    constructor(config: {name: string, value: number, reg?: RegExp, text?: string}) {
         super({
-            reg: reg ? reg : new RegExp(name),
+            reg: config.reg ? config.reg : new RegExp(config.name),
             priority: Priority.Constant,
-            calculate: () => value
+            calculate: () => config.value,
+            text: config.text
         });
     }
 }
