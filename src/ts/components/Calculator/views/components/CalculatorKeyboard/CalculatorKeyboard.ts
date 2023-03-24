@@ -1,4 +1,4 @@
-import { ViewEvent } from './../../view-observer-events';
+import { ViewEvent } from '../../view-observer-events';
 import { Observer } from '@utilities/Observer/Observer';
 import { Button } from '@components/Elements/Button';
 import { GridContainer } from '@components/Elements/GridContainer';

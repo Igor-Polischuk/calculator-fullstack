@@ -3,7 +3,7 @@ import { CalculatorResultDisplay } from './ResultBlock/CalculatorResultDisplay';
 import { DivElement } from "@components/Elements/DivElement";
 import { Observer } from "@utilities/Observer/Observer";
 import { CalculatorInput } from "./CalculatorInput/CalculatorInput";
-import { CalculatorKeyboard } from "./Keyboard/Keyboard";
+import { CalculatorKeyboard } from "./CalculatorKeyboard/CalculatorKeyboard";
 import { ViewEvent } from '../view-observer-events';
 
 type CalculatorEvents = {
