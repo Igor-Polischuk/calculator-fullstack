@@ -1,9 +1,8 @@
 import { ICalculatorController, ICalculatorModel, IError } from '@components/Calculator/interfaces/ICalculator';
 import { formatDecimal } from '@utilities/formatDecimal';
-import { CalculatorObserverEvent } from '../calculator-event';
+import { CalculatorModelEvent } from '../calculator-event';
 import { calculatorConfig } from './config/calculator-config';
-import { formatExpression, getNumbersFromExpression } from './services';
-import { processExpression } from './services/processing/processExpression';
+import { formatExpression, getNumbersFromExpression, processExpression } from './services';
 import { validate } from './validation/validate';
 
 //2+3*4-5/6^7+sin8*cos9-10+11*12/13-sin14+cos15*16+17-18/19^20+sin21*cos22-23+24*25/26-sin27+cos28*29 = -12.524865745452113
@@ -11,7 +10,7 @@ import { validate } from './validation/validate';
 
 export class CalculatorController implements ICalculatorController {
   constructor(public model: ICalculatorModel) {
-    this.model.subscribe(CalculatorObserverEvent.Expression, this.calculateExpression.bind(this));
+    this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this));
   }
 
   private calculateExpression(inputExpression: string): void {
@@ -32,11 +31,11 @@ export class CalculatorController implements ICalculatorController {
 
   private calculate =  processExpression(this.calculateUnbracketedExpression)
 
-  private calculateUnbracketedExpression(resultAcc: string, operation: string): string {
+  private calculateUnbracketedExpression(calculationResultAccumulator: string, operation: string): string {
     const currentOperationObj = calculatorConfig[operation];
-    const matchedExpressionWithOperation = resultAcc.match(currentOperationObj.reg)
+    const matchedExpressionWithOperation = calculationResultAccumulator.match(currentOperationObj.reg)
     if (!matchedExpressionWithOperation) {
-      return resultAcc
+      return calculationResultAccumulator
     }
     const [expressionWithCurrentOperation] = matchedExpressionWithOperation
     const numbersOperand = getNumbersFromExpression(expressionWithCurrentOperation)
@@ -44,6 +43,6 @@ export class CalculatorController implements ICalculatorController {
     currentOperationObj.checkException(numbersOperand);
     const calculationResult = currentOperationObj.calculate(...numbersOperand).toString()
 
-    return resultAcc.replace(expressionWithCurrentOperation, calculationResult)
+    return calculationResultAccumulator.replace(expressionWithCurrentOperation, calculationResult)
   }
 }

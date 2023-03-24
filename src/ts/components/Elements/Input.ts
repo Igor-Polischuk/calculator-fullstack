@@ -1,5 +1,5 @@
 import { IInput } from './interfaces';
-import { MyElement } from './Element';
+import { BaseElement } from './BaseElement';
 interface IInputConfig {
     classNames: string[],
     value?: string,
@@ -7,7 +7,7 @@ interface IInputConfig {
     type?: string
 }
 
-export class Input extends MyElement implements IInput {
+export class Input extends BaseElement implements IInput {
     private input: HTMLInputElement
 
     constructor({ classNames, value = '', placeholder = '', type = 'text' }: IInputConfig) {
@@ -29,7 +29,7 @@ export class Input extends MyElement implements IInput {
         return this.input.value
     }
 
-    get domEl() {
+    get domElement() {
         return this.input
     }
 

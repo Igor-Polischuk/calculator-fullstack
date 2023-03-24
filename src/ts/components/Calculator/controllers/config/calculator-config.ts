@@ -42,7 +42,7 @@ export const calculatorConfig: ICalculatorConfig = {
     }),
     '!': new Operation({
         priority: Priority.Hight,
-        reg: regularWithParam.numbersLeftToSymbol('!'),
+        reg: regularWithParam.getNumbersLeftToSymbolReg('!'),
         calculate: factorial,
         exceptionHandler: [exceptions.negativeNumber, exceptions.notInteger]
     }),
@@ -68,7 +68,7 @@ export const calculatorConfig: ICalculatorConfig = {
         func: (a: number) => 1 / Math.tan(a)
     }),
     'pi': new Constant('pi', Math.PI),
-    'e': new Constant('e', Math.E, regexPatterns.E_CONST_REG),
+    'e': new Constant('e', Math.E, regexPatterns.E_CONST),
 }
 
 

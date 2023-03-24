@@ -1,20 +1,20 @@
 import { IError } from "@components/Calculator/interfaces/ICalculator";
-import { BlockElement } from "@components/Elements/BlockElement";
+import { DivElement } from "@components/Elements/DivElement";
 
 export class ResultBlock {
-    private resultBlock = new BlockElement({ classNames: ['calculator__result'] })
+    private resultBlock = new DivElement({ classNames: ['calculator__result'] })
     constructor() {
 
     }
 
     showResult(result: number, expression: string) {
-        this.resultBlock.domEl.classList.add('visible')
+        this.resultBlock.domElement.classList.add('visible')
         const formattedExpression = this.formatExpression(expression)
-        this.resultBlock.domEl.innerHTML = `<p class='showup'>${formattedExpression} = <b>${result}</b></p>`
+        this.resultBlock.domElement.innerHTML = `<p class='showup'>${formattedExpression} = <b>${result}</b></p>`
     }
 
     showError(errors: IError[], expressionWithError: string){
-        this.resultBlock.domEl.classList.add('visible') 
+        this.resultBlock.domElement.classList.add('visible') 
         const errorsIndex = errors.map(error => error.meta.errorIndex || []).flat()
         const errorsDescription = errors.map(error => error.meta.description || []).flat()
 
@@ -23,10 +23,10 @@ export class ResultBlock {
             console.log(expressionWithError[errorIndex]);
             return this.replaceByIndex(acc, errorIndex, `<span class='error'>${expressionWithError[errorIndex]}</span>`)
         }, expressionWithError)
-        this.resultBlock.domEl.innerHTML = errorStringByIndex
+        this.resultBlock.domElement.innerHTML = errorStringByIndex
 
         if (errorsDescription.length > 0){
-            this.resultBlock.domEl.innerHTML = `<span class='error'>Unresolved expression: ${errorsDescription[0]}</span>`
+            this.resultBlock.domElement.innerHTML = `<span class='error'>Unresolved expression: ${errorsDescription[0]}</span>`
         }
         
     }

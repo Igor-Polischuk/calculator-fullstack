@@ -1,10 +1,10 @@
-import { BlockElement } from "@components/Elements/BlockElement";
+import { DivElement } from "@components/Elements/DivElement";
 import { getMathInput } from "./getMathInput";
 
 export class CalculatorInput{
     private className = 'calculator__field'
     private input = getMathInput()
-    private inputBlock = new BlockElement({ classNames: [this.className] })
+    private inputBlock = new DivElement({ classNames: [this.className] })
 
     constructor (){
         this.inputBlock.append(this.input)

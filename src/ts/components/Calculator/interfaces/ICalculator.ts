@@ -1,13 +1,13 @@
 import { IObserver } from "@utilities/Observer/IObserver"
-import { CalculatorObserverEvent } from "../calculator-event";
+import { CalculatorModelEvent } from "../calculator-event";
 
-export type AllowedEvents = {
-    [CalculatorObserverEvent.Result]: number;
-    [CalculatorObserverEvent.Expression]: string;
-    [CalculatorObserverEvent.Error]: IError[]
+export type ModelAllowedEvents = {
+    [CalculatorModelEvent.ResultChanged]: number;
+    [CalculatorModelEvent.ExpressionChanged]: string;
+    [CalculatorModelEvent.ErrorChanged]: IError[]
 };
 
-export interface ICalculatorModel extends IObserver<AllowedEvents> {
+export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
     setResult: (result: number) => void
     setExpression: (expression: string) => void
     setError: (errors: IError[]) => void

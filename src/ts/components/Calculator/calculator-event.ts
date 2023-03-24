@@ -1,5 +1,5 @@
-export enum CalculatorObserverEvent {
-    Result = 'result',
-    Expression = 'expression',
-    Error = 'error'
+export enum CalculatorModelEvent {
+    ResultChanged = 'result',
+    ExpressionChanged = 'expression',
+    ErrorChanged = 'error'
 }

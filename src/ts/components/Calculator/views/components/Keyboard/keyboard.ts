@@ -27,7 +27,7 @@ export class Keyboard extends Observer<KeyboardEvents>{
         return this.keyboardValue
     }
 
-    private setValue(value: string){
+    setValue(value: string){
         this.keyboardValue = value
         this.notifyAll('value', this.keyboardValue)
     }

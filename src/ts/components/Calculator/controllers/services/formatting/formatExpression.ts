@@ -1,12 +1,12 @@
 import { formatText, removeSpaces } from '@utilities/formatText';
 
 export function formatExpression(expression: string) {
-  const formatedExpression = formatText(expression, {
+  const formattedExpression = formatText(expression, {
     removeSpaces,
     addMultiplicationOperator,
   });
 
-  return formatedExpression;
+  return formattedExpression;
 }
 
 function addMultiplicationOperator(expression: string) {

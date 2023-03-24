@@ -1,4 +1,4 @@
-import { MyElement } from "./Element";
+import { BaseElement } from "./BaseElement";
 import { IButton } from "./interfaces";
 
 interface IButtonConfig {
@@ -7,7 +7,7 @@ interface IButtonConfig {
     meta?: Record<string, string>,
 }
 
-export class Button extends MyElement implements IButton{
+export class Button extends BaseElement implements IButton{
     private text: string;
     private meta: Record<string, string> = {}
     private button: HTMLButtonElement
@@ -24,7 +24,7 @@ export class Button extends MyElement implements IButton{
         this.button.addEventListener('click', (e) => callback(e))
     }
 
-    get domEl(){
+    get domElement(){
         return this.button
     }
 

@@ -1,16 +1,16 @@
 import { IError } from './../../interfaces/ICalculator';
-import { ResultBlock } from './ResultBlock/result-block';
-import { BlockElement } from "@components/Elements/BlockElement";
+import { ResultBlock } from './ResultBlock/ResultBlock';
+import { DivElement } from "@components/Elements/DivElement";
 import { Observer } from "@utilities/Observer/Observer";
-import { CalculatorInput } from "./CalculatorInput/calculator-input";
-import { Keyboard } from "./Keyboard/keyboard";
+import { CalculatorInput } from "./CalculatorInput/CalculatorInput";
+import { Keyboard } from "./Keyboard/Keyboard";
 
 type CalculatorEvents = {
     expression: string
 }
 
 export class Calculator extends Observer<CalculatorEvents>{
-    private calculatorBlock = new BlockElement({
+    private calculatorBlock = new DivElement({
         classNames: ['calculator']
     })
     private calculatorKeyboard = new Keyboard(this.setExpression.bind(this))
@@ -26,13 +26,14 @@ export class Calculator extends Observer<CalculatorEvents>{
         this.resultBlock.showResult(result, this.calculatorInput.inputText)
         const resultStr = result.toString()
         this.calculatorInput.update(resultStr)
+        this.calculatorKeyboard.setValue(resultStr)
     }
 
     renderError(errors: IError[]){
         this.resultBlock.showError(errors, this.calculatorInput.inputText)
     }
 
-    get container(){
+    get element(){
         return this.calculatorBlock
     }
 

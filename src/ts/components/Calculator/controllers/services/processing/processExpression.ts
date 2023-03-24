@@ -1,5 +1,5 @@
 import { calculatorConfig } from "../../config/calculator-config";
-import { getMostNestedParentheses } from "../brackets/getMostNestedParentheses";
+import { getMostNestedBrackets } from "../brackets/getMostNestedBrackets";
 import { hasBrackets } from "../brackets/hasBrackets";
 import { getOperationsFromExpression } from "../expressionDataParsers/getOperationsFromExpression";
 import { unwrapBracketInExpression } from "../formatting/unwrapExpressionTerms";
@@ -9,7 +9,7 @@ type unbracketedExpressionProcessor = (resultAcc: string, operation: string) => 
 
 export function processExpression(processingCallback: unbracketedExpressionProcessor) {
     function processBracketedExpression(expression: string): string {
-        const bracketsExpressions = getMostNestedParentheses(expression);
+        const bracketsExpressions = getMostNestedBrackets(expression);
         const replacedMostNestedBrackets = bracketsExpressions.reduce<string>(
             (expressionAcc, currentBracketExpression) => {
                 const unbracketedExpression = unwrapBracketInExpression(currentBracketExpression);

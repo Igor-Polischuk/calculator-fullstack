@@ -1,4 +1,4 @@
-import { BlockElement } from './BlockElement';
+import { DivElement } from './DivElement';
 
 interface IGridContainerConfig {
     classNames?: string[]
@@ -9,7 +9,7 @@ interface IGridContainerConfig {
     gap?: number
 }
 
-export class GridContainer extends BlockElement {
+export class GridContainer extends DivElement {
     private columns: number | undefined;
     private rows: number | undefined;
     private columnsWidth: number | undefined;
@@ -27,7 +27,7 @@ export class GridContainer extends BlockElement {
     }
 
     private createGrid() {
-        const gridBlock = this.domEl
+        const gridBlock = this.domElement
         gridBlock.style.display = 'grid'
         gridBlock.style.gridTemplateColumns = `repeat(${this.columns}, ${this.columnsWidth || 'auto'})`
         gridBlock.style.gridTemplateRows = `repeat(${this.rows}, ${this.rowsHeight || 'auto'})`

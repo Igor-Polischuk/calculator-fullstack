@@ -1,22 +1,22 @@
-import { IMyElement, IMyElementConfig } from "./interfaces";
+import { IBaseElement, IBaseElementConfig } from "./interfaces";
 
 
 
-export class MyElement implements IMyElement{
+export class BaseElement implements IBaseElement{
     protected classNames: string[];
     protected parentNode: Element | null = null
-    constructor(config: IMyElementConfig) {
+    constructor(config: IBaseElementConfig) {
         this.classNames = config.classNames || [];
     }
 
-    insert(parentNode: Element) {
-        const el = this.domEl;
+    render(parentNode: Element) {
+        const el = this.domElement;
         el.classList.add(...this.classNames);
         this.parentNode = parentNode
         this.parentNode.appendChild(el);
     }
 
-    get domEl(): Element {
+    get domElement(): Element {
         throw new Error('domEl getter not implemented');
     }
 }
