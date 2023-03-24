@@ -1,7 +1,7 @@
 import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
 
-export class ResultBlock {
+export class CalculatorResultDisplay {
     private resultBlock = new DivElement({ classNames: 'calculator__result' })
     constructor() {
 
@@ -19,8 +19,6 @@ export class ResultBlock {
         const errorsDescription = errors.map(error => error.meta.description || []).flat()
 
         const errorStringByIndex = errorsIndex.reduce<string>((acc, errorIndex) => {
-            console.log(errorIndex);
-            console.log(expressionWithError[errorIndex]);
             return this.replaceByIndex(acc, errorIndex, `<span class='error'>${expressionWithError[errorIndex]}</span>`)
         }, expressionWithError)
         this.resultBlock.domElement.innerHTML = errorStringByIndex

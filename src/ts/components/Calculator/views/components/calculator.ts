@@ -1,5 +1,5 @@
 import { IError } from './../../interfaces/ICalculator';
-import { ResultBlock } from './ResultBlock/ResultBlock';
+import { CalculatorResultDisplay } from './ResultBlock/CalculatorResultDisplay';
 import { DivElement } from "@components/Elements/DivElement";
 import { Observer } from "@utilities/Observer/Observer";
 import { CalculatorInput } from "./CalculatorInput/CalculatorInput";
@@ -16,7 +16,7 @@ export class Calculator extends Observer<CalculatorEvents>{
     })
     private calculatorKeyboard = new CalculatorKeyboard(this.setExpression.bind(this))
     private calculatorInput = new CalculatorInput()
-    private resultBlock = new ResultBlock()
+    private resultBlock = new CalculatorResultDisplay()
     constructor(){
         super()
         this.calculatorKeyboard.subscribe(ViewEvent.KeyboardValueChanged, (value) => this.calculatorInput.update(value))
