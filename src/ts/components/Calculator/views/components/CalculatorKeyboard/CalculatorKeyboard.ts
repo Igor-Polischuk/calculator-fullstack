@@ -1,24 +1,25 @@
-import { ViewEvent } from '../../view-observer-events';
-import { Observer } from '@utilities/Observer/Observer';
 import { Button } from '@components/Elements/Button';
 import { GridContainer } from '@components/Elements/GridContainer';
 import { getCalculatorButtons } from './getCalculatorButtons';
 
-type KeyboardEvents = {
-    [ViewEvent.KeyboardValueChanged]: string
-}
 
-export class CalculatorKeyboard extends Observer<KeyboardEvents>{
+export class CalculatorKeyboard{
     private keyboard = new GridContainer({ columns: 6, gap: 10 })
     private buttons = getCalculatorButtons()
-    
+
     private keyboardValue = ''
+    private resultHandlerBTN
+    private keyboardValueHandler: (value: string) => void
     constructor(
-        private resultHandlerBTN: () => void
-    ){
-        super()
-        console.log(this.buttons);
-            
+        config: {
+            resultBtnHandler: () => void,
+            keyboardValueHandler: (value: string) => void
+
+        }
+    ) {
+        this.resultHandlerBTN = config.resultBtnHandler
+        this.keyboardValueHandler = config.keyboardValueHandler
+
         this.listenButtons()
         this.keyboard.append(...this.buttons)
     }
@@ -27,13 +28,13 @@ export class CalculatorKeyboard extends Observer<KeyboardEvents>{
         return this.keyboard
     }
 
-    get value(){
+    get value() {
         return this.keyboardValue
     }
 
-    setValue(value: string){
+    setValue(value: string) {
         this.keyboardValue = value
-        this.notifyAll(ViewEvent.KeyboardValueChanged, this.keyboardValue)
+        this.keyboardValueHandler(value)
     }
 
     private listenButtons() {
@@ -43,7 +44,7 @@ export class CalculatorKeyboard extends Observer<KeyboardEvents>{
         const [resultBtn] = this.buttons.filter(button => button.metaData.purpose === 'getResult')
         const [removeSymbolBtn] = this.buttons.filter(button => button.metaData.purpose === 'removeSymbol')
         const [clearBtn] = this.buttons.filter(button => button.metaData.purpose === 'clearInput')
-        
+
         resultBtn.onClick(() => {
             this.resultHandlerBTN()
         })
@@ -51,7 +52,7 @@ export class CalculatorKeyboard extends Observer<KeyboardEvents>{
         removeSymbolBtn.onClick(() => {
             this.setValue(this.keyboardValue.slice(0, -1))
         })
-        
+
         clearBtn.onClick(() => {
 
             this.setValue('')

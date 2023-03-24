@@ -1,4 +1,3 @@
 export enum ViewEvent {
-    KeyboardValueChanged = '',
-    EnteredExpressionChanged = ''
+    EnteredExpressionChanged = 'inputExpression'
 }

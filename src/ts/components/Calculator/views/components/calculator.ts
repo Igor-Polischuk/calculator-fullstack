@@ -14,12 +14,14 @@ export class Calculator extends Observer<CalculatorEvents>{
     private calculatorBlock = new DivElement({
         classNames: 'calculator'
     })
-    private calculatorKeyboard = new CalculatorKeyboard(this.setExpression.bind(this))
     private calculatorInput = new CalculatorInput()
+    private calculatorKeyboard = new CalculatorKeyboard({
+        resultBtnHandler: this.setExpression.bind(this),
+        keyboardValueHandler: (value) => this.calculatorInput.update(value)
+    })
     private resultBlock = new CalculatorResultDisplay()
     constructor(){
         super()
-        this.calculatorKeyboard.subscribe(ViewEvent.KeyboardValueChanged, (value) => this.calculatorInput.update(value))
         this.calculatorBlock.append(this.calculatorInput.element, this.resultBlock.element, this.calculatorKeyboard.element)
     }
 
