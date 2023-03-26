@@ -1,10 +1,10 @@
-import { Calculator } from './calculator/calculator';
+import { CalculatorUI } from './calculator/calculator';
 import { ICalculatorModel, ICalculatorView } from "@components/Calculator/interfaces/ICalculator";
 import { CalculatorModelEvent } from "../calculator-model-event";
 
 
 export class CalculatorView implements ICalculatorView {
-    private calculator = new Calculator({
+    private calculator = new CalculatorUI({
         newExpressionHandler: (expression) => this.model.setExpression(expression)
     })
 

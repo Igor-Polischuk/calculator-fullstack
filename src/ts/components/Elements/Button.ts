@@ -4,18 +4,18 @@ import { IButton } from "./interfaces";
 interface IButtonConfig {
     text: string,
     classNames: string,
-    meta?: Record<string, string>,
+    data?: Record<string, string>,
 }
 
 export class Button extends BaseElement implements IButton{
     private text: string;
-    private meta: Record<string, string> = {}
+    private data: Record<string, string> = {}
     private button: HTMLButtonElement
 
     constructor(config: IButtonConfig) {
         super(config)
         this.text = config.text
-        this.meta = config.meta ? {...config.meta} : {text: this.text}
+        this.data = config.data ? {...config.data} : {text: this.text}
         this.button = document.createElement('button')
         this.button.innerHTML= this.text
     }
@@ -29,6 +29,6 @@ export class Button extends BaseElement implements IButton{
     }
 
     get metaData(){
-        return this.meta
+        return this.data
     }
 }

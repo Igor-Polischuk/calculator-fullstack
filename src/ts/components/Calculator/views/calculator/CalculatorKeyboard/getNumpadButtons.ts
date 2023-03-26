@@ -8,7 +8,7 @@ export function getNumpadButtons() {
         return new Button({
             classNames: (text === ')' || text === '(') ? bracketsClassNames : numberClassNames,
             text,
-            meta: {
+            data: {
                 action: text
             }
         })

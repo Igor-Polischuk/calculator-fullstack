@@ -34,7 +34,7 @@ export class CalculatorResultDisplay {
     }
 
     private formatExpression(expression: string) {
-        const regex = /(\^(\d+|π|\([^()]*\)))/g;
+        const FIND_POWER = /(\^(\d+|π|\([^()]*\)))/g;
 
         return expression
             .replace(/\*/g, '×')
@@ -42,7 +42,7 @@ export class CalculatorResultDisplay {
             .replace(/\-/g, '−')
             .replace(/\pi/g, 'π')
             .replace(/sqrt/g, '√')
-            .replace(regex, "<sup>$2</sup>")
+            .replace(FIND_POWER, "<sup>$2</sup>")
     }
 
     private replaceByIndex(str: string, index: number, newStr: string){

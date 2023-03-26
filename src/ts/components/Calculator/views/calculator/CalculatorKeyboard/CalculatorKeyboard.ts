@@ -39,10 +39,14 @@ export class CalculatorKeyboard{
 
     private listenButtons() {
         this.buttons = getCalculatorButtons()
+
         const symbolsBtn = this.buttons.filter(button => button.metaData.hasOwnProperty('action'))
         this.attachButtonHandlers(symbolsBtn)
+
         const [resultBtn] = this.buttons.filter(button => button.metaData.purpose === 'getResult')
+
         const [removeSymbolBtn] = this.buttons.filter(button => button.metaData.purpose === 'removeSymbol')
+        
         const [clearBtn] = this.buttons.filter(button => button.metaData.purpose === 'clearInput')
 
         resultBtn.onClick(() => {
