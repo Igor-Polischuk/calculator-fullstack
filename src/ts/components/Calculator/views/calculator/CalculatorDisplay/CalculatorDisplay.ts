@@ -25,7 +25,7 @@ export class CalculatorDisplay {
     }
 
     private renderError(errors: IError[], expressionWithError: string){
-
+        
     }
 
     showError(errors: IError[], expressionWithError: string) {
