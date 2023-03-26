@@ -55,8 +55,9 @@ export class MathFunction extends Operation {
 
 export class Constant extends Operation {
     constructor(config: {name: string, value: number, reg?: RegExp, text?: string}) {
+        const regularForConst = new RegExp(`(?<![A-Za-z0-9])${config.name}`)
         super({
-            reg: config.reg ? config.reg : new RegExp(config.name),
+            reg: config.reg ? config.reg : regularForConst,
             priority: Priority.Constant,
             calculate: () => config.value,
             text: config.text

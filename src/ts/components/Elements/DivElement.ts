@@ -14,6 +14,13 @@ export class DivElement extends BaseElement implements IDivElement{
         return this.div
     }
 
+    removeElement(selector: string){
+        const element = this.div.querySelector(selector)
+        if (element){
+            element.remove()
+        }
+    }
+
     append(...elements: IBaseElement[]){
         elements.forEach(element => {
             element.render(this.div)

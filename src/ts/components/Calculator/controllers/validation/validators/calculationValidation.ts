@@ -17,7 +17,7 @@ export function calculationValidation(expression: string): IError | undefined {
     return {
         message: 'unresolved expression format',
         meta: {
-            description: replacingResult.replace('0', '...')
+            description: replacingResult
         }
     }
 }

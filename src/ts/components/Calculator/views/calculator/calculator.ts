@@ -1,5 +1,5 @@
 import { IError } from './../../interfaces/ICalculator';
-import { CalculatorDisplay } from './CalculatorResultDisplay/CalculatorDisplay';
+import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
 import { DivElement } from '@components/Elements/DivElement';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
@@ -31,19 +31,18 @@ export class CalculatorUI {
         );
     }
 
-    renderResult(result: number) {
-        this.calculatorDisplay.showResult(result, this.calculatorInput.inputText);
-        const resultStr = result.toString();
-        this.calculatorInput.update(resultStr);
-        this.calculatorKeyboard.setValue(resultStr);
-    }
-
-    renderError(errors: IError[]) {
-        this.calculatorDisplay.showError(errors, this.calculatorInput.inputText);
+    renderResult(result: number | IError[]) {
+        this.calculatorDisplay.renderCalculationResult(result, this.calculatorInput.inputText)
+        if(typeof result === 'number') this.synchronizeTheKeyboardAndInput(`${result}`)
     }
 
     get element() {
         return this.calculatorBlock;
+    }
+
+    private synchronizeTheKeyboardAndInput(value: string){
+        this.calculatorKeyboard.setValue(value)
+        this.calculatorInput.update(value)
     }
 
     private setExpression() {
