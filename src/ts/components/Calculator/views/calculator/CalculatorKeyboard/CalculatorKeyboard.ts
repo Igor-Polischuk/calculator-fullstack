@@ -2,24 +2,21 @@ import { Button } from '@components/Elements/Button';
 import { GridContainer } from '@components/Elements/GridContainer';
 import { getCalculatorButtons } from './getCalculatorButtons';
 
+interface ICalculatorKeyboardOption {
+    onEqual: () => void
+    onValueChange: (value: string) => void
+}
 
-export class CalculatorKeyboard{
-    private keyboard = new GridContainer({ columns: 6, gap: 10 })
-    private buttons = getCalculatorButtons()
-
-    private keyboardValue = ''
-    private resultHandlerBTN
-    private keyboardValueHandler: (value: string) => void
-    constructor(
-        config: {
-            resultBtnHandler: () => void,
-            keyboardValueHandler: (value: string) => void
-
-        }
-    ) {
-        this.resultHandlerBTN = config.resultBtnHandler
-        this.keyboardValueHandler = config.keyboardValueHandler
-
+export class CalculatorKeyboard {
+    private keyboard: GridContainer
+    private buttons: Button[]
+    private keyboardValue: string
+    private options: ICalculatorKeyboardOption
+    constructor(options: ICalculatorKeyboardOption) {
+        this.options = options
+        this.keyboardValue = ''
+        this.keyboard = new GridContainer({ columns: 6, gap: 10 })
+        this.buttons = getCalculatorButtons()
         this.listenButtons()
         this.keyboard.append(...this.buttons)
     }
@@ -34,7 +31,7 @@ export class CalculatorKeyboard{
 
     setValue(value: string) {
         this.keyboardValue = value
-        this.keyboardValueHandler(value)
+        this.options.onValueChange(value)
     }
 
     private listenButtons() {
@@ -46,11 +43,11 @@ export class CalculatorKeyboard{
         const [resultBtn] = this.buttons.filter(button => button.metaData.purpose === 'getResult')
 
         const [removeSymbolBtn] = this.buttons.filter(button => button.metaData.purpose === 'removeSymbol')
-        
+
         const [clearBtn] = this.buttons.filter(button => button.metaData.purpose === 'clearInput')
 
         resultBtn.onClick(() => {
-            this.resultHandlerBTN()
+            this.options.onEqual()
         })
 
         removeSymbolBtn.onClick(() => {

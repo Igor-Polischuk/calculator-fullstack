@@ -1,10 +1,10 @@
 import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
 
-export class CalculatorResultDisplay {
-    private resultBlock = new DivElement({ classNames: 'calculator__result' })
+export class CalculatorDisplay {
+    private resultBlock: DivElement
     constructor() {
-
+        this.resultBlock = new DivElement({ classNames: 'calculator__result' })
     }
 
     showResult(result: number, expression: string) {
