@@ -62,16 +62,21 @@
         opacity: 0;
         visibility: hidden;
         transform: translateY(-20px);
+        font-style: italic;
 
         .result {
-            font-style: italic;
             font-size: 18px;
             color: $text-dark;
         }
 
         .error {
-            color: $red;
-            font-weight: bold;
+            font-size: 18px;
+            color: $gray;
+            font-weight: normal;
+            span {
+                color: $red;
+                font-weight: bold;
+            }
         }
 
         &.visible {
