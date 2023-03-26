@@ -29,15 +29,15 @@ export class CalculatorDisplay {
     }
 
     showError(errors: IError[], expressionWithError: string) {
-        this.resultBlock.domElement.classList.add('visible')
-        const errorWithDescription = errors.filter(errors => errors.meta.invalidExpressionPart)
-        const errorText = errorWithDescription[0].meta.invalidExpressionPart
-        const incorrectParts = errorText?.split('0').filter(symbol => symbol !== '')
-        const html = incorrectParts?.reduce<string>((acc, error) => {
-            return this.replaceSubstringWithHTMLTag(acc, error)
-        }, expressionWithError)
+        // this.resultBlock.domElement.classList.add('visible')
+        // const errorWithDescription = errors.filter(errors => errors.meta.invalidExpressionPart)
+        // const errorText = errorWithDescription[0].meta.invalidExpressionPart
+        // const incorrectParts = errorText?.split('0').filter(symbol => symbol !== '')
+        // const html = incorrectParts?.reduce<string>((acc, error) => {
+        //     return this.replaceSubstringWithHTMLTag(acc, error)
+        // }, expressionWithError)
 
-        this.resultBlock.domElement.innerHTML = html || ''
+        // this.resultBlock.domElement.innerHTML = html || ''
     }
 
     get element() {

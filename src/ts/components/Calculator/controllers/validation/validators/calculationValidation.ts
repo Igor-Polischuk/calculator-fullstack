@@ -12,6 +12,8 @@ export function calculationValidation(checkedExpression: string): IError | undef
 
     const expressionValidation = processExpression(validateUnbracketedExpression)
     const replacingResult = expressionValidation(expression)
+    
+    const wrongPartsOfExpression = replacingResult.split('0').filter(char => char !== '')
 
     if (replacingResult === '0') {
         return
@@ -20,7 +22,7 @@ export function calculationValidation(checkedExpression: string): IError | undef
     return {
         message: 'unresolved expression format',
         meta: {
-            invalidExpressionPart: replacingResult
+            invalidExpressionPart: wrongPartsOfExpression
         }
     }
 }
