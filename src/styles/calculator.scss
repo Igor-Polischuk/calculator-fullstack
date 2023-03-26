@@ -7,6 +7,7 @@
     padding: 20px;
     background-color: $accent-color;
     border-radius: 5px;
+    max-width: 500px;
 
     @media (max-width: 375px) {
         padding: 20px 5px;
@@ -63,6 +64,13 @@
         visibility: hidden;
         transform: translateY(-20px);
         font-style: italic;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+
+        p {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
 
         .result {
             font-size: 18px;
@@ -73,6 +81,7 @@
             font-size: 18px;
             color: $gray;
             font-weight: normal;
+
             span {
                 color: $red;
                 font-weight: bold;
