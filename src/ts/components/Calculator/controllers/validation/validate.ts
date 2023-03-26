@@ -9,14 +9,10 @@ export function validate(expression: string) {
     const validateResult = validateExpression(expression, {
         bracketsValidator,
         zeroDivisionValidator,
+        calculationValidation
     })
     if (validateResult.length > 0) {
         throw validateResult
-    }
-
-    const validateCalculation = validateExpression(expression, { calculationValidation })
-    if (validateCalculation.length > 0) {
-        throw validateCalculation
     }
 }
 

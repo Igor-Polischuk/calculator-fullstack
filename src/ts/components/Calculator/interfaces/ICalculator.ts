@@ -27,7 +27,7 @@ export interface IError {
     message: string
     meta: {
         errorIndex?: number,
-        description?: string
+        invalidExpressionPart?: string
     }    
 }
 

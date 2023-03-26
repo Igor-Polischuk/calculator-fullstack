@@ -1,31 +1,15 @@
 
 import { regexPatterns } from "../../regex";
+import { bracketsOrder } from "../bracketsOrder";
 import { Error } from "../error";
 
 export function bracketsValidator(expression: string) {
-    const stack = [];
-    for (let i = 0; i < expression.length; i++) {
-        const char = expression[i];
-        if (char === "(") {
-            stack.push(i);
-        } else if (char === ")") {
-            if (stack.length === 0) {
-                return {
-                    message: Error.UnexpectedClosingBracketError,
-                    meta: {
-                        errorIndex: i
-                    }
-                }
-            }
-            stack.pop();
-        }
-    }
-    
-    if (stack.length !== 0) {
+    const incorrectBracketIndex = bracketsOrder(expression)
+    if(incorrectBracketIndex !== -1){
         return {
-            message: Error.UnclosedBracketError,
+            message: Error.BracketError,
             meta: {
-                errorIndex: expression.lastIndexOf('(') - 1
+                errorIndex: incorrectBracketIndex
             }
         }
     }

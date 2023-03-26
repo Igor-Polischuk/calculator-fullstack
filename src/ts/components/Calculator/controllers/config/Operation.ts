@@ -32,7 +32,7 @@ export class Operation implements IOperation {
                 const error: IError = {
                     message: `${exception.exceptionMessage}`,
                     meta: {
-                        description: `${exception.exceptionMessage}`
+                        invalidExpressionPart: `${exception.exceptionMessage}`
                     }
                 }
                 throw [error]

@@ -1,11 +1,14 @@
 import { calculatorConfig } from "../../config/calculator-config";
 import { IError } from "@components/Calculator/interfaces/ICalculator"
-import { processExpression } from "../../services";
+import { processExpression, unwrapBracketInExpression } from "../../services";
+import { bracketsOrder } from "../bracketsOrder";
 
-export function calculationValidation(expression: string): IError | undefined {
-    if (Number(expression)) {
+export function calculationValidation(checkedExpression: string): IError | undefined {
+    if (Number(checkedExpression)) {
         return
     }
+
+    const expression = bracketsOrder(checkedExpression) === -1 ? checkedExpression : unwrapBracketInExpression(checkedExpression)
 
     const expressionValidation = processExpression(validateUnbracketedExpression)
     const replacingResult = expressionValidation(expression)
@@ -17,7 +20,7 @@ export function calculationValidation(expression: string): IError | undefined {
     return {
         message: 'unresolved expression format',
         meta: {
-            description: replacingResult
+            invalidExpressionPart: replacingResult
         }
     }
 }
