@@ -21,7 +21,7 @@ export class CalculatorUI {
         this.calculatorDisplay = new CalculatorDisplay();
         this.calculatorKeyboard = new CalculatorKeyboard({
             onEqual: this.setExpression.bind(this),
-            updateInputValue: (value) => this.calculatorInput.update(value),
+            updateInputValue: this.updatedTheKeyboardAndInputValues.bind(this),
         });
 
         this.calculatorInput.onInput((value) => this.calculatorKeyboard.value = value)
@@ -32,17 +32,17 @@ export class CalculatorUI {
             this.calculatorKeyboard.element,
         );
     }
-
-    renderResult(result: number | IError[]) {
-        this.calculatorDisplay.renderCalculationResult(result, this.calculatorInput.inputText)
-        if(typeof result === 'number') this.synchronizeTheKeyboardAndInput(`${result}`)
-    }
-
+    
     get element() {
         return this.calculatorBlock;
     }
+    
+    renderResult(result: number | IError[]) {
+        this.calculatorDisplay.renderCalculationResult(result, this.calculatorInput.inputText)
+        if(typeof result === 'number') this.updatedTheKeyboardAndInputValues(`${result}`)
+    }
 
-    private synchronizeTheKeyboardAndInput(value: string){
+    private updatedTheKeyboardAndInputValues(value: string){
         this.calculatorKeyboard.value = value
         this.calculatorInput.update(value)
     }
