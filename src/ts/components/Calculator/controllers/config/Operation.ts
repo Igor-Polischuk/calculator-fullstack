@@ -23,14 +23,14 @@ export class Operation implements IOperation {
         this.text = config.text
     }
 
-    checkException(numbers: number[]): void {
+    checkException(numbers: number[], errorExpression?: string): void {
         if (this.exceptionHandler.length === 0) return
-
+        const whereMessage  = errorExpression ? `in ${errorExpression}` : ''
         this.exceptionHandler.forEach(exception => {
             const isException = exception.checkException(...numbers)
             if (isException){
                 const error: IError = {
-                    message: `${exception.exceptionMessage}`,
+                    message: `Runtime error: ${exception.exceptionMessage} ${whereMessage}`,
                     meta: {}
                 }
                 throw [error]

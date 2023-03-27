@@ -4,19 +4,18 @@ import { DivElement } from "@components/Elements/DivElement";
 import { formatExpression } from '@utilities/formatText/formatExpression';
 
 export class CalculatorDisplay {
-    private resultBlock: DivElement
+    private displayDiv: DivElement
     constructor() {
-        this.resultBlock = new DivElement({ classNames: 'calculator__result' })
+        this.displayDiv = new DivElement({ classNames: 'calculator__result' })
     }
 
-
     get element() {
-        return this.resultBlock
+        return this.displayDiv
     }
 
     renderCalculationResult(result: number | IError[], expression: string) {
-        this.resultBlock.domElement.classList.add('visible')
-        this.resultBlock.removeElement('p')
+        this.displayDiv.domElement.classList.add('visible')
+        this.displayDiv.removeElement('p')
         if (typeof result === 'number') {
             this.renderResultNumber(result, expression)
         } else {
@@ -27,29 +26,42 @@ export class CalculatorDisplay {
     private renderResultNumber(result: number, expression: string) {
         const resultText = `${this.formatExpression(expression)} = <b>${result}</b>`
         const p = new Paragraph({ text: resultText, classNames: 'result showup' })
-        this.resultBlock.append(p)
+        this.displayDiv.append(p)
     }
 
     private renderError(errors: IError[], expressionWithError: string) {
         const indicesOfErrors = this.extractErrorValues(errors, 'errorIndex') as number[]
         const invalidExpressionParts = this.extractErrorValues(errors, 'invalidExpressionPart').flat() as string[]
-        const formattedExpressionWithError = formatExpression(expressionWithError)
+        if (indicesOfErrors.length === 0 && invalidExpressionParts.length === 0) {
+            this.displayErrorMessage(errors[0].message)
+            return
+        }
+        const errorString = this.highlightInvalidParts(expressionWithError, indicesOfErrors, invalidExpressionParts)
+        this.displayErrorMessage(errorString)
+    }
+
+    private highlightInvalidParts(expression: string, indicesOfErrors: number[], invalidExpressionParts: string[]): string{
+        const formattedExpressionWithError = formatExpression(expression)
         const expressionWithIndexErrors = indicesOfErrors.reduce<string>((expressionChartsWithError, char) => {
             const errorIndexWrapper = `<span>${formattedExpressionWithError[char]}</span>`
             return this.replaceByIndex(expressionChartsWithError, char, errorIndexWrapper)
         }, formattedExpressionWithError)
-        
+
         const expressionWithInvalidParts = invalidExpressionParts.reduce<string>((formattedExpressionPartWithError, incorrectPart) => {
             return this.replaceSubstringWithHTMLTag(formattedExpressionPartWithError, incorrectPart)
         }, expressionWithIndexErrors)
-        
-        const errorParagraph = new Paragraph({ text: expressionWithInvalidParts, classNames: 'error' })
-        this.resultBlock.append(errorParagraph)
+
+        return expressionWithInvalidParts
     }
 
-    private extractErrorValues(errors: IError[], param: keyof IError['meta']): Array<number | string>{
+    private extractErrorValues(errors: IError[], param: keyof IError['meta']): Array<number | string> {
         return errors.map(error => error.meta[param]).filter(item => item !== undefined) as Array<number | string>
     }
+
+    private displayErrorMessage(message: string) {
+        const errorParagraph = new Paragraph({ text: message, classNames: 'error' })
+        this.displayDiv.append(errorParagraph)
+      }
 
     private formatExpression(expression: string) {
         const FIND_POWER = /(\^(\d+|π|\([^()]*\)))/g;

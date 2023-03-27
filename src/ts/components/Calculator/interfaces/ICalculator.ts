@@ -16,7 +16,7 @@ export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
 export interface IOperation {
     readonly reg: RegExp
     calculate: (...args: number[]) => number
-    checkException: (numbers: number[]) => void
+    checkException: (numbers: number[], errorExpression?: string) => void
     readonly priority: number
     readonly text?: string
 }

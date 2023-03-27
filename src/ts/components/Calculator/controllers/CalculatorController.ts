@@ -40,7 +40,7 @@ export class CalculatorController implements ICalculatorController {
     const [expressionWithCurrentOperation] = matchedExpressionWithOperation
     const numbersOperand = getNumbersFromExpression(expressionWithCurrentOperation)
 
-    currentOperationObj.checkException(numbersOperand);
+    currentOperationObj.checkException(numbersOperand, expressionWithCurrentOperation);
     const calculationResult = currentOperationObj.calculate(...numbersOperand).toString()
 
     return calculationResultAccumulator.replace(expressionWithCurrentOperation, calculationResult)
