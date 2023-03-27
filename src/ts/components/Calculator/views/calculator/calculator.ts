@@ -47,6 +47,7 @@ export class CalculatorUI {
 
     private setExpression() {
         const expression = this.calculatorInput.inputText;
+        if (expression.trim() === '') return
         this.options.onExpressionChange(expression);
     }
 }
