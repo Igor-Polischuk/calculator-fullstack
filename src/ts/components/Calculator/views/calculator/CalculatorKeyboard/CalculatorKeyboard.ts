@@ -1,21 +1,21 @@
 import { Button } from '@components/Elements/Button';
-import { GridContainer } from '@components/Elements/GridContainer';
+import { DivElement } from '@components/Elements/DivElement';
 import { getCalculatorButtons } from './getCalculatorButtons';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
-    onValueChange: (value: string) => void
+    onKeyboardValueChange: (value: string) => void
 }
 
 export class CalculatorKeyboard {
-    private keyboard: GridContainer
+    private keyboard: DivElement
     private buttons: Button[]
     private keyboardValue: string
     private options: ICalculatorKeyboardOption
     constructor(options: ICalculatorKeyboardOption) {
         this.options = options
         this.keyboardValue = ''
-        this.keyboard = new GridContainer({ columns: 6, gap: 10 })
+        this.keyboard = new DivElement({ classNames: 'calculator__keyboard'})
         this.buttons = getCalculatorButtons()
         this.listenButtons()
         this.keyboard.append(...this.buttons)
@@ -31,7 +31,7 @@ export class CalculatorKeyboard {
 
     setValue(value: string) {
         this.keyboardValue = value
-        this.options.onValueChange(value)
+        this.options.onKeyboardValueChange(value)
     }
 
     private listenButtons() {
