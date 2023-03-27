@@ -9,42 +9,35 @@ interface ICalculatorUIOptions {
 }
 
 export class CalculatorUI {
-    private calculatorBlock: DivElement;
+    private calculatorWrapper: DivElement;
     private calculatorInput: CalculatorInput;
     private calculatorDisplay: CalculatorDisplay;
     private calculatorKeyboard: CalculatorKeyboard;
     private options: ICalculatorUIOptions;
     constructor(options: ICalculatorUIOptions) {
         this.options = options;
-        this.calculatorBlock = new DivElement({ classNames: 'calculator' });
+        this.calculatorWrapper = new DivElement({ classNames: 'calculator' });
         this.calculatorInput = new CalculatorInput();
         this.calculatorDisplay = new CalculatorDisplay();
         this.calculatorKeyboard = new CalculatorKeyboard({
             onEqual: this.setExpression.bind(this),
-            updateInputValue: this.updatedTheKeyboardAndInputValues.bind(this),
+            setInputValue: this.calculatorInput.setInputValue.bind(this.calculatorInput)
         });
 
-        this.calculatorInput.onInput((value) => this.calculatorKeyboard.value = value)
-
-        this.calculatorBlock.append(
+        this.calculatorWrapper.append(
             this.calculatorInput.element,
             this.calculatorDisplay.element,
             this.calculatorKeyboard.element,
         );
     }
-    
+
     get element() {
-        return this.calculatorBlock;
-    }
-    
-    renderResult(result: number | IError[]) {
-        this.calculatorDisplay.renderCalculationResult(result, this.calculatorInput.inputText)
-        if(typeof result === 'number') this.updatedTheKeyboardAndInputValues(`${result}`)
+        return this.calculatorWrapper;
     }
 
-    private updatedTheKeyboardAndInputValues(value: string){
-        this.calculatorKeyboard.value = value
-        this.calculatorInput.update(value)
+    renderResult(result: number | IError[]) {
+        this.calculatorDisplay.renderCalculationResult(result, this.calculatorInput.inputText)
+        if (typeof result === 'number') this.calculatorInput.setInputValue(() => result.toString())
     }
 
     private setExpression() {

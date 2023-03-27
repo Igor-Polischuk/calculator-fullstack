@@ -4,17 +4,15 @@ import { getCalculatorButtons } from './getCalculatorButtons';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
-    updateInputValue: (value: string) => void
+    setInputValue: (callback: (currentInputValue: string) => string) => void
 }
 
 export class CalculatorKeyboard {
     private keyboard: DivElement
     private buttons: Button[]
-    private keyboardValue: string
     private options: ICalculatorKeyboardOption
     constructor(options: ICalculatorKeyboardOption) {
         this.options = options
-        this.keyboardValue = ''
         this.keyboard = new DivElement({ classNames: 'calculator__keyboard'})
         this.buttons = getCalculatorButtons()
         this.listenButtons()
@@ -23,14 +21,6 @@ export class CalculatorKeyboard {
 
     get element() {
         return this.keyboard
-    }
-
-    get value() {
-        return this.keyboardValue
-    }
-
-    set value(value: string){
-        this.keyboardValue = value
     }
 
     private listenButtons() {
@@ -50,19 +40,18 @@ export class CalculatorKeyboard {
         })
 
         removeSymbolBtn.onClick(() => {
-            this.options.updateInputValue(this.keyboardValue.slice(0, -1))
+            this.options.setInputValue((value) => value.slice(0, -1))
         })
 
         clearBtn.onClick(() => {
-            this.options.updateInputValue('')
+            this.options.setInputValue(() => '')
         })
     }
 
     private attachButtonHandlers(buttons: Button[]) {
         buttons.forEach(numButton => {
             numButton.onClick(() => {
-                const newInputValue = this.keyboardValue + numButton.metaData.action
-                this.options.updateInputValue(newInputValue)
+                this.options.setInputValue(value => value + numButton.metaData.action)
             })
         })
     }

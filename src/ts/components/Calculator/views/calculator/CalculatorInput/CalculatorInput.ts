@@ -7,7 +7,7 @@ export class CalculatorInput {
     private inputWrapper: DivElement
     constructor() {
         this.input = getMathInput()
-        this.inputWrapper = new DivElement({classNames: 'calculator__field'})
+        this.inputWrapper = new DivElement({ classNames: 'calculator__field' })
         this.inputWrapper.append(this.input)
     }
 
@@ -19,11 +19,8 @@ export class CalculatorInput {
         return this.input.value
     }
 
-    update(newInputValue: string) {
-        this.input.value = newInputValue
-    }
-
-    onInput(callback: (value: string) => void){
-        this.input.onInput(() => callback(this.input.value))
+    setInputValue(callback: (currentInputValue: string) => string) {
+        const newValue = callback(this.input.value)
+        this.input.value = newValue
     }
 }
