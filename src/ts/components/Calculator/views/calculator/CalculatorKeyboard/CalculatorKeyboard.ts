@@ -4,7 +4,7 @@ import { getCalculatorButtons } from './getCalculatorButtons';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
-    onKeyboardValueChange: (value: string) => void
+    updateInputValue: (value: string) => void
 }
 
 export class CalculatorKeyboard {
@@ -29,9 +29,8 @@ export class CalculatorKeyboard {
         return this.keyboardValue
     }
 
-    setValue(value: string) {
+    set value(value: string){
         this.keyboardValue = value
-        this.options.onKeyboardValueChange(value)
     }
 
     private listenButtons() {
@@ -51,12 +50,11 @@ export class CalculatorKeyboard {
         })
 
         removeSymbolBtn.onClick(() => {
-            this.setValue(this.keyboardValue.slice(0, -1))
+            this.options.updateInputValue(this.keyboardValue.slice(0, -1))
         })
 
         clearBtn.onClick(() => {
-
-            this.setValue('')
+            this.options.updateInputValue('')
         })
     }
 
@@ -64,7 +62,7 @@ export class CalculatorKeyboard {
         buttons.forEach(numButton => {
             numButton.onClick(() => {
                 const newInputValue = this.keyboardValue + numButton.metaData.action
-                this.setValue(newInputValue)
+                this.options.updateInputValue(newInputValue)
             })
         })
     }

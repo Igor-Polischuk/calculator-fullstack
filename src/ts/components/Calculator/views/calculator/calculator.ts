@@ -21,8 +21,10 @@ export class CalculatorUI {
         this.calculatorDisplay = new CalculatorDisplay();
         this.calculatorKeyboard = new CalculatorKeyboard({
             onEqual: this.setExpression.bind(this),
-            onKeyboardValueChange: (value) => this.calculatorInput.update(value),
+            updateInputValue: (value) => this.calculatorInput.update(value),
         });
+
+        this.calculatorInput.onInput((value) => this.calculatorKeyboard.value = value)
 
         this.calculatorBlock.append(
             this.calculatorInput.element,
@@ -41,7 +43,7 @@ export class CalculatorUI {
     }
 
     private synchronizeTheKeyboardAndInput(value: string){
-        this.calculatorKeyboard.setValue(value)
+        this.calculatorKeyboard.value = value
         this.calculatorInput.update(value)
     }
 

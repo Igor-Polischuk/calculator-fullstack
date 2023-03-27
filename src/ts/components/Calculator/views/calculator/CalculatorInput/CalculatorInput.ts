@@ -22,4 +22,8 @@ export class CalculatorInput {
     update(newInputValue: string) {
         this.input.value = newInputValue
     }
+
+    onInput(callback: (value: string) => void){
+        this.input.onInput(() => callback(this.input.value))
+    }
 }
