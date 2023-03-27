@@ -31,20 +31,20 @@ export class CalculatorDisplay {
     }
 
     private renderError(errors: IError[], expressionWithError: string) {
-        const errorsIndex = this.extractErrorValues(errors, 'errorIndex') as number[]
-        const incorrectParts = this.extractErrorValues(errors, 'invalidExpressionPart').flat() as string[]
-        const formattedExpression = formatExpression(expressionWithError)
-        const errorStringByIndex = errorsIndex.reduce<string>((acc, char) => {
-            const errorIndexWrapper = `<span>${formattedExpression[char]}</span>`
-            return this.replaceByIndex(acc, char, errorIndexWrapper)
-        }, formattedExpression)
+        const indicesOfErrors = this.extractErrorValues(errors, 'errorIndex') as number[]
+        const invalidExpressionParts = this.extractErrorValues(errors, 'invalidExpressionPart').flat() as string[]
+        const formattedExpressionWithError = formatExpression(expressionWithError)
+        const expressionWithIndexErrors = indicesOfErrors.reduce<string>((expressionChartsWithError, char) => {
+            const errorIndexWrapper = `<span>${formattedExpressionWithError[char]}</span>`
+            return this.replaceByIndex(expressionChartsWithError, char, errorIndexWrapper)
+        }, formattedExpressionWithError)
         
-        const errorStringByParts = incorrectParts.reduce<string>((acc, incorrectPart) => {
-            return this.replaceSubstringWithHTMLTag(acc, incorrectPart)
-        }, errorStringByIndex)
+        const expressionWithInvalidParts = invalidExpressionParts.reduce<string>((formattedExpressionPartWithError, incorrectPart) => {
+            return this.replaceSubstringWithHTMLTag(formattedExpressionPartWithError, incorrectPart)
+        }, expressionWithIndexErrors)
         
-        const p = new Paragraph({ text: errorStringByParts, classNames: 'error' })
-        this.resultBlock.append(p)
+        const errorParagraph = new Paragraph({ text: expressionWithInvalidParts, classNames: 'error' })
+        this.resultBlock.append(errorParagraph)
     }
 
     private extractErrorValues(errors: IError[], param: keyof IError['meta']): Array<number | string>{
