@@ -6,7 +6,8 @@ export const regexPatterns = {
     E_CONST: /(?<![0-9eE.+-])e(?![0-9eE.+-])/,
     ZERO_DIVISION: /\/0+(?!\.\d)/,
     OPEN_BRACKETS_ADJACENT_SYMBOLS: /[\d]\(|\([\+\*\/\^]/,
-    CLOSED_BRACKETS_ADJACENT_SYMBOLS: /[^\d\)\w\!]\)|\)[\d\w]/
+    CLOSED_BRACKETS_ADJACENT_SYMBOLS: /[^\d\)\w\!]\)|\)[\d\w]/,
+    DOUBLE_POINTS_IN_NUMBER: /\d+(\.\d+){2,}/,
 };
 
 export const regularWithParam = {
