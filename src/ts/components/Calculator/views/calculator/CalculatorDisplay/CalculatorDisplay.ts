@@ -1,6 +1,7 @@
 import { Paragraph } from './../../../../Elements/Paragraph';
 import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
+import { formatExpression } from '@utilities/formatText/formatExpression';
 
 export class CalculatorDisplay {
     private resultBlock: DivElement
@@ -32,12 +33,11 @@ export class CalculatorDisplay {
     private renderError(errors: IError[], expressionWithError: string) {
         const errorsIndex = this.extractErrorValues(errors, 'errorIndex') as number[]
         const incorrectParts = this.extractErrorValues(errors, 'invalidExpressionPart').flat() as string[]
-
+        const formattedExpression = formatExpression(expressionWithError)
         const errorStringByIndex = errorsIndex.reduce<string>((acc, char) => {
-            const errorIndexWrapper = `<span>${expressionWithError[char]}</span>`
+            const errorIndexWrapper = `<span>${formattedExpression[char]}</span>`
             return this.replaceByIndex(acc, char, errorIndexWrapper)
-        }, expressionWithError)
-        console.log(incorrectParts);
+        }, formattedExpression)
         
         const errorStringByParts = incorrectParts.reduce<string>((acc, incorrectPart) => {
             return this.replaceSubstringWithHTMLTag(acc, incorrectPart)
