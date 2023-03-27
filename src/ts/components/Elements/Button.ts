@@ -5,17 +5,19 @@ interface IButtonConfig {
     text: string,
     classNames: string,
     data?: Record<string, string>,
+    role?: string
 }
 
 export class Button extends BaseElement implements IButton{
     private text: string;
-    private data: Record<string, string> = {}
+    private data?: Record<string, string> = {}
     private button: HTMLButtonElement
-
+    private role?: string
     constructor(config: IButtonConfig) {
         super(config)
         this.text = config.text
-        this.data = config.data ? {...config.data} : {text: this.text}
+        this.role = config.role
+        this.data = config.data
         this.button = document.createElement('button')
         this.button.innerHTML= this.text
     }
@@ -28,7 +30,11 @@ export class Button extends BaseElement implements IButton{
         return this.button
     }
 
+    get getButtonRole(){
+        return this.role
+    }
+
     get metaData(){
-        return this.data
+        return this.data || {}
     }
 }

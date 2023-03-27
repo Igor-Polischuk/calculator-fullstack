@@ -1,6 +1,8 @@
+import { ButtonList } from '@utilities/dataStructures/ButtonList';
 import { Button } from '@components/Elements/Button';
 import { DivElement } from '@components/Elements/DivElement';
 import { getCalculatorButtons } from './getCalculatorButtons';
+import { ButtonRole } from './buttonName';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
@@ -8,51 +10,36 @@ interface ICalculatorKeyboardOption {
 }
 
 export class CalculatorKeyboard {
-    private keyboard: DivElement
-    private buttons: Button[]
+    private keyboardWrapper: DivElement
+    private buttons: ButtonList
     private options: ICalculatorKeyboardOption
     constructor(options: ICalculatorKeyboardOption) {
         this.options = options
-        this.keyboard = new DivElement({ classNames: 'calculator__keyboard'})
+        this.keyboardWrapper = new DivElement({ classNames: 'calculator__keyboard' })
         this.buttons = getCalculatorButtons()
-        this.listenButtons()
-        this.keyboard.append(...this.buttons)
+        this.keyboardWrapper.append(...this.buttons.getAll())
+        this.initButtonsListeners()
     }
 
     get element() {
-        return this.keyboard
+        return this.keyboardWrapper
     }
 
-    private listenButtons() {
-        this.buttons = getCalculatorButtons()
+    private initButtonsListeners() {
+        this.buttons.addClickListenersByRole(ButtonRole.GET_VALUES, ({ button }) => {
+            this.options.setInputValue(value => value + button.metaData.action)
+        })
 
-        const symbolsBtn = this.buttons.filter(button => button.metaData.hasOwnProperty('action'))
-        this.attachButtonHandlers(symbolsBtn)
-
-        const [resultBtn] = this.buttons.filter(button => button.metaData.purpose === 'getResult')
-
-        const [removeSymbolBtn] = this.buttons.filter(button => button.metaData.purpose === 'removeSymbol')
-
-        const [clearBtn] = this.buttons.filter(button => button.metaData.purpose === 'clearInput')
-
-        resultBtn.onClick(() => {
+        this.buttons.addClickListenersByRole(ButtonRole.GET_RESULT, () => {
             this.options.onEqual()
         })
 
-        removeSymbolBtn.onClick(() => {
+        this.buttons.addClickListenersByRole(ButtonRole.CLEAR_CHAR, () => {
             this.options.setInputValue((value) => value.slice(0, -1))
         })
 
-        clearBtn.onClick(() => {
+        this.buttons.addClickListenersByRole(ButtonRole.CLEAR_ALL, () => {
             this.options.setInputValue(() => '')
-        })
-    }
-
-    private attachButtonHandlers(buttons: Button[]) {
-        buttons.forEach(numButton => {
-            numButton.onClick(() => {
-                this.options.setInputValue(value => value + numButton.metaData.action)
-            })
         })
     }
 }
