@@ -1,11 +1,10 @@
-import { ClassName } from './../ClassName';
-import { Paragraph } from '../../../../Elements/Paragraph';
+import { ClassName } from '../ClassName';
+import { Paragraph } from '@components/Elements/Paragraph';
 import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
 import { formatExpression } from '@utilities/formatText/formatExpression';
-import { replaceByIndex } from '@utilities/formatText/replaceByIndex';
-import { replaceString } from '@utilities/formatText/replaceString';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
+import { highlightErrorByIndex, highlightErrorByInvalidParts } from './highlightErrors';
 
 export class CalculatorOutput {
     private displayDiv: DivElement
@@ -37,42 +36,14 @@ export class CalculatorOutput {
             return
         }
         const formattedExpressionWithError = formatExpression(expressionWithError)
-        const highlightedErrorsByIndex = this.highlightErrorByIndex(formattedExpressionWithError, indicesOfErrors)
-        const highlightedErrorsInvalidParts = this.highlightErrorByInvalidParts(highlightedErrorsByIndex, invalidExpressionParts)
+        const highlightedErrorsByIndex = highlightErrorByIndex(formattedExpressionWithError, indicesOfErrors)
+        const highlightedErrorsInvalidParts = highlightErrorByInvalidParts(highlightedErrorsByIndex, invalidExpressionParts)
 
         this.renderParagraph({
             text: highlightedErrorsInvalidParts,
             className: ClassName.OUTPUT_ERROR
         })
     }
-
-
-    private highlightErrorByIndex(expression: string, indices: number[]){
-        const expressionWithIndexErrors = indices.reduce<string>((highlightedErrorsAcc, index) => {
-            const errorIndexWrapper = `<span>${highlightedErrorsAcc[index]}</span>`
-            return replaceByIndex({
-                sourceString: highlightedErrorsAcc,
-                index,
-                replaceWith: errorIndexWrapper
-            })
-        }, expression)
-
-        return expressionWithIndexErrors
-    }
-
-
-    private highlightErrorByInvalidParts(expression: string, parts: string[]){
-        const expressionWithInvalidParts = parts.reduce<string>((highlightedErrorsAcc, part) => {
-            return replaceString({
-                sourceString: highlightedErrorsAcc,
-                targetString: `<span>${part}</span>`,
-                replacementString: part
-            })            
-        }, expression)
-
-        return expressionWithInvalidParts
-    }
-
 
     private renderParagraph(params: {text: string, className?: string}){
         this.displayDiv.domElement.classList.add('visible')

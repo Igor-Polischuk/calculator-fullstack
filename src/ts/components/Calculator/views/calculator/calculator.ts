@@ -1,6 +1,6 @@
 import { ClassName } from './ClassName';
 import { IError } from './../../interfaces/ICalculator';
-import { CalculatorOutput } from './CalculatorDisplay/CalculatorOutput';
+import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { DivElement } from '@components/Elements/DivElement';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
