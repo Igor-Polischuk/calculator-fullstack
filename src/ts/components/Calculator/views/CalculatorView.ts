@@ -13,10 +13,10 @@ export class CalculatorView implements ICalculatorView {
         })
 
         model.subscribe(CalculatorModelEvent.ResultChanged, (result) => {
-            this.calculatorUI.renderResult(result)
+            this.calculatorUI.showCalculationResult(result)
         })
         model.subscribe(CalculatorModelEvent.ErrorChanged, (error) => {
-            this.calculatorUI.renderResult(error)
+            this.calculatorUI.showCalculationError(error)
         })
 
         const root = document.querySelector('.container')!

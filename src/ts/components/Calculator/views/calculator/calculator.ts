@@ -1,5 +1,5 @@
 import { IError } from './../../interfaces/ICalculator';
-import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
+import { CalculatorOutput } from './CalculatorDisplay/CalculatorOutput';
 import { DivElement } from '@components/Elements/DivElement';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
@@ -11,14 +11,14 @@ interface ICalculatorUIOptions {
 export class CalculatorUI {
     private calculatorWrapper: DivElement;
     private calculatorInput: CalculatorInput;
-    private calculatorDisplay: CalculatorDisplay;
+    private calculatorOutput: CalculatorOutput;
     private calculatorKeyboard: CalculatorKeyboard;
     private options: ICalculatorUIOptions;
     constructor(options: ICalculatorUIOptions) {
         this.options = options;
         this.calculatorWrapper = new DivElement({ classNames: 'calculator' });
         this.calculatorInput = new CalculatorInput();
-        this.calculatorDisplay = new CalculatorDisplay();
+        this.calculatorOutput = new CalculatorOutput();
         this.calculatorKeyboard = new CalculatorKeyboard({
             onEqual: this.setExpression.bind(this),
             setInputValue: this.calculatorInput.setInputValue.bind(this.calculatorInput)
@@ -26,7 +26,7 @@ export class CalculatorUI {
 
         this.calculatorWrapper.append(
             this.calculatorInput.element,
-            this.calculatorDisplay.element,
+            this.calculatorOutput.element,
             this.calculatorKeyboard.element,
         );
     }
@@ -35,9 +35,13 @@ export class CalculatorUI {
         return this.calculatorWrapper;
     }
 
-    renderResult(result: number | IError[]) {
-        this.calculatorDisplay.renderCalculationResult(result, this.calculatorInput.inputText)
-        if (typeof result === 'number') this.calculatorInput.setInputValue(() => result.toString())
+    showCalculationResult(result: number){
+        this.calculatorOutput.showCalculationResult(result, this.calculatorInput.inputText)
+        this.calculatorInput.setInputValue(() => result.toString())
+    }
+
+    showCalculationError(errors: IError[]){
+        this.calculatorOutput.showCalculationError(errors, this.calculatorInput.inputText)
     }
 
     private setExpression() {
