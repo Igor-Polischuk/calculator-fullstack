@@ -31,7 +31,6 @@ export class Operation implements IOperation {
             if (isException){
                 const error: IError = {
                     message: `Runtime error: ${exception.exceptionMessage} ${whereMessage}`,
-                    meta: {}
                 }
                 throw [error]
             }

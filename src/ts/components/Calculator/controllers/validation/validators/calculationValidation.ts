@@ -1,3 +1,4 @@
+import { findSubstringIndexes } from '@utilities/findSubstringIndexes';
 import { calculatorConfig } from "../../config/calculator-config";
 import { IError } from "@components/Calculator/interfaces/ICalculator"
 import { processExpression, unwrapBracketInExpression } from "../../services";
@@ -12,18 +13,16 @@ export function calculationValidation(checkedExpression: string): IError | undef
 
     const expressionValidation = processExpression(validateUnbracketedExpression)
     const replacingResult = expressionValidation(expression)
-    
-    const wrongPartsOfExpression = replacingResult.split('0').filter(char => char !== '')
 
     if (replacingResult === '0') {
         return
     }
 
+    const indexesOfInvalidExpressionParts = getInvalidPartsIndexes(replacingResult, expression)
+
     return {
         message: 'unresolved expression format',
-        meta: {
-            invalidExpressionPart: wrongPartsOfExpression
-        }
+        errorRange: indexesOfInvalidExpressionParts
     }
 }
 
@@ -32,6 +31,15 @@ function validateUnbracketedExpression(resultAcc: string, operation: string): st
     const matchedExpressionWithOperation = resultAcc.match(currentOperationObj.reg)
     if (!matchedExpressionWithOperation) {
         return resultAcc
-    }   
+    }
     return resultAcc.replace(matchedExpressionWithOperation[0], '0')
+}
+
+function getInvalidPartsIndexes(replacingResult: string, expression: string) {
+    const invalidPartsOfExpression = replacingResult.split('0').filter(char => char !== '')
+    const indexesOfInvalidExpressionParts = invalidPartsOfExpression.reduce<[number, number][]>((indexesAcc, invalidPart) => {
+        const indexesOfCurrentParts = findSubstringIndexes(expression, invalidPart)
+        return [...indexesAcc, ...indexesOfCurrentParts]
+    }, [])
+    return indexesOfInvalidExpressionParts
 }
