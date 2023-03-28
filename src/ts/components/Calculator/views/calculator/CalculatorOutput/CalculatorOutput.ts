@@ -4,7 +4,8 @@ import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
 import { formatExpression } from '@utilities/formatText/formatExpression';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
-import { highlightErrorByIndex, highlightErrorByInvalidParts } from './highlightErrors';
+import { mergeRanges } from '@utilities/mergeRanges';
+import { replaceSubstringsWithTags } from '@utilities/formatText/replaceSubstringsWithTags';
 
 export class CalculatorOutput {
     private displayDiv: DivElement
@@ -16,7 +17,7 @@ export class CalculatorOutput {
         return this.displayDiv
     }
 
-    showCalculationResult(result: number, expression: string){
+    showCalculationResult(result: number, expression: string) {
         const resultText = `${replaceMathOperators(expression)} = <b>${result}</b>`
         this.renderParagraph({
             text: resultText,
@@ -25,29 +26,32 @@ export class CalculatorOutput {
     }
 
 
-    showCalculationError(errors: IError[], expressionWithError: string){
-        console.log(errors);
+    showCalculationError(errors: IError[], expressionWithError: string) {
+        const invalidExpressionPartsIndexes = this.getInvalidExpressionPartsIndexes(errors)
+        if (invalidExpressionPartsIndexes.length === 0) {
+            this.renderParagraph({
+                text: errors[0].message,
+                className: ClassName.OUTPUT_ERROR
+            })
+            return
+        }
         
-        // const indicesOfErrors = this.extractErrorValues(errors, 'errorIndex') as number[]
-        // const invalidExpressionParts = this.extractErrorValues(errors, 'invalidExpressionPart').flat() as string[]
-        // if (indicesOfErrors.length === 0 && invalidExpressionParts.length === 0) {
-        //     this.renderParagraph({
-        //         text: errors[0].message,
-        //         className: ClassName.OUTPUT_ERROR
-        //     })
-        //     return
-        // }
-        // const formattedExpressionWithError = formatExpression(expressionWithError)
-        // const highlightedErrorsByIndex = highlightErrorByIndex(formattedExpressionWithError, indicesOfErrors)
-        // const highlightedErrorsInvalidParts = highlightErrorByInvalidParts(highlightedErrorsByIndex, invalidExpressionParts)
+        const formattedExpressionWithError = formatExpression(expressionWithError)
+        const highlightedErrors = replaceSubstringsWithTags(formattedExpressionWithError, invalidExpressionPartsIndexes, 'span')
 
-        // this.renderParagraph({
-        //     text: highlightedErrorsInvalidParts,
-        //     className: ClassName.OUTPUT_ERROR
-        // })
+        this.renderParagraph({
+            text: highlightedErrors,
+            className: ClassName.OUTPUT_ERROR
+        })
     }
 
-    private renderParagraph(params: {text: string, className?: string}){
+    private getInvalidExpressionPartsIndexes(errors: IError[]) {
+        const invalidPartsIndexes = errors.map(error => error.errorRange || []).flat()
+        return mergeRanges(invalidPartsIndexes)
+
+    }
+
+    private renderParagraph(params: { text: string, className?: string }) {
         this.displayDiv.domElement.classList.add('visible')
         this.displayDiv.removeElement('p')
         const p = new Paragraph({ text: params.text, classNames: params.className })
