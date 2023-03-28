@@ -1,3 +1,4 @@
+import { ClassName } from './../ClassName';
 import { Paragraph } from '../../../../Elements/Paragraph';
 import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
@@ -9,7 +10,7 @@ import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators
 export class CalculatorOutput {
     private displayDiv: DivElement
     constructor() {
-        this.displayDiv = new DivElement({ classNames: 'calculator__result' })
+        this.displayDiv = new DivElement({ classNames: ClassName.CALCULATOR_RESULT })
     }
 
     get element() {
@@ -20,7 +21,7 @@ export class CalculatorOutput {
         const resultText = `${replaceMathOperators(expression)} = <b>${result}</b>`
         this.renderParagraph({
             text: resultText,
-            className: 'result showup'
+            className: ClassName.SHOWUP_RESULT
         })
     }
 
@@ -31,7 +32,7 @@ export class CalculatorOutput {
         if (indicesOfErrors.length === 0 && invalidExpressionParts.length === 0) {
             this.renderParagraph({
                 text: errors[0].message,
-                className: 'error'
+                className: ClassName.OUTPUT_ERROR
             })
             return
         }
@@ -41,7 +42,7 @@ export class CalculatorOutput {
 
         this.renderParagraph({
             text: highlightedErrorsInvalidParts,
-            className: 'error'
+            className: ClassName.OUTPUT_ERROR
         })
     }
 

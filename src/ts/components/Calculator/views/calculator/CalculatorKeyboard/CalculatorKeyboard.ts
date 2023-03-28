@@ -1,8 +1,8 @@
+import { ClassName } from './../ClassName';
 import { ButtonList } from '@utilities/dataStructures/ButtonList';
-import { Button } from '@components/Elements/Button';
 import { DivElement } from '@components/Elements/DivElement';
 import { getCalculatorButtons } from './getCalculatorButtons';
-import { ButtonRole } from './buttonName';
+import { ButtonRole } from './ButtonRole';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
@@ -15,7 +15,7 @@ export class CalculatorKeyboard {
     private options: ICalculatorKeyboardOption
     constructor(options: ICalculatorKeyboardOption) {
         this.options = options
-        this.keyboardWrapper = new DivElement({ classNames: 'calculator__keyboard' })
+        this.keyboardWrapper = new DivElement({ classNames: ClassName.CALCULATOR_KEYBOARD })
         this.buttons = getCalculatorButtons()
         this.keyboardWrapper.append(...this.buttons.getAll())
         this.initButtonsListeners()

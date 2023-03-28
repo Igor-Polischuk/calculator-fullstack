@@ -9,7 +9,7 @@ export class CalculatorView implements ICalculatorView {
     constructor(model: ICalculatorModel) {
         this.model = model
         this.calculatorUI = new CalculatorUI({
-            onExpressionChange: (expression) => this.model.setExpression(expression)
+            onEqual: (expression) => this.model.setExpression(expression)
         })
 
         model.subscribe(CalculatorModelEvent.ResultChanged, (result) => {

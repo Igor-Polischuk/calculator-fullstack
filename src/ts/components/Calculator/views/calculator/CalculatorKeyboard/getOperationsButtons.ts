@@ -1,4 +1,5 @@
-import { ButtonRole } from './buttonName';
+import { ClassName } from './../ClassName';
+import { ButtonRole } from './ButtonRole';
 import { Button } from "@components/Elements/Button"
 import { allowedActions, calculatorConfig } from "@components/Calculator/controllers/config/calculator-config"
 
@@ -8,7 +9,7 @@ export function getOperationsButtons() {
     return operationsData.reduce<Record<string, Button>>((buttonsObj, operation) => {
         buttonsObj[operation.action] = new Button({
             text: operation.text,
-            classNames: 'button button--action',
+            classNames: ClassName.ACTION_BUTTON,
             role: ButtonRole.GET_VALUES,
             data: {
                 action: operation.action

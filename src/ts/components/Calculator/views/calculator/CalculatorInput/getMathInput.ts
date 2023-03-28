@@ -1,9 +1,9 @@
 import { Input } from "@components/Elements/Input"
+import { ClassName } from "../ClassName"
 
 export function getMathInput(){
-    const inputClasses = 'calculator__input'
     const input = new Input({
-        classNames: inputClasses,
+        classNames: ClassName.CALCULATOR_INPUT,
         placeholder: 'Enter what you want to calculate',
     })
 

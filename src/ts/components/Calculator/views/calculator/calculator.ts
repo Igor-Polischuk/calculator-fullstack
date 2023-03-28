@@ -1,3 +1,4 @@
+import { ClassName } from './ClassName';
 import { IError } from './../../interfaces/ICalculator';
 import { CalculatorOutput } from './CalculatorDisplay/CalculatorOutput';
 import { DivElement } from '@components/Elements/DivElement';
@@ -5,7 +6,7 @@ import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
 
 interface ICalculatorUIOptions {
-    onExpressionChange: (expression: string) => void;
+    onEqual: (expression: string) => void;
 }
 
 export class CalculatorUI {
@@ -16,7 +17,7 @@ export class CalculatorUI {
     private options: ICalculatorUIOptions;
     constructor(options: ICalculatorUIOptions) {
         this.options = options;
-        this.calculatorWrapper = new DivElement({ classNames: 'calculator' });
+        this.calculatorWrapper = new DivElement({ classNames: ClassName.CALCULATOR_WRAPPER });
         this.calculatorInput = new CalculatorInput();
         this.calculatorOutput = new CalculatorOutput();
         this.calculatorKeyboard = new CalculatorKeyboard({
@@ -47,6 +48,6 @@ export class CalculatorUI {
     private setExpression() {
         const expression = this.calculatorInput.inputText;
         if (expression.trim() === '') return
-        this.options.onExpressionChange(expression);
+        this.options.onEqual(expression);
     }
 }
