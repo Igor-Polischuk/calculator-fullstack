@@ -1,4 +1,4 @@
-import { CalculatorUI } from './calculator/calculator';
+import { CalculatorUI } from './calculator/CalculatorUI';
 import { ICalculatorModel, ICalculatorView } from "@components/Calculator/interfaces/ICalculator";
 import { CalculatorModelEvent } from "../calculator-model-event";
 
