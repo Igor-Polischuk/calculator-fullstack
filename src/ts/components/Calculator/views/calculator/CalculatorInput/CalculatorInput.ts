@@ -19,8 +19,7 @@ export class CalculatorInput {
         return this.input.value
     }
 
-    setInputValue(callback: (currentInputValue: string) => string) {
-        const newValue = callback(this.input.value)
+    setInputValue(newValue: string) {
         this.input.value = newValue
     }
 }

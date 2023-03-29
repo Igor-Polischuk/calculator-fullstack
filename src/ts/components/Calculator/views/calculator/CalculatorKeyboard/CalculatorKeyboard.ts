@@ -5,7 +5,7 @@ import { ButtonType } from './ButtonType';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
-    onButtonClick: (clickedButtonValue: string) => void
+    onChar: (clickedButtonValue: string) => void
     onBackspace: () => void
     onReset: () => void
 }
@@ -28,7 +28,7 @@ export class CalculatorKeyboard {
 
     private initButtonsListeners() {
         this.buttons.addClickListenersByType(ButtonType.Char, ({ button }) => {
-            this.params.onButtonClick(button.metaData.action)
+            this.params.onChar(button.metaData.action)
         })
 
         this.buttons.addClickListenersByType(ButtonType.Equal, () => {

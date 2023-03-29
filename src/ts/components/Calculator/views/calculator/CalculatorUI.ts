@@ -20,10 +20,10 @@ export class CalculatorUI {
         this.calculatorInput = new CalculatorInput();
         this.calculatorOutput = new CalculatorOutput();
         this.calculatorKeyboard = new CalculatorKeyboard({
-            onEqual: () => this.setExpression(),
-            onButtonClick: (clickedButtonValue) => this.calculatorInput.setInputValue(value => value + clickedButtonValue),
-            onReset: () => this.calculatorInput.setInputValue(() => ''),
-            onBackspace: () => this.calculatorInput.setInputValue(value => value.slice(0, -1))
+            onEqual: this.setExpression.bind(this),
+            onChar: this.onButtonClick.bind(this),
+            onBackspace: this.onBackspace.bind(this),
+            onReset: () => this.calculatorInput.setInputValue(''),
         });
 
         this.calculatorWrapper.append(
@@ -39,11 +39,21 @@ export class CalculatorUI {
 
     showCalculationResult(result: number){
         this.calculatorOutput.showCalculationResult(result, this.calculatorInput.inputText)
-        this.calculatorInput.setInputValue(() => result.toString())
+        this.calculatorInput.setInputValue(result.toString())
     }
 
     showCalculationError(errors: IError[]){
         this.calculatorOutput.showCalculationError(errors, this.calculatorInput.inputText)
+    }
+
+    private onButtonClick(clickedButtonValue: string){
+        const newInputValue = this.calculatorInput.inputText + clickedButtonValue
+        this.calculatorInput.setInputValue(newInputValue)
+    }
+
+    private onBackspace(){
+        const newInputValue = this.calculatorInput.inputText.slice(0, -1)
+        this.calculatorInput.setInputValue(newInputValue)
     }
 
     private setExpression() {
