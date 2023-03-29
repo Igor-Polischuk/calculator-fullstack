@@ -1,5 +1,5 @@
 import { Button } from "@components/Elements/Button"
-import { ButtonRole } from "./ButtonRole"
+import { ButtonType } from "../ButtonType"
 
 const ACTION_BUTTON_CLASS_NAME = 'button button--action'
 const NUMBER_BUTTON_CLASS_NAME = 'button button--number'
@@ -10,7 +10,7 @@ export function getNumpadButtons() {
         return new Button({
             classNames: (text === ')' || text === '(') ? ACTION_BUTTON_CLASS_NAME :  NUMBER_BUTTON_CLASS_NAME,
             text,
-            type: ButtonRole.GET_VALUES,
+            type: ButtonType.Char,
             data: {
                 action: text
             }

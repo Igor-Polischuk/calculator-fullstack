@@ -1,10 +1,11 @@
+import { ButtonType } from './../ButtonType';
 import { ButtonList } from '@utilities/dataStructures/ButtonList';
 import { getNumpadButtons } from "./getNumpadButtons"
 import { getOperationsButtons } from "./getOperationsButtons"
 import { getServiceButtons } from "./getServiceButtons"
 
 
-export function getCalculatorButtons(): ButtonList {
+export function getCalculatorButtons(): ButtonList<ButtonType> {
     const numpadButtons = getNumpadButtons()
     const operationsButton = getOperationsButtons()
     const { resultBtn, removeSymbolBtn, clearBtn } = getServiceButtons()
@@ -15,7 +16,7 @@ export function getCalculatorButtons(): ButtonList {
     const row4 = [operationsButton['tg'], operationsButton['!'], numpadButtons[1], numpadButtons[2], numpadButtons[3], operationsButton['-']]
     const row5 = [operationsButton['ctg'], operationsButton['%'], numpadButtons[0], numpadButtons[10], resultBtn, operationsButton['+']]
 
-    return new ButtonList([
+    return new ButtonList<ButtonType>([
         ...row1,
         ...row2,
         ...row3,

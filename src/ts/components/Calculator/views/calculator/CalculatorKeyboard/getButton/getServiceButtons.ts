@@ -1,4 +1,4 @@
-import { ButtonRole } from './ButtonRole';
+import { ButtonType } from '../ButtonType';
 import { Button } from "@components/Elements/Button"
 
 const ACTION_BUTTON_CLASS_NAME = 'button button--action'
@@ -7,18 +7,18 @@ const GET_RESULT_BUTTON_CLASS_NAME = 'button button--get-res'
 export function getServiceButtons() {
     const clearBtn = new Button({
         text: 'AC',
-        type: ButtonRole.CLEAR_ALL,
+        type: ButtonType.Clear,
         classNames: ACTION_BUTTON_CLASS_NAME,
     })
 
     const removeSymbolBtn = new Button({
         text: '←',
-        type: ButtonRole.CLEAR_CHAR,
+        type: ButtonType.Backspace,
         classNames: ACTION_BUTTON_CLASS_NAME,
     })
     const resultBtn = new Button({
         text: '=',
-        type: ButtonRole.GET_RESULT,
+        type: ButtonType.Equal,
         classNames: GET_RESULT_BUTTON_CLASS_NAME ,
     })
     return { resultBtn, removeSymbolBtn, clearBtn }

@@ -1,4 +1,4 @@
-import { ButtonRole } from './ButtonRole';
+import { ButtonType } from '../ButtonType';
 import { Button } from "@components/Elements/Button"
 import { allowedActions, calculatorConfig } from "@components/Calculator/controllers/config/calculator-config"
 
@@ -9,7 +9,7 @@ export function getOperationsButtons() {
         buttonsObj[operation.action] = new Button({
             text: operation.text,
             classNames: 'button button--action',
-            type: ButtonRole.GET_VALUES,
+            type: ButtonType.Char,
             data: {
                 action: operation.action
             }

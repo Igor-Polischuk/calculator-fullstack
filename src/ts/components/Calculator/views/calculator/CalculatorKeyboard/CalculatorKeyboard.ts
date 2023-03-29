@@ -1,7 +1,7 @@
 import { ButtonList } from '@utilities/dataStructures/ButtonList';
 import { DivElement } from '@components/Elements/DivElement';
-import { getCalculatorButtons } from './getCalculatorButtons';
-import { ButtonRole } from './ButtonRole';
+import { getCalculatorButtons } from './getButton/getCalculatorButtons';
+import { ButtonType } from './ButtonType';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
@@ -12,7 +12,7 @@ interface ICalculatorKeyboardOption {
 
 export class CalculatorKeyboard {
     private keyboardWrapper: DivElement
-    private buttons: ButtonList
+    private buttons: ButtonList<ButtonType>
     private params: ICalculatorKeyboardOption
     constructor(params: ICalculatorKeyboardOption) {
         this.params = params
@@ -27,19 +27,19 @@ export class CalculatorKeyboard {
     }
 
     private initButtonsListeners() {
-        this.buttons.addClickListenersByType(ButtonRole.GET_VALUES, ({ button }) => {
+        this.buttons.addClickListenersByType(ButtonType.Char, ({ button }) => {
             this.params.onButtonClick(button.metaData.action)
         })
 
-        this.buttons.addClickListenersByType(ButtonRole.GET_RESULT, () => {
+        this.buttons.addClickListenersByType(ButtonType.Equal, () => {
             this.params.onEqual()
         })
 
-        this.buttons.addClickListenersByType(ButtonRole.CLEAR_CHAR, () => {
+        this.buttons.addClickListenersByType(ButtonType.Backspace, () => {
             this.params.onBackspace()
         })
 
-        this.buttons.addClickListenersByType(ButtonRole.CLEAR_ALL, () => {
+        this.buttons.addClickListenersByType(ButtonType.Clear, () => {
             this.params.onReset()
         })
     }
