@@ -6,15 +6,17 @@ import { ButtonRole } from './ButtonRole';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
-    setInputValue: (callback: (currentInputValue: string) => string) => void
+    onButtonClick: (clickedButtonValue: string) => void
+    onBackspace: () => void
+    onReset: () => void
 }
 
 export class CalculatorKeyboard {
     private keyboardWrapper: DivElement
     private buttons: ButtonList
-    private options: ICalculatorKeyboardOption
-    constructor(options: ICalculatorKeyboardOption) {
-        this.options = options
+    private params: ICalculatorKeyboardOption
+    constructor(params: ICalculatorKeyboardOption) {
+        this.params = params
         this.keyboardWrapper = new DivElement({ classNames: ClassName.CALCULATOR_KEYBOARD })
         this.buttons = getCalculatorButtons()
         this.keyboardWrapper.append(...this.buttons.getAll())
@@ -27,19 +29,19 @@ export class CalculatorKeyboard {
 
     private initButtonsListeners() {
         this.buttons.addClickListenersByRole(ButtonRole.GET_VALUES, ({ button }) => {
-            this.options.setInputValue(value => value + button.metaData.action)
+            this.params.onButtonClick(button.metaData.action)
         })
 
         this.buttons.addClickListenersByRole(ButtonRole.GET_RESULT, () => {
-            this.options.onEqual()
+            this.params.onEqual()
         })
 
         this.buttons.addClickListenersByRole(ButtonRole.CLEAR_CHAR, () => {
-            this.options.setInputValue((value) => value.slice(0, -1))
+            this.params.onBackspace()
         })
 
         this.buttons.addClickListenersByRole(ButtonRole.CLEAR_ALL, () => {
-            this.options.setInputValue(() => '')
+            this.params.onReset()
         })
     }
 }
