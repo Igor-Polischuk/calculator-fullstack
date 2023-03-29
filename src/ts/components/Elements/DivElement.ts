@@ -1,12 +1,12 @@
 import { BaseElement } from "./BaseElement"
-import { IDivElement, IBaseElement, IBaseElementConfig } from "./interfaces"
+import { IDivElement, IBaseElement, IBaseElementParams } from "./interfaces"
 
 export class DivElement extends BaseElement implements IDivElement{
     private div: HTMLDivElement
     protected children: IBaseElement[] = []
 
-    constructor(config: IBaseElementConfig){
-        super(config)
+    constructor(params: IBaseElementParams){
+        super(params)
         this.div = document.createElement('div')
     }
 

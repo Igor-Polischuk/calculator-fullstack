@@ -1,10 +1,10 @@
-import { IBaseElement, IBaseElementConfig } from "./interfaces";
+import { IBaseElement, IBaseElementParams } from "./interfaces";
 
 export class BaseElement implements IBaseElement{
     protected classNames: string;
     protected parentNode: Element | null = null
-    constructor(config: IBaseElementConfig) {
-        this.classNames = config.classNames || '';
+    constructor(params: IBaseElementParams) {
+        this.classNames = params.classNames || '';
     }
 
     render(parentNode: Element) {

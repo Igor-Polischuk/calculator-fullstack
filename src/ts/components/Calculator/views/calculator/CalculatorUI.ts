@@ -4,7 +4,7 @@ import { DivElement } from '@components/Elements/DivElement';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
 
-interface ICalculatorUIOptions {
+interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
 }
 
@@ -13,9 +13,9 @@ export class CalculatorUI {
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
     private calculatorKeyboard: CalculatorKeyboard;
-    private options: ICalculatorUIOptions;
-    constructor(options: ICalculatorUIOptions) {
-        this.options = options;
+    private params: ICalculatorUIParams;
+    constructor(params: ICalculatorUIParams) {
+        this.params = params;
         this.calculatorWrapper = new DivElement({ classNames: 'calculator' });
         this.calculatorInput = new CalculatorInput();
         this.calculatorOutput = new CalculatorOutput();
@@ -54,6 +54,6 @@ export class CalculatorUI {
     private setExpression() {
         const expression = this.calculatorInput.inputText;
         if (expression.trim() === '') return
-        this.options.onEqual(expression);
+        this.params.onEqual(expression);
     }
 }

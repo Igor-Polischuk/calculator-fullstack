@@ -1,23 +1,23 @@
 import { BaseElement } from './BaseElement';
-import { IBaseElementConfig } from './interfaces';
+import { IBaseElementParams } from './interfaces';
 
-interface IParagraphConfig extends IBaseElementConfig{
+interface IParagraphConfig extends IBaseElementParams{
     text: string
 }
 
 export class Paragraph extends BaseElement {
     private paragraphElement: HTMLParagraphElement
-    constructor(config: IParagraphConfig){
-        super(config)
+    constructor(params: IParagraphConfig){
+        super(params)
         this.paragraphElement = document.createElement('p')
-        this.paragraphElement.innerHTML = config.text
+        this.paragraphElement.innerHTML = params.text
     }
 
     get domElement(){
         return this.paragraphElement
     }
 
-    set text(text: string){
+    set HTML(text: string){
         this.paragraphElement.innerHTML = text
     }
 }

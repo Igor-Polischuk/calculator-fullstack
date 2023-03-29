@@ -1,6 +1,6 @@
 import { IInput } from './interfaces';
 import { BaseElement } from './BaseElement';
-interface IInputConfig {
+interface IInputParams {
     classNames: string,
     value?: string,
     placeholder?: string
@@ -10,7 +10,7 @@ interface IInputConfig {
 export class Input extends BaseElement implements IInput {
     private input: HTMLInputElement
 
-    constructor({ classNames, value = '', placeholder = '', type = 'text' }: IInputConfig) {
+    constructor({ classNames, value = '', placeholder = '', type = 'text' }: IInputParams) {
         super({ classNames })
         this.classNames = classNames
 

@@ -1,7 +1,7 @@
 import { BaseElement } from "./BaseElement";
 import { IButton } from "./interfaces";
 
-interface IButtonConfig {
+interface IButtonParams {
     text: string,
     classNames: string,
     data?: Record<string, string>,
@@ -13,11 +13,11 @@ export class Button extends BaseElement implements IButton{
     private data?: Record<string, string> = {}
     private button: HTMLButtonElement
     private role?: string
-    constructor(config: IButtonConfig) {
-        super(config)
-        this.text = config.text
-        this.role = config.role
-        this.data = config.data
+    constructor(params: IButtonParams) {
+        super(params)
+        this.text = params.text
+        this.role = params.role
+        this.data = params.data
         this.button = document.createElement('button')
         this.button.innerHTML= this.text
     }

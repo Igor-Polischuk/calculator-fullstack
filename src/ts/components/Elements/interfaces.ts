@@ -1,4 +1,4 @@
-export interface IBaseElementConfig {
+export interface IBaseElementParams {
     parentNode?: Element,
     classNames?: string
 }
