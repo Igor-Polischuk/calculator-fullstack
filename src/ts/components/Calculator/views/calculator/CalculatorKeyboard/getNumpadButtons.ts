@@ -1,12 +1,14 @@
 import { Button } from "@components/Elements/Button"
-import { ClassName } from "../ClassName"
 import { ButtonRole } from "./ButtonRole"
+
+const ACTION_BUTTON_CLASS_NAME = 'button button--action'
+const NUMBER_BUTTON_CLASS_NAME = 'button button--get-res'
 
 export function getNumpadButtons() {
     const numpadButtonsText = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '(', ')']
     return numpadButtonsText.map(text => {
         return new Button({
-            classNames: (text === ')' || text === '(') ? ClassName.ACTION_BUTTON :  ClassName.NUMBER_BUTTON,
+            classNames: (text === ')' || text === '(') ? ACTION_BUTTON_CLASS_NAME :  NUMBER_BUTTON_CLASS_NAME,
             text,
             role: ButtonRole.GET_VALUES,
             data: {

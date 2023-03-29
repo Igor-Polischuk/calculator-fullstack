@@ -1,4 +1,3 @@
-import { ClassName } from './ClassName';
 import { IError } from '../../interfaces/ICalculator';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { DivElement } from '@components/Elements/DivElement';
@@ -17,7 +16,7 @@ export class CalculatorUI {
     private options: ICalculatorUIOptions;
     constructor(options: ICalculatorUIOptions) {
         this.options = options;
-        this.calculatorWrapper = new DivElement({ classNames: ClassName.CALCULATOR_WRAPPER });
+        this.calculatorWrapper = new DivElement({ classNames: 'calculator' });
         this.calculatorInput = new CalculatorInput();
         this.calculatorOutput = new CalculatorOutput();
         this.calculatorKeyboard = new CalculatorKeyboard({

@@ -3,7 +3,7 @@ import { ClassName } from "../ClassName"
 
 export function getMathInput(){
     const input = new Input({
-        classNames: ClassName.CALCULATOR_INPUT,
+        classNames: 'calculator__input',
         placeholder: 'Enter what you want to calculate',
     })
 

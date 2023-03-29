@@ -1,6 +1,5 @@
 import { DivElement } from "@components/Elements/DivElement";
 import { Input } from "@components/Elements/Input";
-import { ClassName } from "../ClassName";
 import { getMathInput } from "./getMathInput";
 
 export class CalculatorInput {
@@ -8,7 +7,7 @@ export class CalculatorInput {
     private inputWrapper: DivElement
     constructor() {
         this.input = getMathInput()
-        this.inputWrapper = new DivElement({ classNames: ClassName.CALCULATOR_FIELD })
+        this.inputWrapper = new DivElement({ classNames: 'calculator__field' })
         this.inputWrapper.append(this.input)
     }
 

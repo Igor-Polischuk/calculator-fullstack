@@ -1,4 +1,3 @@
-import { ClassName } from './../ClassName';
 import { ButtonList } from '@utilities/dataStructures/ButtonList';
 import { DivElement } from '@components/Elements/DivElement';
 import { getCalculatorButtons } from './getCalculatorButtons';
@@ -17,7 +16,7 @@ export class CalculatorKeyboard {
     private params: ICalculatorKeyboardOption
     constructor(params: ICalculatorKeyboardOption) {
         this.params = params
-        this.keyboardWrapper = new DivElement({ classNames: ClassName.CALCULATOR_KEYBOARD })
+        this.keyboardWrapper = new DivElement({ classNames: 'calculator__keyboard' })
         this.buttons = getCalculatorButtons()
         this.keyboardWrapper.append(...this.buttons.getAll())
         this.initButtonsListeners()
