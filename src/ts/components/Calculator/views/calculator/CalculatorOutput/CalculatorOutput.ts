@@ -4,7 +4,6 @@ import { DivElement } from "@components/Elements/DivElement";
 import { formatExpression } from '@utilities/formatText/formatExpression';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
 import { mergeRanges } from '@utilities/mergeRanges';
-import { replaceSubstringsWithTags } from '@utilities/formatText/replaceSubstringsWithTags';
 
 export class CalculatorOutput {
     private outputWrapper: DivElement
@@ -36,13 +35,32 @@ export class CalculatorOutput {
         }
         
         const formattedExpressionWithError = formatExpression(expressionWithError)
-        const highlightedErrors = replaceSubstringsWithTags(formattedExpressionWithError, invalidExpressionPartsIndexes, 'span')
+        const highlightedErrors = this.wrapSubstringsInSpan(formattedExpressionWithError, invalidExpressionPartsIndexes)
 
         this.renderParagraph({
             text: highlightedErrors,
             className: 'error'
         })
     }
+
+    private wrapSubstringsInSpan(str: string, indices: [number, number][]): string {
+        const { result } = indices.reduce(
+          ({ result, offset }, [start, end]) => {
+            console.log(start, end);
+            
+            const openTag = `<span>`;
+            const closeTag = `</span>`;
+            const replacement = openTag + str.slice(start, end + 1) + closeTag;
+            return {
+              result: result.slice(0, start + offset) + replacement + result.slice(end + 1 + offset),
+              offset: offset + replacement.length - (end - start + 1),
+            };
+          },
+          { result: str, offset: 0 }
+        );
+      
+        return result;
+      }
 
     private getInvalidExpressionPartsIndexes(errors: IError[]) {
         const invalidPartsIndexes = errors.map(error => error.errorRange || []).flat()
