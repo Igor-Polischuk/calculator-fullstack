@@ -1,4 +1,4 @@
-import { ButtonList } from '@utilities/dataStructures/ButtonList';
+import { ButtonList } from '@components/Calculator/views/calculator/CalculatorKeyboard/ButtonList';
 import { DivElement } from '@components/Elements/DivElement';
 import { getCalculatorButtons } from './getButton/getCalculatorButtons';
 import { ButtonType } from './ButtonType';

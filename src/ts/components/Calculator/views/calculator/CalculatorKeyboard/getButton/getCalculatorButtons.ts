@@ -1,5 +1,5 @@
 import { ButtonType } from './../ButtonType';
-import { ButtonList } from '@utilities/dataStructures/ButtonList';
+import { ButtonList } from '@components/Calculator/views/calculator/CalculatorKeyboard/ButtonList';
 import { getNumpadButtons } from "./getNumpadButtons"
 import { getOperationsButtons } from "./getOperationsButtons"
 import { getServiceButtons } from "./getServiceButtons"
