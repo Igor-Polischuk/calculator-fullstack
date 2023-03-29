@@ -46,11 +46,6 @@ export class CalculatorUI {
         this.calculatorOutput.showCalculationError(errors, this.calculatorInput.inputText)
     }
 
-    private handleKeyboardClick(clickedButtonValue: string){
-        this.calculatorInput.setInputValue(value => value + clickedButtonValue)
-        
-    }
-
     private setExpression() {
         const expression = this.calculatorInput.inputText;
         if (expression.trim() === '') return

@@ -5,18 +5,18 @@ interface IButtonParams {
     text: string,
     classNames: string,
     data?: Record<string, string>,
-    role?: string
+    type: string
 }
 
 export class Button extends BaseElement implements IButton{
+    public type: string
     private text: string;
     private data?: Record<string, string> = {}
     private button: HTMLButtonElement
-    private role?: string
     constructor(params: IButtonParams) {
         super(params)
         this.text = params.text
-        this.role = params.role
+        this.type = params.type
         this.data = params.data
         this.button = document.createElement('button')
         this.button.innerHTML= this.text
@@ -28,10 +28,6 @@ export class Button extends BaseElement implements IButton{
 
     get domElement(){
         return this.button
-    }
-
-    get getButtonRole(){
-        return this.role
     }
 
     get metaData(){

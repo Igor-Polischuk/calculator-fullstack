@@ -27,19 +27,19 @@ export class CalculatorKeyboard {
     }
 
     private initButtonsListeners() {
-        this.buttons.addClickListenersByRole(ButtonRole.GET_VALUES, ({ button }) => {
+        this.buttons.addClickListenersByType(ButtonRole.GET_VALUES, ({ button }) => {
             this.params.onButtonClick(button.metaData.action)
         })
 
-        this.buttons.addClickListenersByRole(ButtonRole.GET_RESULT, () => {
+        this.buttons.addClickListenersByType(ButtonRole.GET_RESULT, () => {
             this.params.onEqual()
         })
 
-        this.buttons.addClickListenersByRole(ButtonRole.CLEAR_CHAR, () => {
+        this.buttons.addClickListenersByType(ButtonRole.CLEAR_CHAR, () => {
             this.params.onBackspace()
         })
 
-        this.buttons.addClickListenersByRole(ButtonRole.CLEAR_ALL, () => {
+        this.buttons.addClickListenersByType(ButtonRole.CLEAR_ALL, () => {
             this.params.onReset()
         })
     }

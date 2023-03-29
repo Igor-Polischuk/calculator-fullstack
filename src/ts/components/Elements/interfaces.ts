@@ -10,7 +10,7 @@ export interface IBaseElement {
 export interface IButton extends IBaseElement {
     onClick: (callback: (e: MouseEvent) => void) => void
     metaData: Record<string, string>
-    getButtonRole?: string
+    type: string
 }
 
 export interface IInput extends IBaseElement {

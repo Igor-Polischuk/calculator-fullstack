@@ -9,7 +9,7 @@ export function getOperationsButtons() {
         buttonsObj[operation.action] = new Button({
             text: operation.text,
             classNames: 'button button--action',
-            role: ButtonRole.GET_VALUES,
+            type: ButtonRole.GET_VALUES,
             data: {
                 action: operation.action
             }

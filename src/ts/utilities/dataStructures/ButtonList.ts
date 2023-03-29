@@ -7,15 +7,15 @@ export class ButtonList {
         this.buttons = buttons
     }
 
-    addClickListenersByRole(role: string, callback: (params: {e: Event, button: Button}) => void) {
-        const buttons = this.getButtonsByRole(role)
+    addClickListenersByType(type: string, callback: (params: {e: Event, button: Button}) => void) {
+        const buttons = this.getButtonsByType(type)
         buttons.forEach(button => {
             button.onClick((e) => callback({e, button}))
         })
     }
 
-    getButtonsByRole(role: string){
-        return this.buttons.filter(button => button.getButtonRole === role)
+    getButtonsByType(type: string){
+        return this.buttons.filter(button => button.type === type)
     }
 
     getAll(){

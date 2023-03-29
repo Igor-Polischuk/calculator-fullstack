@@ -7,13 +7,13 @@ import { mergeRanges } from '@utilities/mergeRanges';
 import { replaceSubstringsWithTags } from '@utilities/formatText/replaceSubstringsWithTags';
 
 export class CalculatorOutput {
-    private displayDiv: DivElement
+    private outputWrapper: DivElement
     constructor() {
-        this.displayDiv = new DivElement({ classNames: 'calculator__result'})
+        this.outputWrapper = new DivElement({ classNames: 'calculator__result'})
     }
 
     get element() {
-        return this.displayDiv
+        return this.outputWrapper
     }
 
     showCalculationResult(result: number, expression: string) {
@@ -51,9 +51,9 @@ export class CalculatorOutput {
     }
 
     private renderParagraph(params: { text: string, className?: string }) {
-        this.displayDiv.domElement.classList.add('visible')
-        this.displayDiv.removeElement('p')
+        this.outputWrapper.domElement.classList.add('visible')
+        this.outputWrapper.removeElement('p')
         const p = new Paragraph({ text: params.text, classNames: params.className })
-        this.displayDiv.append(p)
+        this.outputWrapper.append(p)
     }
 }

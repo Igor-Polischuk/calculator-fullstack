@@ -10,7 +10,7 @@ export function getNumpadButtons() {
         return new Button({
             classNames: (text === ')' || text === '(') ? ACTION_BUTTON_CLASS_NAME :  NUMBER_BUTTON_CLASS_NAME,
             text,
-            role: ButtonRole.GET_VALUES,
+            type: ButtonRole.GET_VALUES,
             data: {
                 action: text
             }

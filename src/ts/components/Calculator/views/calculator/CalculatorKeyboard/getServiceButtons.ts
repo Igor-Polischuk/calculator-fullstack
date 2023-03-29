@@ -7,18 +7,18 @@ const GET_RESULT_BUTTON_CLASS_NAME = 'button button--get-res'
 export function getServiceButtons() {
     const clearBtn = new Button({
         text: 'AC',
-        role: ButtonRole.CLEAR_ALL,
+        type: ButtonRole.CLEAR_ALL,
         classNames: ACTION_BUTTON_CLASS_NAME,
     })
 
     const removeSymbolBtn = new Button({
         text: '←',
-        role: ButtonRole.CLEAR_CHAR,
+        type: ButtonRole.CLEAR_CHAR,
         classNames: ACTION_BUTTON_CLASS_NAME,
     })
     const resultBtn = new Button({
         text: '=',
-        role: ButtonRole.GET_RESULT,
+        type: ButtonRole.GET_RESULT,
         classNames: GET_RESULT_BUTTON_CLASS_NAME ,
     })
     return { resultBtn, removeSymbolBtn, clearBtn }
