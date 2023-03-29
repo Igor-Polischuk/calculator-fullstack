@@ -18,7 +18,7 @@ export function getServiceButtons() {
     })
     const resultBtn = new Button({
         text: '=',
-        role: 'button button--get-res',
+        role: ButtonRole.GET_RESULT,
         classNames: GET_RESULT_BUTTON_CLASS_NAME ,
     })
     return { resultBtn, removeSymbolBtn, clearBtn }
