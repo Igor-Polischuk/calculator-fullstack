@@ -9,6 +9,6 @@ export function pointValidator(expression: string): IError | undefined {
     
     if (numberWithSeveralPoints) return {
         message: Error.NumberPointError,
-        errorRange: findSubstringIndexes(expression, numberWithSeveralPoints[0])
+        errorPlace: findSubstringIndexes(expression, numberWithSeveralPoints[0])
     }
 }

@@ -43,17 +43,17 @@ export class CalculatorOutput {
         })
     }
 
-    private wrapSubstringsInSpan(str: string, indices: [number, number][]): string {
+    private wrapSubstringsInSpan(str: string, indices: {from: number, to: number}[]): string {
         const { result } = indices.reduce(
-          ({ result, offset }, [start, end]) => {
-            console.log(start, end);
+          ({ result, offset }, {from, to}) => {
+            console.log(from, to);
             
             const openTag = `<span>`;
             const closeTag = `</span>`;
-            const replacement = openTag + str.slice(start, end + 1) + closeTag;
+            const replacement = openTag + str.slice(from, to + 1) + closeTag;
             return {
-              result: result.slice(0, start + offset) + replacement + result.slice(end + 1 + offset),
-              offset: offset + replacement.length - (end - start + 1),
+              result: result.slice(0, from + offset) + replacement + result.slice(to + 1 + offset),
+              offset: offset + replacement.length - (to - from + 1),
             };
           },
           { result: str, offset: 0 }
@@ -63,7 +63,7 @@ export class CalculatorOutput {
       }
 
     private getInvalidExpressionPartsIndexes(errors: IError[]) {
-        const invalidPartsIndexes = errors.map(error => error.errorRange || []).flat()
+        const invalidPartsIndexes = errors.map(error => error.errorPlace || []).flat()
         return mergeRanges(invalidPartsIndexes)
 
     }

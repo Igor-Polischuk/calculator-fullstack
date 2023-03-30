@@ -25,7 +25,7 @@ export type ICalculatorConfig = Record<string, IOperation>
 
 export interface IError {
     message: string
-    errorRange?: [number, number][]    
+    errorPlace?: {from: number, to: number}[]    
 }
 
 export interface ICalculatorView { }

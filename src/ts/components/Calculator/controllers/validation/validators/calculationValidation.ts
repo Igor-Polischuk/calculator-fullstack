@@ -23,7 +23,7 @@ export function calculationValidation(checkedExpression: string): IError | undef
 
     return {
         message: 'unresolved expression format',
-        errorRange: indexesOfInvalidExpressionParts
+        errorPlace: indexesOfInvalidExpressionParts
     }
 }
 
@@ -38,7 +38,7 @@ function validateUnbracketedExpression(resultAcc: string, operation: string): st
 
 function getInvalidPartsIndexes(replacingResult: string, expression: string) {
     const invalidPartsOfExpression = replacingResult.split('0').filter(char => char !== '')
-    const indexesOfInvalidExpressionParts = invalidPartsOfExpression.reduce<[number, number][]>((indexesAcc, invalidPart) => {
+    const indexesOfInvalidExpressionParts = invalidPartsOfExpression.reduce<{from: number, to: number}[]>((indexesAcc, invalidPart) => {
         const indexesOfCurrentParts = findSubstringIndexes(expression, invalidPart)
         return [...indexesAcc, ...indexesOfCurrentParts]
     }, [])

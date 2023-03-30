@@ -7,7 +7,7 @@ export function zeroDivisionValidator(expression: string): IError | undefined{
     const zeroDivisionMatch = expression.match(regexPatterns.ZERO_DIVISION)
     if(zeroDivisionMatch) return {
         message: Error.ZeroDivisionError,
-        errorRange: [[zeroDivisionMatch.index!, zeroDivisionMatch.index!]]
+        errorPlace: [{from: zeroDivisionMatch.index!, to: zeroDivisionMatch.index!}]
     }
     return
 }

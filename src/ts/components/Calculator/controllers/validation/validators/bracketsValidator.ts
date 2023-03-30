@@ -9,7 +9,7 @@ export function bracketsValidator(expression: string): IError | undefined {
     if (incorrectBracketIndex !== -1) {
         return {
             message: Error.BracketError,
-            errorRange: [[incorrectBracketIndex, incorrectBracketIndex]]
+            errorPlace: [{from: incorrectBracketIndex, to: incorrectBracketIndex}]
         }
     }
 
@@ -18,11 +18,11 @@ export function bracketsValidator(expression: string): IError | undefined {
 
     if (wrongOpenBracketSiblings) return {
         message: Error.BracketAdjacentCharactersError,
-        errorRange: [[wrongOpenBracketSiblings.index!, wrongOpenBracketSiblings.index!]]
+        errorPlace: [{from: wrongOpenBracketSiblings.index!, to: wrongOpenBracketSiblings.index!}]
     }
 
     if (wrongClosedBracketSiblings) return {
         message: Error.BracketAdjacentCharactersError,
-        errorRange: [[wrongClosedBracketSiblings.index!, wrongClosedBracketSiblings.index!]]
+        errorPlace: [{from: wrongClosedBracketSiblings.index!, to: wrongClosedBracketSiblings.index!}]
     }
 }

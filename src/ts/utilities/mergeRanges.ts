@@ -1,13 +1,13 @@
-export function mergeRanges(ranges: [number, number][]): [number, number][] {
+export function mergeRanges(ranges: {from: number, to: number}[]): {from: number, to: number}[]{
     if (ranges.length < 2) {
         return ranges;
     }
-    const sortedRanges = [...ranges].sort((a, b) => a[0] - b[0])
-    const mergedRanges: [number, number][] = sortedRanges.reduce((acc, currentRange) => {
+    const sortedRanges = [...ranges].sort((a, b) => a.from - b.from)
+    const mergedRanges: {from: number, to: number}[] = sortedRanges.reduce((acc, currentRange) => {
         const previousRange = acc[acc.length - 1]
 
-        if (currentRange[0] <= previousRange[1]) {
-          previousRange[1] = Math.max(previousRange[1], currentRange[1])
+        if (currentRange.from <= previousRange.to) {
+          previousRange.to = Math.max(previousRange.to, currentRange.to)
         } else {
             return [...acc, currentRange]
         }
