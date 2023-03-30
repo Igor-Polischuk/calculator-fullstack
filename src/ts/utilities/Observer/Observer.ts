@@ -5,7 +5,7 @@ export class Observer<EventsTypes extends IEventMap> implements IObserver<IEvent
     protected observers: IObserverCallbacks = {}
 
     subscribe<EventName extends EventKey<EventsTypes>>(event: EventName, callback: IObserverCallback<EventsTypes[EventName]>) {
-        (this.observers[event] || (this.observers[event] = [])).push(callback);
+        (this.observers[event] || (this.observers[event] = [])).push(callback)
         return callback
     };
 

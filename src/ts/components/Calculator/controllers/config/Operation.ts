@@ -9,18 +9,18 @@ export class Operation implements IOperation {
     private exceptionHandler: IExceptionObj[] = []
     readonly priority: number
     readonly text
-    constructor(config: {
+    constructor(params: {
         reg: RegExp
         priority: number
         calculate: (...args: number[]) => number,
         exceptionHandler?: IExceptionObj[],
         text?: string
     }) {
-        this.reg = config.reg
-        this.calculate = config.calculate
-        this.exceptionHandler = config.exceptionHandler || []
-        this.priority = config.priority
-        this.text = config.text
+        this.reg = params.reg
+        this.calculate = params.calculate
+        this.exceptionHandler = params.exceptionHandler || []
+        this.priority = params.priority
+        this.text = params.text
     }
 
     checkException(numbers: number[], errorExpression?: string): void {
@@ -39,25 +39,24 @@ export class Operation implements IOperation {
 }
 
 export class MathFunction extends Operation {
-    constructor(config: { name: string, func: (...args: number[]) => number, exceptionHandler?: IExceptionObj[], text?: string }) {
+    constructor(params: { name: string, func: (...args: number[]) => number, exceptionHandler?: IExceptionObj[], text?: string }) {
         super({
-            reg: regularWithParam.getFunctionRegWithParam(config.name),
+            reg: regularWithParam.getFunctionRegWithParam(params.name),
             priority: Priority.Hight,
-            calculate: config.func,
-            exceptionHandler: config.exceptionHandler,
-            text: config.text
+            calculate: params.func,
+            exceptionHandler: params.exceptionHandler,
+            text: params.text
         });
     }
 }
 
 export class Constant extends Operation {
-    constructor(config: {name: string, value: number, reg?: RegExp, text?: string}) {
-        const regularForConst = new RegExp(`(?<![A-Za-z0-9])${config.name}`)
+    constructor(params: {name: string, value: number, reg?: RegExp, text?: string}) {
         super({
-            reg: config.reg ? config.reg : regularForConst,
+            reg: params.reg ? params.reg : regularWithParam.getConstantReg(params.name),
             priority: Priority.Constant,
-            calculate: () => config.value,
-            text: config.text
+            calculate: () => params.value,
+            text: params.text
         });
     }
 }

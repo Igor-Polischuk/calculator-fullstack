@@ -1,7 +1,6 @@
-import { IError } from '../interfaces/ICalculator';
+import { IError, ModelAllowedEvents, ICalculatorModel } from '../interfaces/ICalculator';
 import { CalculatorModelEvent} from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
-import { ModelAllowedEvents, ICalculatorModel } from "../interfaces/ICalculator";
 
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel{
@@ -10,13 +9,14 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
     private error: IError[] = [];
 
     setResult(res: number) {
-        this.result = res;
+        this.result = res
         this.error = []
         this.notifyAll(CalculatorModelEvent.ResultChanged, res)
     }
 
     setExpression(expression: string) {
-        this.expression = expression;
+        this.expression = expression
+        this.error = []
         this.notifyAll(CalculatorModelEvent.ExpressionChanged, expression)
     }
 

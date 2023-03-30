@@ -8,7 +8,7 @@ import { mergeRanges } from '@utilities/mergeRanges';
 export class CalculatorOutput {
     private outputWrapper: DivElement
     constructor() {
-        this.outputWrapper = new DivElement({ classNames: 'calculator__result'})
+        this.outputWrapper = new DivElement({ classNames: 'calculator__result' })
     }
 
     get element() {
@@ -33,7 +33,7 @@ export class CalculatorOutput {
             })
             return
         }
-        
+
         const formattedExpressionWithError = formatExpression(expressionWithError)
         const highlightedErrors = this.wrapSubstringsInSpan(formattedExpressionWithError, invalidExpressionPartsIndexes)
 
@@ -43,24 +43,17 @@ export class CalculatorOutput {
         })
     }
 
-    private wrapSubstringsInSpan(str: string, indices: {from: number, to: number}[]): string {
+    private wrapSubstringsInSpan(str: string, indices: { from: number, to: number }[]): string {
         const { result } = indices.reduce(
-          ({ result, offset }, {from, to}) => {
-            console.log(from, to);
-            
-            const openTag = `<span>`;
-            const closeTag = `</span>`;
-            const replacement = openTag + str.slice(from, to + 1) + closeTag;
-            return {
-              result: result.slice(0, from + offset) + replacement + result.slice(to + 1 + offset),
-              offset: offset + replacement.length - (to - from + 1),
-            };
-          },
-          { result: str, offset: 0 }
-        );
-      
+            ({ result, offset }, { from, to }) => {
+                const replacement = `<span>${str.slice(from, to + 1)}</span>`
+                return {
+                    result: result.slice(0, from + offset) + replacement + result.slice(to + 1 + offset),
+                    offset: offset + replacement.length - (to - from + 1),
+                };
+            }, { result: str, offset: 0 });
         return result;
-      }
+    }
 
     private getInvalidExpressionPartsIndexes(errors: IError[]) {
         const invalidPartsIndexes = errors.map(error => error.errorPlace || []).flat()
