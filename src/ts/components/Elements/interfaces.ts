@@ -5,6 +5,7 @@ export interface IBaseElementParams {
 
 export interface IBaseElement {
     domElement: Element,
+    append: (...elements: IBaseElement[]) => void
     render: (parentNode: Element) => void
 }
 export interface IButton extends IBaseElement {
@@ -19,7 +20,6 @@ export interface IInput extends IBaseElement {
 }
 
 export interface IDivElement extends IBaseElement{
-    append: (...elements: IBaseElement[]) => void
 }
 
 export interface IDivElement extends IBaseElement{

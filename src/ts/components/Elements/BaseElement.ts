@@ -3,6 +3,8 @@ import { IBaseElement, IBaseElementParams } from "./interfaces";
 export class BaseElement implements IBaseElement{
     protected classNames: string;
     protected parentNode: Element | null = null
+    protected children: IBaseElement[] = []
+
     constructor(params: IBaseElementParams) {
         this.classNames = params.classNames || '';
     }
@@ -16,5 +18,12 @@ export class BaseElement implements IBaseElement{
 
     get domElement(): Element {
         throw new Error('domEl getter not implemented');
+    }
+
+    append(...elements: IBaseElement[]){
+        elements.forEach(element => {
+            element.render(this.domElement)
+            this.children = [...this.children, element]
+        })
     }
 }

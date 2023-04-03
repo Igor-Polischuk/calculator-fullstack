@@ -3,7 +3,6 @@ import { IDivElement, IBaseElement, IBaseElementParams } from "./interfaces"
 
 export class DivElement extends BaseElement implements IDivElement{
     private div: HTMLDivElement
-    protected children: IBaseElement[] = []
 
     constructor(params: IBaseElementParams){
         super(params)
@@ -20,12 +19,4 @@ export class DivElement extends BaseElement implements IDivElement{
             element.remove()
         }
     }
-
-    append(...elements: IBaseElement[]){
-        elements.forEach(element => {
-            element.render(this.div)
-            this.children = [...this.children, element]
-        })
-    }
-
 }
