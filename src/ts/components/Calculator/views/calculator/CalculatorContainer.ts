@@ -47,11 +47,12 @@ export class CalculatorContainer {
     showCalculationResult(result: number){
         this.calculatorOutput.showCalculationResult(result, this.calculatorInput.inputText)
         this.calculatorInput.setInputValue(result.toString())
+        this.calculatorDetail.hideDetail()
     }
 
     showCalculationError(errors: IError[]){
         this.calculatorOutput.showCalculationError(errors, this.calculatorInput.inputText)
-        this.calculatorDetail.showErrorsInfo(errors, this.calculatorInput.inputText)
+        this.calculatorDetail.showErrorsInfo(errors)
     }
 
     private onButtonClick(clickedButtonValue: string){

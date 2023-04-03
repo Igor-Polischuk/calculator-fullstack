@@ -110,18 +110,29 @@
     }
 
     &__detail{
-        // display: none;
+        display: none;
         width: 100%;
-        border-radius: 5px;
-        border: 2px solid $blue-2;
-        margin-top: 40px;
         padding: 10px;
-        background-color: $bg-color;
+        border-radius: 5px;
+        margin-top: 40px;
+        background-color: $accent-color;
+        box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 5%);
         
-        .error-info{
-            border: 1px solid $red;
+        .detail-error-info{
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            list-style: none;
+            gap: 10px;
+
+
+            li{
+                padding: 10px;
+                text-transform: uppercase;
+                border-radius: 5px;
+                border: 1px solid $red;
+                display: flex;
+                justify-content: space-between;
+            }
         }
     }
 
