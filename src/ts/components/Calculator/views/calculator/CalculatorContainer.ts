@@ -35,13 +35,14 @@ export class CalculatorContainer {
             this.calculatorInput.element,
             this.calculatorOutput.element,
             this.calculatorKeyboard.element,
+            this.calculatorDetail.element
         );
 
-        this.wrapper.append(this.calculatorWrapper, this.calculatorDetail.element)
+        // this.wrapper.append(this.calculatorWrapper, this.calculatorDetail.element)
     }
 
     get element() {
-        return this.wrapper;
+        return this.calculatorWrapper
     }
 
     showCalculationResult(result: number){

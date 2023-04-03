@@ -1,7 +1,7 @@
 
 import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { regexPatterns } from "../../regex";
-import { bracketsOrder } from "../bracketsOrder";
+import { bracketsOrder } from "../helpers/bracketsOrder";
 import { Error } from "../error";
 
 export function bracketsValidator(expression: string): IError | undefined {

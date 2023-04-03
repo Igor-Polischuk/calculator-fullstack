@@ -4,22 +4,22 @@ import { CalculatorModelEvent } from "../calculator-model-event";
 
 
 export class CalculatorView implements ICalculatorView {
-    private calculatorUI: CalculatorContainer
+    private calculatorContainer: CalculatorContainer
     private model: ICalculatorModel
     constructor(model: ICalculatorModel) {
         this.model = model
-        this.calculatorUI = new CalculatorContainer({
+        this.calculatorContainer = new CalculatorContainer({
             onEqual: (expression) => this.model.setExpression(expression)
         })
 
         model.subscribe(CalculatorModelEvent.ResultChanged, (result) => {
-            this.calculatorUI.showCalculationResult(result)
+            this.calculatorContainer.showCalculationResult(result)
         })
         model.subscribe(CalculatorModelEvent.ErrorChanged, (error) => {
-            this.calculatorUI.showCalculationError(error)
+            this.calculatorContainer.showCalculationError(error)
         })
 
         const root = document.querySelector('.container')!
-        this.calculatorUI.element.render(root)
+        this.calculatorContainer.element.render(root)
     }
 }

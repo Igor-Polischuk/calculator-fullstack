@@ -112,17 +112,22 @@
     &__detail{
         display: none;
         width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        margin-top: 40px;
-        background-color: $accent-color;
-        box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 5%);
+        margin-top: 20px;
+        border-top: 1px solid $gray;
+        padding-top: 10px;
+
+        &__title{
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
         
         .detail-error-info{
             display: flex;
             flex-direction: column;
             list-style: none;
-            gap: 10px;
+            gap: 5px;
 
 
             li{
