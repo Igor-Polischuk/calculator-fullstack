@@ -8,7 +8,7 @@ interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
 }
 
-export class CalculatorUI {
+export class CalculatorContainer {
     private calculatorWrapper: DivElement;
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
@@ -57,8 +57,11 @@ export class CalculatorUI {
     }
 
     private setExpression() {
-        const expression = this.calculatorInput.inputText;
-        if (expression.trim() === '') return
-        this.params.onEqual(expression);
+        const expression = this.calculatorInput.inputText
+        const isExpressionEmpty = expression.trim() === ''
+
+        if (!isExpressionEmpty) {
+            this.params.onEqual(expression);
+        }
     }
 }

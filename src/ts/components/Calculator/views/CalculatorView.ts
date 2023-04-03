@@ -1,14 +1,14 @@
-import { CalculatorUI } from './calculator/CalculatorUI';
+import { CalculatorContainer } from './calculator/CalculatorContainer';
 import { ICalculatorModel, ICalculatorView } from "@components/Calculator/interfaces/ICalculator";
 import { CalculatorModelEvent } from "../calculator-model-event";
 
 
 export class CalculatorView implements ICalculatorView {
-    private calculatorUI: CalculatorUI
+    private calculatorUI: CalculatorContainer
     private model: ICalculatorModel
     constructor(model: ICalculatorModel) {
         this.model = model
-        this.calculatorUI = new CalculatorUI({
+        this.calculatorUI = new CalculatorContainer({
             onEqual: (expression) => this.model.setExpression(expression)
         })
 

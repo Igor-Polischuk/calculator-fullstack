@@ -35,7 +35,7 @@ export class CalculatorOutput {
         }
 
         const formattedExpressionWithError = formatExpression(expressionWithError)
-        const highlightedErrors = this.wrapSubstringsInSpan(formattedExpressionWithError, invalidExpressionPartsIndexes)
+        const highlightedErrors = this.highlightErrors(formattedExpressionWithError, invalidExpressionPartsIndexes)
 
         this.renderParagraph({
             text: highlightedErrors,
@@ -43,7 +43,7 @@ export class CalculatorOutput {
         })
     }
 
-    private wrapSubstringsInSpan(str: string, indices: { from: number, to: number }[]): string {
+    private highlightErrors(str: string, indices: { from: number, to: number }[]): string {
         const { result } = indices.reduce(
             ({ result, offset }, { from, to }) => {
                 const replacement = `<span>${str.slice(from, to + 1)}</span>`
