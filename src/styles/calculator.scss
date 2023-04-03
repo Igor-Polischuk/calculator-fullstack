@@ -110,14 +110,19 @@
     }
 
     &__detail{
-        display: none;
-        height: 200px;
+        // display: none;
         width: 100%;
         border-radius: 5px;
         border: 2px solid $blue-2;
         margin-top: 40px;
         padding: 10px;
         background-color: $bg-color;
+        
+        .error-info{
+            border: 1px solid $red;
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
 }

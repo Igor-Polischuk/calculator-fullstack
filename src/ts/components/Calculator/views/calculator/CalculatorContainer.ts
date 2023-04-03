@@ -51,6 +51,7 @@ export class CalculatorContainer {
 
     showCalculationError(errors: IError[]){
         this.calculatorOutput.showCalculationError(errors, this.calculatorInput.inputText)
+        this.calculatorDetail.showErrorsInfo(errors, this.calculatorInput.inputText)
     }
 
     private onButtonClick(clickedButtonValue: string){
