@@ -1,5 +1,5 @@
 import { ICalculatorController, ICalculatorModel, IError } from '@components/Calculator/interfaces/ICalculator';
-import { formatDecimal } from '@utilities/formatDecimal';
+import { formatDecimal } from '@utilities/formatText/formatDecimal';
 import { CalculatorModelEvent } from '../calculator-model-event';
 import { calculatorConfig } from './config/calculator-config';
 import { formatExpression, getNumbersFromExpression, processExpression } from './services';

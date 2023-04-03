@@ -1,4 +1,4 @@
-import { findSubstringIndexes } from '@utilities/findSubstringIndexes';
+import { findSubstringIndexes } from '@utilities/substring/findSubstringIndexes';
 import { calculatorConfig } from "../../config/calculator-config";
 import { IError } from "@components/Calculator/interfaces/ICalculator"
 import { processExpression, unwrapBracketInExpression } from "../../services";

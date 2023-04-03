@@ -3,7 +3,7 @@ import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
 import { formatExpression } from '@utilities/formatText/formatExpression';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
-import { mergeRanges } from '@utilities/mergeRanges';
+import { mergeRanges } from '@utilities/ranges/mergeRanges';
 
 export class CalculatorOutput {
     private outputWrapper: DivElement
