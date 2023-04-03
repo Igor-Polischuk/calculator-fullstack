@@ -1,13 +1,13 @@
 import { BaseElement } from './BaseElement';
 import { IBaseElementParams } from './interfaces';
 
-interface IParagraphConfig extends IBaseElementParams{
+interface IParagraphParams extends IBaseElementParams{
     text: string
 }
 
 export class Paragraph extends BaseElement {
     private paragraphElement: HTMLParagraphElement
-    constructor(params: IParagraphConfig){
+    constructor(params: IParagraphParams){
         super(params)
         this.paragraphElement = document.createElement('p')
         this.paragraphElement.innerHTML = params.text

@@ -4,6 +4,7 @@ import { DivElement } from "@components/Elements/DivElement";
 import { formatExpression } from '@utilities/formatText/formatExpression';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
 import { mergeRanges } from '@utilities/ranges/mergeRanges';
+import { Span } from '@components/Elements/Span';
 
 export class CalculatorOutput {
     private outputWrapper: DivElement
@@ -46,7 +47,8 @@ export class CalculatorOutput {
     private highlightErrors(str: string, indices: { from: number, to: number }[]): string {
         const { result } = indices.reduce(
             ({ result, offset }, { from, to }) => {
-                const replacement = `<span>${str.slice(from, to + 1)}</span>`
+                const targetString = str.slice(from, to + 1)
+                const replacement = new Span({text: targetString}).spanString
                 return {
                     result: result.slice(0, from + offset) + replacement + result.slice(to + 1 + offset),
                     offset: offset + replacement.length - (to - from + 1),
