@@ -20,6 +20,6 @@ export function bracketsOrder(expression: string) {
     if (stack.length !== 0) {
         return expression.lastIndexOf('(')
     }
-
+    
     return -1
 }

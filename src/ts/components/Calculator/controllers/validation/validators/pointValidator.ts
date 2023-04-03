@@ -8,6 +8,6 @@ export function pointValidator(expression: string): IError | undefined {
     
     if (numberWithSeveralPoints) return {
         message: Error.NumberPointError,
-        errorPlace: findSubstringIndexes(expression, numberWithSeveralPoints[0])
+        errorPlace: numberWithSeveralPoints.flatMap((num) => findSubstringIndexes(expression, num))
     }
 }
