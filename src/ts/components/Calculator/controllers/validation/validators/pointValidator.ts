@@ -1,5 +1,4 @@
 import { IError } from "@components/Calculator/interfaces/ICalculator";
-import { findSubstringIndexes } from "@utilities/substring/findSubstringIndexes";
 import { regexPatterns } from "../../regex"
 import { Error } from "../error"
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";

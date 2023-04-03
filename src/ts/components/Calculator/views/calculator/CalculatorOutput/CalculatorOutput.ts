@@ -16,8 +16,8 @@ export class CalculatorOutput {
         return this.outputWrapper
     }
 
-    showCalculationResult(result: number, expression: string) {
-        const resultText = `${replaceMathOperators(expression)} = <b>${result}</b>`
+    showCalculationResult(result: number, calculatedExpression: string) {
+        const resultText = `${replaceMathOperators(calculatedExpression)} = <b>${result}</b>`
         this.renderParagraph({
             text: resultText,
             className: 'result showup'
