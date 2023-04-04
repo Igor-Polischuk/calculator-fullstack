@@ -29,6 +29,9 @@ export class CalculatorDetail {
 
     showErrorsInfo(errors: IError[]) {
         const errorsInfo = this.getErrorsInfo(errors);
+        if (errorsInfo.length === 0){
+            return
+        }
         
         this.detailWrapper.domElement.style.display = 'block'
         this.detailWrapper.removeElement('ul')
