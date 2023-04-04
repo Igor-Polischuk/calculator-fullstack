@@ -77,7 +77,7 @@ export class CalculatorOutput {
     }
 
     private getInvalidExpressionPartsIndexes(errors: IError[]) {
-        const invalidPartsIndexes = errors.map(error => error.errorPlace || []).flat()
+        const invalidPartsIndexes = errors.flatMap(error => error.errorPlace || [])
         return mergeRanges(invalidPartsIndexes)
     }
 

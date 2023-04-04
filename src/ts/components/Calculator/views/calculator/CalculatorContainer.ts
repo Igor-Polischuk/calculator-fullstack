@@ -3,7 +3,7 @@ import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { DivElement } from '@components/Elements/DivElement';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
-import { CalculatorDetail } from './CalculatorDetail/CalculatorDetail';
+import { CalculatorErrorsDetails } from './CalculatorDetail/CalculatorDetail';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
@@ -14,7 +14,7 @@ export class CalculatorContainer {
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
     private calculatorKeyboard: CalculatorKeyboard;
-    private calculatorDetail: CalculatorDetail;
+    private calculatorDetail: CalculatorErrorsDetails;
     private params: ICalculatorUIParams;
 
     constructor(params: ICalculatorUIParams) {
@@ -24,7 +24,7 @@ export class CalculatorContainer {
         this.calculatorOutput = new CalculatorOutput({
             onErrorClick: this.onErrorClick.bind(this)
         });
-        this.calculatorDetail = new CalculatorDetail({
+        this.calculatorDetail = new CalculatorErrorsDetails({
             onErrorClick: this.onErrorClick.bind(this)
         });
         this.calculatorKeyboard = new CalculatorKeyboard({

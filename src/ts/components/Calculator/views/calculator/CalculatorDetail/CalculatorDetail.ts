@@ -4,7 +4,7 @@ import { ListItem } from "@components/Elements/ListItem";
 import { Paragraph } from "@components/Elements/Paragraph";
 import { UnorderedList } from "@components/Elements/UList";
 
-interface ErrorInfo {
+interface IFormattedErrorsInfo {
     message: string;
     index: number;
 }
@@ -13,52 +13,58 @@ interface ICalculatorDetailParams{
     onErrorClick: (start: number, end: number) => void
 }
 
-export class CalculatorDetail {
-    private detailWrapper: DivElement
+export class CalculatorErrorsDetails {
+    private errorDetailsWrapper: DivElement
     params: ICalculatorDetailParams;
     constructor(params: ICalculatorDetailParams) {
         this.params = params
-        this.detailWrapper = new DivElement({ classNames: 'calculator__detail' })
+        this.errorDetailsWrapper = new DivElement({ classNames: 'calculator__detail' })
         const title = new Paragraph({ classNames: 'calculator__detail__title', text: 'Validation errors' })
-        this.detailWrapper.append(title)
+        this.errorDetailsWrapper.append(title)
     }
 
     get element() {
-        return this.detailWrapper
+        return this.errorDetailsWrapper
     }
 
     showErrorsInfo(errors: IError[]) {
-        const errorsInfo = this.getErrorsInfo(errors);
-        if (errorsInfo.length === 0){
+        const formattedErrors = this.formatErrors(errors);
+        if (formattedErrors.length === 0){
             return
         }
         
-        this.detailWrapper.domElement.style.display = 'block'
-        this.detailWrapper.removeElement('#detail-list')
+        this.errorDetailsWrapper.domElement.classList.add('show')
+        this.errorDetailsWrapper.removeElement('#detail-list')
         const unorderedList = new UnorderedList({ classNames: 'detail-error-info', id: 'detail-list' })
 
-        errorsInfo.forEach(({ message, index }) => {
-            const listItem = new ListItem({})
-            listItem.onClick(() => this.params.onErrorClick(index, index))
-            const errorMessage = new Paragraph({ text: `${message} by index:` });
-            const errorIndex = new Paragraph({ text: index.toString() });
-            listItem.append(errorMessage, errorIndex);
-            unorderedList.append(listItem)
-        })
-
-        this.detailWrapper.append(unorderedList)
+        const listItemsArray = this.getListItems(formattedErrors)
+        unorderedList.append(...listItemsArray)
+        this.errorDetailsWrapper.append(unorderedList)
     }
 
     hideDetail() {
-        this.detailWrapper.domElement.style.display = 'none'
+        this.errorDetailsWrapper.domElement.classList.remove('show')
     }
 
-    private getErrorsInfo(errors: IError[]): ErrorInfo[] {
-        const errorsInfo = errors.reduce<ErrorInfo[]>((acc, { message, errorPlace = [] }) => {
-            const errorInfos = errorPlace.map((place: { from: number, to: number }) => ({ message, index: place.to }));
-            return [...acc, ...errorInfos];
+    private getListItems(formattedErrors: IFormattedErrorsInfo[]){
+        return formattedErrors.map(({ message, index }) => {
+            const errorMessage = new Paragraph({ text: `${message} by index:` })
+            const errorIndex = new Paragraph({ text: index.toString() })
+            const listItem = new ListItem({})
+
+            listItem.append(errorMessage, errorIndex);
+            listItem.onClick(() => this.params.onErrorClick(index, index))
+
+            return listItem
+        })
+    }
+
+    private formatErrors(errors: IError[]): IFormattedErrorsInfo[] {
+        const formattedErrors  = errors.reduce<IFormattedErrorsInfo[]>((formattedErrors , { message, errorPlace }) => {
+            const errorInfos = errorPlace!.map((place) => ({ message, index: place.to }));
+            return [...formattedErrors , ...errorInfos];
         }, []);
 
-        return [...errorsInfo].sort((error1, error2) => error1.index - error2.index)
+        return [...formattedErrors ].sort((error1, error2) => error1.index - error2.index)
     }
 }
