@@ -18,6 +18,10 @@ export class CalculatorInput {
         return this.inputWrapper
     }
 
+    get inputElement(){
+        return this.input.domElement
+    }
+
     get inputText() {
         return this.input.value
     }

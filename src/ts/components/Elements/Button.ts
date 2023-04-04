@@ -22,10 +22,6 @@ export class Button extends BaseElement implements IButton{
         this.button.innerHTML= this.text
     }
 
-    onClick(callback: (e: MouseEvent) => void) {
-        this.button.addEventListener('click', (e) => callback(e))
-    }
-
     get domElement(){
         return this.button
     }

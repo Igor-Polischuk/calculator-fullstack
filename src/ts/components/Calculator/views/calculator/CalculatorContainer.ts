@@ -10,7 +10,6 @@ interface ICalculatorUIParams {
 }
 
 export class CalculatorContainer {
-    private wrapper: DivElement;
     private calculatorWrapper: DivElement;
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
@@ -20,10 +19,11 @@ export class CalculatorContainer {
 
     constructor(params: ICalculatorUIParams) {
         this.params = params;
-        this.wrapper = new DivElement({})
         this.calculatorWrapper = new DivElement({ classNames: 'calculator' });
         this.calculatorInput = new CalculatorInput();
-        this.calculatorOutput = new CalculatorOutput();
+        this.calculatorOutput = new CalculatorOutput({
+            onErrorClick: this.onErrorClick.bind(this)
+        });
         this.calculatorDetail = new CalculatorDetail();
         this.calculatorKeyboard = new CalculatorKeyboard({
             onEqual: this.setExpression.bind(this),
@@ -55,6 +55,11 @@ export class CalculatorContainer {
         const expressionWithError  = this.calculatorInput.inputText
         this.calculatorOutput.showCalculationError(errors, expressionWithError )
         this.calculatorDetail.showErrorsInfo(errors)
+    }
+
+    private onErrorClick(from: number, to: number){
+        this.calculatorInput.inputElement.focus()
+        this.calculatorInput.inputElement.setSelectionRange(from, to + 1);
     }
 
     private onButtonClick(clickedButtonValue: string){

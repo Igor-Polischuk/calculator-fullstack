@@ -12,9 +12,15 @@ interface IHighlightErrorsReduce{
     spansArray: Span[]
 }
 
+interface ICalculatorOutputParams{
+    onErrorClick: (start: number, end: number) => void
+}
+
 export class CalculatorOutput {
     private outputWrapper: DivElement
-    constructor() {
+    params: ICalculatorOutputParams;
+    constructor(params: ICalculatorOutputParams) {
+        this.params = params
         this.outputWrapper = new DivElement({ classNames: 'calculator__result' })
     }
 
@@ -23,9 +29,11 @@ export class CalculatorOutput {
     }
 
     showCalculationResult(result: number, calculatedExpression: string) {
-        const resultText = `${replaceMathOperators(calculatedExpression)} = <b>${result}</b>`
+        const expressionSpan = new Span({text: replaceMathOperators(calculatedExpression)})
+        const equalSymbolSpan = new Span({text: ' = '})
+        const resultSpan = new Span({classNames: 'bold', text: result.toString()})
         this.renderParagraph({
-            text: resultText,
+            children: [expressionSpan, equalSymbolSpan, resultSpan],
             className: 'result showup'
         })
     }
@@ -56,6 +64,7 @@ export class CalculatorOutput {
                 const notErrorSpan = new Span({ text: notErrorString })
                 const errorString = str.slice(from, to + 1)
                 const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
+                errorSpan.onClick(() => this.params.onErrorClick(from, to))
                 return {
                     offset: offset + errorString.length - (to - from + 1),
                     spansArray: [...spansArray, notErrorSpan, errorSpan],

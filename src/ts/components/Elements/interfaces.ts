@@ -7,9 +7,9 @@ export interface IBaseElement {
     domElement: Element,
     append: (...elements: IBaseElement[]) => void
     render: (parentNode: Element) => void
+    onClick: (callback: (e: Event) => void) => void
 }
 export interface IButton extends IBaseElement {
-    onClick: (callback: (e: MouseEvent) => void) => void
     metaData: Record<string, string>
     type: string
 }

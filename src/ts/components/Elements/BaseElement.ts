@@ -26,4 +26,8 @@ export class BaseElement implements IBaseElement{
             this.children = [...this.children, element]
         })
     }
+
+    onClick(callback: (e: Event) => void) {
+        this.domElement.addEventListener('click', (e) => callback(e))
+    }
 }
