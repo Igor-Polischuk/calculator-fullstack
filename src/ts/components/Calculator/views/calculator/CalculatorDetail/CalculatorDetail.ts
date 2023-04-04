@@ -6,10 +6,13 @@ import { UnorderedList } from "@components/Elements/UList";
 
 interface IFormattedErrorsInfo {
     message: string;
-    index: number;
+    indexes: {
+        from: number;
+        to: number;
+    };
 }
 
-interface ICalculatorDetailParams{
+interface ICalculatorDetailParams {
     onErrorClick: (start: number, end: number) => void
 }
 
@@ -27,17 +30,17 @@ export class CalculatorErrorsDetails {
         return this.errorDetailsWrapper
     }
 
-    showErrorsInfo(errors: IError[]) {
+    showErrorsInfo(errors: IError[], invalidedExpression: string) {
         const formattedErrors = this.formatErrors(errors);
-        if (formattedErrors.length === 0){
+        if (formattedErrors.length === 0) {
             return
         }
-        
+
         this.errorDetailsWrapper.domElement.classList.add('show')
         this.errorDetailsWrapper.removeElement('#detail-list')
         const unorderedList = new UnorderedList({ classNames: 'detail-error-info', id: 'detail-list' })
 
-        const listItemsArray = this.getListItems(formattedErrors)
+        const listItemsArray = this.getListItems(formattedErrors, invalidedExpression)
         unorderedList.append(...listItemsArray)
         this.errorDetailsWrapper.append(unorderedList)
     }
@@ -46,25 +49,29 @@ export class CalculatorErrorsDetails {
         this.errorDetailsWrapper.domElement.classList.remove('show')
     }
 
-    private getListItems(formattedErrors: IFormattedErrorsInfo[]){
-        return formattedErrors.map(({ message, index }) => {
-            const errorMessage = new Paragraph({ text: `${message} by index:` })
-            const errorIndex = new Paragraph({ text: index.toString() })
+    private getListItems(formattedErrors: IFormattedErrorsInfo[], invalidedExpression: string) {
+        return formattedErrors.map(({ message, indexes }) => {
+            const invalidString = invalidedExpression.substring(indexes.from, indexes.to + 1)
+            const errorMessage = new Paragraph({ text: `${message}:` })
+            const errorIndex = new Paragraph({ text: invalidString })
             const listItem = new ListItem({})
 
             listItem.append(errorMessage, errorIndex);
-            listItem.onClick(() => this.params.onErrorClick(index, index))
+            listItem.onClick(() => this.params.onErrorClick(indexes.to, indexes.to))
 
             return listItem
         })
     }
 
     private formatErrors(errors: IError[]): IFormattedErrorsInfo[] {
-        const formattedErrors  = errors.reduce<IFormattedErrorsInfo[]>((formattedErrors , { message, errorPlace }) => {
-            const errorInfos = errorPlace!.map((place) => ({ message, index: place.to }));
-            return [...formattedErrors , ...errorInfos];
+        const formattedErrors = errors.reduce<IFormattedErrorsInfo[]>((formattedErrors, { message, errorPlace }) => {
+            if (errorPlace) {
+                const errorInfos = errorPlace.map((place) => ({ message, indexes: { from: place.from, to: place.to } }));
+                return [...formattedErrors, ...errorInfos];
+            }
+            return formattedErrors
         }, []);
 
-        return [...formattedErrors ].sort((error1, error2) => error1.index - error2.index)
+        return [...formattedErrors].sort((error1, error2) => error1.indexes.from - error2.indexes.from)
     }
 }

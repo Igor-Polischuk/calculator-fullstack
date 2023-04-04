@@ -56,7 +56,7 @@ export class CalculatorContainer {
     showCalculationError(errors: IError[]){
         const expressionWithError  = this.calculatorInput.inputText
         this.calculatorOutput.showCalculationError(errors, expressionWithError )
-        this.calculatorDetail.showErrorsInfo(errors)
+        this.calculatorDetail.showErrorsInfo(errors, expressionWithError)
     }
 
     private onErrorClick(from: number, to: number){
