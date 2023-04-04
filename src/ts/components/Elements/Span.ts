@@ -10,7 +10,7 @@ export class Span extends BaseElement {
     constructor(params: IParagraphParams){
         super(params)
         this.spanElement = document.createElement('span')
-        this.spanElement.innerText = params.text ?? ''
+        this.spanElement.innerHTML = params.text ?? ''
     }
 
     get domElement(){
@@ -19,9 +19,5 @@ export class Span extends BaseElement {
 
     set text(text: string){
         this.spanElement.innerHTML = text
-    }
-
-    get spanString(){
-        return `<span>${this.spanElement.innerText}</span>`
     }
 }
