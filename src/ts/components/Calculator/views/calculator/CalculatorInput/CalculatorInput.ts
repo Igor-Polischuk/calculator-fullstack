@@ -6,7 +6,7 @@ export class CalculatorInput {
     private inputWrapper: DivElement
     constructor() {
         this.input = new Input({
-            classNames: 'calculator__input',
+            classNames: 'input',
             placeholder: 'Enter what you want to calculate',
         })
 
