@@ -34,8 +34,8 @@ export class CalculatorDetail {
         }
         
         this.detailWrapper.domElement.style.display = 'block'
-        this.detailWrapper.removeElement('ul')
-        const unorderedList = new UnorderedList({ classNames: 'detail-error-info' })
+        this.detailWrapper.removeElement('#detail-list')
+        const unorderedList = new UnorderedList({ classNames: 'detail-error-info', id: 'detail-list' })
 
         errorsInfo.forEach(({ message, index }) => {
             const listItem = new ListItem({})

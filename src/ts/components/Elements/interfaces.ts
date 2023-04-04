@@ -1,6 +1,7 @@
 export interface IBaseElementParams {
     parentNode?: Element,
     classNames?: string
+    id?: string
 }
 
 export interface IBaseElement {

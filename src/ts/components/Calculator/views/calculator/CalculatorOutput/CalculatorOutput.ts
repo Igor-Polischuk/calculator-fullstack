@@ -83,8 +83,8 @@ export class CalculatorOutput {
 
     private renderParagraph(params: { text?: string, className?: string, children?: Span[]}) {
         this.outputWrapper.domElement.classList.add('visible')
-        this.outputWrapper.removeElement('p')
-        const p = new Paragraph({ text: params.text || '', classNames: params.className })
+        this.outputWrapper.removeElement('#result-display')
+        const p = new Paragraph({ text: params.text || '', classNames: params.className, id: 'result-display' })
         params.children && p.append(...params.children)
         this.outputWrapper.append(p)
     }
