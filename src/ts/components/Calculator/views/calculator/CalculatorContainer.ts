@@ -24,7 +24,9 @@ export class CalculatorContainer {
         this.calculatorOutput = new CalculatorOutput({
             onErrorClick: this.onErrorClick.bind(this)
         });
-        this.calculatorDetail = new CalculatorDetail();
+        this.calculatorDetail = new CalculatorDetail({
+            onErrorClick: this.onErrorClick.bind(this)
+        });
         this.calculatorKeyboard = new CalculatorKeyboard({
             onEqual: this.setExpression.bind(this),
             onChar: this.onButtonClick.bind(this),

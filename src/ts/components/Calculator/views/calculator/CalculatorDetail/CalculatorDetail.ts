@@ -9,9 +9,15 @@ interface ErrorInfo {
     index: number;
 }
 
+interface ICalculatorDetailParams{
+    onErrorClick: (start: number, end: number) => void
+}
+
 export class CalculatorDetail {
     private detailWrapper: DivElement
-    constructor() {
+    params: ICalculatorDetailParams;
+    constructor(params: ICalculatorDetailParams) {
+        this.params = params
         this.detailWrapper = new DivElement({ classNames: 'calculator__detail' })
         const title = new Paragraph({ classNames: 'calculator__detail__title', text: 'Validation errors' })
         this.detailWrapper.append(title)
@@ -30,6 +36,7 @@ export class CalculatorDetail {
 
         errorsInfo.forEach(({ message, index }) => {
             const errorWrapper = new ListItem({})
+            errorWrapper.onClick(() => this.params.onErrorClick(index, index))
             const errorMessage = new Paragraph({ text: `${message} by index:` });
             const errorIndex = new Paragraph({ text: index.toString() });
             errorWrapper.append(errorMessage, errorIndex);
