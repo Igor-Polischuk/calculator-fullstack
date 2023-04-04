@@ -6,6 +6,12 @@ import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators
 import { mergeRanges } from '@utilities/ranges/mergeRanges';
 import { Span } from '@components/Elements/Span';
 
+interface IHighlightErrorsReduce{
+    offset: number
+    lastErrorIndex: number
+    spansArray: Span[]
+}
+
 export class CalculatorOutput {
     private outputWrapper: DivElement
     constructor() {
@@ -37,36 +43,40 @@ export class CalculatorOutput {
 
         const formattedExpressionWithError = formatExpression(expressionWithError)
         const highlightedErrors = this.highlightErrors(formattedExpressionWithError, invalidExpressionPartsIndexes)
-
         this.renderParagraph({
-            text: highlightedErrors,
-            className: 'error'
+            className: 'error',
+            children: highlightedErrors
         })
     }
 
-    private highlightErrors(str: string, indices: { from: number, to: number }[]): string {
-        const { result } = indices.reduce(
-            ({ result, offset }, { from, to }) => {
-                const targetString = str.slice(from, to + 1)
-                const replacement = new Span({text: targetString}).spanString
+    private highlightErrors(str: string, indices: { from: number, to: number }[]) {
+        const { spansArray, lastErrorIndex } = indices.reduce<IHighlightErrorsReduce>(
+            ({ offset, spansArray, lastErrorIndex }, { from, to }) => {
+                const notErrorString = str.slice(lastErrorIndex, from)
+                const notErrorSpan = new Span({ text: notErrorString })
+                const errorString = str.slice(from, to + 1)
+                const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
                 return {
-                    result: result.slice(0, from + offset) + replacement + result.slice(to + 1 + offset),
-                    offset: offset + replacement.length - (to - from + 1),
+                    offset: offset + errorString.length - (to - from + 1),
+                    spansArray: [...spansArray, notErrorSpan, errorSpan],
+                    lastErrorIndex: from + (to - from) + 1
                 };
-            }, { result: str, offset: 0 });
-        return result;
+            }, { offset: 0, lastErrorIndex: 0, spansArray: [] });
+
+        const lastStringPart = str.slice(lastErrorIndex + 1) 
+        return [...spansArray, new Span({ text: lastStringPart})]
     }
 
     private getInvalidExpressionPartsIndexes(errors: IError[]) {
         const invalidPartsIndexes = errors.map(error => error.errorPlace || []).flat()
         return mergeRanges(invalidPartsIndexes)
-
     }
 
-    private renderParagraph(params: { text: string, className?: string }) {
+    private renderParagraph(params: { text?: string, className?: string, children?: Span[]}) {
         this.outputWrapper.domElement.classList.add('visible')
         this.outputWrapper.removeElement('p')
-        const p = new Paragraph({ text: params.text, classNames: params.className })
+        const p = new Paragraph({ text: params.text || '', classNames: params.className })
+        params.children && p.append(...params.children)
         this.outputWrapper.append(p)
     }
 }
