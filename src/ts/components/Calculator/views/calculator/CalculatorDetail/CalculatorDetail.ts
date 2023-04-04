@@ -35,12 +35,12 @@ export class CalculatorDetail {
         const unorderedList = new UnorderedList({ classNames: 'detail-error-info' })
 
         errorsInfo.forEach(({ message, index }) => {
-            const errorWrapper = new ListItem({})
-            errorWrapper.onClick(() => this.params.onErrorClick(index, index))
+            const listItem = new ListItem({})
+            listItem.onClick(() => this.params.onErrorClick(index, index))
             const errorMessage = new Paragraph({ text: `${message} by index:` });
             const errorIndex = new Paragraph({ text: index.toString() });
-            errorWrapper.append(errorMessage, errorIndex);
-            unorderedList.append(errorWrapper)
+            listItem.append(errorMessage, errorIndex);
+            unorderedList.append(listItem)
         })
 
         this.detailWrapper.append(unorderedList)
