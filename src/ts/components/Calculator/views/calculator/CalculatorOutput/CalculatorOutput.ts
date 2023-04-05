@@ -7,7 +7,6 @@ import { mergeRanges } from '@utilities/ranges/mergeRanges';
 import { Span } from '@components/Elements/Span';
 
 interface IHighlightErrorsReduce{
-    offset: number
     lastErrorIndex: number
     spansArray: Span[]
 }
@@ -59,18 +58,17 @@ export class CalculatorOutput {
 
     private highlightErrors(str: string, indices: { from: number, to: number }[]) {
         const { spansArray, lastErrorIndex } = indices.reduce<IHighlightErrorsReduce>(
-            ({ offset, spansArray, lastErrorIndex }, { from, to }) => {
+            ({ spansArray, lastErrorIndex }, { from, to }) => {
                 const notErrorString = str.slice(lastErrorIndex, from)
                 const notErrorSpan = new Span({ text: notErrorString })
                 const errorString = str.slice(from, to + 1)
                 const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
                 errorSpan.onClick(() => this.params.onErrorClick(from, to))
                 return {
-                    offset: offset + errorString.length - (to - from + 1),
                     spansArray: [...spansArray, notErrorSpan, errorSpan],
                     lastErrorIndex: from + (to - from) + 1
                 };
-            }, { offset: 0, lastErrorIndex: 0, spansArray: [] });
+            }, { lastErrorIndex: 0, spansArray: [] });
 
         const lastStringPart = str.slice(lastErrorIndex + 1) 
         return [...spansArray, new Span({ text: lastStringPart})]
