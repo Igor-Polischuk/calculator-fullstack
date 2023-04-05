@@ -1,0 +1,15 @@
+{
+    "plugins": [
+      "plugins/markdown",
+      "@jsdoc/plugin-typescript"
+    ],
+    "source": {
+      "include": "src",
+      "includePattern": ".+\\.ts(doc)?$",
+      "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+      "destination": "docs/",
+      "recurse": true
+    }
+  }
