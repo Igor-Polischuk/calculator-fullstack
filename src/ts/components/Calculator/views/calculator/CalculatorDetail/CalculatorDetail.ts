@@ -1,4 +1,4 @@
-import { IError } from "@components/Calculator/interfaces/ICalculator";
+import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
 import { Paragraph } from "@components/Elements/Paragraph";
 import { Span } from "@components/Elements/Span";
@@ -13,7 +13,7 @@ interface IFormattedErrorsInfo {
 }
 
 interface ICalculatorDetailParams {
-    onErrorClick: (start: number, end: number) => void
+    onErrorClick: (errorRange: IErrorRange) => void
 }
 
 export class CalculatorErrorsDetails {
@@ -56,7 +56,7 @@ export class CalculatorErrorsDetails {
             const errorSubstring = new Span({ text: invalidString })
             const errorParagraph = new Paragraph({ text: '' })
             errorParagraph.append(errorMessage, errorSubstring)
-            errorParagraph.onClick(() => this.params.onErrorClick(indexes.from, indexes.to))
+            errorParagraph.onClick(() => this.params.onErrorClick(indexes))
             return errorParagraph
         })
     }

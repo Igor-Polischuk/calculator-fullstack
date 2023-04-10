@@ -21,11 +21,16 @@ export interface IOperation {
     readonly text?: string
 }
 
-export type ICalculatorConfig = Record<string, IOperation> 
+export type ICalculatorConfig = Record<string, IOperation>
 
 export interface IError {
     message: string
-    errorPlace?: {from: number, to: number}[]    
+    errorPlace?: { from: number, to: number }[]
+}
+
+export interface IErrorRange {
+    from: number
+    to: number
 }
 
 export interface ICalculatorView { }

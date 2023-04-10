@@ -1,4 +1,4 @@
-import { IError } from '../../interfaces/ICalculator';
+import { IError, IErrorRange } from '../../interfaces/ICalculator';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { DivElement } from '@components/Elements/DivElement';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
@@ -59,9 +59,9 @@ export class CalculatorContainer {
         this.calculatorDetail.showErrorsInfo(errors, expressionWithError)
     }
 
-    private onErrorClick(from: number, to: number) {
+    private onErrorClick(range: IErrorRange) {
         this.calculatorInput.inputElement.focus()
-        this.calculatorInput.inputElement.setSelectionRange(from, to + 1);
+        this.calculatorInput.inputElement.setSelectionRange(range.from, range.to + 1);
     }
 
     private onButtonClick(clickedButtonValue: string) {

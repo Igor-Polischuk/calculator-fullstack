@@ -1,3 +1,4 @@
+import { IErrorRange } from './../../../interfaces/ICalculator';
 import { Paragraph } from '@components/Elements/Paragraph';
 import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
@@ -12,7 +13,7 @@ interface IHighlightErrorsReduce {
 }
 
 interface ICalculatorOutputParams {
-    onErrorClick: (start: number, end: number) => void
+    onErrorClick: (range: IErrorRange) => void
 }
 
 export class CalculatorOutput {
@@ -56,14 +57,14 @@ export class CalculatorOutput {
         })
     }
 
-    private highlightErrors(expression: string, indices: { from: number, to: number }[]) {
+    private highlightErrors(expression: string, indices: IErrorRange[]) {
         const { spansArray, lastErrorIndex } = indices.reduce<IHighlightErrorsReduce>(
             ({ spansArray, lastErrorIndex }, { from, to }) => {
                 const notErrorString = expression.slice(lastErrorIndex, from)
                 const notErrorSpan = new Span({ text: notErrorString })
                 const errorString = expression.slice(from, to + 1)
                 const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
-                errorSpan.onClick(() => this.params.onErrorClick(from, to))
+                errorSpan.onClick(() => this.params.onErrorClick({ from, to }))
                 return {
                     spansArray: [...spansArray, notErrorSpan, errorSpan],
                     lastErrorIndex: from + (to - from) + 1
