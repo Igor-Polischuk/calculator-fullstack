@@ -14,9 +14,21 @@
     transition: background-color 0.4s;
     font-size: 24px;
 
-    @media (max-width: 450px) {
+    @media (max-width: 540px) {
         width: 55px;
     }
+
+    @media (max-width: 460px) {
+        width: 45px;
+    }
+
+    @media (max-width: 405px) {
+        width: 40px;
+        height: 60px;
+        font-size: 18px;
+    }
+
+
 
     &--get-res {
         background: #19ACFF;
@@ -29,20 +41,22 @@
         background-color: $blue-1;
         color: $blue-3;
         transition: background-color 0.4s;
+
         // border: none;
         &:hover {
             background-color: darken($blue-1, 15%)
         }
     }
 
-    &--number{
+    &--number {
         transition: background-color 0.2s;
-        &:hover{
+
+        &:hover {
             background-color: darken($accent-color, 10%)
         }
     }
 
-    &__small{
+    &__small {
         background: transparent;
         font-size: 34px;
         color: $blue-2;

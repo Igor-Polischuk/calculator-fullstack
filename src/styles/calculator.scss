@@ -93,8 +93,23 @@
         overflow: hidden;
         font-size: 14px;
 
+        @media (max-width: 1200px) {
+            position: static;
+            transform: none;
+            width: 300px;
+            font-size: 12px;
+            display: none;
+        }
+
+        @media (max-width: 800px) {
+            width: 100%;
+            height: fit-content;
+            max-height: 250px;
+        }
+
         &.show {
             left: 0;
+            display: block;
         }
 
         &__title {
