@@ -4,7 +4,7 @@ import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
 import { formatExpression } from '@utilities/formatText/formatExpression';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
-import { mergeRanges } from '@utilities/ranges/mergeRanges';
+import { removeOverlappingRanges } from '@utilities/ranges/removeOverlappingRanges';
 import { Span } from '@components/Elements/Span';
 
 interface IHighlightErrorsReduce {
@@ -76,7 +76,7 @@ export class CalculatorOutput {
 
     private getInvalidExpressionPartsIndexes(errors: IError[]) {
         const invalidPartsIndexes = errors.flatMap(error => error.errorPlace || [])
-        return mergeRanges(invalidPartsIndexes)
+        return removeOverlappingRanges(invalidPartsIndexes)
     }
 
     private renderParagraph(params: { text?: string, className?: string, children?: Span[] }) {
