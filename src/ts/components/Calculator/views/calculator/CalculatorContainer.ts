@@ -14,7 +14,6 @@ export class CalculatorContainer {
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
     private calculatorKeyboard: CalculatorKeyboard;
-    private calculatorDetail: CalculatorErrorsDetails;
     private params: ICalculatorUIParams;
 
     constructor(params: ICalculatorUIParams) {
@@ -22,9 +21,6 @@ export class CalculatorContainer {
         this.calculatorWrapper = new DivElement({ classNames: 'calculator' });
         this.calculatorInput = new CalculatorInput();
         this.calculatorOutput = new CalculatorOutput({
-            onErrorClick: this.onErrorClick.bind(this)
-        });
-        this.calculatorDetail = new CalculatorErrorsDetails({
             onErrorClick: this.onErrorClick.bind(this)
         });
         this.calculatorKeyboard = new CalculatorKeyboard({
@@ -38,7 +34,6 @@ export class CalculatorContainer {
             this.calculatorInput.element,
             this.calculatorOutput.element,
             this.calculatorKeyboard.element,
-            this.calculatorDetail.element
         );
     }
 
@@ -50,13 +45,11 @@ export class CalculatorContainer {
         const calculatedExpression = this.calculatorInput.inputText
         this.calculatorOutput.showCalculationResult(result, calculatedExpression)
         this.calculatorInput.setInputValue(result.toString())
-        this.calculatorDetail.hideDetail()
     }
 
     showCalculationError(errors: IError[]) {
         const expressionWithError = this.calculatorInput.inputText
         this.calculatorOutput.showCalculationError(errors, expressionWithError)
-        this.calculatorDetail.showErrorsInfo(errors, expressionWithError)
     }
 
     private onErrorClick(range: IErrorRange) {

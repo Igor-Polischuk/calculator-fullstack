@@ -11,6 +11,7 @@ export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
     setResult: (result: number) => void
     setExpression: (expression: string) => void
     setError: (errors: IError[]) => void
+    getExpression: () => string | null
 }
 
 export interface IOperation {

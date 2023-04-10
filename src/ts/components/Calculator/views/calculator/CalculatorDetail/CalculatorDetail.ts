@@ -12,6 +12,11 @@ interface IFormattedErrorsInfo {
     };
 }
 
+interface IShowErrorInfoParams {
+    errors: IError[]
+    invalidExpression: string
+}
+
 interface ICalculatorDetailParams {
     onErrorClick: (errorRange: IErrorRange) => void
 }
@@ -30,7 +35,7 @@ export class CalculatorErrorsDetails {
         return this.errorDetailsWrapper
     }
 
-    showErrorsInfo(errors: IError[], invalidedExpression: string) {
+    showErrorsInfo({ errors, invalidExpression }: IShowErrorInfoParams) {
         const formattedErrors = this.formatErrors(errors);
         if (formattedErrors.length === 0) {
             return
@@ -40,7 +45,7 @@ export class CalculatorErrorsDetails {
         this.errorDetailsWrapper.removeElement('#detail-list')
         const unorderedList = new UnorderedList({ classNames: 'detail-error-info', id: 'detail-list' })
 
-        const listItemsArray = this.getErrorsParagraph(formattedErrors, invalidedExpression)
+        const listItemsArray = this.getErrorsParagraph(formattedErrors, invalidExpression)
         unorderedList.appendListItems(listItemsArray)
         this.errorDetailsWrapper.append(unorderedList)
     }
@@ -53,7 +58,7 @@ export class CalculatorErrorsDetails {
         return formattedErrors.map(({ message, indexes }) => {
             const invalidString = invalidedExpression.substring(indexes.from, indexes.to + 1)
             const errorMessage = new Span({ text: `${message}:` })
-            const errorSubstring = new Span({ text: invalidString })
+            const errorSubstring = new Span({ text: invalidString, classNames: 'bold' })
             const errorParagraph = new Paragraph({ text: '' })
             errorParagraph.append(errorMessage, errorSubstring)
             errorParagraph.onClick(() => this.params.onErrorClick(indexes))
