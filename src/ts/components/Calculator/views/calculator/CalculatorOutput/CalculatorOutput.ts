@@ -56,12 +56,12 @@ export class CalculatorOutput {
         })
     }
 
-    private highlightErrors(str: string, indices: { from: number, to: number }[]) {
+    private highlightErrors(expression: string, indices: { from: number, to: number }[]) {
         const { spansArray, lastErrorIndex } = indices.reduce<IHighlightErrorsReduce>(
             ({ spansArray, lastErrorIndex }, { from, to }) => {
-                const notErrorString = str.slice(lastErrorIndex, from)
+                const notErrorString = expression.slice(lastErrorIndex, from)
                 const notErrorSpan = new Span({ text: notErrorString })
-                const errorString = str.slice(from, to + 1)
+                const errorString = expression.slice(from, to + 1)
                 const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
                 errorSpan.onClick(() => this.params.onErrorClick(from, to))
                 return {
@@ -70,7 +70,7 @@ export class CalculatorOutput {
                 };
             }, { lastErrorIndex: 0, spansArray: [] })
 
-        return spansArray.concat(new Span({ text: str.slice(lastErrorIndex) }))
+        return spansArray.concat(new Span({ text: expression.slice(lastErrorIndex) }))
     }
 
     private getInvalidExpressionPartsIndexes(errors: IError[]) {

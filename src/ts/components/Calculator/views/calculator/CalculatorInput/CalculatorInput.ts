@@ -18,7 +18,7 @@ export class CalculatorInput {
         return this.inputWrapper
     }
 
-    get inputElement(){
+    get inputElement() {
         return this.input.domElement
     }
 

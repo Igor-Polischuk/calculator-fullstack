@@ -18,7 +18,7 @@ interface ICalculatorDetailParams {
 
 export class CalculatorErrorsDetails {
     private errorDetailsWrapper: DivElement
-    params: ICalculatorDetailParams;
+    private params: ICalculatorDetailParams;
     constructor(params: ICalculatorDetailParams) {
         this.params = params
         this.errorDetailsWrapper = new DivElement({ classNames: 'calculator__detail' })

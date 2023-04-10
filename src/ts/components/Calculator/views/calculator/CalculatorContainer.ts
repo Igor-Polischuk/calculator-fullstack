@@ -22,15 +22,15 @@ export class CalculatorContainer {
         this.calculatorWrapper = new DivElement({ classNames: 'calculator' });
         this.calculatorInput = new CalculatorInput();
         this.calculatorOutput = new CalculatorOutput({
-            onErrorClick: this.onErrorClick
+            onErrorClick: this.onErrorClick.bind(this)
         });
         this.calculatorDetail = new CalculatorErrorsDetails({
-            onErrorClick: this.onErrorClick
+            onErrorClick: this.onErrorClick.bind(this)
         });
         this.calculatorKeyboard = new CalculatorKeyboard({
-            onEqual: this.setExpression,
-            onChar: this.onButtonClick,
-            onBackspace: this.onBackspace,
+            onEqual: this.setExpression.bind(this),
+            onChar: this.onButtonClick.bind(this),
+            onBackspace: this.onBackspace.bind(this),
             onReset: () => this.calculatorInput.setInputValue(''),
         });
 
@@ -46,35 +46,35 @@ export class CalculatorContainer {
         return this.calculatorWrapper
     }
 
-    showCalculationResult = (result: number) => {
+    showCalculationResult(result: number) {
         const calculatedExpression = this.calculatorInput.inputText
         this.calculatorOutput.showCalculationResult(result, calculatedExpression)
         this.calculatorInput.setInputValue(result.toString())
         this.calculatorDetail.hideDetail()
     }
 
-    showCalculationError = (errors: IError[]) => {
+    showCalculationError(errors: IError[]) {
         const expressionWithError = this.calculatorInput.inputText
         this.calculatorOutput.showCalculationError(errors, expressionWithError)
         this.calculatorDetail.showErrorsInfo(errors, expressionWithError)
     }
 
-    private onErrorClick = (from: number, to: number) => {
+    private onErrorClick(from: number, to: number) {
         this.calculatorInput.inputElement.focus()
         this.calculatorInput.inputElement.setSelectionRange(from, to + 1);
     }
 
-    private onButtonClick = (clickedButtonValue: string) => {
+    private onButtonClick(clickedButtonValue: string) {
         const newInputValue = this.calculatorInput.inputText + clickedButtonValue
         this.calculatorInput.setInputValue(newInputValue)
     }
 
-    private onBackspace = () => {
+    private onBackspace() {
         const newInputValue = this.calculatorInput.inputText.slice(0, -1)
         this.calculatorInput.setInputValue(newInputValue)
     }
 
-    private setExpression = () => {
+    private setExpression() {
         const expression = this.calculatorInput.inputText
         const isExpressionEmpty = expression.trim() === ''
 
