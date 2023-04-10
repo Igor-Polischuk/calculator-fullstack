@@ -1,7 +1,7 @@
 import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { DivElement } from "@components/Elements/DivElement";
-import { ListItem } from "@components/Elements/ListItem";
 import { Paragraph } from "@components/Elements/Paragraph";
+import { Span } from "@components/Elements/Span";
 import { UnorderedList } from "@components/Elements/UList";
 
 interface IFormattedErrorsInfo {
@@ -40,8 +40,8 @@ export class CalculatorErrorsDetails {
         this.errorDetailsWrapper.removeElement('#detail-list')
         const unorderedList = new UnorderedList({ classNames: 'detail-error-info', id: 'detail-list' })
 
-        const listItemsArray = this.getListItems(formattedErrors, invalidedExpression)
-        unorderedList.append(...listItemsArray)
+        const listItemsArray = this.getErrorsParagraph(formattedErrors, invalidedExpression)
+        unorderedList.appendListItems(listItemsArray)
         this.errorDetailsWrapper.append(unorderedList)
     }
 
@@ -49,17 +49,15 @@ export class CalculatorErrorsDetails {
         this.errorDetailsWrapper.domElement.classList.remove('show')
     }
 
-    private getListItems(formattedErrors: IFormattedErrorsInfo[], invalidedExpression: string) {
+    private getErrorsParagraph(formattedErrors: IFormattedErrorsInfo[], invalidedExpression: string) {
         return formattedErrors.map(({ message, indexes }) => {
             const invalidString = invalidedExpression.substring(indexes.from, indexes.to + 1)
-            const errorMessage = new Paragraph({ text: `${message}:` })
-            const errorIndex = new Paragraph({ text: invalidString })
-            const listItem = new ListItem({})
-
-            listItem.append(errorMessage, errorIndex);
-            listItem.onClick(() => this.params.onErrorClick(indexes.to, indexes.to))
-
-            return listItem
+            const errorMessage = new Span({ text: `${message}:` })
+            const errorSubstring = new Span({ text: invalidString })
+            const errorParagraph = new Paragraph({ text: '' })
+            errorParagraph.append(errorMessage, errorSubstring)
+            errorParagraph.onClick(() => this.params.onErrorClick(indexes.from, indexes.to))
+            return errorParagraph
         })
     }
 
