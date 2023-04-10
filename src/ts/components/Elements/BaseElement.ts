@@ -1,6 +1,6 @@
 import { IBaseElement, IBaseElementParams } from "./interfaces";
 
-export class BaseElement implements IBaseElement{
+export class BaseElement implements IBaseElement {
     protected classNames: string;
     protected id: string;
     protected parentNode: Element | null = null
@@ -23,7 +23,7 @@ export class BaseElement implements IBaseElement{
         throw new Error('domEl getter not implemented');
     }
 
-    append(...elements: IBaseElement[]){
+    append(...elements: IBaseElement[]) {
         elements.forEach(element => {
             element.render(this.domElement)
             this.children = [...this.children, element]

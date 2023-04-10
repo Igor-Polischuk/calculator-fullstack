@@ -20,9 +20,9 @@ export interface IInput extends IBaseElement {
     value: string
 }
 
-export interface IDivElement extends IBaseElement{
+export interface IDivElement extends IBaseElement {
 }
 
-export interface IDivElement extends IBaseElement{
-    
+export interface IDivElement extends IBaseElement {
+
 }

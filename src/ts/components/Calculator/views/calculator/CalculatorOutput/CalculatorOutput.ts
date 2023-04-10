@@ -6,12 +6,12 @@ import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators
 import { mergeRanges } from '@utilities/ranges/mergeRanges';
 import { Span } from '@components/Elements/Span';
 
-interface IHighlightErrorsReduce{
+interface IHighlightErrorsReduce {
     lastErrorIndex: number
     spansArray: Span[]
 }
 
-interface ICalculatorOutputParams{
+interface ICalculatorOutputParams {
     onErrorClick: (start: number, end: number) => void
 }
 
@@ -28,9 +28,9 @@ export class CalculatorOutput {
     }
 
     showCalculationResult(result: number, calculatedExpression: string) {
-        const expressionSpan = new Span({text: replaceMathOperators(calculatedExpression)})
-        const equalSymbolSpan = new Span({text: ' = '})
-        const resultSpan = new Span({classNames: 'bold', text: result.toString()})
+        const expressionSpan = new Span({ text: replaceMathOperators(calculatedExpression) })
+        const equalSymbolSpan = new Span({ text: ' = ' })
+        const resultSpan = new Span({ classNames: 'bold', text: result.toString() })
         this.renderParagraph({
             children: [expressionSpan, equalSymbolSpan, resultSpan],
             className: 'result showup'
@@ -68,10 +68,9 @@ export class CalculatorOutput {
                     spansArray: [...spansArray, notErrorSpan, errorSpan],
                     lastErrorIndex: from + (to - from) + 1
                 };
-            }, { lastErrorIndex: 0, spansArray: [] });
+            }, { lastErrorIndex: 0, spansArray: [] })
 
-        const lastStringPart = str.slice(lastErrorIndex + 1) 
-        return [...spansArray, new Span({ text: lastStringPart})]
+        return spansArray.concat(new Span({ text: str.slice(lastErrorIndex) }))
     }
 
     private getInvalidExpressionPartsIndexes(errors: IError[]) {
@@ -79,7 +78,7 @@ export class CalculatorOutput {
         return mergeRanges(invalidPartsIndexes)
     }
 
-    private renderParagraph(params: { text?: string, className?: string, children?: Span[]}) {
+    private renderParagraph(params: { text?: string, className?: string, children?: Span[] }) {
         this.outputWrapper.domElement.classList.add('visible')
         this.outputWrapper.removeElement('#result-display')
         const p = new Paragraph({ text: params.text || '', classNames: params.className, id: 'result-display' })
