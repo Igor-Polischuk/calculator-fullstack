@@ -1,9 +1,7 @@
 import { ErrorMessage } from './ErrorMessage';
 import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
 import { ComplexElement } from "@components/Elements/ComplexElement";
-import { DivElement } from "@components/Elements/DivElement";
 import { Paragraph } from "@components/Elements/Paragraph";
-import { Span } from "@components/Elements/Span";
 import { UnorderedList } from "@components/Elements/UList";
 
 interface IFormattedErrorsInfo {
