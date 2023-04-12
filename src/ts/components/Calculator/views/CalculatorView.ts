@@ -21,6 +21,7 @@ export class CalculatorView implements ICalculatorView {
         })
         model.subscribe(CalculatorModelEvent.ErrorChanged, (error) => {
             this.calculatorContainer.showCalculationError(error)
+            this.calculatorErrorDetail.hideDetail()
             this.calculatorErrorDetail.showErrorsInfo({
                 errors: error,
                 invalidExpression: this.model.getExpression()!

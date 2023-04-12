@@ -32,13 +32,11 @@ export class CalculatorOutput extends ComplexElement {
         })
     }
 
-
     showCalculationError(errors: IError[], expressionWithError: string) {
         const invalidPartsIndexes = errors.flatMap(error => error.errorPlace || [])
         const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
-        const formattedExpressionWithError = formatExpression(expressionWithError)
         const paragraphWithHighlightedErrors = new HighlightedErrors({
-            expressionWithErrors: formattedExpressionWithError,
+            expressionWithErrors: expressionWithError,
             errorRanges: invalidExpressionPartsIndexes,
             onErrorClick: this.params.onErrorClick
         })

@@ -1,5 +1,6 @@
 import { ComplexElement } from "@components/Elements/ComplexElement";
 import { Input } from "@components/Elements/Input";
+import { formatExpression } from "@utilities/formatText/formatExpression";
 
 export class CalculatorInput extends ComplexElement {
     private input: Input
@@ -13,6 +14,7 @@ export class CalculatorInput extends ComplexElement {
         })
 
         this.wrapper.append(this.input)
+        this.input.onInput(() => { this.input.domElement.value = formatExpression(this.input.value) })
     }
 
     get inputElement() {
