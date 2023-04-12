@@ -10,7 +10,7 @@ export class CalculatorView implements ICalculatorView {
     private model: ICalculatorModel
     constructor(model: ICalculatorModel) {
         this.model = model
-        this.calculatorErrorDetail = new CalculatorErrorsDetails({ onErrorClick: () => { } });
+        this.calculatorErrorDetail = new CalculatorErrorsDetails();
         this.calculatorContainer = new CalculatorContainer({
             onEqual: (expression) => this.model.setExpression(expression)
         })

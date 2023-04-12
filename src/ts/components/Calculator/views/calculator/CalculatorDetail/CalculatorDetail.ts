@@ -17,17 +17,12 @@ interface IShowErrorInfoParams {
     invalidExpression: string
 }
 
-interface ICalculatorDetailParams {
-    onErrorClick: (errorRange: IErrorRange) => void
-}
 
 export class CalculatorErrorsDetails extends ComplexElement {
-    private params: ICalculatorDetailParams;
-    constructor(params: ICalculatorDetailParams) {
+    constructor() {
         super({
             wrapperClassNames: 'calculator__detail'
         })
-        this.params = params
         const title = new Paragraph({ classNames: 'calculator__detail__title', text: 'Validation errors' })
         this.wrapper.append(title)
     }
@@ -61,7 +56,6 @@ export class CalculatorErrorsDetails extends ComplexElement {
             const errorMessage = new ErrorMessage({
                 errorMessage: message,
                 errorSubstring: invalidString,
-                onErrorClick: () => this.params.onErrorClick(indexes)
             })
             return errorMessage.element
         })
