@@ -4,7 +4,6 @@ import { DivElement } from "./DivElement"
 interface IComplexElementParams {
     wrapperClassNames?: string
     wrapperId?: string
-    parentElement?: BaseElement
 }
 
 export class ComplexElement {
@@ -14,7 +13,6 @@ export class ComplexElement {
             classNames: params.wrapperClassNames,
             id: params.wrapperId
         })
-
     }
 
     get element() {

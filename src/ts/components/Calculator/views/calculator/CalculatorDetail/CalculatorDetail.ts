@@ -39,7 +39,7 @@ export class CalculatorErrorsDetails extends ComplexElement {
             return
         }
 
-        this.wrapper.domElement.classList.add('show')
+        this.showDetail()
         this.wrapper.removeElement('#detail-list')
         const unorderedList = new UnorderedList({ classNames: 'detail-error-info', id: 'detail-list' })
 
@@ -50,6 +50,10 @@ export class CalculatorErrorsDetails extends ComplexElement {
 
     hideDetail() {
         this.wrapper.domElement.classList.remove('show')
+    }
+
+    showDetail() {
+        this.wrapper.domElement.classList.add('show')
     }
 
     private getErrorsParagraph(formattedErrors: IFormattedErrorsInfo[], invalidedExpression: string) {
