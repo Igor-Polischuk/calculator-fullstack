@@ -6,22 +6,22 @@ import { CalculatorErrorsDetails } from './calculator/CalculatorDetail/Calculato
 
 export class CalculatorView implements ICalculatorView {
     private calculatorContainer: CalculatorContainer
-    private calculatorDetail: CalculatorErrorsDetails
+    private calculatorErrorDetail: CalculatorErrorsDetails
     private model: ICalculatorModel
     constructor(model: ICalculatorModel) {
         this.model = model
-        this.calculatorDetail = new CalculatorErrorsDetails({ onErrorClick: () => { } });
+        this.calculatorErrorDetail = new CalculatorErrorsDetails({ onErrorClick: () => { } });
         this.calculatorContainer = new CalculatorContainer({
             onEqual: (expression) => this.model.setExpression(expression)
         })
 
         model.subscribe(CalculatorModelEvent.ResultChanged, (result) => {
             this.calculatorContainer.showCalculationResult(result)
-            this.calculatorDetail.hideDetail()
+            this.calculatorErrorDetail.hideDetail()
         })
         model.subscribe(CalculatorModelEvent.ErrorChanged, (error) => {
             this.calculatorContainer.showCalculationError(error)
-            this.calculatorDetail.showErrorsInfo({
+            this.calculatorErrorDetail.showErrorsInfo({
                 errors: error,
                 invalidExpression: this.model.getExpression()!
             })
@@ -30,6 +30,6 @@ export class CalculatorView implements ICalculatorView {
 
         const root = document.querySelector('.container')!
         this.calculatorContainer.element.render(root)
-        this.calculatorDetail.element.render(root)
+        this.calculatorErrorDetail.element.render(root)
     }
 }

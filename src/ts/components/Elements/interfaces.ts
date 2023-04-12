@@ -6,6 +6,7 @@ export interface IBaseElementParams {
 
 export interface IBaseElement {
     domElement: Element,
+    childElements: IBaseElement[]
     append: (...elements: IBaseElement[]) => void
     render: (parentNode: Element) => void
     onClick: (callback: (e: Event) => void) => void

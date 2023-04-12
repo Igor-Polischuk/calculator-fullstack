@@ -6,11 +6,13 @@ import { formatExpression } from '@utilities/formatText/formatExpression';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
 import { removeOverlappingRanges } from '@utilities/ranges/removeOverlappingRanges';
 import { Span } from '@components/Elements/Span';
+import { HighlightedErrors } from './HighlightedErrors';
+import { IBaseElement } from '@components/Elements/interfaces';
 
-interface IHighlightErrorsReduce {
-    lastErrorIndex: number
-    spansArray: Span[]
-}
+// interface IHighlightErrorsReduce {
+//     lastErrorIndex: number
+//     spansArray: Span[]
+// }
 
 interface ICalculatorOutputParams {
     onErrorClick: (range: IErrorRange) => void
@@ -50,28 +52,16 @@ export class CalculatorOutput {
         }
 
         const formattedExpressionWithError = formatExpression(expressionWithError)
-        const highlightedErrors = this.highlightErrors(formattedExpressionWithError, invalidExpressionPartsIndexes)
+        const paragraphWithHighlightedErrors = new HighlightedErrors({
+            expressionWithErrors: formattedExpressionWithError,
+            errorRanges: invalidExpressionPartsIndexes,
+            onErrorClick: this.params.onErrorClick
+        })
+
         this.renderParagraph({
             className: 'error',
-            children: highlightedErrors
+            children: paragraphWithHighlightedErrors.element.childElements
         })
-    }
-
-    private highlightErrors(expression: string, indices: IErrorRange[]) {
-        const { spansArray, lastErrorIndex } = indices.reduce<IHighlightErrorsReduce>(
-            ({ spansArray, lastErrorIndex }, { from, to }) => {
-                const notErrorString = expression.slice(lastErrorIndex, from)
-                const notErrorSpan = new Span({ text: notErrorString })
-                const errorString = expression.slice(from, to + 1)
-                const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
-                errorSpan.onClick(() => this.params.onErrorClick({ from, to }))
-                return {
-                    spansArray: [...spansArray, notErrorSpan, errorSpan],
-                    lastErrorIndex: from + (to - from) + 1
-                };
-            }, { lastErrorIndex: 0, spansArray: [] })
-
-        return spansArray.concat(new Span({ text: expression.slice(lastErrorIndex) }))
     }
 
     private getInvalidExpressionPartsIndexes(errors: IError[]) {
@@ -79,7 +69,7 @@ export class CalculatorOutput {
         return removeOverlappingRanges(invalidPartsIndexes)
     }
 
-    private renderParagraph(params: { text?: string, className?: string, children?: Span[] }) {
+    private renderParagraph(params: { text?: string, className?: string, children?: IBaseElement[] }) {
         this.outputWrapper.domElement.classList.add('visible')
         this.outputWrapper.removeElement('#result-display')
         const p = new Paragraph({ text: params.text || '', classNames: params.className, id: 'result-display' })

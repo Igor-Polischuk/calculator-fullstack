@@ -23,6 +23,10 @@ export class BaseElement implements IBaseElement {
         throw new Error('domEl getter not implemented');
     }
 
+    get childElements() {
+        return this.children
+    }
+
     append(...elements: IBaseElement[]) {
         elements.forEach(element => {
             element.render(this.domElement)

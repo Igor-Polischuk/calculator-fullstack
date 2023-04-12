@@ -4,7 +4,6 @@ import { IBaseElement, IBaseElementParams } from "./interfaces"
 
 export class UnorderedList extends BaseElement {
     private ul: HTMLUListElement
-    protected children: IBaseElement[] = []
 
     constructor(params: IBaseElementParams) {
         super(params)
