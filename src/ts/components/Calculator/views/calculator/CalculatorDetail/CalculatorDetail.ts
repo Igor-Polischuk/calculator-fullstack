@@ -1,3 +1,4 @@
+import { ErrorMessage } from './ErrorMessage';
 import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
 import { ComplexElement } from "@components/Elements/ComplexElement";
 import { DivElement } from "@components/Elements/DivElement";
@@ -59,12 +60,12 @@ export class CalculatorErrorsDetails extends ComplexElement {
     private getErrorsParagraph(formattedErrors: IFormattedErrorsInfo[], invalidedExpression: string) {
         return formattedErrors.map(({ message, indexes }) => {
             const invalidString = invalidedExpression.substring(indexes.from, indexes.to + 1)
-            const errorMessage = new Span({ text: `${message}:` })
-            const errorSubstring = new Span({ text: invalidString, classNames: 'bold' })
-            const errorParagraph = new Paragraph({ text: '' })
-            errorParagraph.append(errorMessage, errorSubstring)
-            errorParagraph.onClick(() => this.params.onErrorClick(indexes))
-            return errorParagraph
+            const errorMessage = new ErrorMessage({
+                errorMessage: message,
+                errorSubstring: invalidString,
+                onErrorClick: () => this.params.onErrorClick(indexes)
+            })
+            return errorMessage.element
         })
     }
 
