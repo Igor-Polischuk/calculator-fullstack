@@ -3,22 +3,23 @@ import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { DivElement } from '@components/Elements/DivElement';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
-import { CalculatorErrorsDetails } from './CalculatorDetail/CalculatorDetail';
+import { ComplexElement } from '@components/Elements/ComplexElement';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
 }
 
-export class CalculatorContainer {
-    private calculatorWrapper: DivElement;
+export class CalculatorContainer extends ComplexElement {
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
     private calculatorKeyboard: CalculatorKeyboard;
     private params: ICalculatorUIParams;
 
     constructor(params: ICalculatorUIParams) {
+        super({
+            wrapperClassNames: 'calculator'
+        })
         this.params = params;
-        this.calculatorWrapper = new DivElement({ classNames: 'calculator' });
         this.calculatorInput = new CalculatorInput();
         this.calculatorOutput = new CalculatorOutput({
             onErrorClick: this.onErrorClick.bind(this)
@@ -30,15 +31,11 @@ export class CalculatorContainer {
             onReset: () => this.calculatorInput.setInputValue(''),
         });
 
-        this.calculatorWrapper.append(
+        this.wrapper.append(
             this.calculatorInput.element,
             this.calculatorOutput.element,
             this.calculatorKeyboard.element,
         );
-    }
-
-    get element() {
-        return this.calculatorWrapper
     }
 
     showCalculationResult(result: number) {

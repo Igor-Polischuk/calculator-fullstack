@@ -1,4 +1,5 @@
 import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
+import { ComplexElement } from "@components/Elements/ComplexElement";
 import { DivElement } from "@components/Elements/DivElement";
 import { Paragraph } from "@components/Elements/Paragraph";
 import { Span } from "@components/Elements/Span";
@@ -21,18 +22,15 @@ interface ICalculatorDetailParams {
     onErrorClick: (errorRange: IErrorRange) => void
 }
 
-export class CalculatorErrorsDetails {
-    private errorDetailsWrapper: DivElement
+export class CalculatorErrorsDetails extends ComplexElement {
     private params: ICalculatorDetailParams;
     constructor(params: ICalculatorDetailParams) {
+        super({
+            wrapperClassNames: 'calculator__detail'
+        })
         this.params = params
-        this.errorDetailsWrapper = new DivElement({ classNames: 'calculator__detail' })
         const title = new Paragraph({ classNames: 'calculator__detail__title', text: 'Validation errors' })
-        this.errorDetailsWrapper.append(title)
-    }
-
-    get element() {
-        return this.errorDetailsWrapper
+        this.wrapper.append(title)
     }
 
     showErrorsInfo({ errors, invalidExpression }: IShowErrorInfoParams) {
@@ -41,17 +39,17 @@ export class CalculatorErrorsDetails {
             return
         }
 
-        this.errorDetailsWrapper.domElement.classList.add('show')
-        this.errorDetailsWrapper.removeElement('#detail-list')
+        this.wrapper.domElement.classList.add('show')
+        this.wrapper.removeElement('#detail-list')
         const unorderedList = new UnorderedList({ classNames: 'detail-error-info', id: 'detail-list' })
 
         const listItemsArray = this.getErrorsParagraph(formattedErrors, invalidExpression)
         unorderedList.appendListItems(listItemsArray)
-        this.errorDetailsWrapper.append(unorderedList)
+        this.wrapper.append(unorderedList)
     }
 
     hideDetail() {
-        this.errorDetailsWrapper.domElement.classList.remove('show')
+        this.wrapper.domElement.classList.remove('show')
     }
 
     private getErrorsParagraph(formattedErrors: IFormattedErrorsInfo[], invalidedExpression: string) {

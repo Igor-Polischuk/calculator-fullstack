@@ -1,21 +1,18 @@
-import { DivElement } from "@components/Elements/DivElement";
+import { ComplexElement } from "@components/Elements/ComplexElement";
 import { Input } from "@components/Elements/Input";
 
-export class CalculatorInput {
+export class CalculatorInput extends ComplexElement {
     private input: Input
-    private inputWrapper: DivElement
     constructor() {
+        super({
+            wrapperClassNames: 'calculator__field'
+        })
         this.input = new Input({
             classNames: 'input',
             placeholder: 'Enter what you want to calculate',
         })
 
-        this.inputWrapper = new DivElement({ classNames: 'calculator__field' })
-        this.inputWrapper.append(this.input)
-    }
-
-    get element() {
-        return this.inputWrapper
+        this.wrapper.append(this.input)
     }
 
     get inputElement() {
