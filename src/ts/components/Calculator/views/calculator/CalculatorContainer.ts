@@ -12,6 +12,8 @@ export class CalculatorContainer extends ComplexElement {
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
     private calculatorKeyboard: CalculatorKeyboard;
+
+    private replaceCurrentNumberInInput
     private params: ICalculatorUIParams;
 
     constructor(params: ICalculatorUIParams) {
@@ -19,6 +21,8 @@ export class CalculatorContainer extends ComplexElement {
             wrapperClassNames: 'calculator'
         })
         this.params = params;
+        this.replaceCurrentNumberInInput = true
+
         this.calculatorInput = new CalculatorInput();
         this.calculatorOutput = new CalculatorOutput({
             onErrorClick: this.onErrorClick.bind(this)
@@ -27,7 +31,10 @@ export class CalculatorContainer extends ComplexElement {
             onEqual: this.setExpression.bind(this),
             onChar: this.onButtonClick.bind(this),
             onBackspace: this.onBackspace.bind(this),
-            onReset: () => this.calculatorInput.setInputValue(''),
+            onReset: () => {
+                this.calculatorInput.setInputValue('0')
+                this.replaceCurrentNumberInInput = true
+            },
         });
 
         this.wrapper.append(
@@ -54,11 +61,19 @@ export class CalculatorContainer extends ComplexElement {
     }
 
     private onButtonClick(clickedButtonValue: string) {
-        const newInputValue = this.calculatorInput.inputText + clickedButtonValue
+        const newInputValue = this.replaceCurrentNumberInInput
+            ? clickedButtonValue
+            : this.calculatorInput.inputText + clickedButtonValue
         this.calculatorInput.setInputValue(newInputValue)
+        this.replaceCurrentNumberInInput = false
     }
 
     private onBackspace() {
+        if (this.calculatorInput.inputText === '0' || this.calculatorInput.inputText.length <= 1) {
+            this.calculatorInput.setInputValue('0')
+            this.replaceCurrentNumberInInput = true
+            return
+        }
         const newInputValue = this.calculatorInput.inputText.slice(0, -1)
         this.calculatorInput.setInputValue(newInputValue)
     }

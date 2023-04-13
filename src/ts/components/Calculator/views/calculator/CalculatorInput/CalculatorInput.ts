@@ -10,7 +10,7 @@ export class CalculatorInput extends ComplexElement {
         })
         this.input = new Input({
             classNames: 'input',
-            placeholder: 'Enter what you want to calculate',
+            value: '0'
         })
 
         this.wrapper.append(this.input)
