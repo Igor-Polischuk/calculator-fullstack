@@ -1,5 +1,5 @@
 import { ErrorMessage } from './ErrorMessage';
-import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
+import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { ComplexElement } from "@components/Elements/ComplexElement";
 import { Paragraph } from "@components/Elements/Paragraph";
 import { UnorderedList } from "@components/Elements/UList";
