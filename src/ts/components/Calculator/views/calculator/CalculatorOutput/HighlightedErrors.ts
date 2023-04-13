@@ -1,4 +1,5 @@
 import { IErrorRange } from "@components/Calculator/interfaces/ICalculator";
+import { ComplexElement } from "@components/Elements/ComplexElement";
 import { Paragraph } from "@components/Elements/Paragraph";
 import { Span } from "@components/Elements/Span";
 
@@ -13,17 +14,15 @@ interface IHighlightErrorsReduce {
     spansArray: Span[]
 }
 
-export class HighlightedErrors {
-    private paragraphWrapper: Paragraph
+export class HighlightedErrors extends ComplexElement {
     private params: IHighlightedErrorsParams
     constructor(params: IHighlightedErrorsParams) {
-        this.paragraphWrapper = new Paragraph({ text: '', classNames: 'error', id: 'result-display' })
+        super({
+            wrapperClassNames: 'error',
+            wrapperId: 'result-display'
+        })
         this.params = params
-        this.paragraphWrapper.append(...this.highlightErrors())
-    }
-
-    get element() {
-        return this.paragraphWrapper
+        this.wrapper.append(...this.highlightErrors())
     }
 
     private highlightErrors() {

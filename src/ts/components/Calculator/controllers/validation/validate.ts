@@ -5,7 +5,7 @@ interface IValidators {
     [validatorName: string]: (expression: string) => IError | undefined
 }
 
-export function validate(expression: string) {
+export function validate(expression: string): void {
     const validateResult = validateExpression(expression, {
         pointValidator,
         bracketsValidator,

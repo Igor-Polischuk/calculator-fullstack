@@ -17,7 +17,7 @@ export function calculationValidation(checkedExpression: string): IError | undef
     if (replacingResult === '0') {
         return
     }
-    
+
     const invalidPartsOfExpression = replacingResult.split('0').filter(char => char !== '')
     const indexesOfInvalidExpressionParts = getSubstringsIndexes(invalidPartsOfExpression, expression)
 

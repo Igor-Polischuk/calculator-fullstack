@@ -4,22 +4,21 @@
  * @returns index of incorrect brackets or -1 if all is good 
  */
 export function bracketsOrder(expression: string) {
-    const stack = [];
-    for (let i = 0; i < expression.length; i++) {
-        const char = expression[i];
+    let bracketCount = 0
+    expression.split('').forEach((char, i) => {
         if (char === "(") {
-            stack.push(i);
+            bracketCount++
         } else if (char === ")") {
-            if (stack.length === 0) {
+            if (bracketCount === 0) {
                 return i
             }
-            stack.pop();
+            bracketCount--
         }
-    }
+    })
 
-    if (stack.length !== 0) {
+    if (bracketCount !== 0) {
         return expression.lastIndexOf('(')
     }
-    
+
     return -1
 }
