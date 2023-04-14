@@ -1,8 +1,8 @@
-import { IError } from "@components/Calculator/interfaces/ICalculator"
+import { IValidationError } from "@components/Calculator/interfaces/ICalculator"
 import { bracketsValidator, calculationValidation, pointValidator, zeroDivisionValidator } from "./validators/"
 
 interface IValidators {
-    [validatorName: string]: (expression: string) => IError | undefined
+    [validatorName: string]: (expression: string) => IValidationError | undefined
 }
 
 export function validate(expression: string): void {
@@ -17,7 +17,7 @@ export function validate(expression: string): void {
     }
 }
 
-function validateExpression(expression: string, validators: IValidators): IError[] {
+function validateExpression(expression: string, validators: IValidators): IValidationError[] {
     const errors = Object.keys(validators).map(validatorName => {
         const validateFunction = validators[validatorName]
         const validateResult = validateFunction(expression)

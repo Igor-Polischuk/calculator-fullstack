@@ -1,4 +1,4 @@
-import { IError, IErrorRange } from '../../interfaces/ICalculator';
+import { IValidationError, IErrorRange } from '../../interfaces/ICalculator';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
@@ -50,7 +50,7 @@ export class CalculatorContainer extends ComplexElement {
         this.calculatorInput.setInputValue(result.toString())
     }
 
-    showCalculationError(errors: IError[]) {
+    showCalculationError(errors: IValidationError[]) {
         const expressionWithError = this.calculatorInput.inputText
         this.calculatorOutput.showCalculationError(errors, expressionWithError)
     }

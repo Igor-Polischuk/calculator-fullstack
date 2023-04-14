@@ -1,5 +1,5 @@
 import { ErrorMessage } from './ErrorMessage';
-import { IError } from "@components/Calculator/interfaces/ICalculator";
+import { IValidationError } from "@components/Calculator/interfaces/ICalculator";
 import { ComplexElement } from "@components/Elements/ComplexElement";
 import { Paragraph } from "@components/Elements/Paragraph";
 import { UnorderedList } from "@components/Elements/UList";
@@ -13,7 +13,7 @@ interface IFormattedErrorsInfo {
 }
 
 interface IShowErrorInfoParams {
-    errors: IError[]
+    errors: IValidationError[]
     invalidExpression: string
 }
 
@@ -61,7 +61,7 @@ export class CalculatorErrorsDetails extends ComplexElement {
         })
     }
 
-    private formatErrors(errors: IError[]): IFormattedErrorsInfo[] {
+    private formatErrors(errors: IValidationError[]): IFormattedErrorsInfo[] {
         const formattedErrors = errors.reduce<IFormattedErrorsInfo[]>((formattedErrors, { message, errorPlace }) => {
             if (errorPlace) {
                 const errorInfos = errorPlace.map((place) => ({ message, indexes: { from: place.from, to: place.to } }));

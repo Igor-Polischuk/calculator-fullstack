@@ -1,5 +1,5 @@
 import { Paragraph } from '@components/Elements/Paragraph';
-import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
+import { IValidationError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
 import { removeOverlappingRanges } from '@utilities/ranges/removeOverlappingRanges';
 import { HighlightedErrors } from './HighlightedErrors';
 import { IBaseElement } from '@components/Elements/interfaces';
@@ -31,7 +31,7 @@ export class CalculatorOutput extends ComplexElement {
         })
     }
 
-    showCalculationError(errors: IError[], expressionWithError: string) {
+    showCalculationError(errors: IValidationError[], expressionWithError: string) {
         const invalidPartsIndexes = errors.flatMap(error => error.errorPlace || [])
         const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
         const paragraphWithHighlightedErrors = new HighlightedErrors({

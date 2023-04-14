@@ -1,4 +1,4 @@
-import { IError, IOperation } from "@components/Calculator/interfaces/ICalculator";
+import { IValidationError, IOperation, IRuntimeError } from "@components/Calculator/interfaces/ICalculator";
 import { regularWithParam } from "../regex";
 import { IExceptionObj } from "./exceptions";
 import { Priority } from "./priority";
@@ -25,12 +25,13 @@ export class Operation implements IOperation {
 
     checkException(numbers: number[], errorExpression?: string): void {
         if (this.exceptionHandler.length === 0) return
-        const whereMessage  = errorExpression ? `in ${errorExpression}` : ''
+        const whereMessage = errorExpression ? `in ${errorExpression}` : ''
         this.exceptionHandler.forEach(exception => {
             const isException = exception.checkException(...numbers)
-            if (isException){
-                const error: IError = {
+            if (isException) {
+                const error: IRuntimeError = {
                     message: `Runtime error: ${exception.exceptionMessage} ${whereMessage}`,
+                    currentExpressionSnapshot: whereMessage
                 }
                 throw [error]
             }
@@ -51,7 +52,7 @@ export class MathFunction extends Operation {
 }
 
 export class Constant extends Operation {
-    constructor(params: {name: string, value: number, reg?: RegExp, text?: string}) {
+    constructor(params: { name: string, value: number, reg?: RegExp, text?: string }) {
         super({
             reg: params.reg ? params.reg : regularWithParam.getConstantReg(params.name),
             priority: Priority.Constant,

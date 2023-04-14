@@ -1,10 +1,10 @@
 import { calculatorConfig } from "../../config/calculator-config";
-import { IError } from "@components/Calculator/interfaces/ICalculator"
+import { IValidationError } from "@components/Calculator/interfaces/ICalculator"
 import { processExpression, unwrapBracketInExpression } from "../../services";
 import { bracketsOrder } from "../helpers/bracketsOrder";
 import { getSubstringsIndexes } from '../helpers/getSubstringsIndexes';
 
-export function calculationValidation(checkedExpression: string): IError | undefined {
+export function calculationValidation(checkedExpression: string): IValidationError | undefined {
     if (Number(checkedExpression)) {
         return
     }

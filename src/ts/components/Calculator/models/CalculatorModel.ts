@@ -1,4 +1,4 @@
-import { IError, ModelAllowedEvents, ICalculatorModel } from '../interfaces/ICalculator';
+import { IValidationError, ModelAllowedEvents, ICalculatorModel, IRuntimeError, IUnexpectedError, errorsType } from '../interfaces/ICalculator';
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
 
@@ -6,7 +6,7 @@ import { Observer } from "@utilities/Observer/Observer";
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
     private result: number | null = null;
     private expression: string | null = null;
-    private error: IError[] = [];
+    private error: errorsType = [];
 
     setResult(res: number) {
         this.result = res
@@ -20,7 +20,7 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
         this.notifyAll(CalculatorModelEvent.ExpressionChanged, expression)
     }
 
-    setError(errors: IError[]) {
+    setError(errors: errorsType) {
         this.error = errors
         this.result = null
         this.notifyAll(CalculatorModelEvent.ErrorChanged, errors)

@@ -1,5 +1,4 @@
-import { ICalculatorController, ICalculatorModel, IError } from '@components/Calculator/interfaces/ICalculator';
-import { formatDecimal } from '@utilities/formatText/formatDecimal';
+import { ICalculatorController, ICalculatorModel, errorsType } from '@components/Calculator/interfaces/ICalculator';
 import { CalculatorModelEvent } from '../calculator-model-event';
 import { formatExpression } from './services';
 import { validate } from './validation/validate';
@@ -20,8 +19,7 @@ export class CalculatorController implements ICalculatorController {
       const result = expressionCalculator.calculate(expression)
       this.model.setResult(result);
     } catch (error) {
-      console.log(error);
-      this.model.setError(error as IError[]);
+      this.model.setError(error as errorsType);
     }
   }
 }

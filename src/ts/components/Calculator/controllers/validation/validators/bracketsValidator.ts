@@ -1,10 +1,10 @@
 
-import { IError } from "@components/Calculator/interfaces/ICalculator";
+import { IValidationError } from "@components/Calculator/interfaces/ICalculator";
 import { regexPatterns } from "../../regex";
 import { bracketsOrder } from "../helpers/bracketsOrder";
 import { Error } from "../error";
 
-export function bracketsValidator(expression: string): IError | undefined {
+export function bracketsValidator(expression: string): IValidationError | undefined {
     const incorrectBracketIndex = bracketsOrder(expression)
     if (incorrectBracketIndex !== -1) {
         return {

@@ -4,15 +4,17 @@ import { CalculatorModelEvent } from "../calculator-model-event";
 export type ModelAllowedEvents = {
     [CalculatorModelEvent.ResultChanged]: number;
     [CalculatorModelEvent.ExpressionChanged]: string;
-    [CalculatorModelEvent.ErrorChanged]: IError[]
+    [CalculatorModelEvent.ErrorChanged]: IRuntimeError | IValidationError[] | IUnexpectedError
 };
 
 export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
     setResult: (result: number) => void
     setExpression: (expression: string) => void
-    setError: (errors: IError[]) => void
+    setError: (errors: IRuntimeError | IValidationError[] | IUnexpectedError) => void
     getExpression: () => string | null
 }
+
+export type errorsType = IValidationError[] | IRuntimeError | IUnexpectedError
 
 export interface IOperation {
     readonly reg: RegExp
@@ -24,9 +26,18 @@ export interface IOperation {
 
 export type ICalculatorConfig = Record<string, IOperation>
 
-export interface IError {
+export interface IValidationError {
     message: string
-    errorPlace?: { from: number, to: number }[]
+    errorPlace: IErrorRange[]
+}
+
+export interface IRuntimeError {
+    message: string
+    currentExpressionSnapshot: string
+}
+
+export interface IUnexpectedError {
+    message: string
 }
 
 export interface IErrorRange {
