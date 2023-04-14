@@ -11,12 +11,12 @@ export class CalculatorController implements ICalculatorController {
     this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this));
   }
 
-  private calculateExpression(inputExpression: string): void {
-    const expression = formatExpression(inputExpression);
+  private calculateExpression(expression: string): void {
+    const formattedExpression = formatExpression(expression);
 
     try {
-      validate(expression);
-      const result = expressionCalculator.calculate(expression)
+      validate(formattedExpression);
+      const result = expressionCalculator.calculate(formattedExpression)
       this.model.setResult(result);
     } catch (error) {
       console.log(error);
