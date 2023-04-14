@@ -8,7 +8,8 @@ export const regexPatterns = {
     OPEN_BRACKETS_ADJACENT_SYMBOLS: /[\d]\(|\([\+\*\/\^]/,
     CLOSED_BRACKETS_ADJACENT_SYMBOLS: /[^\d\)\w\!]\)|\)[\d\w]/,
     DOUBLE_POINTS_IN_NUMBER: /\d+(\.\d+){2,}/g,
-    MOST_NESTED_BRACKET: /\(([^()]+)\)/g
+    MOST_NESTED_BRACKET: /\(([^()]+)\)/g,
+    OPERATIONS_IN_ROW: /([-+*/^]{2,})/g
 };
 
 export const regularWithParam = {

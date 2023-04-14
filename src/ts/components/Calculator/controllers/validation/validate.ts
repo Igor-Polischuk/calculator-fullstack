@@ -1,5 +1,5 @@
 import { IValidationError } from "@components/Calculator/interfaces/ICalculator"
-import { bracketsValidator, calculationValidation, pointValidator, zeroDivisionValidator } from "./validators/"
+import { bracketsValidator, pointValidator, zeroDivisionValidator, operationsInRow } from "./validators/"
 
 interface IValidators {
     [validatorName: string]: (expression: string) => IValidationError | undefined
@@ -10,7 +10,8 @@ export function validate(expression: string): void {
         pointValidator,
         bracketsValidator,
         zeroDivisionValidator,
-        calculationValidation,
+        operationsInRow
+        // calculationValidation,
     })
     if (validateResult.length > 0) {
         throw validateResult
