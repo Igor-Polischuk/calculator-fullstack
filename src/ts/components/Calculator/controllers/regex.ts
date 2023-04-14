@@ -9,7 +9,8 @@ export const regexPatterns = {
     CLOSED_BRACKETS_ADJACENT_SYMBOLS: /[^\d\)\w\!]\)|\)[\d\w]/,
     DOUBLE_POINTS_IN_NUMBER: /\d+(\.\d+){2,}/g,
     MOST_NESTED_BRACKET: /\(([^()]+)\)/g,
-    OPERATIONS_IN_ROW: /([-+*/^]{2,})/g
+    OPERATIONS_IN_ROW: /([-+*/^]{2,})/g,
+    ALL_WORDS: /[a-zA-Z]+/g,
 };
 
 export const regularWithParam = {

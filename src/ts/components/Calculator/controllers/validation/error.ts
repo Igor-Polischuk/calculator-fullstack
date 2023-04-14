@@ -4,5 +4,6 @@ export enum Error {
     ZeroDivisionError = 'division by Zero',
     NumberPointError = 'number with several points',
     OperationsInRowError = 'several operations are entered in a row',
-    UnknownSymbol = 'unexpected character'
+    UnknownSymbol = 'unexpected character',
+    IncorrectFunctionNameError = 'incorrect function name',
 }
