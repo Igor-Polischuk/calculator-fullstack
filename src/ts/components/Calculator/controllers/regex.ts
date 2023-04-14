@@ -11,6 +11,7 @@ export const regexPatterns = {
     MOST_NESTED_BRACKET: /\(([^()]+)\)/g,
     OPERATIONS_IN_ROW: /([-+*/^]{2,})/g,
     ALL_WORDS: /[a-zA-Z]+/g,
+    EXPRESSION_START: /^(?:(?:-?[a-z])|(?:-?\d)|(?:\())/
 };
 
 export const regularWithParam = {

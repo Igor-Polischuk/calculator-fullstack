@@ -1,5 +1,6 @@
 import { bracketsValidator } from "./bracketsValidator";
 import { calculationValidation } from "./calculationValidation";
+import { expressionStartValidator } from "./expressionStartValidator";
 import { incorrectFunctionNameValidator } from "./incorrectFunctionNameValidator";
 import { operationsInRow } from "./operationsInRow";
 import { pointValidator } from "./pointValidator";
@@ -13,5 +14,6 @@ export {
     pointValidator,
     operationsInRow,
     unknownSymbolValidator,
-    incorrectFunctionNameValidator
+    incorrectFunctionNameValidator,
+    expressionStartValidator
 }

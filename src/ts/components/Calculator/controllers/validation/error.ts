@@ -7,4 +7,5 @@ export enum Error {
     PointError = 'point in incorrect place',
     UnknownSymbol = 'unexpected character',
     IncorrectFunctionNameError = 'incorrect function name',
+    LineStartError = 'incorrect start of expression',
 }
