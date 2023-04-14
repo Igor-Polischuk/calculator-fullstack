@@ -1,5 +1,5 @@
-import { bracketsValidator } from "./bracketsValidator";
-import { calculationValidation } from "./calculationValidation";
+import { bracketsOrderValidator } from "./bracketsOrderValidator";
+import { bracketsSiblingsValidator } from "./bracketsSiblingsValidator";
 import { expressionEndValidator } from "./expressionEndValidator";
 import { expressionStartValidator } from "./expressionStartValidator";
 import { incorrectFunctionNameValidator } from "./incorrectFunctionNameValidator";
@@ -9,9 +9,9 @@ import { unknownSymbolValidator } from "./uknownSymbolValidator";
 import { zeroDivisionValidator } from "./zeroDivisionValidator";
 
 export {
-    bracketsValidator,
+    bracketsOrderValidator,
+    bracketsSiblingsValidator,
     zeroDivisionValidator,
-    calculationValidation,
     pointValidator,
     operationsInRow,
     unknownSymbolValidator,
