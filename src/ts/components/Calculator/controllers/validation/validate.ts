@@ -1,12 +1,13 @@
 import { IValidationError } from "@components/Calculator/interfaces/ICalculator"
 import {
-    bracketsValidator,
+    bracketsOrderValidator,
     pointValidator,
     zeroDivisionValidator,
     operationsInRow,
     unknownSymbolValidator,
     expressionStartValidator,
-    expressionEndValidator
+    expressionEndValidator,
+    bracketsSiblingsValidator
 } from "./validators/"
 
 interface IValidators {
@@ -16,13 +17,13 @@ interface IValidators {
 export function validate(expression: string): void {
     const validateResult = validateExpression(expression, {
         pointValidator,
-        bracketsValidator,
+        bracketsOrderValidator,
+        bracketsSiblingsValidator,
         zeroDivisionValidator,
         operationsInRow,
         unknownSymbolValidator,
         expressionStartValidator,
         expressionEndValidator
-        // calculationValidation,
     })
     if (validateResult.length > 0) {
         throw validateResult
