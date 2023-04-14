@@ -8,4 +8,5 @@ export enum Error {
     UnknownSymbol = 'unexpected character',
     IncorrectFunctionNameError = 'incorrect function name',
     LineStartError = 'incorrect start of expression',
+    LineEndError = 'incorrect end of expression',
 }

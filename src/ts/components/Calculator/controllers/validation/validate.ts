@@ -5,7 +5,8 @@ import {
     zeroDivisionValidator,
     operationsInRow,
     unknownSymbolValidator,
-    expressionStartValidator
+    expressionStartValidator,
+    expressionEndValidator
 } from "./validators/"
 
 interface IValidators {
@@ -19,7 +20,8 @@ export function validate(expression: string): void {
         zeroDivisionValidator,
         operationsInRow,
         unknownSymbolValidator,
-        expressionStartValidator
+        expressionStartValidator,
+        expressionEndValidator
         // calculationValidation,
     })
     if (validateResult.length > 0) {
