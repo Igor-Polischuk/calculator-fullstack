@@ -5,6 +5,7 @@ import { HighlightedErrors } from './HighlightedErrors';
 import { IBaseElement } from '@components/Elements/interfaces';
 import { ComplexElement } from '@components/Elements/ComplexElement';
 import { ResultOutput } from './ResultParagraph';
+import { Span } from '@components/Elements/Span';
 
 
 interface ICalculatorOutputParams {
@@ -31,7 +32,7 @@ export class CalculatorOutput extends ComplexElement {
         })
     }
 
-    showCalculationError(errors: IValidationError[], expressionWithError: string) {
+    showValidationError(errors: IValidationError[], expressionWithError: string) {
         const invalidPartsIndexes = errors.flatMap(error => error.errorPlace || [])
         const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
         const paragraphWithHighlightedErrors = new HighlightedErrors({
@@ -42,8 +43,14 @@ export class CalculatorOutput extends ComplexElement {
 
         this.renderParagraph({
             className: 'error',
-            text: invalidExpressionPartsIndexes.length === 0 ? errors[0].message : '',
             children: paragraphWithHighlightedErrors.element.childElements
+        })
+    }
+
+    showTextError(errorMessage: string) {
+        this.renderParagraph({
+            children: [new Span({ text: errorMessage })],
+            className: 'error'
         })
     }
 

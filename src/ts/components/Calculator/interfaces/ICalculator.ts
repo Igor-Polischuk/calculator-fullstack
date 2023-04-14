@@ -31,12 +31,12 @@ export interface IValidationError {
     errorPlace: IErrorRange[]
 }
 
-export interface IRuntimeError {
+export interface IRuntimeError extends Object {
     message: string
     currentExpressionSnapshot: string
 }
 
-export interface IUnexpectedError {
+export interface IUnexpectedError extends Object {
     message: string
 }
 

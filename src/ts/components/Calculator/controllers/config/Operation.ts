@@ -33,7 +33,7 @@ export class Operation implements IOperation {
                     message: `Runtime error: ${exception.exceptionMessage} ${whereMessage}`,
                     currentExpressionSnapshot: whereMessage
                 }
-                throw [error]
+                throw error
             }
         })
     }

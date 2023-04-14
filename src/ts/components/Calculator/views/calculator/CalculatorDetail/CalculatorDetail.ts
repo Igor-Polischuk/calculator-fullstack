@@ -29,9 +29,6 @@ export class CalculatorErrorsDetails extends ComplexElement {
 
     showErrorsInfo({ errors, invalidExpression }: IShowErrorInfoParams) {
         const formattedErrors = this.formatErrors(errors);
-        if (formattedErrors.length === 0) {
-            return
-        }
 
         this.showDetail()
         this.wrapper.removeElement('#detail-list')

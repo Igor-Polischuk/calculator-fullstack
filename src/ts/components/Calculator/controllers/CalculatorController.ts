@@ -19,6 +19,8 @@ export class CalculatorController implements ICalculatorController {
       const result = expressionCalculator.calculate(expression)
       this.model.setResult(result);
     } catch (error) {
+      console.log(error);
+
       this.model.setError(error as errorsType);
     }
   }
