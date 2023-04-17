@@ -1,8 +1,8 @@
-import { ComplexElement } from "@components/Elements/ComplexElement";
+import { WrapperElement } from "@components/Elements/ComplexElement";
 import { Input } from "@components/Elements/Input";
 import { formatExpression } from "@utilities/formatText/formatExpression";
 
-export class CalculatorInput extends ComplexElement {
+export class CalculatorInput extends WrapperElement {
     private input: Input
     constructor() {
         super({

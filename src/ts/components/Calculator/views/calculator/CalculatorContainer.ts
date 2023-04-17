@@ -2,13 +2,13 @@ import { IError, IErrorRange } from '../../interfaces/ICalculator';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
-import { ComplexElement } from '@components/Elements/ComplexElement';
+import { WrapperElement } from '@components/Elements/ComplexElement';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
 }
 
-export class CalculatorContainer extends ComplexElement {
+export class CalculatorContainer extends WrapperElement {
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
     private calculatorKeyboard: CalculatorKeyboard;

@@ -1,6 +1,6 @@
 import { ErrorMessage } from './ErrorMessage';
 import { IError } from "@components/Calculator/interfaces/ICalculator";
-import { ComplexElement } from "@components/Elements/ComplexElement";
+import { WrapperElement } from "@components/Elements/ComplexElement";
 import { Paragraph } from "@components/Elements/Paragraph";
 import { UnorderedList } from "@components/Elements/UList";
 
@@ -18,7 +18,7 @@ interface IShowErrorInfoParams {
 }
 
 
-export class CalculatorErrorsDetails extends ComplexElement {
+export class CalculatorErrorsDetails extends WrapperElement {
     constructor() {
         super({
             wrapperClassNames: 'calculator__detail'

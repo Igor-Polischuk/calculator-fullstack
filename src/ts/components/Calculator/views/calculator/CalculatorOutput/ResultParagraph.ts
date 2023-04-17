@@ -1,4 +1,4 @@
-import { ComplexElement } from "@components/Elements/ComplexElement";
+import { WrapperElement } from "@components/Elements/ComplexElement";
 import { Span } from "@components/Elements/Span";
 import { replaceMathOperators } from "@utilities/formatText/replaceMathOperators";
 
@@ -7,7 +7,7 @@ interface IResultParagraphParams {
     result: number
 }
 
-export class ResultOutput extends ComplexElement {
+export class ResultOutput extends WrapperElement {
     constructor(params: IResultParagraphParams) {
         super({})
         const expressionSpan = new Span({ text: replaceMathOperators(params.expression) })

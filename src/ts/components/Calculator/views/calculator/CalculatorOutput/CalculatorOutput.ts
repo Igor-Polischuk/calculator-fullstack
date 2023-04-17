@@ -3,7 +3,7 @@ import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculat
 import { removeOverlappingRanges } from '@utilities/ranges/removeOverlappingRanges';
 import { HighlightedErrors } from './HighlightedErrors';
 import { IBaseElement } from '@components/Elements/interfaces';
-import { ComplexElement } from '@components/Elements/ComplexElement';
+import { WrapperElement } from '@components/Elements/ComplexElement';
 import { ResultOutput } from './ResultParagraph';
 import { Span } from '@components/Elements/Span';
 
@@ -12,11 +12,11 @@ interface ICalculatorOutputParams {
     onErrorClick: (range: IErrorRange) => void
 }
 
-export class CalculatorOutput extends ComplexElement {
+export class CalculatorOutput extends WrapperElement {
     private params: ICalculatorOutputParams;
     constructor(params: ICalculatorOutputParams) {
         super({
-            wrapperClassNames: 'calculator__result'
+            wrapperClassNames: 'calculator__result',
         })
         this.params = params
     }

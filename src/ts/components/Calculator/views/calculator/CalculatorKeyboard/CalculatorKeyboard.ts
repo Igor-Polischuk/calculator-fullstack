@@ -2,7 +2,7 @@ import { ButtonList } from '@components/Calculator/views/calculator/CalculatorKe
 import { DivElement } from '@components/Elements/DivElement';
 import { getCalculatorButtons } from './getButton/getCalculatorButtons';
 import { ButtonType } from './ButtonType';
-import { ComplexElement } from '@components/Elements/ComplexElement';
+import { WrapperElement } from '@components/Elements/ComplexElement';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
@@ -11,7 +11,7 @@ interface ICalculatorKeyboardOption {
     onReset: () => void
 }
 
-export class CalculatorKeyboard extends ComplexElement {
+export class CalculatorKeyboard extends WrapperElement {
     private buttons: ButtonList<ButtonType>
     private params: ICalculatorKeyboardOption
     constructor(params: ICalculatorKeyboardOption) {

@@ -1,4 +1,3 @@
-import { BaseElement } from "./BaseElement"
 import { DivElement } from "./DivElement"
 
 interface IComplexElementParams {
@@ -6,7 +5,7 @@ interface IComplexElementParams {
     wrapperId?: string
 }
 
-export class ComplexElement {
+export class WrapperElement {
     protected wrapper: DivElement
     constructor(params: IComplexElementParams) {
         this.wrapper = new DivElement({

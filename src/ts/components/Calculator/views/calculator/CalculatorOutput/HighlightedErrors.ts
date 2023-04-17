@@ -1,5 +1,5 @@
 import { IErrorRange } from "@components/Calculator/interfaces/ICalculator";
-import { ComplexElement } from "@components/Elements/ComplexElement";
+import { WrapperElement } from "@components/Elements/ComplexElement";
 import { Span } from "@components/Elements/Span";
 
 interface IHighlightedErrorsParams {
@@ -13,7 +13,7 @@ interface HighlightErrorsReduceResult {
     spansArray: Span[]
 }
 
-export class HighlightedErrors extends ComplexElement {
+export class HighlightedErrors extends WrapperElement {
     private params: IHighlightedErrorsParams
     constructor(params: IHighlightedErrorsParams) {
         super({

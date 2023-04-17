@@ -1,4 +1,4 @@
-import { ComplexElement } from "@components/Elements/ComplexElement";
+import { WrapperElement } from "@components/Elements/ComplexElement";
 import { Paragraph } from "@components/Elements/Paragraph";
 import { Span } from "@components/Elements/Span";
 
@@ -7,7 +7,7 @@ interface IErrorMessageParams {
     errorSubstring: string
 }
 
-export class ErrorMessage extends ComplexElement {
+export class ErrorMessage extends WrapperElement {
     constructor(params: IErrorMessageParams) {
         super({})
         const errorMessage = new Span({ text: `${params.errorMessage}:` })
