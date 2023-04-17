@@ -6,7 +6,8 @@ import { getNumbersFromExpression } from "../expressionDataParsers/getNumbersFro
 import { getOperationsFromExpression } from "../expressionDataParsers/getOperationsFromExpression";
 import { unwrapBracketInExpression } from "../formatting/unwrapExpressionTerms";
 
-class ExpressionCalculator {
+//
+class ExpressionCalculatorService {
     calculate(expression: string): number {
         const result = +this.processBracketedExpression(expression)
         return formatDecimal(result, 7)
@@ -49,4 +50,4 @@ class ExpressionCalculator {
     }
 }
 
-export default new ExpressionCalculator()
+export default new ExpressionCalculatorService()

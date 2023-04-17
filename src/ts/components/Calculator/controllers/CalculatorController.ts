@@ -2,7 +2,7 @@ import { ICalculatorController, ICalculatorModel, IError } from '@components/Cal
 import { CalculatorModelEvent } from '../calculator-model-event';
 import { formatExpression } from './services';
 import { validate } from './validation/validate';
-import expressionCalculator from './services/calculation/calculate';
+import expressionCalculatorService from './services/calculation/ExpressionCalculatorService';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
@@ -16,7 +16,7 @@ export class CalculatorController implements ICalculatorController {
 
     try {
       validate(formattedExpression);
-      const result = expressionCalculator.calculate(formattedExpression)
+      const result = expressionCalculatorService.calculate(formattedExpression)
       this.model.setResult(result);
     } catch (error) {
       console.log(error);
