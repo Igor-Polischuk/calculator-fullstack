@@ -1,6 +1,5 @@
 import { IErrorRange } from "@components/Calculator/interfaces/ICalculator";
 import { ComplexElement } from "@components/Elements/ComplexElement";
-import { Paragraph } from "@components/Elements/Paragraph";
 import { Span } from "@components/Elements/Span";
 
 interface IHighlightedErrorsParams {
@@ -9,7 +8,7 @@ interface IHighlightedErrorsParams {
     onErrorClick: (range: IErrorRange) => void
 }
 
-interface IHighlightErrorsReduce {
+interface HighlightErrorsReduceResult {
     lastErrorIndex: number
     spansArray: Span[]
 }
@@ -22,11 +21,12 @@ export class HighlightedErrors extends ComplexElement {
             wrapperId: 'result-display'
         })
         this.params = params
-        this.wrapper.append(...this.highlightErrors())
+        const errorSpans = this.generateErrorSpans()
+        this.wrapper.append(...errorSpans)
     }
 
-    private highlightErrors() {
-        const { spansArray, lastErrorIndex } = this.params.errorRanges.reduce<IHighlightErrorsReduce>(
+    private generateErrorSpans(): Span[] {
+        const { spansArray, lastErrorIndex } = this.params.errorRanges.reduce<HighlightErrorsReduceResult>(
             ({ spansArray, lastErrorIndex }, { from, to }) => {
                 const notErrorString = this.params.expressionWithErrors.slice(lastErrorIndex, from)
                 const notErrorSpan = new Span({ text: notErrorString })
