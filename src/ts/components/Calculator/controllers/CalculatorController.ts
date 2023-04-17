@@ -1,4 +1,4 @@
-import { ICalculatorController, ICalculatorModel, errorsType } from '@components/Calculator/interfaces/ICalculator';
+import { ICalculatorController, ICalculatorModel, IError } from '@components/Calculator/interfaces/ICalculator';
 import { CalculatorModelEvent } from '../calculator-model-event';
 import { formatExpression } from './services';
 import { validate } from './validation/validate';
@@ -20,8 +20,7 @@ export class CalculatorController implements ICalculatorController {
       this.model.setResult(result);
     } catch (error) {
       console.log(error);
-
-      this.model.setError(error as errorsType);
+      this.model.setError(error as IError | IError[]);
     }
   }
 }

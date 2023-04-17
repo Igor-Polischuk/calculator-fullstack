@@ -1,5 +1,5 @@
 import { ErrorMessage } from './ErrorMessage';
-import { IValidationError } from "@components/Calculator/interfaces/ICalculator";
+import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { ComplexElement } from "@components/Elements/ComplexElement";
 import { Paragraph } from "@components/Elements/Paragraph";
 import { UnorderedList } from "@components/Elements/UList";
@@ -13,7 +13,7 @@ interface IFormattedErrorsInfo {
 }
 
 interface IShowErrorInfoParams {
-    errors: IValidationError[]
+    errors: IError[]
     invalidExpression: string
 }
 
@@ -51,17 +51,17 @@ export class CalculatorErrorsDetails extends ComplexElement {
         return formattedErrors.map(({ message, indexes }) => {
             const invalidString = invalidedExpression.substring(indexes.from, indexes.to + 1)
             const errorMessage = new ErrorMessage({
-                errorMessage: message,
+                errorMessage: message,//
                 errorSubstring: invalidString,
             })
             return errorMessage.element
         })
     }
 
-    private formatErrors(errors: IValidationError[]): IFormattedErrorsInfo[] {
-        const formattedErrors = errors.reduce<IFormattedErrorsInfo[]>((formattedErrors, { message, errorPlace }) => {
-            if (errorPlace) {
-                const errorInfos = errorPlace.map((place) => ({ message, indexes: { from: place.from, to: place.to } }));
+    private formatErrors(errors: IError[]): IFormattedErrorsInfo[] {
+        const formattedErrors = errors.reduce<IFormattedErrorsInfo[]>((formattedErrors, { message, payload }) => {
+            if (payload?.errorPlace) {
+                const errorInfos = payload.errorPlace.map((place) => ({ message, indexes: { from: place.from, to: place.to } }));
                 return [...formattedErrors, ...errorInfos];
             }
             return formattedErrors

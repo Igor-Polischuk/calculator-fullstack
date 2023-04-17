@@ -1,4 +1,4 @@
-import { IValidationError, IErrorRange, errorsType } from '../../interfaces/ICalculator';
+import { IError, IErrorRange } from '../../interfaces/ICalculator';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
@@ -50,11 +50,11 @@ export class CalculatorContainer extends ComplexElement {
         this.calculatorInput.setInputValue(result.toString())
     }
 
-    showCalculationError(error: errorsType) {
+    showCalculationError(error: IError | IError[]) {
         const expressionWithError = this.calculatorInput.inputText
         if (Array.isArray(error)) {
             this.calculatorOutput.showValidationError(error, expressionWithError)
-        } else if (error.hasOwnProperty('currentExpressionSnapshot')) {
+        } else if (error.hasOwnProperty('payload')) {
             this.calculatorOutput.showTextError(error.message)
         } else {
             this.calculatorOutput.showTextError('An unexpected error occurred while evaluating the expression')

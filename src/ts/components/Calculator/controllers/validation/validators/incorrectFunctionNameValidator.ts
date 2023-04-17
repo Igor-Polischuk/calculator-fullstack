@@ -1,10 +1,10 @@
-import { IValidationError } from "@components/Calculator/interfaces/ICalculator";
+import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { regexPatterns } from "../../regex";
 import { calculatorConfig } from "../../config/calculator-config";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
 import { Error } from "../error"
 
-export function incorrectFunctionNameValidator(expression: string): IValidationError | undefined {
+export function incorrectFunctionNameValidator(expression: string): IError | undefined {
     const allWords = expression.match(regexPatterns.ALL_WORDS)
 
     if (allWords) {
@@ -13,7 +13,9 @@ export function incorrectFunctionNameValidator(expression: string): IValidationE
             if (!calculatorConfig[word]) {
                 return {
                     message: Error.IncorrectFunctionNameError,
-                    errorPlace: getSubstringsIndexes([word], expression)
+                    payload: {
+                        errorPlace: getSubstringsIndexes([word], expression)
+                    }
                 }
             }
         }

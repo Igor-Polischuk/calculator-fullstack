@@ -1,4 +1,4 @@
-import { IValidationError, IOperation, IRuntimeError } from "@components/Calculator/interfaces/ICalculator";
+import { IOperation, IError } from "@components/Calculator/interfaces/ICalculator";
 import { regularWithParam } from "../regex";
 import { IExceptionObj } from "./exceptions";
 import { Priority } from "./priority";
@@ -29,9 +29,11 @@ export class Operation implements IOperation {
         this.exceptionHandler.forEach(exception => {
             const isException = exception.checkException(...numbers)
             if (isException) {
-                const error: IRuntimeError = {
+                const error: IError = {
                     message: `Runtime error: ${exception.exceptionMessage} ${whereMessage}`,
-                    currentExpressionSnapshot: whereMessage
+                    payload: {
+                        currentExpressionSnapshot: whereMessage
+                    }
                 }
                 throw error
             }

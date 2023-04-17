@@ -1,7 +1,7 @@
-import { IValidationError } from "@components/Calculator/interfaces/ICalculator";
+import { IError } from "@components/Calculator/interfaces/ICalculator";
 import { Error } from "../error";
 
-export function bracketsOrderValidator(expression: string): IValidationError | undefined {
+export function bracketsOrderValidator(expression: string): IError | undefined {
     let bracketCount = 0
     for (let i = 0; i < expression.length; i++) {
         const char = expression[i]
@@ -13,7 +13,9 @@ export function bracketsOrderValidator(expression: string): IValidationError | u
             if (bracketCount === 0) {
                 return {
                     message: Error.ClosedBracketError,
-                    errorPlace: [{ from: i, to: i }]
+                    payload: {
+                        errorPlace: [{ from: i, to: i }]
+                    }
                 }
             }
             bracketCount--
@@ -24,7 +26,9 @@ export function bracketsOrderValidator(expression: string): IValidationError | u
         const bracketIndex = expression.indexOf('(')
         return {
             message: Error.OpenBracketError,
-            errorPlace: [{ from: bracketIndex, to: bracketIndex }]
+            payload: {
+                errorPlace: [{ from: bracketIndex, to: bracketIndex }]
+            }
         }
     }
 }
