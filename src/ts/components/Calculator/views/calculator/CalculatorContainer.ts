@@ -28,7 +28,7 @@ export class CalculatorContainer extends WrapperElement {
             onErrorClick: this.onErrorClick.bind(this)
         });
         this.calculatorKeyboard = new CalculatorKeyboard({
-            onEqual: this.setExpression.bind(this),
+            onEqual: this.onEqualButtonClicked.bind(this),
             onChar: this.onButtonClick.bind(this),
             onBackspace: this.onBackspace.bind(this),
             onReset: () => {
@@ -84,7 +84,7 @@ export class CalculatorContainer extends WrapperElement {
         this.calculatorInput.setInputValue(newInputValue)
     }
 
-    private setExpression(): void {
+    private onEqualButtonClicked(): void {
         const expression = this.calculatorInput.inputText
         const isExpressionEmpty = expression.trim() === ''
 
