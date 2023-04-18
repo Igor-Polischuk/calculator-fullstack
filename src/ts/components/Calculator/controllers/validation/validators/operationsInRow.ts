@@ -5,7 +5,6 @@ import { Error } from "../error"
 
 export function operationsInRow(expression: string): IError | undefined {
     const actionsInRow = expression.match(regexPatterns.OPERATIONS_IN_ROW)
-    console.log(actionsInRow);
 
     if (actionsInRow) {
         return {

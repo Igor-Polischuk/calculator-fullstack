@@ -44,7 +44,7 @@ export class CalculatorOutput extends WrapperElement {
 
         this.renderParagraph({
             className: 'error',
-            children: paragraphWithHighlightedErrors.element.childElements
+            children: paragraphWithHighlightedErrors.element.childElements.sort()
         })
     }
 

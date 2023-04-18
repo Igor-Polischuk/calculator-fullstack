@@ -27,8 +27,6 @@ export class HighlightedErrors extends WrapperElement {
     }
 
     private generateErrorSpans(): Span[] {
-        console.log(this.params.errorRanges);
-
         const { spansArray, lastErrorIndex } = this.params.errorRanges.reduce<HighlightErrorsReduceResult>(
             ({ spansArray, lastErrorIndex }, { from, to }) => {
                 const notErrorString = this.params.expressionWithErrors.slice(lastErrorIndex, from)
