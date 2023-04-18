@@ -14,10 +14,7 @@ export class CalculatorInput extends WrapperElement {
         })
 
         this.wrapper.append(this.input)
-        this.input.onInput(() => {
-            this.input.domElement.value = formatExpression(this.input.value)
-            this.input.domElement.scrollLeft = this.input.domElement.scrollWidth
-        })
+        this.input.onInput(this.handleInputChange.bind(this))
     }
 
     get inputElement(): HTMLInputElement {
@@ -30,5 +27,10 @@ export class CalculatorInput extends WrapperElement {
 
     setInputValue(newValue: string): void {
         this.input.value = newValue
+    }
+
+    private handleInputChange() {
+        this.input.domElement.value = formatExpression(this.input.value)
+        this.input.domElement.scrollLeft = this.input.domElement.scrollWidth
     }
 }
