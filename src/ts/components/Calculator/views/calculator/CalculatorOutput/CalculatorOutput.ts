@@ -38,6 +38,7 @@ export class CalculatorOutput extends WrapperElement {
         const paragraphWithHighlightedErrors = new HighlightedErrors({
             expressionWithErrors: expressionWithError,
             errorRanges: invalidExpressionPartsIndexes,
+            errors,
             onErrorClick: this.params.onErrorClick
         })
 

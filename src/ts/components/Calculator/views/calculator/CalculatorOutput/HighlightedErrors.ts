@@ -1,10 +1,11 @@
-import { IErrorRange } from "@components/Calculator/interfaces/ICalculator";
+import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
 import { WrapperElement } from "@components/Elements/ComplexElement";
 import { Span } from "@components/Elements/Span";
 
 interface IHighlightedErrorsParams {
     errorRanges: IErrorRange[]
     expressionWithErrors: string
+    errors: IError[]
     onErrorClick: (range: IErrorRange) => void
 }
 
@@ -26,12 +27,16 @@ export class HighlightedErrors extends WrapperElement {
     }
 
     private generateErrorSpans(): Span[] {
+        console.log(this.params.errorRanges);
+
         const { spansArray, lastErrorIndex } = this.params.errorRanges.reduce<HighlightErrorsReduceResult>(
             ({ spansArray, lastErrorIndex }, { from, to }) => {
                 const notErrorString = this.params.expressionWithErrors.slice(lastErrorIndex, from)
                 const notErrorSpan = new Span({ text: notErrorString })
                 const errorString = this.params.expressionWithErrors.slice(from, to + 1)
                 const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
+                const error = this.getErrorMessageWithFrom(from)
+                errorSpan.domElement.title = error?.message || ''
                 errorSpan.onClick(() => this.params.onErrorClick({ from, to }))
                 return {
                     spansArray: [...spansArray, notErrorSpan, errorSpan],
@@ -40,5 +45,9 @@ export class HighlightedErrors extends WrapperElement {
             }, { lastErrorIndex: 0, spansArray: [] })
 
         return spansArray.concat(new Span({ text: this.params.expressionWithErrors.slice(lastErrorIndex) }))
+    }
+
+    private getErrorMessageWithFrom(from: number) {
+        return this.params.errors.find(e => e.payload?.errorPlace?.find(error => error.from === from))
     }
 }
