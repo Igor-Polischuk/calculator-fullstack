@@ -44,13 +44,13 @@ export class CalculatorContainer extends WrapperElement {
         );
     }
 
-    showCalculationResult(result: number) {
+    showCalculationResult(result: number): void {
         const calculatedExpression = this.calculatorInput.inputText
         this.calculatorOutput.showCalculationResult(result, calculatedExpression)
         this.calculatorInput.setInputValue(`${result}`)
     }
 
-    showCalculationError(error: IError | IError[]) {
+    showCalculationError(error: IError | IError[]): void {
         const expressionWithError = this.calculatorInput.inputText
         if (Array.isArray(error)) {
             this.calculatorOutput.showValidationError(error, expressionWithError)
@@ -61,12 +61,12 @@ export class CalculatorContainer extends WrapperElement {
         }
     }
 
-    private onErrorClick(range: IErrorRange) {
+    private onErrorClick(range: IErrorRange): void {
         this.calculatorInput.inputElement.focus()
         this.calculatorInput.inputElement.setSelectionRange(range.from, range.to + 1);
     }
 
-    private onButtonClick(clickedButtonValue: string) {
+    private onButtonClick(clickedButtonValue: string): void {
         const newInputValue = this.replaceCurrentNumberInInput
             ? clickedButtonValue
             : this.calculatorInput.inputText + clickedButtonValue
@@ -74,7 +74,7 @@ export class CalculatorContainer extends WrapperElement {
         this.replaceCurrentNumberInInput = false
     }
 
-    private onBackspace() {
+    private onBackspace(): void {
         if (this.calculatorInput.inputText === '0' || this.calculatorInput.inputText.length <= 1) {
             this.calculatorInput.setInputValue('0')
             this.replaceCurrentNumberInInput = true
@@ -84,7 +84,7 @@ export class CalculatorContainer extends WrapperElement {
         this.calculatorInput.setInputValue(newInputValue)
     }
 
-    private setExpression() {
+    private setExpression(): void {
         const expression = this.calculatorInput.inputText
         const isExpressionEmpty = expression.trim() === ''
 

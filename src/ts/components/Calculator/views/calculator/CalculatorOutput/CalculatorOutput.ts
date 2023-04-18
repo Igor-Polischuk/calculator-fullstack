@@ -21,7 +21,7 @@ export class CalculatorOutput extends WrapperElement {
         this.params = params
     }
 
-    showCalculationResult(result: number, calculatedExpression: string) {
+    showCalculationResult(result: number, calculatedExpression: string): void {
         const resultOutput = new ResultOutput({
             expression: calculatedExpression,
             result
@@ -32,7 +32,7 @@ export class CalculatorOutput extends WrapperElement {
         })
     }
 
-    showValidationError(errors: IError[], expressionWithError: string) {
+    showValidationError(errors: IError[], expressionWithError: string): void {
         const invalidPartsIndexes = errors.flatMap(error => error.payload?.errorPlace!)
         const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
         const paragraphWithHighlightedErrors = new HighlightedErrors({
@@ -48,14 +48,14 @@ export class CalculatorOutput extends WrapperElement {
         })
     }
 
-    showTextError(errorMessage: string) {
+    showTextError(errorMessage: string): void {
         this.renderParagraph({
             children: [new Span({ text: errorMessage })],
             className: 'error'
         })
     }
 
-    private renderParagraph(params: { text?: string, className?: string, children?: IBaseElement[] }) {
+    private renderParagraph(params: { text?: string, className?: string, children?: IBaseElement[] }): void {
         this.wrapper.domElement.classList.add('visible')
         this.wrapper.removeElement('#result-display')
         const p = new Paragraph({ text: params.text || '', classNames: params.className, id: 'result-display' })

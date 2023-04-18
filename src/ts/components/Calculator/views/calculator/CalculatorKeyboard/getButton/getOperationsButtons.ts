@@ -2,7 +2,12 @@ import { ButtonType } from '../ButtonType';
 import { Button } from "@components/Elements/Button"
 import { allowedActions, calculatorConfig } from "@components/Calculator/controllers/config/calculator-config"
 
-export function getOperationsButtons() {
+interface IButtonDataReducer {
+    text: string
+    action: string
+}
+
+export function getOperationsButtons(): Record<string, Button> {
     const operationsData = generateButtonsData()
 
     return operationsData.reduce<Record<string, Button>>((buttonsObj, operation) => {
@@ -18,8 +23,8 @@ export function getOperationsButtons() {
     }, {})
 }
 
-function generateButtonsData() {
-    return allowedActions.reduce<{ text: string, action: string }[]>((acc, currentOperation) => {
+function generateButtonsData(): IButtonDataReducer[] {
+    return allowedActions.reduce<IButtonDataReducer[]>((acc, currentOperation) => {
         const operationData = calculatorConfig[currentOperation]
         const buttonText = {
             text: operationData.text || currentOperation,

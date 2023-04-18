@@ -23,7 +23,7 @@ export class CalculatorKeyboard extends WrapperElement {
         this.initButtonsListeners()
     }
 
-    private initButtonsListeners() {
+    private initButtonsListeners(): void {
         this.buttons.addClickListenersByType(ButtonType.Char, ({ button }) => {
             this.params.onChar(button.metaData.action)
         })

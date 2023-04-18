@@ -17,15 +17,15 @@ export class CalculatorInput extends WrapperElement {
         this.input.onInput(() => { this.input.domElement.value = formatExpression(this.input.value) })
     }
 
-    get inputElement() {
+    get inputElement(): HTMLInputElement {
         return this.input.domElement
     }
 
-    get inputText() {
+    get inputText(): string {
         return this.input.value
     }
 
-    setInputValue(newValue: string) {
+    setInputValue(newValue: string): void {
         this.input.value = newValue
     }
 }
