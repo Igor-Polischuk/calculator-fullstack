@@ -7,7 +7,8 @@ import {
     unknownSymbolValidator,
     expressionStartValidator,
     expressionEndValidator,
-    bracketsSiblingsValidator
+    bracketsSiblingsValidator,
+    functionValidator
 } from "./validators/"
 
 interface IValidators {
@@ -23,7 +24,8 @@ export function validate(expression: string): void {
         operationsInRow,
         unknownSymbolValidator,
         expressionStartValidator,
-        expressionEndValidator
+        expressionEndValidator,
+        functionValidator
     })
     if (validateResult.length > 0) {
         throw validateResult

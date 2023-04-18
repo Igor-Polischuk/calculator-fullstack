@@ -10,7 +10,7 @@ export function unknownSymbolValidator(expression: string): IError | undefined {
 
     if (unknownSymbols) {
         return {
-            message: Error.UnknownSymbol,
+            message: Error.UnknownSymbolError,
             payload: {
                 errorPlace: getSubstringsIndexes(unknownSymbols, expression)
             }

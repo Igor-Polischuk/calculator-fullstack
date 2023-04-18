@@ -6,8 +6,9 @@ export enum Error {
     NumberPointError = 'number with several points',
     OperationsInRowError = 'several operations are entered in a row',
     PointError = 'point in incorrect place',
-    UnknownSymbol = 'unexpected character',
+    UnknownSymbolError = 'unexpected character',
     IncorrectFunctionNameError = 'incorrect function name',
     LineStartError = 'incorrect start of expression',
     LineEndError = 'incorrect end of expression',
+    IncorrectFunctionArgumentError = 'incorrect function argument'
 }

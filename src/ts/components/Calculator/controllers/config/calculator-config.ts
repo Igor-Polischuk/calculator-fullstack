@@ -92,3 +92,7 @@ export const searchAllowedOperationsRegStr = allowedActions
 export const constantReg = allowedActions
     .flatMap(operation => calculatorConfig[operation] instanceof Constant ? operation : [])
     .join('.')
+
+export const functionReg = allowedActions
+    .flatMap(operation => calculatorConfig[operation] instanceof MathFunction ? operation : [])
+    .join('|')
