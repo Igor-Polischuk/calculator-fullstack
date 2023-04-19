@@ -55,9 +55,9 @@ export class CalculatorContainer extends WrapperElement {
         if (Array.isArray(error)) {
             this.calculatorOutput.showValidationError(error, expressionWithError)
         } else if (error.hasOwnProperty('payload')) {
-            this.calculatorOutput.showTextError(error.message)
+            this.calculatorOutput.showErrorMessage(error.message)
         } else {
-            this.calculatorOutput.showTextError('An unexpected error occurred while evaluating the expression')
+            this.calculatorOutput.showErrorMessage('An unexpected error occurred while evaluating the expression')
         }
     }
 
