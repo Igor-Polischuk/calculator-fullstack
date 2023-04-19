@@ -1,5 +1,5 @@
 
-import { IError } from "@components/Calculator/interfaces/ICalculator"
+import { IError } from "@components/Calculator/interfaces/IErrors"
 import { regexPatterns } from "../../regex"
 import { Error } from "../error"
 

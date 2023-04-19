@@ -1,8 +1,9 @@
-import { ICalculatorController, ICalculatorModel, IError } from '@components/Calculator/interfaces/ICalculator';
+import { ICalculatorController, ICalculatorModel } from '@components/Calculator/interfaces/ICalculator';
 import { CalculatorModelEvent } from '../calculator-model-event';
 import { formatExpression } from './services';
 import { validate } from './validation/validate';
 import expressionCalculatorService from './services/calculation/ExpressionCalculatorService';
+import { IError } from '../interfaces/IErrors';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel

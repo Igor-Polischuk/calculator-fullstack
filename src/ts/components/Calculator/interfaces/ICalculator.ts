@@ -1,5 +1,6 @@
 import { IObserver } from "@utilities/Observer/IObserver"
 import { CalculatorModelEvent } from "../calculator-model-event";
+import { IError } from "./IErrors";
 
 export type ModelAllowedEvents = {
     [CalculatorModelEvent.ResultChanged]: number;
@@ -23,19 +24,6 @@ export interface IOperation {
 }
 
 export type ICalculatorConfig = Record<string, IOperation>
-
-export interface IError {
-    message: string
-    payload?: {
-        currentExpressionSnapshot?: string
-        errorPlace?: IErrorRange[]
-    }
-}
-
-export interface IErrorRange {
-    from: number
-    to: number
-}
 
 export interface ICalculatorView { }
 

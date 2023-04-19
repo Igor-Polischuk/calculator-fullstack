@@ -3,7 +3,7 @@ import { ICalculatorConfig } from "@components/Calculator/interfaces/ICalculator
 import { Constant, MathFunction, Operation } from "./Operation";
 import { factorial } from "../services";
 import { exceptions } from './exceptions';
-import { regexPatterns, regularWithParam } from '../regex';
+import { regularWithParam } from '../regex';
 
 
 export const calculatorConfig: ICalculatorConfig = {

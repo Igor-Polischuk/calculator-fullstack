@@ -1,4 +1,4 @@
-import { IError, IErrorRange } from '../../interfaces/ICalculator';
+import { IError, IErrorRange } from '../../interfaces/IErrors';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';

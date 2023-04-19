@@ -1,8 +1,7 @@
-import { IError } from "@components/Calculator/interfaces/ICalculator";
+import { IError, IErrorRange } from "@components/Calculator/interfaces/IErrors";
 import { Error } from "../error";
 import { regexPatterns } from "../../regex";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
-import { IErrorRange } from "@components/Calculator/interfaces/ICalculator";
 
 export function bracketsSiblingsValidator(expression: string): IError | undefined {
     const wrongOpenBracketSiblings = expression.match(regexPatterns.OPEN_BRACKETS_ADJACENT_SYMBOLS)

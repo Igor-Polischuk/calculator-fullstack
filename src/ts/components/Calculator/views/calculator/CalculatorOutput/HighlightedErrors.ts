@@ -1,4 +1,4 @@
-import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
+import { IError, IErrorRange } from "@components/Calculator/interfaces/IErrors";
 import { WrapperElement } from "@components/Elements/ComplexElement";
 import { Span } from "@components/Elements/Span";
 

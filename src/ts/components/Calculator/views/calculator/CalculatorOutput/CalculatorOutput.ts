@@ -1,5 +1,5 @@
 import { Paragraph } from '@components/Elements/Paragraph';
-import { IError, IErrorRange } from "@components/Calculator/interfaces/ICalculator";
+import { IError, IErrorRange } from "@components/Calculator/interfaces/IErrors";
 import { removeOverlappingRanges } from '@utilities/ranges/removeOverlappingRanges';
 import { HighlightedErrors } from './HighlightedErrors';
 import { IBaseElement } from '@components/Elements/interfaces';

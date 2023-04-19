@@ -1,4 +1,4 @@
-import { IError } from "@components/Calculator/interfaces/ICalculator";
+import { IError } from "@components/Calculator/interfaces/IErrors";
 import { Error } from "../error"
 import { functionReg } from "../../config/calculator-config";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";

@@ -1,7 +1,8 @@
-import { IOperation, IError } from "@components/Calculator/interfaces/ICalculator";
+import { IOperation } from "@components/Calculator/interfaces/ICalculator";
 import { regularWithParam } from "../regex";
 import { IExceptionObj } from "./exceptions";
 import { Priority } from "./priority";
+import { IError } from "@components/Calculator/interfaces/IErrors";
 
 export class Operation implements IOperation {
     readonly reg: RegExp
