@@ -10,4 +10,8 @@
     transition: 0.3s;
     font-size: 34px;
     text-align: right;
+
+    &::placeholder {
+        // color: inherit;
+    }
 }

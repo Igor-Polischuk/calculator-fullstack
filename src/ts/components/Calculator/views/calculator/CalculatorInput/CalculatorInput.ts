@@ -10,7 +10,7 @@ export class CalculatorInput extends WrapperElement {
         })
         this.input = new Input({
             classNames: 'input',
-            value: '0'
+            placeholder: '0'
         })
 
         this.wrapper.append(this.input)
