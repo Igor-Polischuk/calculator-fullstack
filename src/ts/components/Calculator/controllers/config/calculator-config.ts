@@ -79,7 +79,6 @@ export const calculatorConfig: ICalculatorConfig = {
     'e': new Constant({
         name: 'e',
         value: Math.E,
-        reg: regexPatterns.E_CONST
     }),
 }
 
