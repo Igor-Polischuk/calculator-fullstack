@@ -10,6 +10,7 @@ import {
     bracketsSiblingsValidator,
     functionValidator
 } from "./validators/"
+import { ErrorType } from "@components/Calculator/interfaces/error-type"
 
 interface IValidators {
     [validatorName: string]: (expression: string) => IError | undefined
@@ -28,7 +29,10 @@ export function validate(expression: string): void {
         functionValidator
     })
     if (validateResult.length > 0) {
-        throw validateResult
+        throw {
+            type: ErrorType.ValidationError,
+            errors: validateResult
+        }
     }
 }
 

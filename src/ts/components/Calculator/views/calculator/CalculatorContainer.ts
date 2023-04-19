@@ -1,4 +1,4 @@
-import { IError, IErrorRange } from '../../interfaces/IErrors';
+import { ICalculationErrors, IErrorRange } from '../../interfaces/IErrors';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
@@ -45,15 +45,16 @@ export class CalculatorContainer extends WrapperElement {
         this.calculatorInput.setInputValue(`${result}`)
     }
 
-    showCalculationError(error: IError | IError[]): void {
+    showCalculationError(error: ICalculationErrors): void {
         const expressionWithError = this.calculatorInput.inputText
-        if (Array.isArray(error)) {
-            this.calculatorOutput.showValidationError(error, expressionWithError)
-        } else if (error.hasOwnProperty('payload')) {
-            this.calculatorOutput.showErrorMessage(error.message)
-        } else {
-            this.calculatorOutput.showErrorMessage('An unexpected error occurred while evaluating the expression')
-        }
+        this.calculatorOutput.showErrorInfo(error, expressionWithError)
+        // if (Array.isArray(error)) {
+        //     this.calculatorOutput.showValidationError(error, expressionWithError)
+        // } else if (error.hasOwnProperty('payload')) {
+        //     this.calculatorOutput.showErrorMessage(error.message)
+        // } else {
+        //     this.calculatorOutput.showErrorMessage('An unexpected error occurred while evaluating the expression')
+        // }
     }
 
     private onErrorClick(range: IErrorRange): void {

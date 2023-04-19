@@ -10,7 +10,7 @@ export interface IError {
 
 export interface ICalculationErrors {
     type: ErrorType
-    errors?: IError[]
+    errors: IError[]
 }
 
 export interface IErrorRange {

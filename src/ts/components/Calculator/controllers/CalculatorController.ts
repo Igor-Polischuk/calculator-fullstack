@@ -3,7 +3,8 @@ import { CalculatorModelEvent } from '../calculator-model-event';
 import { formatExpression } from './services';
 import { validate } from './validation/validate';
 import expressionCalculatorService from './services/calculation/ExpressionCalculatorService';
-import { IError } from '../interfaces/IErrors';
+import { ICalculationErrors } from '../interfaces/IErrors';
+import { ErrorType } from '../interfaces/error-type';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
@@ -19,8 +20,15 @@ export class CalculatorController implements ICalculatorController {
       validate(formattedExpression);
       const result = expressionCalculatorService.calculate(formattedExpression)
       this.model.setResult(result);
-    } catch (error) {
-      this.model.setError(error as IError | IError[]);
+    } catch (error: any) {
+      if (!('type' in error)) {
+        error = {
+          type: ErrorType.UnexpectedError,
+          errors: [{ message: 'An unexpected error occurred while evaluating the expression' }]
+        }
+      }
+
+      this.model.setError(error as ICalculationErrors);
     }
   }
 }

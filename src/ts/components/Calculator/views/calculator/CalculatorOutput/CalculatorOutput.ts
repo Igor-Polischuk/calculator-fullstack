@@ -1,11 +1,12 @@
 import { Paragraph } from '@components/Elements/Paragraph';
-import { IError, IErrorRange } from "@components/Calculator/interfaces/IErrors";
+import { ICalculationErrors, IError, IErrorRange } from "@components/Calculator/interfaces/IErrors";
 import { removeOverlappingRanges } from '@utilities/ranges/removeOverlappingRanges';
 import { HighlightedErrors } from './HighlightedErrors';
 import { IBaseElement } from '@components/Elements/interfaces';
 import { WrapperElement } from '@components/Elements/ComplexElement';
 import { ResultOutput } from './ResultParagraph';
 import { Span } from '@components/Elements/Span';
+import { ErrorType } from '@components/Calculator/interfaces/error-type';
 
 
 interface ICalculatorOutputParams {
@@ -21,6 +22,12 @@ export class CalculatorOutput extends WrapperElement {
         this.params = params
     }
 
+    showErrorInfo(error: ICalculationErrors, expression: string) {
+        error.type === ErrorType.ValidationError ?
+            this.showValidationError(error.errors, expression) :
+            this.showErrorMessage(error.errors[0].message)
+    }
+
     showCalculationResult(result: number, calculatedExpression: string): void {
         const resultOutput = new ResultOutput({
             expression: calculatedExpression,
@@ -32,7 +39,7 @@ export class CalculatorOutput extends WrapperElement {
         })
     }
 
-    showValidationError(errors: IError[], expressionWithError: string): void {
+    private showValidationError(errors: IError[], expressionWithError: string): void {
         const invalidPartsIndexes = errors.flatMap(error => error.payload?.errorPlace!)
         const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
         const paragraphWithHighlightedErrors = new HighlightedErrors({
@@ -48,7 +55,7 @@ export class CalculatorOutput extends WrapperElement {
         })
     }
 
-    showErrorMessage(errorMessage: string): void {
+    private showErrorMessage(errorMessage: string): void {
         this.renderParagraph({
             children: [new Span({ text: errorMessage })],
             className: 'error'
