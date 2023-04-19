@@ -48,13 +48,6 @@ export class CalculatorContainer extends WrapperElement {
     showCalculationError(error: ICalculationErrors): void {
         const expressionWithError = this.calculatorInput.inputText
         this.calculatorOutput.showErrorInfo(error, expressionWithError)
-        // if (Array.isArray(error)) {
-        //     this.calculatorOutput.showValidationError(error, expressionWithError)
-        // } else if (error.hasOwnProperty('payload')) {
-        //     this.calculatorOutput.showErrorMessage(error.message)
-        // } else {
-        //     this.calculatorOutput.showErrorMessage('An unexpected error occurred while evaluating the expression')
-        // }
     }
 
     private onErrorClick(range: IErrorRange): void {

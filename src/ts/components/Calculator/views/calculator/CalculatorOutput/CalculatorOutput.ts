@@ -21,7 +21,7 @@ export class CalculatorOutput extends WrapperElement {
         this.params = params
     }
 
-    showErrorInfo(error: ICalculationErrors, expression: string) {
+    showErrorInfo(error: ICalculationErrors, expression: string): void {
         error.type === ErrorType.ValidationError ?
             this.showValidationError(error.errors, expression) :
             this.renderMessage(error.errors[0].message)

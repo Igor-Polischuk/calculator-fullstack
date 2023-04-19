@@ -31,16 +31,20 @@ export class HighlightedErrors extends WrapperElement {
             ({ spansArray, lastErrorIndex }, { from, to }) => {
                 const notErrorString = this.params.expressionWithErrors.slice(lastErrorIndex, from)
                 const notErrorSpan = new Span({ text: notErrorString })
+
                 const errorString = this.params.expressionWithErrors.slice(from, to + 1)
                 const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
+
                 const error = this.getErrorMessageWithFrom(from)
                 errorSpan.domElement.title = error?.message || ''
+
                 errorSpan.onClick(() => this.params.onErrorClick({ from, to }))
+
                 return {
                     spansArray: [...spansArray, notErrorSpan, errorSpan],
                     lastErrorIndex: from + (to - from) + 1
                 };
-            }, { lastErrorIndex: 0, spansArray: [] })
+            }, { lastErrorIndex: 0, spansArray: [new Span({ text: 'Validation error: ' })] })
 
         return spansArray.concat(new Span({ text: this.params.expressionWithErrors.slice(lastErrorIndex) }))
     }
