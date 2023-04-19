@@ -44,11 +44,11 @@ export class CalculatorOutput extends WrapperElement {
 
         this.renderParagraph({
             className: 'error',
-            children: paragraphWithHighlightedErrors.element.childElements.sort()
+            children: paragraphWithHighlightedErrors.element.childElements
         })
     }
 
-    showTextError(errorMessage: string): void {
+    showErrorMessage(errorMessage: string): void {
         this.renderParagraph({
             children: [new Span({ text: errorMessage })],
             className: 'error'
