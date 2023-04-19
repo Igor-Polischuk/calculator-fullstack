@@ -9,10 +9,10 @@ interface IResultParagraphParams {
 
 export class ResultOutput extends WrapperElement {
     constructor(params: IResultParagraphParams) {
-        super({})
+        super({ wrapperClassNames: 'result showup', wrapperId: 'result-display' })
         const expressionSpan = new Span({ text: replaceMathOperators(params.expression) })
         const equalSymbolSpan = new Span({ text: ' = ' })
-        const resultSpan = new Span({ classNames: 'bold', text: params.result.toString() })
+        const resultSpan = new Span({ classNames: 'bold', text: `${params.result}` })
         this.wrapper.append(expressionSpan, equalSymbolSpan, resultSpan)
     }
 }

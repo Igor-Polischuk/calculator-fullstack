@@ -5,7 +5,6 @@ import { HighlightedErrors } from './HighlightedErrors';
 import { IBaseElement } from '@components/Elements/interfaces';
 import { WrapperElement } from '@components/Elements/ComplexElement';
 import { ResultOutput } from './ResultParagraph';
-import { Span } from '@components/Elements/Span';
 import { ErrorType } from '@components/Calculator/interfaces/error-type';
 
 
@@ -25,7 +24,7 @@ export class CalculatorOutput extends WrapperElement {
     showErrorInfo(error: ICalculationErrors, expression: string) {
         error.type === ErrorType.ValidationError ?
             this.showValidationError(error.errors, expression) :
-            this.showErrorMessage(error.errors[0].message)
+            this.renderMessage(error.errors[0].message)
     }
 
     showCalculationResult(result: number, calculatedExpression: string): void {
@@ -33,40 +32,36 @@ export class CalculatorOutput extends WrapperElement {
             expression: calculatedExpression,
             result
         })
-        this.renderParagraph({
-            children: resultOutput.element.childElements,
-            className: 'result showup'
-        })
+        this.renderOutputElement(resultOutput.element)
     }
 
     private showValidationError(errors: IError[], expressionWithError: string): void {
         const invalidPartsIndexes = errors.flatMap(error => error.payload?.errorPlace!)
         const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
-        const paragraphWithHighlightedErrors = new HighlightedErrors({
+
+        const highlightedErrors = new HighlightedErrors({
             expressionWithErrors: expressionWithError,
             errorRanges: invalidExpressionPartsIndexes,
             errors,
             onErrorClick: this.params.onErrorClick
         })
 
-        this.renderParagraph({
-            className: 'error',
-            children: paragraphWithHighlightedErrors.element.childElements
-        })
+        this.renderOutputElement(highlightedErrors.element)
     }
 
-    private showErrorMessage(errorMessage: string): void {
-        this.renderParagraph({
-            children: [new Span({ text: errorMessage })],
-            className: 'error'
-        })
+    private renderMessage(message: string): void {
+        this.updateOutput()
+        const p = new Paragraph({ text: message, id: 'result-display' })
+        this.wrapper.append(p)
     }
 
-    private renderParagraph(params: { text?: string, className?: string, children?: IBaseElement[] }): void {
+    private renderOutputElement(element: IBaseElement): void {
+        this.updateOutput()
+        this.wrapper.append(element)
+    }
+
+    private updateOutput(): void {
         this.wrapper.domElement.classList.add('visible')
         this.wrapper.removeElement('#result-display')
-        const p = new Paragraph({ text: params.text || '', classNames: params.className, id: 'result-display' })
-        params.text || params.children && p.append(...params.children)
-        this.wrapper.append(p)
     }
 }
