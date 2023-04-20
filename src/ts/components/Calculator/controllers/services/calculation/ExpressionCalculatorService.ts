@@ -10,7 +10,8 @@ import { unwrapBracketInExpression } from "../formatting/unwrapExpressionTerms";
 class ExpressionCalculatorService {
     calculate(expression: string): number {
         const result = +this.processBracketedExpression(expression)
-        return formatDecimal(result, 7)
+        const precision = process.env.PRECISION || 7
+        return formatDecimal(result, +precision)
     }
 
     private processBracketedExpression(expression: string): string {

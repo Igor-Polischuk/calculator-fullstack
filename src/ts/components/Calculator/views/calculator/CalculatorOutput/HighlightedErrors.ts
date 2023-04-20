@@ -44,7 +44,7 @@ export class HighlightedErrors extends WrapperElement {
                     spansArray: [...spansArray, notErrorSpan, errorSpan],
                     lastErrorIndex: from + (to - from) + 1
                 };
-            }, { lastErrorIndex: 0, spansArray: [new Span({ text: 'Validation error: ' })] })
+            }, { lastErrorIndex: 0, spansArray: [new Span({ text: 'Invalid expression: ' })] })
 
         return spansArray.concat(new Span({ text: this.params.expressionWithErrors.slice(lastErrorIndex) }))
     }
