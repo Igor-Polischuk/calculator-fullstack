@@ -40,14 +40,14 @@ export class CalculatorContainer extends WrapperElement {
     }
 
     showCalculationResult(result: number): void {
-        const calculatedExpression = this.calculatorInput.inputText
-        this.calculatorOutput.showCalculationResult(result, calculatedExpression)
+        const expression = this.calculatorInput.inputText
+        this.calculatorOutput.showCalculationResult({ result, expression })
         this.calculatorInput.setInputValue(`${result}`)
     }
 
     showCalculationError(error: ICalculationErrors): void {
         const expressionWithError = this.calculatorInput.inputText
-        this.calculatorOutput.showErrorInfo(error, expressionWithError)
+        this.calculatorOutput.showErrorInfo({ error, expressionWithError })
     }
 
     private onErrorClick(range: IErrorRange): void {

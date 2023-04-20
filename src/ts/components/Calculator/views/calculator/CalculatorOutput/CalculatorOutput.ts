@@ -12,35 +12,51 @@ interface ICalculatorOutputParams {
     onErrorClick: (range: IErrorRange) => void
 }
 
+interface IShowErrorInfoProps {
+    error: ICalculationErrors
+    expressionWithError: string
+}
+
+interface IShowCalculationResultProps {
+    result: number
+    expression: string
+}
+
+type ErrorHandlers = Record<ErrorType, (params: IShowErrorInfoProps) => void>;
+
 export class CalculatorOutput extends WrapperElement {
     private params: ICalculatorOutputParams;
+    errorHandlers: ErrorHandlers;
+
     constructor(params: ICalculatorOutputParams) {
         super({
             wrapperClassNames: 'calculator__result',
         })
         this.params = params
+        this.errorHandlers = {
+            [ErrorType.RuntimeError]: this.renderMessage.bind(this),
+            [ErrorType.UnexpectedError]: this.renderMessage.bind(this),
+            [ErrorType.ValidationError]: this.showValidationError.bind(this)
+        }
     }
 
-    showErrorInfo(error: ICalculationErrors, expression: string): void {
-        error.type === ErrorType.ValidationError ?
-            this.showValidationError(error.errors, expression) :
-            this.renderMessage(error.errors[0].message)
-    }
-
-    showCalculationResult(result: number, calculatedExpression: string): void {
-        const resultOutput = new ResultOutput({
-            expression: calculatedExpression,
-            result
-        })
+    showCalculationResult(params: IShowCalculationResultProps): void {
+        const resultOutput = new ResultOutput(params)
         this.appendOutputElement(resultOutput.element)
     }
 
-    private showValidationError(errors: IError[], expressionWithError: string): void {
+    showErrorInfo(params: IShowErrorInfoProps): void {
+        const errorHandler = this.errorHandlers[params.error.type]
+        errorHandler(params)
+    }
+
+    private showValidationError(params: IShowErrorInfoProps): void {
+        const errors = params.error.errors
         const invalidPartsIndexes = errors.flatMap(error => error.payload?.errorPlace!)
         const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
 
         const highlightedErrors = new HighlightedErrors({
-            expressionWithErrors: expressionWithError,
+            expressionWithErrors: params.expressionWithError,
             errorRanges: invalidExpressionPartsIndexes,
             errors,
             onErrorClick: this.params.onErrorClick
@@ -49,8 +65,9 @@ export class CalculatorOutput extends WrapperElement {
         this.appendOutputElement(highlightedErrors.element)
     }
 
-    private renderMessage(message: string): void {
+    private renderMessage(params: IShowErrorInfoProps): void {
         this.updateOutput()
+        const message = params.error.errors[0].message
         const p = new Paragraph({ text: message, id: 'result-display' })
         this.wrapper.append(p)
     }

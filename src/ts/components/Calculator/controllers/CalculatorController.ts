@@ -21,6 +21,7 @@ export class CalculatorController implements ICalculatorController {
       const result = expressionCalculatorService.calculate(formattedExpression)
       this.model.setResult(result);
     } catch (error: any) {
+      //
       if (!('type' in error)) {
         error = {
           type: ErrorType.UnexpectedError,
