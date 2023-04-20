@@ -1,12 +1,12 @@
 import { Priority } from './priority';
-import { ICalculatorConfig } from "@components/Calculator/interfaces/ICalculator";
-import { Constant, MathFunction, Operation } from "./Operation";
+import { Constant, MathFunction, Operation } from "./operation/Operation";
 import { factorial } from "../services";
 import { exceptions } from './exceptions';
 import { regularWithParam } from '../regex';
+import { IOperation } from './operation/IOperations';
 
 
-export const calculatorConfig: ICalculatorConfig = {
+export const calculatorConfig: Record<string, IOperation> = {
     '+': new Operation({
         priority: Priority.Low,
         reg: regularWithParam.getNumberBetweenRegWithSymbol('+'),
@@ -51,25 +51,25 @@ export const calculatorConfig: ICalculatorConfig = {
     }),
     'sqrt': new MathFunction({
         name: 'sqrt',
-        func: Math.sqrt,
+        calculate: Math.sqrt,
         exceptionHandler: [exceptions.negativeNumber],
         text: '√'
     }),
     'sin': new MathFunction({
         name: 'sin',
-        func: Math.sin
+        calculate: Math.sin
     }),
     'cos': new MathFunction({
         name: 'cos',
-        func: Math.cos
+        calculate: Math.cos
     }),
     'tg': new MathFunction({
         name: 'tg',
-        func: Math.tan
+        calculate: Math.tan
     }),
     'ctg': new MathFunction({
         name: 'ctg',
-        func: (a: number) => 1 / Math.tan(a)
+        calculate: (a: number) => 1 / Math.tan(a)
     }),
     'pi': new Constant({
         name: 'pi',
@@ -81,17 +81,3 @@ export const calculatorConfig: ICalculatorConfig = {
         value: Math.E,
     }),
 }
-
-
-export const allowedActions = Object.keys(calculatorConfig)
-export const searchAllowedOperationsRegStr = allowedActions
-    .map(action => action.length === 1 ? `\\${action}` : action)
-    .join('|')
-
-export const constantReg = allowedActions
-    .flatMap(operation => calculatorConfig[operation] instanceof Constant ? operation : [])
-    .join('.')
-
-export const functionReg = allowedActions
-    .flatMap(operation => calculatorConfig[operation] instanceof MathFunction ? operation : [])
-    .join('|')

@@ -1,4 +1,4 @@
-import { constantReg, searchAllowedOperationsRegStr } from '../../config/calculator-config';
+import { constantReg, searchAllowedOperationsRegStr } from '../../calculator-config';
 
 export function getOperationsFromExpression(expression: string): string[] {
   const minusInNumberReg = new RegExp(`(?<![0-9${constantReg}])-`, 'g')

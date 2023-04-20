@@ -1,6 +1,6 @@
 import { IError } from "exceptions/IErrors";
 import { Error } from "../error"
-import { functionReg } from "../../config/calculator-config";
+import { functionReg } from "../../calculator-config";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
 
 export function functionValidator(expression: string): IError | undefined {

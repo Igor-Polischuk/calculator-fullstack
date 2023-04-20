@@ -1,12 +1,11 @@
 import { formatDecimal } from "@utilities/formatText/formatDecimal";
-import { calculatorConfig } from "../../config/calculator-config";
+import { calculatorConfig } from "../../calculator-config";
 import { getMostNestedBrackets } from "../brackets/getMostNestedBrackets";
 import { hasBrackets } from "../brackets/hasBrackets";
 import { getNumbersFromExpression } from "../expressionDataParsers/getNumbersFromExpression";
 import { getOperationsFromExpression } from "../expressionDataParsers/getOperationsFromExpression";
 import { unwrapBracketInExpression } from "../formatting/unwrapExpressionTerms";
 
-//
 class ExpressionCalculatorService {
     calculate(expression: string): number {
         const result = +this.processBracketedExpression(expression)

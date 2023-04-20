@@ -1,6 +1,6 @@
 import { IError } from "exceptions/IErrors";
 import { regexPatterns } from "../../regex";
-import { calculatorConfig } from "../../config/calculator-config";
+import { calculatorConfig } from "../../calculator-config";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
 import { Error } from "../error"
 

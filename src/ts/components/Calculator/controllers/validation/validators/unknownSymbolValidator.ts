@@ -1,7 +1,7 @@
 import { IError } from "exceptions/IErrors"
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
 import { Error } from "../error"
-import { searchAllowedOperationsRegStr } from "../../config/calculator-config";
+import { searchAllowedOperationsRegStr } from "../../calculator-config";
 import { incorrectFunctionNameValidator } from "./incorrectFunctionNameValidator";
 
 export function unknownSymbolValidator(expression: string): IError | undefined {

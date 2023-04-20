@@ -1,24 +1,21 @@
-import { IOperation } from "@components/Calculator/interfaces/ICalculator";
-import { regularWithParam } from "../regex";
-import { IExceptionObj } from "./exceptions";
-import { Priority } from "./priority";
+import { regularWithParam } from "../../regex";
+import { IExceptionObj } from "../exceptions";
+import { Priority } from "../priority";
 import { IError } from "exceptions/IErrors";
 import { ErrorType } from "exceptions/error-type";
 import { AppError } from "exceptions/AppError";
+import { IConstantParams, IMathFunctionParams, IOperation, IOperationParams } from "./IOperations";
+
 
 export class Operation implements IOperation {
     readonly reg: RegExp
     readonly calculate: (...args: number[]) => number
-    private exceptionHandler: IExceptionObj[] = []
     readonly priority: number
-    readonly text
-    constructor(params: {
-        reg: RegExp
-        priority: number
-        calculate: (...args: number[]) => number,
-        exceptionHandler?: IExceptionObj[],
-        text?: string
-    }) {
+    readonly text: string | undefined
+
+    private exceptionHandler: IExceptionObj[] = []
+
+    constructor(params: IOperationParams) {
         this.reg = params.reg
         this.calculate = params.calculate
         this.exceptionHandler = params.exceptionHandler || []
@@ -27,10 +24,15 @@ export class Operation implements IOperation {
     }
 
     checkException(numbers: number[], errorExpression?: string): void {
-        if (this.exceptionHandler.length === 0) return
+        if (this.exceptionHandler.length === 0) {
+            return
+        }
+
         const whereMessage = errorExpression ? `in ${errorExpression}` : ''
+
         this.exceptionHandler.forEach(exception => {
             const isException = exception.checkException(...numbers)
+
             if (isException) {
                 const error: IError = {
                     message: `Runtime error: ${exception.exceptionMessage} ${whereMessage}`,
@@ -38,6 +40,7 @@ export class Operation implements IOperation {
                         currentExpressionSnapshot: errorExpression
                     }
                 }
+
                 throw new AppError({
                     type: ErrorType.RuntimeError,
                     errors: [error]
@@ -48,11 +51,11 @@ export class Operation implements IOperation {
 }
 
 export class MathFunction extends Operation {
-    constructor(params: { name: string, func: (...args: number[]) => number, exceptionHandler?: IExceptionObj[], text?: string }) {
+    constructor(params: IMathFunctionParams) {
         super({
             reg: regularWithParam.getFunctionRegWithParam(params.name),
             priority: Priority.Hight,
-            calculate: params.func,
+            calculate: params.calculate,
             exceptionHandler: params.exceptionHandler,
             text: params.text
         });
@@ -60,7 +63,7 @@ export class MathFunction extends Operation {
 }
 
 export class Constant extends Operation {
-    constructor(params: { name: string, value: number, reg?: RegExp, text?: string }) {
+    constructor(params: IConstantParams) {
         super({
             reg: params.reg ? params.reg : regularWithParam.getConstantReg(params.name),
             priority: Priority.Constant,

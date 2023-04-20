@@ -6,7 +6,7 @@ import { functionValidator } from "./functionValidator";
 import { incorrectFunctionNameValidator } from "./incorrectFunctionNameValidator";
 import { operationsInRow } from "./operationsInRow";
 import { pointValidator } from "./pointValidator";
-import { unknownSymbolValidator } from "./uknownSymbolValidator";
+import { unknownSymbolValidator } from "./unknownSymbolValidator";
 import { zeroDivisionValidator } from "./zeroDivisionValidator";
 
 export {

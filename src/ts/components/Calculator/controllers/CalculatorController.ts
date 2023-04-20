@@ -2,9 +2,9 @@ import { ICalculatorController, ICalculatorModel } from '@components/Calculator/
 import { CalculatorModelEvent } from '../calculator-model-event';
 import { formatExpression } from './services';
 import { validate } from './validation/validate';
-import expressionCalculatorService from './services/calculation/ExpressionCalculatorService';
-import { ICalculationErrors } from '../../../exceptions/IErrors';
 import { AppError } from 'exceptions/AppError';
+
+import expressionCalculatorService from './services/calculation/ExpressionCalculatorService';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
@@ -22,7 +22,7 @@ export class CalculatorController implements ICalculatorController {
       this.model.setResult(result);
     } catch (error: any) {
       const appError = new AppError({ fromObject: error })
-      this.model.setError(appError as ICalculationErrors);
+      this.model.setError(appError as AppError);
     }
   }
 }

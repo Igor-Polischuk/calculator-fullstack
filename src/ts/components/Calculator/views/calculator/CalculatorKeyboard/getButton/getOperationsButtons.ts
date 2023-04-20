@@ -1,6 +1,6 @@
 import { ButtonType } from '../ButtonType';
 import { Button } from "@components/Elements/Button"
-import { allowedActions, calculatorConfig } from "@components/Calculator/controllers/config/calculator-config"
+import { allowedActions, calculatorConfig } from "@components/Calculator/controllers/calculator-config"
 
 interface IButtonDataReducer {
     text: string
