@@ -2,8 +2,9 @@ import { IOperation } from "@components/Calculator/interfaces/ICalculator";
 import { regularWithParam } from "../regex";
 import { IExceptionObj } from "./exceptions";
 import { Priority } from "./priority";
-import { IError } from "@components/Calculator/interfaces/IErrors";
-import { ErrorType } from "@components/Calculator/interfaces/error-type";
+import { IError } from "exceptions/IErrors";
+import { ErrorType } from "exceptions/error-type";
+import { AppError } from "exceptions/AppError";
 
 export class Operation implements IOperation {
     readonly reg: RegExp
@@ -37,10 +38,10 @@ export class Operation implements IOperation {
                         currentExpressionSnapshot: errorExpression
                     }
                 }
-                throw {
+                throw new AppError({
                     type: ErrorType.RuntimeError,
                     errors: [error]
-                }
+                })
             }
         })
     }

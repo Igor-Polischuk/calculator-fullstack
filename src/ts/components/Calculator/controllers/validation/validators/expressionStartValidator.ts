@@ -1,4 +1,4 @@
-import { IError } from "@components/Calculator/interfaces/IErrors";
+import { IError } from "exceptions/IErrors";
 import { Error } from "../error"
 import { regexPatterns } from "../../regex";
 

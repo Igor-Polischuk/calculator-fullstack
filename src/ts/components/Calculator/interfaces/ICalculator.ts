@@ -1,6 +1,6 @@
 import { IObserver } from "@utilities/Observer/IObserver"
 import { CalculatorModelEvent } from "../calculator-model-event";
-import { ICalculationErrors, IError } from "./IErrors";
+import { ICalculationErrors, IError } from "../../../exceptions/IErrors";
 
 export type ModelAllowedEvents = {
     [CalculatorModelEvent.ResultChanged]: number;

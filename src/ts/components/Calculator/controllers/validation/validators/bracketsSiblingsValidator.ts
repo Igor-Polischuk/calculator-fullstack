@@ -1,4 +1,4 @@
-import { IError, IErrorRange } from "@components/Calculator/interfaces/IErrors";
+import { IError, IErrorRange } from "exceptions/IErrors";
 import { Error } from "../error";
 import { regexPatterns } from "../../regex";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";

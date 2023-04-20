@@ -1,4 +1,4 @@
-import { IError } from "@components/Calculator/interfaces/IErrors"
+import { IError } from "exceptions/IErrors"
 import {
     bracketsOrderValidator,
     pointValidator,
@@ -10,7 +10,8 @@ import {
     bracketsSiblingsValidator,
     functionValidator
 } from "./validators/"
-import { ErrorType } from "@components/Calculator/interfaces/error-type"
+import { ErrorType } from "exceptions/error-type"
+import { AppError } from "exceptions/AppError"
 
 interface IValidators {
     [validatorName: string]: (expression: string) => IError | undefined
@@ -29,10 +30,11 @@ export function validate(expression: string): void {
         functionValidator
     })
     if (validateResult.length > 0) {
-        throw {
+        throw new AppError({
             type: ErrorType.ValidationError,
             errors: validateResult
-        }
+        })
+
     }
 }
 

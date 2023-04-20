@@ -1,4 +1,4 @@
-import { IErrorRange } from "@components/Calculator/interfaces/IErrors"
+import { IErrorRange } from "exceptions/IErrors"
 import { findSubstringIndexes } from "@utilities/substring/findSubstringIndexes"
 
 export function getSubstringsIndexes(substrings: string[], inputString: string): IErrorRange[] {

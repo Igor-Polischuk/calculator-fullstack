@@ -1,4 +1,4 @@
-import { IErrorRange } from "@components/Calculator/interfaces/IErrors";
+import { IErrorRange } from "exceptions/IErrors";
 
 export function removeOverlappingRanges(ranges: IErrorRange[]): IErrorRange[] {
   if (ranges.length < 2) {

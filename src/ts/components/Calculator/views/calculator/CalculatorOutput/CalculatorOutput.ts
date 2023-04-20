@@ -1,11 +1,11 @@
 import { Paragraph } from '@components/Elements/Paragraph';
-import { ICalculationErrors, IError, IErrorRange } from "@components/Calculator/interfaces/IErrors";
+import { ICalculationErrors, IError, IErrorRange } from "exceptions/IErrors";
 import { removeOverlappingRanges } from '@utilities/ranges/removeOverlappingRanges';
 import { HighlightedErrors } from './HighlightedErrors';
 import { IBaseElement } from '@components/Elements/interfaces';
 import { WrapperElement } from '@components/Elements/ComplexElement';
 import { ResultOutput } from './ResultParagraph';
-import { ErrorType } from '@components/Calculator/interfaces/error-type';
+import { ErrorType } from 'exceptions/error-type';
 
 
 interface ICalculatorOutputParams {
