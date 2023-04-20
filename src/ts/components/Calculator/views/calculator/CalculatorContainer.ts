@@ -52,7 +52,7 @@ export class CalculatorContainer extends WrapperElement {
 
     private onErrorClick(range: IErrorRange): void {
         this.calculatorInput.inputElement.focus()
-        this.calculatorInput.inputElement.setSelectionRange(range.from, range.to + 1);
+        this.calculatorInput.inputElement.setSelectionRange(range.from, range.to + 1)
     }
 
     private onButtonClick(clickedButtonValue: string): void {
@@ -70,7 +70,7 @@ export class CalculatorContainer extends WrapperElement {
         const isExpressionEmpty = expression.trim() === ''
 
         if (!isExpressionEmpty) {
-            this.params.onEqual(expression);
+            this.params.onEqual(expression)
         }
     }
 }
