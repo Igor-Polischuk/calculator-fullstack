@@ -32,7 +32,7 @@ export class CalculatorOutput extends WrapperElement {
             expression: calculatedExpression,
             result
         })
-        this.renderOutputElement(resultOutput.element)
+        this.appendOutputElement(resultOutput.element)
     }
 
     private showValidationError(errors: IError[], expressionWithError: string): void {
@@ -46,7 +46,7 @@ export class CalculatorOutput extends WrapperElement {
             onErrorClick: this.params.onErrorClick
         })
 
-        this.renderOutputElement(highlightedErrors.element)
+        this.appendOutputElement(highlightedErrors.element)
     }
 
     private renderMessage(message: string): void {
@@ -55,7 +55,7 @@ export class CalculatorOutput extends WrapperElement {
         this.wrapper.append(p)
     }
 
-    private renderOutputElement(element: IBaseElement): void {
+    private appendOutputElement(element: IBaseElement): void {
         this.updateOutput()
         this.wrapper.append(element)
     }
