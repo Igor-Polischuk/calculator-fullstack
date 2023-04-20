@@ -35,8 +35,8 @@ export class HighlightedErrors extends WrapperElement {
                 const errorString = this.params.expressionWithErrors.slice(from, to + 1)
                 const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
 
-                const error = this.getErrorMessageWithFrom(from)
-                errorSpan.domElement.title = error?.message || ''
+                const errorMessage = this.getErrorMessageByRangeStart(from)
+                errorSpan.domElement.title = this.uppercaseFirstLetter(errorMessage)
 
                 errorSpan.onClick(() => this.params.onErrorClick({ from, to }))
 
@@ -49,7 +49,11 @@ export class HighlightedErrors extends WrapperElement {
         return spansArray.concat(new Span({ text: this.params.expressionWithErrors.slice(lastErrorIndex) }))
     }
 
-    private getErrorMessageWithFrom(from: number) {
-        return this.params.errors.find(e => e.payload?.errorPlace?.find(error => error.from === from))
+    private getErrorMessageByRangeStart(from: number) {
+        return this.params.errors.find(e => e.payload?.errorPlace?.find(error => error.from === from))?.message || ''
+    }
+
+    private uppercaseFirstLetter(text: string) {
+        return text[0].toUpperCase() + text.slice(1)
     }
 }
