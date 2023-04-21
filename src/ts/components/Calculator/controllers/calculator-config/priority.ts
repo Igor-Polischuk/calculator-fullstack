@@ -1,8 +1,8 @@
-type priorityKeys = 'Constant' | 'Hight' | 'Medium' | 'Low'
+type PriorityKeys = 'Constant' | 'Hight' | 'Medium' | 'Low'
 
-type priority = Record<priorityKeys, number>
+type Priority = Record<PriorityKeys, number>
 
-export const Priority: priority = {
+export const Priority: Priority = {
     Constant: 3,
     Hight: 2,
     Medium: 1,

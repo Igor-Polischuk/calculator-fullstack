@@ -12,7 +12,6 @@ export class CalculatorContainer extends WrapperElement {
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
     private calculatorKeyboard: CalculatorKeyboard;
-
     private params: ICalculatorUIParams;
 
     constructor(params: ICalculatorUIParams) {

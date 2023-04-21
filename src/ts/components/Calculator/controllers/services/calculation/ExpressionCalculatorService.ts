@@ -10,17 +10,20 @@ class ExpressionCalculatorService {
     calculate(expression: string): number {
         const result = +this.processBracketedExpression(expression)
         const precision = process.env.PRECISION || 7
+
         return formatDecimal(result, +precision)
     }
 
     private processBracketedExpression(expression: string): string {
-        const bracketsExpressions = getMostNestedBrackets(expression);
+        const bracketsExpressions = getMostNestedBrackets(expression)
+
         const replacedMostNestedBrackets = bracketsExpressions.reduce<string>(
             (expressionAcc, currentBracketExpression) => {
-                const unbracketedExpression = unwrapBracketInExpression(currentBracketExpression);
+                const unbracketedExpression = unwrapBracketInExpression(currentBracketExpression)
                 const currentBracketExpressionResult = this.calculateUnbracketedExpression(unbracketedExpression)
-                return expressionAcc.replace(currentBracketExpression, currentBracketExpressionResult);
-            }, expression);
+                return expressionAcc.replace(currentBracketExpression, currentBracketExpressionResult)
+            }, expression)
+
         return hasBrackets(replacedMostNestedBrackets)
             ? this.processBracketedExpression(replacedMostNestedBrackets)
             : this.calculateUnbracketedExpression(replacedMostNestedBrackets)
@@ -31,12 +34,15 @@ class ExpressionCalculatorService {
         const orderedOperations = expressionOperators.sort(
             (a, b) => calculatorConfig[b].priority - calculatorConfig[a].priority,
         );
+
         const result = orderedOperations.reduce<string>((expressionAcc, operation) => {
             const currentOperationObj = calculatorConfig[operation];
             const matchedExpressionWithOperation = expressionAcc.match(currentOperationObj.reg)
+
             if (!matchedExpressionWithOperation) {
                 return expression
             }
+
             const [expressionWithCurrentOperation] = matchedExpressionWithOperation
             const numbersOperand = getNumbersFromExpression(expressionWithCurrentOperation)
 
