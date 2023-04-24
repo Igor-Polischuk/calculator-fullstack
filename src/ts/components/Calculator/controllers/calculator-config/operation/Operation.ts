@@ -1,10 +1,8 @@
-import { regularWithParam } from "../../regex";
 import { IExceptionObj } from "../exceptions";
-import { Priority } from "../priority";
 import { IError } from "exceptions/IErrors";
 import { ErrorType } from "exceptions/error-type";
 import { AppError } from "exceptions/AppError";
-import { IConstantParams, IMathFunctionParams, IOperation, IOperationParams } from "./IOperations";
+import { IOperation, IOperationParams, OperationType } from "./IOperations";
 
 
 export class Operation implements IOperation {
@@ -12,6 +10,7 @@ export class Operation implements IOperation {
     readonly calculate: (...args: number[]) => number
     readonly priority: number
     readonly text: string | undefined
+    readonly type: OperationType
 
     private exceptionHandler: IExceptionObj[] = []
 
@@ -19,6 +18,7 @@ export class Operation implements IOperation {
         this.reg = params.reg
         this.calculate = params.calculate
         this.exceptionHandler = params.exceptionHandler || []
+        this.type = params.type || OperationType.Operation
         this.priority = params.priority
         this.text = params.text
     }
@@ -47,28 +47,5 @@ export class Operation implements IOperation {
                 })
             }
         })
-    }
-}
-
-export class MathFunction extends Operation {
-    constructor(params: IMathFunctionParams) {
-        super({
-            reg: regularWithParam.getFunctionRegWithParam(params.name),
-            priority: Priority.Hight,
-            calculate: params.calculate,
-            exceptionHandler: params.exceptionHandler,
-            text: params.text
-        });
-    }
-}
-
-export class Constant extends Operation {
-    constructor(params: IConstantParams) {
-        super({
-            reg: params.reg ? params.reg : regularWithParam.getConstantReg(params.name),
-            priority: Priority.Constant,
-            calculate: () => params.value,
-            text: params.text
-        });
     }
 }

@@ -1,9 +1,9 @@
 import { Priority } from './priority';
-import { Constant, MathFunction, Operation } from "./operation/Operation";
+import { Operation } from "./operation/Operation";
 import { factorial } from "../services";
 import { exceptions } from './exceptions';
 import { regularWithParam } from '../regex';
-import { IOperation } from './operation/IOperations';
+import { IOperation, OperationType } from './operation/IOperations';
 
 
 export const calculatorConfig: Record<string, IOperation> = {
@@ -49,35 +49,48 @@ export const calculatorConfig: Record<string, IOperation> = {
         calculate: factorial,
         exceptionHandler: [exceptions.negativeNumber, exceptions.notInteger]
     }),
-    'sqrt': new MathFunction({
-        name: 'sqrt',
+    'sqrt': new Operation({
+        priority: Priority.Hight,
         calculate: Math.sqrt,
         exceptionHandler: [exceptions.negativeNumber],
-        text: '√'
+        reg: regularWithParam.getConstantReg('sqrt'),
+        type: OperationType.MathFunction,
+        text: '√',
     }),
-    'sin': new MathFunction({
-        name: 'sin',
-        calculate: Math.sin
+    'sin': new Operation({
+        priority: Priority.Hight,
+        calculate: Math.sin,
+        reg: regularWithParam.getConstantReg('sin'),
+        type: OperationType.MathFunction,
     }),
-    'cos': new MathFunction({
-        name: 'cos',
-        calculate: Math.cos
+    'cos': new Operation({
+        priority: Priority.Hight,
+        calculate: Math.cos,
+        reg: regularWithParam.getConstantReg('cos'),
+        type: OperationType.MathFunction,
     }),
-    'tg': new MathFunction({
-        name: 'tg',
-        calculate: Math.tan
+    'tg': new Operation({
+        priority: Priority.Hight,
+        calculate: Math.sin,
+        reg: regularWithParam.getConstantReg('tg'),
+        type: OperationType.MathFunction,
     }),
-    'ctg': new MathFunction({
-        name: 'ctg',
-        calculate: (a: number) => 1 / Math.tan(a)
+    'ctg': new Operation({
+        priority: Priority.Hight,
+        calculate: (a: number) => 1 / Math.tan(a),
+        reg: regularWithParam.getConstantReg('ctg'),
+        type: OperationType.MathFunction,
     }),
-    'pi': new Constant({
-        name: 'pi',
-        value: Math.PI,
-        text: 'π'
+    'pi': new Operation({
+        priority: Priority.Constant,
+        calculate: () => Math.PI,
+        reg: regularWithParam.getConstantReg('pi'),
+        type: OperationType.Constant
     }),
-    'e': new Constant({
-        name: 'e',
-        value: Math.E,
+    'e': new Operation({
+        priority: Priority.Constant,
+        calculate: () => Math.E,
+        reg: regularWithParam.getConstantReg('e'),
+        type: OperationType.Constant
     }),
 }

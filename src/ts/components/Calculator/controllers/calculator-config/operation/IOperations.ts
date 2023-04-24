@@ -1,31 +1,27 @@
 import { IExceptionObj } from "../exceptions"
 
 export interface IOperation {
+    readonly calculate: (...args: number[]) => number
+    readonly checkException: (numbers: number[], errorExpression?: string) => void
     readonly reg: RegExp
-    calculate: (...args: number[]) => number
-    checkException: (numbers: number[], errorExpression?: string) => void
     readonly priority: number
+    readonly type: OperationType
     readonly text?: string
 }
 
-export interface IOperationsBaseParams {
+export enum OperationType {
+    Operation,
+    MathFunction,
+    Constant
+}
+
+export interface IOperationParams {
+    reg: RegExp
+    priority: number
     calculate: (...args: number[]) => number
     exceptionHandler?: IExceptionObj[]
     text?: string
+    type?: OperationType
 }
 
-export interface IOperationParams extends IOperationsBaseParams {
-    reg: RegExp
-    priority: number
-}
-
-export interface IMathFunctionParams extends IOperationsBaseParams {
-    name: string
-}
-
-export interface IConstantParams extends Pick<IOperationsBaseParams, 'text'> {
-    name: string
-    value: number
-    reg?: RegExp
-}
 
