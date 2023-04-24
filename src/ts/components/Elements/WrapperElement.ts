@@ -14,7 +14,7 @@ export class WrapperElement {
         })
     }
 
-    get element() {
+    get element(): DivElement {
         return this.wrapper
     }
 }

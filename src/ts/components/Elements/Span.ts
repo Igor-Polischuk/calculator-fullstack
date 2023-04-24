@@ -13,7 +13,7 @@ export class Span extends BaseElement {
         this.spanElement.innerHTML = params.text || ''
     }
 
-    get domElement() {
+    get domElement(): HTMLSpanElement {
         return this.spanElement
     }
 

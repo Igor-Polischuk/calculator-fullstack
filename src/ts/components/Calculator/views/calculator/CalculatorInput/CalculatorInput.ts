@@ -29,7 +29,7 @@ export class CalculatorInput extends WrapperElement {
         this.input.value = newValue
     }
 
-    private handleInputChange() {
+    private handleInputChange(): void {
         this.input.domElement.value = formatExpression(this.input.value)
         this.input.domElement.scrollLeft = this.input.domElement.scrollWidth
     }

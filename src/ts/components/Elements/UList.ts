@@ -10,11 +10,11 @@ export class UnorderedList extends BaseElement {
         this.ul = document.createElement('ul')
     }
 
-    get domElement() {
+    get domElement(): HTMLUListElement {
         return this.ul
     }
 
-    appendListItems(children: BaseElement[]) {
+    appendListItems(children: BaseElement[]): void {
         children.forEach(child => {
             const listItem = document.createElement('li')
             child.render(listItem)

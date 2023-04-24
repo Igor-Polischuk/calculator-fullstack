@@ -9,19 +9,19 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
     private expression: string | null = null
     private error: IAppError | null = null
 
-    setResult(res: number) {
+    setResult(res: number): void {
         this.result = res
         this.error = null
         this.notifyAll(CalculatorModelEvent.ResultChanged, res)
     }
 
-    setExpression(expression: string) {
+    setExpression(expression: string): void {
         this.expression = expression
         this.error = null
         this.notifyAll(CalculatorModelEvent.ExpressionChanged, expression)
     }
 
-    setError(errors: IAppError) {
+    setError(errors: IAppError): void {
         this.error = errors
         this.result = null
         this.notifyAll(CalculatorModelEvent.ErrorChanged, errors)

@@ -16,7 +16,7 @@ const REPLACEMENT_REG_STRING = Object.keys(REPLACEMENTS).map(operation => {
 }).join('|')
 
 
-export function replaceMathOperators(expression: string) {
+export function replaceMathOperators(expression: string): string {
     const regex = new RegExp(`${REPLACEMENT_REG_STRING}`, 'g');
     return expression.replace(regex, (match) => REPLACEMENTS[match])
         .replace(FIND_POWER, "<sup>$2</sup>")

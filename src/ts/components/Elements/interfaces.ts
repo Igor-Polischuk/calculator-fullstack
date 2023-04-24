@@ -22,8 +22,5 @@ export interface IInput extends IBaseElement {
 }
 
 export interface IDivElement extends IBaseElement {
-}
-
-export interface IDivElement extends IBaseElement {
-
+    removeElement: (selector: string) => void
 }

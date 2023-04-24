@@ -49,11 +49,11 @@ export class HighlightedErrors extends WrapperElement {
         return spansArray.concat(new Span({ text: this.params.expressionWithErrors.slice(lastErrorIndex) }))
     }
 
-    private getErrorMessageByRangeStart(from: number) {
+    private getErrorMessageByRangeStart(from: number): string {
         return this.params.errors.find(e => e.payload?.errorPlace?.find(error => error.from === from))?.message || ''
     }
 
-    private uppercaseFirstLetter(text: string) {
+    private uppercaseFirstLetter(text: string): string {
         return text[0].toUpperCase() + text.slice(1)
     }
 }

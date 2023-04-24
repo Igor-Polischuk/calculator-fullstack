@@ -22,11 +22,11 @@ export class Button extends BaseElement implements IButton {
         this.button.innerHTML = this.text
     }
 
-    get domElement() {
+    get domElement(): HTMLButtonElement {
         return this.button
     }
 
-    get metaData() {
+    get metaData(): Record<string, string> {
         return this.data || {}
     }
 }

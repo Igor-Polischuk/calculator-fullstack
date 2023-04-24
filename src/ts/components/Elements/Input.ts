@@ -25,19 +25,19 @@ export class Input extends BaseElement implements IInput {
         this.imitateInput()
     }
 
-    get value() {
+    get value(): string {
         return this.input.value
     }
 
-    get domElement() {
+    get domElement(): HTMLInputElement {
         return this.input
     }
 
-    onInput(callback: (e: Event) => void) {
+    onInput(callback: (e: Event) => void): void {
         this.input.addEventListener('input', callback)
     }
 
-    private imitateInput() {
+    private imitateInput(): void {
         const event = new Event('input', { bubbles: true });
         this.input.dispatchEvent(event);
     };

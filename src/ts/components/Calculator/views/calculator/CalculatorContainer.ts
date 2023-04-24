@@ -44,7 +44,11 @@ export class CalculatorContainer extends WrapperElement {
 
     showCalculationError(error: IAppError): void {
         const expressionWithError = this.calculatorInput.inputText
-        this.calculatorOutput.showErrorInfo({ error, expressionWithError, onErrorClick: this.onErrorClick.bind(this) })
+        this.calculatorOutput.showErrorInfo({
+            error,
+            expressionWithError,
+            onErrorClick: this.onErrorClick.bind(this)
+        })
     }
 
     private onErrorClick(range: IErrorRange): void {

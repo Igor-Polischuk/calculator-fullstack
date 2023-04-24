@@ -50,7 +50,7 @@ export class ErrorHandler implements IErrorHandler {
         return messageParagraph
     }
 
-    private getParagraph(text: string) {
+    private getParagraph(text: string): Paragraph {
         return new Paragraph({ text, id: 'result-display' })
     }
 }

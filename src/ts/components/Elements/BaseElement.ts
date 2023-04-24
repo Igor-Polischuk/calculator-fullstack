@@ -11,7 +11,7 @@ export class BaseElement implements IBaseElement {
         this.id = params.id || ''
     }
 
-    render(parentNode: Element) {
+    render(parentNode: Element): void {
         const el = this.domElement
         el.className = this.classNames
         el.id = this.id
@@ -23,18 +23,18 @@ export class BaseElement implements IBaseElement {
         throw new Error('domEl getter not implemented')
     }
 
-    get childElements() {
+    get childElements(): IBaseElement[] {
         return this.children
     }
 
-    append(...elements: IBaseElement[]) {
+    append(...elements: IBaseElement[]): void {
         elements.forEach(element => {
             element.render(this.domElement)
             this.children = [...this.children, element]
         })
     }
 
-    onClick(callback: (e: Event) => void) {
+    onClick(callback: (e: Event) => void): void {
         this.domElement.addEventListener('click', (e) => callback(e))
     }
 }
