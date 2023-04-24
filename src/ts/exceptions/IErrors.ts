@@ -8,7 +8,7 @@ export interface IError {
     }
 }
 
-export interface ICalculationErrors {
+export interface IAppError {
     type: ErrorType
     errors: IError[]
 }

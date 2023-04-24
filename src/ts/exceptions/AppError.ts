@@ -1,4 +1,4 @@
-import { ICalculationErrors, IError } from "./IErrors";
+import { IAppError, IError } from "./IErrors";
 import { ErrorType } from "./error-type";
 
 interface IAppErrorProps {
@@ -7,7 +7,7 @@ interface IAppErrorProps {
     fromObject?: any
 }
 
-export class AppError implements ICalculationErrors {
+export class AppError implements IAppError {
     type: ErrorType
     errors: IError[]
 

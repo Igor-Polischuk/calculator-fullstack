@@ -1,4 +1,4 @@
-import { ICalculationErrors, IErrorRange } from '../../../../exceptions/IErrors';
+import { IAppError, IErrorRange } from '../../../../exceptions/IErrors';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
@@ -44,7 +44,7 @@ export class CalculatorContainer extends WrapperElement {
         this.calculatorInput.setInputValue(`${result}`)
     }
 
-    showCalculationError(error: ICalculationErrors): void {
+    showCalculationError(error: IAppError): void {
         const expressionWithError = this.calculatorInput.inputText
         this.calculatorOutput.showErrorInfo({ error, expressionWithError })
     }

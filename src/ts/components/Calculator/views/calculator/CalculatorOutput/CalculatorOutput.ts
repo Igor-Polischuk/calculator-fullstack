@@ -1,5 +1,5 @@
 import { Paragraph } from '@components/Elements/Paragraph';
-import { ICalculationErrors, IError, IErrorRange } from "exceptions/IErrors";
+import { IAppError, IError, IErrorRange } from "exceptions/IErrors";
 import { removeOverlappingRanges } from '@utilities/ranges/removeOverlappingRanges';
 import { HighlightedErrors } from './HighlightedErrors';
 import { IBaseElement } from '@components/Elements/interfaces';
@@ -13,7 +13,7 @@ interface ICalculatorOutputParams {
 }
 
 interface IShowErrorInfoProps {
-    error: ICalculationErrors
+    error: IAppError
     expressionWithError: string
 }
 
