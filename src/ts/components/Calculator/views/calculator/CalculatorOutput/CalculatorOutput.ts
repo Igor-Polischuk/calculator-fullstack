@@ -1,43 +1,22 @@
-import { Paragraph } from '@components/Elements/Paragraph';
-import { IAppError, IError, IErrorRange } from "exceptions/IErrors";
-import { removeOverlappingRanges } from '@utilities/ranges/removeOverlappingRanges';
-import { HighlightedErrors } from './HighlightedErrors';
 import { IBaseElement } from '@components/Elements/interfaces';
 import { WrapperElement } from '@components/Elements/ComplexElement';
 import { ResultOutput } from './ResultParagraph';
-import { ErrorType } from 'exceptions/error-type';
-
-
-interface ICalculatorOutputParams {
-    onErrorClick: (range: IErrorRange) => void
-}
-
-interface IShowErrorInfoProps {
-    error: IAppError
-    expressionWithError: string
-}
+import { ErrorHandler, IShowErrorInfoProps } from './ErrorHandler';
+import { Paragraph } from '@components/Elements/Paragraph';
 
 interface IShowCalculationResultProps {
     result: number
     expression: string
 }
 
-type ErrorHandlers = Record<ErrorType, (params: IShowErrorInfoProps) => void>;
-
 export class CalculatorOutput extends WrapperElement {
-    private params: ICalculatorOutputParams;
-    errorHandlers: ErrorHandlers;
+    private errorHandlers: ErrorHandler;
 
-    constructor(params: ICalculatorOutputParams) {
+    constructor() {
         super({
             wrapperClassNames: 'calculator__result',
         })
-        this.params = params
-        this.errorHandlers = {
-            [ErrorType.RuntimeError]: this.renderMessage.bind(this),
-            [ErrorType.UnexpectedError]: this.renderMessage.bind(this),
-            [ErrorType.ValidationError]: this.showValidationError.bind(this)
-        }
+        this.errorHandlers = new ErrorHandler()
     }
 
     showCalculationResult(params: IShowCalculationResultProps): void {
@@ -46,31 +25,13 @@ export class CalculatorOutput extends WrapperElement {
     }
 
     showErrorInfo(params: IShowErrorInfoProps): void {
-        const errorHandler = this.errorHandlers[params.error.type]
-        errorHandler(params)
-
+        const errorHandler = this.errorHandlers[params.error.type] || this.getDefaultErrorBlock
+        const blockWithErrorInfo = errorHandler(params)
+        this.appendOutputElement(blockWithErrorInfo)
     }
 
-    private showValidationError(params: IShowErrorInfoProps): void {
-        const errors = params.error.errors
-        const invalidPartsIndexes = errors.flatMap(error => error.payload?.errorPlace!)
-        const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
-
-        const highlightedErrors = new HighlightedErrors({
-            expressionWithErrors: params.expressionWithError,
-            errorRanges: invalidExpressionPartsIndexes,
-            errors,
-            onErrorClick: this.params.onErrorClick
-        })
-
-        this.appendOutputElement(highlightedErrors.element)
-    }
-
-    private renderMessage(params: IShowErrorInfoProps): void {
-        this.updateOutput()
-        const message = params.error.errors[0].message
-        const p = new Paragraph({ text: message, id: 'result-display' })
-        this.wrapper.append(p)
+    private getDefaultErrorBlock() {
+        return new Paragraph({ text: 'Unknown error', id: 'result-display' })
     }
 
     private appendOutputElement(element: IBaseElement): void {

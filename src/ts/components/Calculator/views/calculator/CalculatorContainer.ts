@@ -20,10 +20,8 @@ export class CalculatorContainer extends WrapperElement {
         })
         this.params = params;
 
-        this.calculatorInput = new CalculatorInput();
-        this.calculatorOutput = new CalculatorOutput({
-            onErrorClick: this.onErrorClick.bind(this)
-        });
+        this.calculatorInput = new CalculatorInput()
+        this.calculatorOutput = new CalculatorOutput()
         this.calculatorKeyboard = new CalculatorKeyboard({
             onEqual: this.onEqualButtonClicked.bind(this),
             onChar: this.onButtonClick.bind(this),
