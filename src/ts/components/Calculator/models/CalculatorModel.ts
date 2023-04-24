@@ -26,8 +26,4 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
         this.result = null
         this.notifyAll(CalculatorModelEvent.ErrorChanged, errors)
     }
-
-    getExpression() {
-        return this.expression
-    }
 }

@@ -12,7 +12,6 @@ export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
     setResult: (result: number) => void
     setExpression: (expression: string) => void
     setError: (errors: IAppError) => void
-    getExpression: () => string | null
 }
 
 export interface ICalculatorView { }
