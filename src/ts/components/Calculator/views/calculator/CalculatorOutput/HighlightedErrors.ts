@@ -6,7 +6,7 @@ interface IHighlightedErrorsParams {
     errorRanges: IErrorRange[]
     expressionWithErrors: string
     errors: IError[]
-    onErrorClick?: (range: IErrorRange) => void
+    onErrorClick: (range: IErrorRange) => void
 }
 
 interface HighlightErrorsReduceResult {
@@ -38,7 +38,7 @@ export class HighlightedErrors extends WrapperElement {
                 const errorMessage = this.getErrorMessageByRangeStart(from)
                 errorSpan.domElement.title = this.uppercaseFirstLetter(errorMessage)
 
-                errorSpan.onClick(() => this.params.onErrorClick!({ from, to }))
+                errorSpan.onClick(() => this.params.onErrorClick({ from, to }))
 
                 return {
                     spansArray: [...spansArray, notErrorSpan, errorSpan],

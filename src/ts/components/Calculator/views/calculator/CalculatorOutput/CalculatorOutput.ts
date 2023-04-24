@@ -2,7 +2,6 @@ import { IBaseElement } from '@components/Elements/interfaces';
 import { WrapperElement } from '@components/Elements/ComplexElement';
 import { ResultOutput } from './ResultParagraph';
 import { ErrorHandler, IShowErrorInfoProps } from './ErrorHandler';
-import { Paragraph } from '@components/Elements/Paragraph';
 
 interface IShowCalculationResultProps {
     result: number
@@ -25,13 +24,9 @@ export class CalculatorOutput extends WrapperElement {
     }
 
     showErrorInfo(params: IShowErrorInfoProps): void {
-        const errorHandler = this.errorHandlers[params.error.type] || this.getDefaultErrorBlock
+        const errorHandler = this.errorHandlers[params.error.type] || this.errorHandlers.getDefaultErrorBlock
         const blockWithErrorInfo = errorHandler(params)
         this.appendOutputElement(blockWithErrorInfo)
-    }
-
-    private getDefaultErrorBlock() {
-        return new Paragraph({ text: 'Unknown error type', id: 'result-display' })
     }
 
     private appendOutputElement(element: IBaseElement): void {
