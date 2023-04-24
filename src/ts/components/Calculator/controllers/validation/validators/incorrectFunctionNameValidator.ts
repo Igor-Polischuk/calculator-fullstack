@@ -2,7 +2,7 @@ import { IError } from "exceptions/IErrors";
 import { regexPatterns } from "../../regex";
 import { calculatorConfig } from "../../calculator-config";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
-import { Error } from "../error"
+import { ValidationError } from "../validation-error"
 
 export function incorrectFunctionNameValidator(expression: string): IError | undefined {
     const allWords = expression.match(regexPatterns.ALL_WORDS)
@@ -12,7 +12,7 @@ export function incorrectFunctionNameValidator(expression: string): IError | und
             const word = allWords[i]
             if (!calculatorConfig[word]) {
                 return {
-                    message: Error.IncorrectFunctionNameError,
+                    message: ValidationError.IncorrectFunctionNameError,
                     payload: {
                         errorPlace: getSubstringsIndexes([word], expression)
                     }

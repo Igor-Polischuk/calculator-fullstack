@@ -1,5 +1,5 @@
 import { IError, IErrorRange } from "exceptions/IErrors";
-import { Error } from "../error";
+import { ValidationError } from "../validation-error";
 import { regexPatterns } from "../../regex";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
 
@@ -19,7 +19,7 @@ export function bracketsSiblingsValidator(expression: string): IError | undefine
 
     if (errorIndexes.length > 0) {
         return {
-            message: Error.BracketAdjacentCharactersError,
+            message: ValidationError.BracketAdjacentCharactersError,
             payload: {
                 errorPlace: errorIndexes
             }

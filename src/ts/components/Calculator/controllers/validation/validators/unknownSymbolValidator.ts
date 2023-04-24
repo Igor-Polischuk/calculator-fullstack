@@ -1,6 +1,6 @@
 import { IError } from "exceptions/IErrors"
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
-import { Error } from "../error"
+import { ValidationError } from "../validation-error"
 import { searchAllowedOperationsRegStr } from "../../calculator-config";
 import { incorrectFunctionNameValidator } from "./incorrectFunctionNameValidator";
 
@@ -10,7 +10,7 @@ export function unknownSymbolValidator(expression: string): IError | undefined {
 
     if (unknownSymbols) {
         return {
-            message: Error.UnknownSymbolError,
+            message: ValidationError.UnknownSymbolError,
             payload: {
                 errorPlace: getSubstringsIndexes(unknownSymbols, expression)
             }

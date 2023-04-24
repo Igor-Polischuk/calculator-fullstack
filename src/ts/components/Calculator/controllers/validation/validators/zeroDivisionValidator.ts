@@ -1,14 +1,14 @@
 
 import { IError } from "exceptions/IErrors"
 import { regexPatterns } from "../../regex"
-import { Error } from "../error"
+import { ValidationError } from "../validation-error"
 
 export function zeroDivisionValidator(expression: string): IError | undefined {
     const zeroDivisionMatch = expression.match(regexPatterns.ZERO_DIVISION)
 
     if (zeroDivisionMatch) {
         return {
-            message: Error.ZeroDivisionError,
+            message: ValidationError.ZeroDivisionError,
             payload: {
                 errorPlace: [{ from: zeroDivisionMatch.index!, to: zeroDivisionMatch.index! }]
             }

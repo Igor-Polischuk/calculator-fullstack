@@ -1,5 +1,5 @@
 import { IError } from "exceptions/IErrors";
-import { Error } from "../error";
+import { ValidationError } from "../validation-error";
 
 export function bracketsOrderValidator(expression: string): IError | undefined {
     let bracketCount = 0
@@ -12,7 +12,7 @@ export function bracketsOrderValidator(expression: string): IError | undefined {
 
             if (bracketCount === 0) {
                 return {
-                    message: Error.ClosedBracketError,
+                    message: ValidationError.ClosedBracketError,
                     payload: {
                         errorPlace: [{ from: i, to: i }]
                     }
@@ -25,7 +25,7 @@ export function bracketsOrderValidator(expression: string): IError | undefined {
     if (bracketCount > 0) {
         const bracketIndex = expression.indexOf('(')
         return {
-            message: Error.OpenBracketError,
+            message: ValidationError.OpenBracketError,
             payload: {
                 errorPlace: [{ from: bracketIndex, to: bracketIndex }]
             }

@@ -1,5 +1,5 @@
 import { IError } from "exceptions/IErrors";
-import { Error } from "../error"
+import { ValidationError } from "../validation-error"
 import { regexPatterns } from "../../regex";
 
 export function expressionEndValidator(expression: string): IError | undefined {
@@ -7,7 +7,7 @@ export function expressionEndValidator(expression: string): IError | undefined {
 
     if (!isCorrectEnd) {
         return {
-            message: Error.LineEndError,
+            message: ValidationError.LineEndError,
             payload: {
                 errorPlace: [{ from: expression.length - 1, to: expression.length - 1 }]
             }

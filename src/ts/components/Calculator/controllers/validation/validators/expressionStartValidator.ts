@@ -1,5 +1,5 @@
 import { IError } from "exceptions/IErrors";
-import { Error } from "../error"
+import { ValidationError } from "../validation-error"
 import { regexPatterns } from "../../regex";
 
 export function expressionStartValidator(expression: string): IError | undefined {
@@ -7,7 +7,7 @@ export function expressionStartValidator(expression: string): IError | undefined
 
     if (!isCorrectStart) {
         return {
-            message: Error.LineStartError,
+            message: ValidationError.LineStartError,
             payload: {
                 errorPlace: [{ from: 0, to: 0 }]
             }

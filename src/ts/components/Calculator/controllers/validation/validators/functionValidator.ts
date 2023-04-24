@@ -1,5 +1,5 @@
 import { IError } from "exceptions/IErrors";
-import { Error } from "../error"
+import { ValidationError } from "../validation-error"
 import { functionReg } from "../../calculator-config";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
 
@@ -9,7 +9,7 @@ export function functionValidator(expression: string): IError | undefined {
 
     if (incorrectFunctions) {
         return {
-            message: Error.IncorrectFunctionArgumentError,
+            message: ValidationError.IncorrectFunctionArgumentError,
             payload: {
                 errorPlace: getSubstringsIndexes(incorrectFunctions, expression)
             }

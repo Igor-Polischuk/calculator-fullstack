@@ -1,4 +1,4 @@
-export enum Error {
+export enum ValidationError {
     ClosedBracketError = 'unexpected closing bracket',
     OpenBracketError = 'unexpected open bracket',
     BracketAdjacentCharactersError = 'incorrect characters near brackets',
