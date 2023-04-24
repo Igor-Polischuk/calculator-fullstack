@@ -10,19 +10,19 @@ export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
   constructor(model: ICalculatorModel) {
     this.model = model
-    this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this));
+    this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this))
   }
 
   private calculateExpression(expression: string): void {
-    const formattedExpression = formatExpression(expression);
+    const formattedExpression = formatExpression(expression)
 
     try {
-      validate(formattedExpression);
+      validate(formattedExpression)
       const result = expressionCalculatorService.calculate(formattedExpression)
-      this.model.setResult(result);
+      this.model.setResult(result)
     } catch (error: any) {
       const appError = new AppError({ fromObject: error })
-      this.model.setError(appError as AppError);
+      this.model.setError(appError as AppError)
     }
   }
 }

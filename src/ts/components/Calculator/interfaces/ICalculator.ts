@@ -3,8 +3,8 @@ import { CalculatorModelEvent } from "../calculator-model-event";
 import { IAppError } from "../../../exceptions/IErrors";
 
 export type ModelAllowedEvents = {
-    [CalculatorModelEvent.ResultChanged]: number;
-    [CalculatorModelEvent.ExpressionChanged]: string;
+    [CalculatorModelEvent.ResultChanged]: number
+    [CalculatorModelEvent.ExpressionChanged]: string
     [CalculatorModelEvent.ErrorChanged]: IAppError
 };
 

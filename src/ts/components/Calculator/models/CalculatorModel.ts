@@ -5,9 +5,9 @@ import { IAppError } from '../../../exceptions/IErrors';
 
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
-    private result: number | null = null;
-    private expression: string | null = null;
-    private error: IAppError | null = null;
+    private result: number | null = null
+    private expression: string | null = null
+    private error: IAppError | null = null
 
     setResult(res: number) {
         this.result = res

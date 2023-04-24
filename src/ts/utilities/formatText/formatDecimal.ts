@@ -3,5 +3,5 @@
  */
 export function formatDecimal(target: number, n = 2): number {
     const coefficient = 10 ** n
-    return Math.round(target * coefficient) / coefficient;
+    return Math.round(target * coefficient) / coefficient
 }

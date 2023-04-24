@@ -7,20 +7,20 @@ export class BaseElement implements IBaseElement {
     protected children: IBaseElement[] = []
 
     constructor(params: IBaseElementParams) {
-        this.classNames = params.classNames || '';
-        this.id = params.id || '';
+        this.classNames = params.classNames || ''
+        this.id = params.id || ''
     }
 
     render(parentNode: Element) {
-        const el = this.domElement;
+        const el = this.domElement
         el.className = this.classNames
         el.id = this.id
         this.parentNode = parentNode
-        this.parentNode.appendChild(el);
+        this.parentNode.appendChild(el)
     }
 
     get domElement(): Element {
-        throw new Error('domEl getter not implemented');
+        throw new Error('domEl getter not implemented')
     }
 
     get childElements() {

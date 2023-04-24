@@ -21,7 +21,7 @@ export class Observer<EventsTypes extends IEventMap> implements IObserver<IEvent
     subscribe<EventName extends EventKey<EventsTypes>>(event: EventName, callback: IObserverCallback<EventsTypes[EventName]>) {
         (this.observers[event] || (this.observers[event] = [])).push(callback)
         return callback
-    };
+    }
 
 
     /**
@@ -32,7 +32,7 @@ export class Observer<EventsTypes extends IEventMap> implements IObserver<IEvent
      */
     unsubscribe<EventName extends EventKey<EventsTypes>>(event: EventName, callback: IObserverCallback<EventsTypes[EventName]>) {
         this.observers[event] = this.observers[event]?.filter(fn => fn !== callback)
-    };
+    }
 
     /**
      * Notifies all subscribed callbacks for an event.

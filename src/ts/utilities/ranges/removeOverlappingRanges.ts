@@ -2,7 +2,7 @@ import { IErrorRange } from "exceptions/IErrors";
 
 export function removeOverlappingRanges(ranges: IErrorRange[]): IErrorRange[] {
   if (ranges.length < 2) {
-    return ranges;
+    return ranges
   }
   const sortedRanges = [...ranges].sort((a, b) => a.from - b.from)
   const mergedRanges: IErrorRange[] = sortedRanges.reduce((mergedRanges, currentRange) => {
@@ -17,5 +17,5 @@ export function removeOverlappingRanges(ranges: IErrorRange[]): IErrorRange[] {
     return mergedRanges;
   }, [sortedRanges[0]]);
 
-  return mergedRanges;
+  return mergedRanges
 }

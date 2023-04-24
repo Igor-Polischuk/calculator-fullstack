@@ -8,9 +8,9 @@ interface IButtonParams {
     type: string
 }
 
-export class Button extends BaseElement implements IButton{
+export class Button extends BaseElement implements IButton {
     public type: string
-    private text: string;
+    private text: string
     private data?: Record<string, string> = {}
     private button: HTMLButtonElement
     constructor(params: IButtonParams) {
@@ -19,14 +19,14 @@ export class Button extends BaseElement implements IButton{
         this.type = params.type
         this.data = params.data
         this.button = document.createElement('button')
-        this.button.innerHTML= this.text
+        this.button.innerHTML = this.text
     }
 
-    get domElement(){
+    get domElement() {
         return this.button
     }
 
-    get metaData(){
+    get metaData() {
         return this.data || {}
     }
 }

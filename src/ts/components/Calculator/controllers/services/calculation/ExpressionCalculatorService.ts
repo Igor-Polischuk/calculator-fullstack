@@ -46,7 +46,7 @@ class ExpressionCalculatorService {
             const [expressionWithCurrentOperation] = matchedExpressionWithOperation
             const numbersOperand = getNumbersFromExpression(expressionWithCurrentOperation)
 
-            currentOperationObj.checkException(numbersOperand, expressionWithCurrentOperation);
+            currentOperationObj.checkException(numbersOperand, expressionWithCurrentOperation)
             const calculationResult = currentOperationObj.calculate(...numbersOperand).toString()
 
             return expressionAcc.replace(expressionWithCurrentOperation, calculationResult)

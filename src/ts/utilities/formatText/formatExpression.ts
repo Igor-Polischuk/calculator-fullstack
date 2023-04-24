@@ -6,10 +6,10 @@ export function formatExpression(expression: string) {
     addMultiplicationOperator,
   });
 
-  return formattedExpression;
+  return formattedExpression
 }
 
 function addMultiplicationOperator(expression: string) {
-  const pattern = /(\d+|\))([A-Za-z(])/g;
-  return expression.replace(pattern, '$1*$2');
+  const pattern = /(\d+|\))([A-Za-z(])/g
+  return expression.replace(pattern, '$1*$2')
 }
