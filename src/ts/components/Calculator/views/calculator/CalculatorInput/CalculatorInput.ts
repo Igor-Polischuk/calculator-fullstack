@@ -1,4 +1,4 @@
-import { WrapperElement } from "@components/Elements/ComplexElement";
+import { WrapperElement } from "@components/Elements/WrapperElement";
 import { Input } from "@components/Elements/Input";
 import { formatExpression } from "@utilities/formatText/formatExpression";
 

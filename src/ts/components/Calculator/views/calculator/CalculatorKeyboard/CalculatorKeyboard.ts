@@ -1,7 +1,7 @@
 import { ButtonList } from '@components/Calculator/views/calculator/CalculatorKeyboard/ButtonList';
 import { getCalculatorButtons } from './getButton/getCalculatorButtons';
 import { ButtonType } from './ButtonType';
-import { WrapperElement } from '@components/Elements/ComplexElement';
+import { WrapperElement } from '@components/Elements/WrapperElement';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void

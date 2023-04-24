@@ -1,5 +1,5 @@
 import { IError, IErrorRange } from "exceptions/IErrors";
-import { WrapperElement } from "@components/Elements/ComplexElement";
+import { WrapperElement } from "@components/Elements/WrapperElement";
 import { Span } from "@components/Elements/Span";
 
 interface IHighlightedErrorsParams {

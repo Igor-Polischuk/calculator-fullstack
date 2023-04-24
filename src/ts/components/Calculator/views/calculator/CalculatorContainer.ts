@@ -2,7 +2,7 @@ import { IAppError, IErrorRange } from '../../../../exceptions/IErrors';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
-import { WrapperElement } from '@components/Elements/ComplexElement';
+import { WrapperElement } from '@components/Elements/WrapperElement';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;

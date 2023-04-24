@@ -1,5 +1,5 @@
 import { IBaseElement } from '@components/Elements/interfaces';
-import { WrapperElement } from '@components/Elements/ComplexElement';
+import { WrapperElement } from '@components/Elements/WrapperElement';
 import { ResultOutput } from './ResultParagraph';
 import { ErrorHandler, IShowErrorInfoProps } from './ErrorHandler';
 
