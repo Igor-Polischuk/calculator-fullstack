@@ -31,7 +31,7 @@ export class CalculatorOutput extends WrapperElement {
     }
 
     private getDefaultErrorBlock() {
-        return new Paragraph({ text: 'Unknown error', id: 'result-display' })
+        return new Paragraph({ text: 'Unknown error type', id: 'result-display' })
     }
 
     private appendOutputElement(element: IBaseElement): void {

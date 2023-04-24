@@ -4,7 +4,7 @@ import { formatExpression } from './services';
 import { validate } from './validation/validate';
 import { AppError } from 'exceptions/AppError';
 
-import expressionCalculatorService from './services/calculation/ExpressionCalculatorService';
+import { calculate } from './services/calculation/ExpressionCalculatorService';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
@@ -18,7 +18,7 @@ export class CalculatorController implements ICalculatorController {
 
     try {
       validate(formattedExpression)
-      const result = expressionCalculatorService.calculate(formattedExpression)
+      const result = calculate(formattedExpression)
       this.model.setResult(result)
     } catch (error: any) {
       const appError = new AppError({ errorInstance: error })

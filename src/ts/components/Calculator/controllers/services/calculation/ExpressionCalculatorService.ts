@@ -6,54 +6,50 @@ import { getNumbersFromExpression } from "../expressionDataParsers/getNumbersFro
 import { getOperationsFromExpression } from "../expressionDataParsers/getOperationsFromExpression";
 import { unwrapBracketInExpression } from "../formatting/unwrapExpressionTerms";
 
-class ExpressionCalculatorService {
-    calculate(expression: string): number {
-        const result = +this.processBracketedExpression(expression)
-        const precision = process.env.PRECISION || 7
+export function calculate(expression: string): number {
+    const result = +processBracketedExpression(expression)
+    const precision = process.env.PRECISION || 7
 
-        return formatDecimal(result, +precision)
-    }
-
-    private processBracketedExpression(expression: string): string {
-        const bracketsExpressions = getMostNestedBrackets(expression)
-
-        const replacedMostNestedBrackets = bracketsExpressions.reduce<string>(
-            (expressionAcc, currentBracketExpression) => {
-                const unbracketedExpression = unwrapBracketInExpression(currentBracketExpression)
-                const currentBracketExpressionResult = this.calculateUnbracketedExpression(unbracketedExpression)
-                return expressionAcc.replace(currentBracketExpression, currentBracketExpressionResult)
-            }, expression)
-
-        return hasBrackets(replacedMostNestedBrackets)
-            ? this.processBracketedExpression(replacedMostNestedBrackets)
-            : this.calculateUnbracketedExpression(replacedMostNestedBrackets)
-    }
-
-    private calculateUnbracketedExpression(expression: string): string {
-        const expressionOperators = getOperationsFromExpression(expression)
-        const orderedOperations = expressionOperators.sort(
-            (a, b) => calculatorConfig[b].priority - calculatorConfig[a].priority,
-        );
-
-        const result = orderedOperations.reduce<string>((expressionAcc, operation) => {
-            const currentOperationObj = calculatorConfig[operation];
-            const matchedExpressionWithOperation = expressionAcc.match(currentOperationObj.reg)
-
-            if (!matchedExpressionWithOperation) {
-                return expression
-            }
-
-            const [expressionWithCurrentOperation] = matchedExpressionWithOperation
-            const numbersOperand = getNumbersFromExpression(expressionWithCurrentOperation)
-
-            currentOperationObj.checkException(numbersOperand, expressionWithCurrentOperation)
-            const calculationResult = currentOperationObj.calculate(...numbersOperand).toString()
-
-            return expressionAcc.replace(expressionWithCurrentOperation, calculationResult)
-        }, expression)
-
-        return result
-    }
+    return formatDecimal(result, +precision)
 }
 
-export default new ExpressionCalculatorService()
+function processBracketedExpression(expression: string): string {
+    const bracketsExpressions = getMostNestedBrackets(expression)
+
+    const replacedMostNestedBrackets = bracketsExpressions.reduce<string>(
+        (expressionAcc, currentBracketExpression) => {
+            const unbracketedExpression = unwrapBracketInExpression(currentBracketExpression)
+            const currentBracketExpressionResult = calculateUnbracketedExpression(unbracketedExpression)
+            return expressionAcc.replace(currentBracketExpression, currentBracketExpressionResult)
+        }, expression)
+
+    return hasBrackets(replacedMostNestedBrackets)
+        ? processBracketedExpression(replacedMostNestedBrackets)
+        : calculateUnbracketedExpression(replacedMostNestedBrackets)
+}
+
+function calculateUnbracketedExpression(expression: string): string {
+    const expressionOperators = getOperationsFromExpression(expression)
+    const orderedOperations = expressionOperators.sort(
+        (a, b) => calculatorConfig[b].priority - calculatorConfig[a].priority,
+    );
+
+    const result = orderedOperations.reduce<string>((expressionAcc, operation) => {
+        const currentOperationObj = calculatorConfig[operation];
+        const matchedExpressionWithOperation = expressionAcc.match(currentOperationObj.reg)
+
+        if (!matchedExpressionWithOperation) {
+            return expression
+        }
+
+        const [expressionWithCurrentOperation] = matchedExpressionWithOperation
+        const numbersOperand = getNumbersFromExpression(expressionWithCurrentOperation)
+
+        currentOperationObj.checkException(numbersOperand, expressionWithCurrentOperation)
+        const calculationResult = currentOperationObj.calculate(...numbersOperand).toString()
+
+        return expressionAcc.replace(expressionWithCurrentOperation, calculationResult)
+    }, expression)
+
+    return result
+}
