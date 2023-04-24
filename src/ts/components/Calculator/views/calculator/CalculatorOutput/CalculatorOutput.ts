@@ -48,6 +48,7 @@ export class CalculatorOutput extends WrapperElement {
     showErrorInfo(params: IShowErrorInfoProps): void {
         const errorHandler = this.errorHandlers[params.error.type]
         errorHandler(params)
+
     }
 
     private showValidationError(params: IShowErrorInfoProps): void {

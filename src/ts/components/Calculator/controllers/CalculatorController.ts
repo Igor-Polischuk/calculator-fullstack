@@ -21,7 +21,7 @@ export class CalculatorController implements ICalculatorController {
       const result = expressionCalculatorService.calculate(formattedExpression)
       this.model.setResult(result)
     } catch (error: any) {
-      const appError = new AppError({ fromObject: error })
+      const appError = new AppError({ errorInstance: error })
       this.model.setError(appError as AppError)
     }
   }

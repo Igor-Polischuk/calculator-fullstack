@@ -4,7 +4,7 @@ import { ErrorType } from "./error-type";
 interface IAppErrorProps {
     type?: ErrorType
     errors?: IError[]
-    fromObject?: any
+    errorInstance?: any
 }
 
 export class AppError implements IAppError {
@@ -13,7 +13,7 @@ export class AppError implements IAppError {
 
     private defaultMessage = 'Unexpected error while execution'
     constructor(params?: IAppErrorProps) {
-        this.type = params?.fromObject?.type || params?.type || ErrorType.UnexpectedError;
-        this.errors = params?.fromObject?.errors || params?.errors || [{ message: this.defaultMessage }];
+        this.type = params?.errorInstance?.type || params?.type || ErrorType.UnexpectedError;
+        this.errors = params?.errorInstance?.errors || params?.errors || [{ message: this.defaultMessage }];
     }
 }
