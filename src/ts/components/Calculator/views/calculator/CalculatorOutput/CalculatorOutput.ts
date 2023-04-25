@@ -1,21 +1,26 @@
 import { IBaseElement } from '@components/Elements/interfaces';
 import { WrapperElement } from '@components/Elements/WrapperElement';
 import { ResultOutput } from './ResultParagraph';
-import { ErrorHandler, IShowErrorInfoProps } from './ErrorHandler';
+import { IAppError, IErrorRange } from 'exceptions/IErrors';
+import { errorComponentByType } from './error-component-by-type';
 
 interface IShowCalculationResultProps {
     result: number
     expression: string
 }
 
-export class CalculatorOutput extends WrapperElement {
-    private errorHandlers: ErrorHandler;
+export interface IShowErrorInfoProps {
+    error: IAppError
+    expressionWithError: string
+    onErrorClick: (range: IErrorRange) => void
 
+}
+
+export class CalculatorOutput extends WrapperElement {
     constructor() {
         super({
             wrapperClassNames: 'calculator__result',
         })
-        this.errorHandlers = new ErrorHandler()
     }
 
     showCalculationResult(params: IShowCalculationResultProps): void {
@@ -24,9 +29,9 @@ export class CalculatorOutput extends WrapperElement {
     }
 
     showErrorInfo(params: IShowErrorInfoProps): void {
-        const errorHandler = this.errorHandlers[params.error.type] || this.errorHandlers.getDefaultErrorBlock
-        const blockWithErrorInfo = errorHandler(params)
-        this.appendOutputElement(blockWithErrorInfo)
+        const ErrorComponentClass = errorComponentByType[params.error.type] || errorComponentByType.defaultComponent
+        const errorComponentInstance = new ErrorComponentClass(params)
+        this.appendOutputElement(errorComponentInstance.element)
     }
 
     private appendOutputElement(element: IBaseElement): void {

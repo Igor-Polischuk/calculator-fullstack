@@ -6,9 +6,9 @@ export class BaseElement implements IBaseElement {
     protected parentNode: Element | null = null
     protected children: IBaseElement[] = []
 
-    constructor(params: IBaseElementParams) {
-        this.classNames = params.classNames || ''
-        this.id = params.id || ''
+    constructor(params?: IBaseElementParams) {
+        this.classNames = params?.classNames || ''
+        this.id = params?.id || ''
     }
 
     render(parentNode: Element): void {

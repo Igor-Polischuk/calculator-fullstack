@@ -7,10 +7,10 @@ interface IWrapperElementParams {
 
 export class WrapperElement {
     protected wrapper: DivElement
-    constructor(params: IWrapperElementParams) {
+    constructor(params?: IWrapperElementParams) {
         this.wrapper = new DivElement({
-            classNames: params.wrapperClassNames,
-            id: params.wrapperId
+            classNames: params?.wrapperClassNames,
+            id: params?.wrapperId
         })
     }
 
