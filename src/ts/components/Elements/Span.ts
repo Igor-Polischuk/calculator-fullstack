@@ -1,13 +1,13 @@
 import { BaseElement } from './BaseElement';
 import { IBaseElementParams } from './interfaces';
 
-interface IParagraphParams extends IBaseElementParams {
+interface ISpanParams extends IBaseElementParams {
     text?: string
 }
 
 export class Span extends BaseElement {
     private spanElement: HTMLSpanElement
-    constructor(params: IParagraphParams) {
+    constructor(params: ISpanParams) {
         super(params)
         this.spanElement = document.createElement('span')
         this.spanElement.innerHTML = params.text || ''

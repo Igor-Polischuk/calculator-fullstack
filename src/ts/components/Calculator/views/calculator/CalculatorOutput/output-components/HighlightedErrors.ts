@@ -3,15 +3,16 @@ import { WrapperElement } from "@components/Elements/WrapperElement";
 import { Span } from "@components/Elements/Span";
 import { removeOverlappingRanges } from "@utilities/ranges/removeOverlappingRanges";
 import { IShowErrorInfoProps } from "../CalculatorOutput";
+import { HighlightedSpan } from "./HighlightedSpan";
 
 interface IHighlightErrorsReduceResult {
     lastErrorIndex: number
     spansArray: Span[]
 }
 
-interface IGetNotErrorSpanParams {
-    lastErrorIndex: number
-    from: number
+interface IFormattedError {
+    message: string
+    errorsStarts: number[]
 }
 
 export class HighlightedValidationErrors extends WrapperElement {
@@ -19,6 +20,7 @@ export class HighlightedValidationErrors extends WrapperElement {
     private invalidExpressionPartsIndexes: IErrorRange[]
     private errors: IError[]
     private expressionWithError: string
+    private formattedErrors: IFormattedError[]
 
     constructor(highlightedErrorsParams: IShowErrorInfoProps) {
 
@@ -31,43 +33,35 @@ export class HighlightedValidationErrors extends WrapperElement {
         this.errors = highlightedErrorsParams.error.errors
         this.expressionWithError = highlightedErrorsParams.expressionWithError
         this.invalidExpressionPartsIndexes = this.getInvalidIndexes()
+        this.formattedErrors = this.formatError()
 
-        const errorSpans = this.generateErrorSpans()
+        const errorSpans = this.highlightInvalidParts()
         this.wrapper.append(...errorSpans)
     }
 
-    private generateErrorSpans(): Span[] {
+    private highlightInvalidParts(): Span[] {
         const { spansArray, lastErrorIndex } = this.invalidExpressionPartsIndexes.reduce<IHighlightErrorsReduceResult>(
             ({ spansArray, lastErrorIndex }, { from, to }) => {
-                const notErrorSpan = this.getNotErrorSpan({ lastErrorIndex, from })
-                const errorSpan = this.getErrorSpan({ from, to })
+                const validSubstring = this.expressionWithError.slice(lastErrorIndex, from)
+                const normalSpan = new Span({ text: validSubstring })
+
+                const invalidString = this.expressionWithError.slice(from, to + 1)
+                const errorMessage = this.getErrorMessageByRangeStart(from)
+
+                const highlightedSpan = new HighlightedSpan({
+                    text: invalidString,
+                    titleAtrText: errorMessage,
+                    onClick: () => this.params.onErrorClick({ from, to })
+                })
 
                 return {
-                    spansArray: [...spansArray, notErrorSpan, errorSpan],
+                    spansArray: [...spansArray, normalSpan, highlightedSpan],
                     lastErrorIndex: from + (to - from) + 1
                 }
 
             }, { lastErrorIndex: 0, spansArray: [] })
 
         return spansArray.concat(new Span({ text: this.expressionWithError.slice(lastErrorIndex) }))
-    }
-
-    private getNotErrorSpan({ lastErrorIndex, from }: IGetNotErrorSpanParams): Span {
-        const notErrorString = this.expressionWithError.slice(lastErrorIndex, from)
-        const notErrorSpan = new Span({ text: notErrorString })
-
-        return notErrorSpan
-    }
-
-    private getErrorSpan({ from, to }: IErrorRange): Span {
-        const errorString = this.expressionWithError.slice(from, to + 1)
-        const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
-        const errorMessage = this.getErrorMessageByRangeStart(from)
-
-        errorSpan.domElement.title = this.uppercaseFirstLetter(errorMessage)
-        errorSpan.onClick(() => this.params.onErrorClick({ from, to }))
-
-        return errorSpan
     }
 
     private getInvalidIndexes(): IErrorRange[] {
@@ -78,10 +72,17 @@ export class HighlightedValidationErrors extends WrapperElement {
     }
 
     private getErrorMessageByRangeStart(from: number): string {
-        return this.errors.find(e => e.payload?.errorPlace?.find(error => error.from === from))?.message || ''
+        return this.formattedErrors.find(error => error.errorsStarts.includes(from))?.message || ''
     }
 
-    private uppercaseFirstLetter(text: string): string {
-        return text[0].toUpperCase() + text.slice(1)
+    private formatError(): IFormattedError[] {
+        const errors = this.errors.map(error => {
+            return {
+                message: error.message,
+                errorsStarts: error.payload?.errorPlace?.map(range => range.from)!
+            }
+        })
+
+        return errors
     }
 }
