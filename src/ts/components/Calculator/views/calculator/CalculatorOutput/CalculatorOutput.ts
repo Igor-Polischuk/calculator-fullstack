@@ -1,6 +1,6 @@
 import { IBaseElement } from '@components/Elements/interfaces';
 import { WrapperElement } from '@components/Elements/WrapperElement';
-import { ResultOutput } from './ResultParagraph';
+import { ResultOutput } from './output-components/ResultParagraph';
 import { IAppError, IErrorRange } from 'exceptions/IErrors';
 import { errorComponentByType } from './error-component-by-type';
 

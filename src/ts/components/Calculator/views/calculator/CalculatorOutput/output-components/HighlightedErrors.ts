@@ -4,58 +4,76 @@ import { Span } from "@components/Elements/Span";
 import { removeOverlappingRanges } from "@utilities/ranges/removeOverlappingRanges";
 import { IShowErrorInfoProps } from "../CalculatorOutput";
 
-interface IHighlightedErrorsParams extends IShowErrorInfoProps {
-    onErrorClick: (range: IErrorRange) => void
-}
-
-interface HighlightErrorsReduceResult {
+interface IHighlightErrorsReduceResult {
     lastErrorIndex: number
     spansArray: Span[]
 }
 
-export class HighlightedErrors extends WrapperElement {
-    private params: IHighlightedErrorsParams
+interface IGetNotErrorSpanParams {
+    lastErrorIndex: number
+    from: number
+}
+
+export class HighlightedValidationErrors extends WrapperElement {
+    private params: IShowErrorInfoProps
     private invalidExpressionPartsIndexes: IErrorRange[]
     private errors: IError[]
+    private expressionWithError: string
 
-    constructor(params: IHighlightedErrorsParams) {
+    constructor(highlightedErrorsParams: IShowErrorInfoProps) {
+
         super({
             wrapperClassNames: 'error',
             wrapperId: 'result-display'
         })
-        this.params = params
-        this.errors = params.error.errors
+
+        this.params = highlightedErrorsParams
+        this.errors = highlightedErrorsParams.error.errors
+        this.expressionWithError = highlightedErrorsParams.expressionWithError
         this.invalidExpressionPartsIndexes = this.getInvalidIndexes()
+
         const errorSpans = this.generateErrorSpans()
         this.wrapper.append(...errorSpans)
     }
 
     private generateErrorSpans(): Span[] {
-        const { spansArray, lastErrorIndex } = this.invalidExpressionPartsIndexes.reduce<HighlightErrorsReduceResult>(
+        const { spansArray, lastErrorIndex } = this.invalidExpressionPartsIndexes.reduce<IHighlightErrorsReduceResult>(
             ({ spansArray, lastErrorIndex }, { from, to }) => {
-                const notErrorString = this.params.expressionWithError.slice(lastErrorIndex, from)
-                const notErrorSpan = new Span({ text: notErrorString })
-
-                const errorString = this.params.expressionWithError.slice(from, to + 1)
-                const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
-
-                const errorMessage = this.getErrorMessageByRangeStart(from)
-                errorSpan.domElement.title = this.uppercaseFirstLetter(errorMessage)
-
-                errorSpan.onClick(() => this.params.onErrorClick({ from, to }))
+                const notErrorSpan = this.getNotErrorSpan({ lastErrorIndex, from })
+                const errorSpan = this.getErrorSpan({ from, to })
 
                 return {
                     spansArray: [...spansArray, notErrorSpan, errorSpan],
                     lastErrorIndex: from + (to - from) + 1
-                };
-            }, { lastErrorIndex: 0, spansArray: [new Span({ text: 'Invalid expression: ' })] })
+                }
 
-        return spansArray.concat(new Span({ text: this.params.expressionWithError.slice(lastErrorIndex) }))
+            }, { lastErrorIndex: 0, spansArray: [] })
+
+        return spansArray.concat(new Span({ text: this.expressionWithError.slice(lastErrorIndex) }))
+    }
+
+    private getNotErrorSpan({ lastErrorIndex, from }: IGetNotErrorSpanParams): Span {
+        const notErrorString = this.expressionWithError.slice(lastErrorIndex, from)
+        const notErrorSpan = new Span({ text: notErrorString })
+
+        return notErrorSpan
+    }
+
+    private getErrorSpan({ from, to }: IErrorRange): Span {
+        const errorString = this.expressionWithError.slice(from, to + 1)
+        const errorSpan = new Span({ text: errorString, classNames: 'error-span' })
+        const errorMessage = this.getErrorMessageByRangeStart(from)
+
+        errorSpan.domElement.title = this.uppercaseFirstLetter(errorMessage)
+        errorSpan.onClick(() => this.params.onErrorClick({ from, to }))
+
+        return errorSpan
     }
 
     private getInvalidIndexes(): IErrorRange[] {
         const invalidPartsIndexes = this.errors.flatMap(error => error.payload?.errorPlace!)
         const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
+
         return invalidExpressionPartsIndexes
     }
 
