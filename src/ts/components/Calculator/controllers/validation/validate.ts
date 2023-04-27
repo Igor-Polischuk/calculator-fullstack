@@ -1,4 +1,4 @@
-import { IError } from "exceptions/IErrors"
+import { IError } from "errors/IErrors"
 import {
     bracketsOrderValidator,
     pointValidator,
@@ -10,8 +10,8 @@ import {
     bracketsSiblingsValidator,
     functionValidator
 } from "./validators/"
-import { ErrorType } from "exceptions/error-type"
-import { AppError } from "exceptions/AppError"
+import { ErrorType } from "errors/error-type"
+import { AppError } from "errors/AppError"
 
 interface IValidators {
     [validatorName: string]: (expression: string) => IError | undefined

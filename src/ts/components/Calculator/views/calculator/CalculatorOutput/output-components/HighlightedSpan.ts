@@ -1,6 +1,6 @@
 import { Span } from "@components/Elements/Span";
 import { uppercaseFirstLetter } from "@utilities/formatText/upercaseFirstLetter";
-import { IErrorRange } from "exceptions/IErrors";
+import { IErrorRange } from "errors/IErrors";
 
 interface IHighlightedSpanProps {
     text: string

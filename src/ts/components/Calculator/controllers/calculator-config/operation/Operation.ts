@@ -1,7 +1,7 @@
 import { IExceptionObj } from "../exceptions";
-import { IError } from "exceptions/IErrors";
-import { ErrorType } from "exceptions/error-type";
-import { AppError } from "exceptions/AppError";
+import { IError } from "errors/IErrors";
+import { ErrorType } from "errors/error-type";
+import { AppError } from "errors/AppError";
 import { IOperation, IOperationParams, OperationType } from "./IOperations";
 
 

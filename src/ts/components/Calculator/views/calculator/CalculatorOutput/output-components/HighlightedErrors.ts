@@ -1,4 +1,4 @@
-import { IError, IErrorRange } from "exceptions/IErrors";
+import { IError, IErrorRange } from "errors/IErrors";
 import { WrapperElement } from "@components/Elements/WrapperElement";
 import { Span } from "@components/Elements/Span";
 import { removeOverlappingRanges } from "@utilities/ranges/removeOverlappingRanges";

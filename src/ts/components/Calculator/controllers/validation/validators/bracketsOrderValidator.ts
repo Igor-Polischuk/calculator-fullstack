@@ -1,4 +1,4 @@
-import { IError } from "exceptions/IErrors";
+import { IError } from "errors/IErrors";
 import { ValidationError } from "../validation-error";
 
 export function bracketsOrderValidator(expression: string): IError | undefined {

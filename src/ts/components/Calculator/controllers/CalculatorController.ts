@@ -2,7 +2,7 @@ import { ICalculatorController, ICalculatorModel } from '@components/Calculator/
 import { CalculatorModelEvent } from '../calculator-model-event';
 import { formatExpression } from './services';
 import { validate } from './validation/validate';
-import { AppError } from 'exceptions/AppError';
+import { AppError } from 'errors/AppError';
 
 import { calculate } from './services/calculation/ExpressionCalculatorService';
 

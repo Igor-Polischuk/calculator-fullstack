@@ -1,4 +1,4 @@
-import { IError, IErrorRange } from "exceptions/IErrors";
+import { IError, IErrorRange } from "errors/IErrors";
 import { ValidationError } from "../validation-error";
 import { regexPatterns } from "../../regex";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";

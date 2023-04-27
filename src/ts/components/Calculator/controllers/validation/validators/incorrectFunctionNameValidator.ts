@@ -1,4 +1,4 @@
-import { IError } from "exceptions/IErrors";
+import { IError } from "errors/IErrors";
 import { regexPatterns } from "../../regex";
 import { calculatorConfig } from "../../calculator-config";
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";

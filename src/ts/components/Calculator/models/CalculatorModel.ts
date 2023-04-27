@@ -1,7 +1,7 @@
 import { ModelAllowedEvents, ICalculatorModel, } from '../interfaces/ICalculator';
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
-import { IAppError } from '../../../exceptions/IErrors';
+import { IAppError } from '../../../errors/IErrors';
 
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {

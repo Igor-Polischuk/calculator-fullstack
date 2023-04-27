@@ -1,4 +1,4 @@
-import { IError } from "exceptions/IErrors"
+import { IError } from "errors/IErrors"
 import { getSubstringsIndexes } from "../helpers/getSubstringsIndexes";
 import { ValidationError } from "../validation-error"
 import { searchAllowedOperationsRegStr } from "../../calculator-config";

@@ -1,7 +1,7 @@
 import { IBaseElement } from '@components/Elements/interfaces';
 import { WrapperElement } from '@components/Elements/WrapperElement';
 import { ResultOutput } from './output-components/ResultParagraph';
-import { IAppError, IErrorRange } from 'exceptions/IErrors';
+import { IAppError, IErrorRange } from 'errors/IErrors';
 import { errorComponentByType } from './error-component-by-type';
 import { DefaultErrorComponent } from './output-components/DefaultErrorComponent';
 

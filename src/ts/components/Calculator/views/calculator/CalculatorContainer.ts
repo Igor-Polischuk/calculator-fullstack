@@ -1,4 +1,4 @@
-import { IAppError, IErrorRange } from '../../../../exceptions/IErrors';
+import { IAppError, IErrorRange } from '../../../../errors/IErrors';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';

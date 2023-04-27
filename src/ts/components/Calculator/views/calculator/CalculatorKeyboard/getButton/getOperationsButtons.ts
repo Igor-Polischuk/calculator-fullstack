@@ -24,12 +24,12 @@ export function getOperationsButtons(): Record<string, Button> {
 }
 
 function generateButtonsData(): IButtonDataReducer[] {
-    return allowedActions.reduce<IButtonDataReducer[]>((acc, currentOperation) => {
+    return allowedActions.reduce<IButtonDataReducer[]>((buttonDataAcc, currentOperation) => {
         const operationData = calculatorConfig[currentOperation]
         const buttonText = {
             text: operationData.text || currentOperation,
             action: currentOperation
         }
-        return [...acc, buttonText]
+        return [...buttonDataAcc, buttonText]
     }, [])
 }
