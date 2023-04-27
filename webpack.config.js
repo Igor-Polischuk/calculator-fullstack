@@ -13,7 +13,7 @@ module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
   entry: {
-    index: "./ts/app.ts",
+    index: "./app.ts",
   },
   devtool: isDev ? "source-map" : "eval",
   devServer: {

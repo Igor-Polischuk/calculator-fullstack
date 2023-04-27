@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src/ts",
+    "baseUrl": "./src",
     "paths": {
-      "@components/*":  ["components/*"],
-      "@utilities/*":  ["utilities/*"],
-      
+      "@components/*": ["components/*"],
+      "@utilities/*": ["utilities/*"],
+
     },
     "outDir": "./dist/",
     "noImplicitAny": true,
