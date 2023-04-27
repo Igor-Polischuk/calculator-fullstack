@@ -22,22 +22,20 @@ export class Operation implements IOperation {
         this.priority = params.priority
         this.text = params.text
     }
-
-    checkException(numbers: number[], errorExpression?: string): void {
+    //  
+    checkException(numbers: number[], expressionWithOperation?: string): void {
         if (this.exceptionHandler.length === 0) {
             return
         }
-
-        const whereMessage = errorExpression ? `in ${errorExpression}` : ''
 
         this.exceptionHandler.forEach(exception => {
             const isException = exception.checkException(...numbers)
 
             if (isException) {
                 const error: IError = {
-                    message: `Runtime error: ${exception.exceptionMessage} ${whereMessage}`,
+                    message: `Runtime error: ${exception.exceptionMessage} in ${expressionWithOperation}`,
                     payload: {
-                        currentExpressionSnapshot: errorExpression
+                        currentExpressionSnapshot: expressionWithOperation
                     }
                 }
 

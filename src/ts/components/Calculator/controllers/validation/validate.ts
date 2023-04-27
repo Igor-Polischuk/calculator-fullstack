@@ -17,8 +17,10 @@ interface IValidators {
     [validatorName: string]: (expression: string) => IError | undefined
 }
 
+type FunctionValidator = (expression: string) => IError | undefined
+
 export function validate(expression: string): void {
-    const validateResult = validateExpression(expression, {
+    const validateResult = validateExpression(expression, [
         pointValidator,
         bracketsOrderValidator,
         bracketsSiblingsValidator,
@@ -27,21 +29,20 @@ export function validate(expression: string): void {
         unknownSymbolValidator,
         expressionStartValidator,
         expressionEndValidator,
-        functionValidator
-    })
+        functionValidator,
+    ])
+
     if (validateResult.length > 0) {
         throw new AppError({
             type: ErrorType.ValidationError,
             errors: validateResult
         })
-
     }
 }
 
-function validateExpression(expression: string, validators: IValidators): IError[] {
-    const errors = Object.keys(validators).map(validatorName => {
-        const validateFunction = validators[validatorName]
-        const validateResult = validateFunction(expression)
+function validateExpression(expression: string, validators: FunctionValidator[]): IError[] {
+    const errors = validators.map(validator => {
+        const validateResult = validator(expression)
 
         return validateResult ? validateResult : []
     }).flat()

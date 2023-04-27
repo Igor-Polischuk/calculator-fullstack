@@ -39,7 +39,8 @@ export class CalculatorContainer extends WrapperElement {
     showCalculationResult(result: number): void {
         const expression = this.calculatorInput.inputText
         this.calculatorOutput.showCalculationResult({ result, expression })
-        this.calculatorInput.setInputValue(`${result}`)
+        const resultString = result.toString()
+        this.calculatorInput.setInputValue(resultString)
     }
 
     showCalculationError(error: IAppError): void {
