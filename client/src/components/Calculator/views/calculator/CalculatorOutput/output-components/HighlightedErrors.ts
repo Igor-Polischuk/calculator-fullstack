@@ -1,9 +1,9 @@
-import { IError, IErrorRange } from "errors/IErrors";
 import { WrapperElement } from "@components/Elements/WrapperElement";
 import { Span } from "@components/Elements/Span";
 import { removeOverlappingRanges } from "@utilities/ranges/removeOverlappingRanges";
 import { IShowErrorInfoProps } from "../CalculatorOutput";
 import { HighlightedSpan } from "./HighlightedSpan";
+import { IAppError, IErrorRange } from "errors/AppError";
 
 interface IHighlightErrorsReduceResult {
     lastErrorIndex: number
@@ -18,7 +18,7 @@ interface IFormattedError {
 export class HighlightedValidationErrors extends WrapperElement {
     private params: IShowErrorInfoProps
     private invalidExpressionPartsIndexes: IErrorRange[]
-    private errors: IError[]
+    private errors: IAppError
     private expressionWithError: string
     private formattedErrors: IFormattedError[]
 
@@ -30,7 +30,7 @@ export class HighlightedValidationErrors extends WrapperElement {
         })
 
         this.params = highlightedErrorsParams
-        this.errors = highlightedErrorsParams.error.errors
+        this.errors = highlightedErrorsParams.error
         this.expressionWithError = highlightedErrorsParams.expressionWithError
         this.invalidExpressionPartsIndexes = this.getInvalidIndexes()
         this.formattedErrors = this.formatError()
@@ -65,7 +65,7 @@ export class HighlightedValidationErrors extends WrapperElement {
     }
 
     private getInvalidIndexes(): IErrorRange[] {
-        const invalidPartsIndexes = this.errors.flatMap(error => error.payload?.errorPlace!)
+        const invalidPartsIndexes = this.errors.failedValidations.flatMap(range => range.errorPlace)
         const invalidExpressionPartsIndexes = removeOverlappingRanges(invalidPartsIndexes)
 
         return invalidExpressionPartsIndexes
@@ -76,10 +76,10 @@ export class HighlightedValidationErrors extends WrapperElement {
     }
 
     private formatError(): IFormattedError[] {
-        const errors = this.errors.map(error => {
+        const errors = this.errors.failedValidations.map(error => {
             return {
                 message: error.message,
-                errorsStarts: error.payload?.errorPlace?.map(range => range.from)!
+                errorsStarts: error.errorPlace.map(range => range.from)
             }
         })
 

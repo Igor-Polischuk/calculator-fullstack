@@ -1,8 +1,8 @@
-import { IAppError, IErrorRange } from '../../../../errors/IErrors';
 import { CalculatorOutput } from './CalculatorOutput/CalculatorOutput';
 import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
 import { WrapperElement } from '@components/Elements/WrapperElement';
+import { IAppError, IErrorRange } from 'errors/AppError';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;

@@ -6,4 +6,5 @@ export const errorComponentByType = {
     [ErrorType.RuntimeError]: ErrorMessage,
     [ErrorType.UnexpectedError]: ErrorMessage,
     [ErrorType.ValidationError]: HighlightedValidationErrors,
+    [ErrorType.ServerError]: ErrorMessage
 }

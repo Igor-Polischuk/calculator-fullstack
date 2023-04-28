@@ -1,9 +1,10 @@
 import { IBaseElement } from '@components/Elements/interfaces';
 import { WrapperElement } from '@components/Elements/WrapperElement';
 import { ResultOutput } from './output-components/ResultParagraph';
-import { IAppError, IErrorRange } from 'errors/IErrors';
 import { errorComponentByType } from './error-component-by-type';
 import { DefaultErrorComponent } from './output-components/DefaultErrorComponent';
+import { ErrorType } from 'errors/error-type';
+import { IAppError, IErrorRange } from 'errors/AppError';
 
 interface IShowCalculationResultProps {
     result: number
@@ -31,6 +32,7 @@ export class CalculatorOutput extends WrapperElement {
 
     showErrorInfo(params: IShowErrorInfoProps): void {
         const ErrorComponentClass = errorComponentByType[params.error.type] || DefaultErrorComponent
+
         const errorComponentInstance = new ErrorComponentClass(params)
         this.appendOutputElement(errorComponentInstance.element)
     }

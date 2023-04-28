@@ -31,9 +31,11 @@ export class CalculatorController implements ICalculatorController {
       const result = response.data?.result
       this.model.setResult(result)
     } catch (error: any) {
-      console.log(error);
+      const appError = AppError.getErrorFrom(error)
 
-      const appError = new AppError({ errorInstance: error })
+      console.log(error);
+      console.log(appError);
+
       this.model.setError(appError as AppError)
     }
   }

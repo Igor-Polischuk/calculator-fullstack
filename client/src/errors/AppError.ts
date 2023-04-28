@@ -1,19 +1,48 @@
-import { IAppError, IError } from "./IErrors";
-import { ErrorType } from "./error-type";
+import { ErrorType } from "./error-type"
 
-interface IAppErrorProps {
+export interface IAppError {
+    message: string
+    type: ErrorType
+    failedValidations: IExpressionValidationError[]
+}
+
+export interface IExpressionValidationError {
+    message: string
+    errorPlace: IErrorRange[]
+}
+
+export interface IErrorRange {
+    from: number
+    to: number
+}
+
+interface IAppErrorParams {
+    message?: string
     type?: ErrorType
-    errors?: IError[]
-    errorInstance?: any
+    failedValidations?: IExpressionValidationError[]
 }
 
 export class AppError implements IAppError {
-    type: ErrorType
-    errors: IError[]
+    message: string
+    type: ErrorType;
+    failedValidations: IExpressionValidationError[]
 
-    private defaultMessage = 'Unexpected error while execution'
-    constructor(params?: IAppErrorProps) {
-        this.type = params?.errorInstance?.type || params?.type || ErrorType.UnexpectedError;
-        this.errors = params?.errorInstance?.errors || params?.errors || [{ message: this.defaultMessage }];
+    constructor(params?: IAppErrorParams) {
+        this.message = params?.message || 'Unexpected error'
+        this.type = params?.type || ErrorType.UnexpectedError
+        this.failedValidations = params?.failedValidations || []
+    }
+
+    static getErrorFrom(error: any): AppError {
+        if (error instanceof AppError) {
+            return error
+        }
+        console.log(error.failedValidations);
+
+        return new AppError({
+            type: error.type || ErrorType.UnexpectedError,
+            message: error.message,
+            failedValidations: error.failedValidations || []
+        })
     }
 }

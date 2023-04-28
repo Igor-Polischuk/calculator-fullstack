@@ -1,4 +1,4 @@
-import { ErrorType } from "./error-type.js"
+import { ErrorType } from "./error-type"
 
 export interface IAppError {
     status: number
