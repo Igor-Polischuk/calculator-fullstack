@@ -1,6 +1,7 @@
 import { callCalculatorApi } from 'api/callCalculatorApi';
 import { ButtonType } from '../ButtonType';
 import { Button } from "@components/Elements/Button"
+import { ApiEndpoint } from 'api/api-endpoint';
 
 interface IOperationsData {
     operation: string
@@ -8,7 +9,7 @@ interface IOperationsData {
 }
 
 export async function getOperationsButtons(): Promise<Record<string, Button>> {
-    const response = await callCalculatorApi<IOperationsData[]>({ endpoint: 'operations' })
+    const response = await callCalculatorApi<IOperationsData[]>({ endpoint: ApiEndpoint.Operations })
 
     if (!response.data) {
         return {}

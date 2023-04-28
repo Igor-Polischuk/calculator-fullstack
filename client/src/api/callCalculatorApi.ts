@@ -1,9 +1,10 @@
 import { AppError } from "../errors/AppError"
 import { QueryParams } from "../utilities/QueryParams/QueryParams"
+import { ApiEndpoint } from "./api-endpoint"
 import { makeRequest } from "./makeRequest"
 
 interface IOption {
-    endpoint: 'resultOF' | 'operations' | 'history'
+    endpoint: ApiEndpoint
     searchParams?: QueryParams
 }
 

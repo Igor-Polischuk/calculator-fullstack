@@ -4,6 +4,7 @@ import { CalculatorModelEvent } from '../calculator-model-event';
 import { AppError } from 'errors/AppError';
 import { formatExpression } from '@utilities/formatText/formatExpression';
 import { QueryParams } from '@utilities/QueryParams/QueryParams';
+import { ApiEndpoint } from 'api/api-endpoint';
 
 interface ICalculationData {
   result: number
@@ -23,7 +24,7 @@ export class CalculatorController implements ICalculatorController {
 
     try {
       const response = await callCalculatorApi<ICalculationData>({
-        endpoint: 'resultOF',
+        endpoint: ApiEndpoint.ResultOf,
         searchParams: new QueryParams({
           expression: formattedExpression
         })
