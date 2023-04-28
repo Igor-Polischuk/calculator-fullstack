@@ -5,22 +5,3 @@ export interface IAppError {
     message: string
     type: ErrorType
 }
-
-export interface IValidationError {
-    message: string
-    errorPlace: IErrorRange
-}
-
-
-export interface IError {
-    message: string
-    payload?: {
-        currentExpressionSnapshot?: string
-        errorPlace?: IErrorRange[]
-    }
-}
-
-export interface IErrorRange {
-    from: number
-    to: number
-}

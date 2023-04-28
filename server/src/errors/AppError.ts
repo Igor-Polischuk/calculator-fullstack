@@ -1,4 +1,4 @@
-import { IAppError, IError, IValidationError } from "./IAppError";
+import { IAppError } from "./IAppError";
 import { ErrorType } from "./error-type";
 
 const DEFAULT_MESSAGE = 'Unexpected error while execution'
