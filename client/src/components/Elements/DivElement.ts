@@ -4,7 +4,7 @@ import { IDivElement, IBaseElement, IBaseElementParams } from "./interfaces"
 export class DivElement extends BaseElement implements IDivElement {
     private div: HTMLDivElement
 
-    constructor(params: IBaseElementParams) {
+    constructor(params?: IBaseElementParams) {
         super(params)
         this.div = document.createElement('div')
     }

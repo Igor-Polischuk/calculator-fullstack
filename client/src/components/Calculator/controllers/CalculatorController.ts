@@ -28,14 +28,11 @@ export class CalculatorController implements ICalculatorController {
         })
       })
 
-      const result = response.data?.result
+      const result = response.data.result
       this.model.setResult(result)
+
     } catch (error: any) {
       const appError = AppError.getErrorFrom(error)
-
-      console.log(error);
-      console.log(appError);
-
       this.model.setError(appError as AppError)
     }
   }

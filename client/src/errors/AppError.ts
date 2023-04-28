@@ -37,7 +37,6 @@ export class AppError implements IAppError {
         if (error instanceof AppError) {
             return error
         }
-        console.log(error.failedValidations);
 
         return new AppError({
             type: error.type || ErrorType.UnexpectedError,

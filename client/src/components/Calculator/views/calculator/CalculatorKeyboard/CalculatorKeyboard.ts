@@ -2,6 +2,7 @@ import { ButtonList } from '@components/Calculator/views/calculator/CalculatorKe
 import { getCalculatorButtons } from './getButton/getCalculatorButtons';
 import { ButtonType } from './ButtonType';
 import { WrapperElement } from '@components/Elements/WrapperElement';
+import { getLoader } from '@components/Loader';
 
 interface ICalculatorKeyboardOption {
     onEqual: () => void
@@ -24,9 +25,13 @@ export class CalculatorKeyboard extends WrapperElement {
     }
 
     private async addButtonsToWrapper() {
+        this.wrapper.append(getLoader({ fullscreen: true }))
+
         this.buttons = await getCalculatorButtons()
         this.initButtonsListeners()
         this.wrapper.append(...this.buttons.getAll())
+
+        this.wrapper.removeElement('#loader')
     }
 
     private initButtonsListeners(): void {
