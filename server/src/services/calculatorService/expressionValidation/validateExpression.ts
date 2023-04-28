@@ -14,8 +14,8 @@ import { ExpressionValidationError, IExpressionValidationError } from "./Express
 
 type ValidateFunction = (expression: string) => IExpressionValidationError | undefined
 
-export function validate(expression: string): true {
-    const validateResult = validateExpression(expression, [
+export function validateExpression(expression: string): true {
+    const validateResult = validate(expression, [
         pointValidator,
         bracketsOrderValidator,
         bracketsSiblingsValidator,
@@ -33,7 +33,7 @@ export function validate(expression: string): true {
     return true
 }
 
-function validateExpression(expression: string, validators: ValidateFunction[]): IExpressionValidationError[] {
+function validate(expression: string, validators: ValidateFunction[]): IExpressionValidationError[] {
     const errors = validators.flatMap(validatorName => {
         const validateResult = validatorName(expression)
 
