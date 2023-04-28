@@ -1,0 +1,30 @@
+{
+  "name": "webpack-server-config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "cross-env NODE_ENV=development webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv-webpack": "^8.0.1",
+    "nodemon-webpack-plugin": "^4.8.1",
+    "tsconfig-paths-webpack-plugin": "^4.0.1",
+    "webpack": "^5.80.0",
+    "webpack-cli": "^5.0.2"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.16.1",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
