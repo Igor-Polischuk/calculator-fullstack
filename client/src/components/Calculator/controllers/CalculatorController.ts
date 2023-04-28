@@ -1,10 +1,14 @@
+import { callCalculatorApi } from 'api/callCalculatorApi';
 import { ICalculatorController, ICalculatorModel } from '@components/Calculator/interfaces/ICalculator';
 import { CalculatorModelEvent } from '../calculator-model-event';
-import { formatExpression } from './services';
-import { validate } from './validation/validate';
 import { AppError } from 'errors/AppError';
+import { formatExpression } from '@utilities/formatText/formatExpression';
+import { QueryParams } from '@utilities/QueryParams/QueryParams';
 
-import { calculate } from './services/calculation/ExpressionCalculatorService';
+interface ICalculationData {
+  result: number
+  expression: string
+}
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
@@ -13,14 +17,22 @@ export class CalculatorController implements ICalculatorController {
     this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this))
   }
 
-  private calculateExpression(expression: string): void {
+  private async calculateExpression(expression: string): Promise<void> {
     const formattedExpression = formatExpression(expression)
 
     try {
-      validate(formattedExpression)
-      const result = calculate(formattedExpression)
+      const response = await callCalculatorApi<ICalculationData>({
+        endpoint: 'resultOF',
+        searchParams: new QueryParams({
+          expression: formattedExpression
+        })
+      })
+
+      const result = response.data?.result
       this.model.setResult(result)
     } catch (error: any) {
+      console.log(error);
+
       const appError = new AppError({ errorInstance: error })
       this.model.setError(appError as AppError)
     }

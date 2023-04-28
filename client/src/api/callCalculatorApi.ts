@@ -10,8 +10,8 @@ interface IOption {
 interface ICalculatorResponse<DataType> {
     success: boolean,
     status: number
-    error: AppError | null
-    data: DataType | null
+    error: AppError
+    data: DataType
 }
 
 export async function callCalculatorApi<DataType>(options: IOption): Promise<ICalculatorResponse<DataType>> {
