@@ -7,7 +7,7 @@ import { formatDecimal } from "../helpers/formatDecimal";
 import { formatExpression } from "../helpers/formatText/formatExpression";
 import { calculatorConfig } from "./calculator-config";
 
-export function calculate(expression: string): number {
+export function calculateExpression(expression: string): number {
     const formattedExpression = formatExpression(expression)
     const result = +processBracketedExpression(formattedExpression)
     const precision = process.env.PRECISION || 7

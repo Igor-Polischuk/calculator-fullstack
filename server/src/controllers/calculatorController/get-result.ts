@@ -1,13 +1,21 @@
 import { AppError } from "@errors/AppError";
-import { validateExpression } from "@services/calculatorService/expressionValidation/validateExpression";
+import { calculateExpression } from "@services/calculatorService/expressionCalculation/ExpressionCalculatorService";
 import { ResponseFormatter } from "@utils/ResponseFormatter";
 import { Request, Response } from "express";
+import { matchedData } from "express-validator";
 
 export function getResult(req: Request, res: Response): void {
+    const { expression } = matchedData(req)
+
     try {
-        validateExpression(req.query.expression as string)
-        res.send(new ResponseFormatter({ status: 200, data: { message: 'success' } }))
-    } catch (error) {
-        res.send(new ResponseFormatter({ error: AppError.getErrorFrom(error) }))
+        const result = calculateExpression(expression)
+        console.log(result);
+
+        const responseFormat = new ResponseFormatter({ data: { result, expression } }).json()
+        res.send(responseFormat)
+    } catch (e) {
+        const error = AppError.getErrorFrom(e);
+        const responseFormat = new ResponseFormatter({ error }).json()
+        res.status(error.status).send(responseFormat)
     }
 }
