@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./src/",
     "paths": {
       "@components/*": ["components/*"],
       "@utilities/*": ["utilities/*"],
 
     },
+    "lib": ["ES6", "DOM"],
     "outDir": "./dist/",
     "noImplicitAny": true,
     "strictNullChecks": true,
