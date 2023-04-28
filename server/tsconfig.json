@@ -9,7 +9,10 @@
         "baseUrl": "./src",
         "paths": {
             "@routers/*": ["routers/*"],
-            "@controllers/*": ["controllers/*"]
+            "@controllers/*": ["controllers/*"],
+            "@services/*": ["services/*"],
+            "@errors/*": ["errors/*"],
+            "@utils/*": ["utils/*"]
         },
         "resolveJsonModule": true,
         "allowJs": true,
