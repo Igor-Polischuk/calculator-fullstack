@@ -6,6 +6,7 @@ import { CalculatorModelEvent } from "../calculator-model-event";
 export class CalculatorView implements ICalculatorView {
     private calculatorContainer: CalculatorContainer
     private model: ICalculatorModel
+
     constructor(model: ICalculatorModel) {
         this.model = model
         this.calculatorContainer = new CalculatorContainer({
@@ -17,6 +18,10 @@ export class CalculatorView implements ICalculatorView {
         })
         model.subscribe(CalculatorModelEvent.ErrorChanged, (error) => {
             this.calculatorContainer.showCalculationError(error)
+        })
+
+        model.subscribe(CalculatorModelEvent.LoadingChanged, loading => {
+            this.calculatorContainer.processLoading(loading)
         })
 
         const root = document.querySelector('.container')!

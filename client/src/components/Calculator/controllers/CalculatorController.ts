@@ -19,6 +19,7 @@ export class CalculatorController implements ICalculatorController {
 
   private async calculateExpression(expression: string): Promise<void> {
     const formattedExpression = formatExpression(expression)
+    this.model.setLoading(true)
 
     try {
       const response = await callCalculatorApi<ICalculationData>({
@@ -35,5 +36,7 @@ export class CalculatorController implements ICalculatorController {
       const appError = AppError.getErrorFrom(error)
       this.model.setError(appError as AppError)
     }
+
+    this.model.setLoading(false)
   }
 }

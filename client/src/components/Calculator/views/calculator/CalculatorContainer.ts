@@ -52,6 +52,10 @@ export class CalculatorContainer extends WrapperElement {
         })
     }
 
+    processLoading(loading: boolean) {
+        this.calculatorKeyboard.changeKeyboardFromLoading(loading)
+    }
+
     private onErrorClick(range: IErrorRange): void {
         this.calculatorInput.inputElement.focus()
         this.calculatorInput.inputElement.setSelectionRange(range.from, range.to + 1)

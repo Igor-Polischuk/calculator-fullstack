@@ -24,8 +24,30 @@ export class CalculatorKeyboard extends WrapperElement {
         this.addButtonsToWrapper()
     }
 
+    changeKeyboardFromLoading(loading: boolean): void {
+        this.wrapper.removeElement('#loader')
+
+        if (!this.buttons) {
+            return
+        }
+
+        const buttons = this.buttons.getAll()
+
+        buttons.forEach(button => {
+            button.domElement.disabled = loading
+        })
+
+        const [equalBtn] = this.buttons.getButtonsByType(ButtonType.Equal)
+
+        equalBtn.domElement.classList.toggle('loading')
+        equalBtn.domElement.innerHTML = loading ? '' : '='
+
+        loading && equalBtn.append(getLoader())
+
+    }
+
     private async addButtonsToWrapper() {
-        this.wrapper.append(getLoader({ fullscreen: true }))
+        this.wrapper.append(getLoader({ fullscreen: true, type: 'text' }))
 
         this.buttons = await getCalculatorButtons()
         this.initButtonsListeners()

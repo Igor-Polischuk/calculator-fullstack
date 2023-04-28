@@ -14,6 +14,11 @@
     transition: background-color 0.4s;
     font-size: 24px;
 
+    &:disabled {
+        opacity: 0.7;
+        cursor: default;
+    }
+
     @media (max-width: 540px) {
         width: 55px;
     }
@@ -35,6 +40,12 @@
         box-shadow: -9px 10px 203px rgba(0, 163, 255, 0.4), inset -3px 4px 11px #B0DFFF;
         color: $white;
         border: none;
+
+        &.loading {
+            background: transparent;
+            box-shadow: none;
+            opacity: 1;
+        }
     }
 
     &--action {
@@ -42,7 +53,6 @@
         color: $blue-3;
         transition: background-color 0.4s;
 
-        // border: none;
         &:hover {
             background-color: darken($blue-1, 15%)
         }
