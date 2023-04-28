@@ -1,5 +1,5 @@
 import { Span } from "@components/Elements/Span";
-import { uppercaseFirstLetter } from "@utilities/formatText/upercaseFirstLetter";
+import { uppercaseFirstLetter } from "@utilities/formatText/uppercaseFirstLetter";
 
 interface IHighlightedSpanProps {
     text: string
