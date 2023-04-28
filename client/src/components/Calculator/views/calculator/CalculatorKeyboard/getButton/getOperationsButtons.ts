@@ -1,35 +1,31 @@
+import { callCalculatorApi } from 'api/callCalculatorApi';
 import { ButtonType } from '../ButtonType';
 import { Button } from "@components/Elements/Button"
-import { allowedActions, calculatorConfig } from "@components/Calculator/controllers/calculator-config"
 
-interface IButtonDataReducer {
-    text: string
-    action: string
+interface IOperationsData {
+    operation: string
+    operationSymbol: string
 }
 
-export function getOperationsButtons(): Record<string, Button> {
-    const operationsData = generateButtonsData()
+export async function getOperationsButtons(): Promise<Record<string, Button>> {
+    const response = await callCalculatorApi<IOperationsData[]>({ endpoint: 'operations' })
 
-    return operationsData.reduce<Record<string, Button>>((buttonsObj, operation) => {
-        buttonsObj[operation.action] = new Button({
-            text: operation.text,
+    if (!response.data) {
+        return {}
+    }
+
+    const buttons = response.data.reduce<Record<string, Button>>((buttonsObj, operation) => {
+        buttonsObj[operation.operation] = new Button({
+            text: operation.operationSymbol,
             classNames: 'button button--action',
             type: ButtonType.Char,
             data: {
-                action: operation.action
+                action: operation.operation
             }
         })
+
         return { ...buttonsObj }
     }, {})
-}
 
-function generateButtonsData(): IButtonDataReducer[] {
-    return allowedActions.reduce<IButtonDataReducer[]>((buttonDataAcc, currentOperation) => {
-        const operationData = calculatorConfig[currentOperation]
-        const buttonText = {
-            text: operationData.text || currentOperation,
-            action: currentOperation
-        }
-        return [...buttonDataAcc, buttonText]
-    }, [])
+    return buttons
 }

@@ -7,7 +7,6 @@ const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const DotenvWebpackPlugin = require("dotenv-webpack");
 
 const isDev = process.env.NODE_ENV === "development";
-const isProd = !isDev;
 
 module.exports = {
   context: path.resolve(__dirname, "src"),

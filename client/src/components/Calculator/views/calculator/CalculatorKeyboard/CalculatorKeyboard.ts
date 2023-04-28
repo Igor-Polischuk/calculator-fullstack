@@ -11,19 +11,29 @@ interface ICalculatorKeyboardOption {
 }
 
 export class CalculatorKeyboard extends WrapperElement {
-    private buttons: ButtonList<ButtonType>
     private params: ICalculatorKeyboardOption
+    private buttons: ButtonList<ButtonType> | null = null
+
     constructor(params: ICalculatorKeyboardOption) {
         super({
             wrapperClassNames: 'calculator__keyboard'
         })
+
         this.params = params
-        this.buttons = getCalculatorButtons()
-        this.wrapper.append(...this.buttons.getAll())
+        this.addButtonsToWrapper()
+    }
+
+    private async addButtonsToWrapper() {
+        this.buttons = await getCalculatorButtons()
         this.initButtonsListeners()
+        this.wrapper.append(...this.buttons.getAll())
     }
 
     private initButtonsListeners(): void {
+        if (!this.buttons) {
+            return
+        }
+
         this.buttons.addClickListenersByType(ButtonType.Char, ({ button }) => {
             this.params.onChar(button.metaData.action)
         })

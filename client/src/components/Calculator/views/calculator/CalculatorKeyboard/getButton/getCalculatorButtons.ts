@@ -5,9 +5,9 @@ import { getOperationsButtons } from "./getOperationsButtons"
 import { getServiceButtons } from "./getServiceButtons"
 
 
-export function getCalculatorButtons(): ButtonList<ButtonType> {
+export async function getCalculatorButtons(): Promise<ButtonList<ButtonType>> {
     const numpadButtons = getNumpadButtons()
-    const operationsButton = getOperationsButtons()
+    const operationsButton = await getOperationsButtons()
     const { resultBtn, removeSymbolBtn, clearBtn } = getServiceButtons()
 
     const row1 = [operationsButton['pi'], operationsButton['e'], numpadButtons[11], numpadButtons[12], removeSymbolBtn, clearBtn]

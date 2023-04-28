@@ -6,7 +6,6 @@
       "@utilities/*": ["utilities/*"],
 
     },
-    "lib": ["ES6", "DOM"],
     "outDir": "./dist/",
     "noImplicitAny": true,
     "strictNullChecks": true,
