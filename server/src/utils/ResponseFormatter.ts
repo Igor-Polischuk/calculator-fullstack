@@ -19,7 +19,7 @@ export class ResponseFormatter {
         this.error = params.error || null
     }
 
-    json() {
+    json(): string {
         return JSON.stringify(this)
     }
 }

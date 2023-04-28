@@ -20,7 +20,7 @@ export class AppError implements IAppError {
         this.type = params?.type || ErrorType.ServerError
     }
 
-    static getErrorFrom(error: unknown) {
+    static getErrorFrom(error: unknown): AppError {
         if (error instanceof AppError) {
             return error
         }
