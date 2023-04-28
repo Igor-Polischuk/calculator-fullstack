@@ -9,8 +9,6 @@ export function getResult(req: Request, res: Response): void {
 
     try {
         const result = calculateExpression(expression)
-        console.log(result);
-
         const responseFormat = new ResponseFormatter({ data: { result, expression } }).json()
         res.send(responseFormat)
     } catch (e) {
