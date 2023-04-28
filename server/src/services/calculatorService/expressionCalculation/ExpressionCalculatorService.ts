@@ -9,10 +9,10 @@ import { calculatorConfig } from "./calculator-config";
 
 export function calculateExpression(expression: string): number {
     const formattedExpression = formatExpression(expression)
-    const result = +processBracketedExpression(formattedExpression)
+    const result = processBracketedExpression(formattedExpression)
     const precision = process.env.PRECISION || 7
 
-    return formatDecimal(result, +precision)
+    return formatDecimal(Number(result), Number(precision))
 }
 
 function processBracketedExpression(expression: string): string {
