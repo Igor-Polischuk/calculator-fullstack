@@ -40,7 +40,7 @@ export class CalculatorKeyboard extends WrapperElement {
         const [equalBtn] = this.buttons.getButtonsByType(ButtonType.Equal)
 
         equalBtn.domElement.classList.toggle('loading')
-        equalBtn.domElement.innerHTML = loading ? '' : '='
+        equalBtn.domElement.textContent = loading ? '' : '='
 
         loading && equalBtn.append(getLoader())
 

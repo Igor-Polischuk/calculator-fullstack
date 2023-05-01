@@ -20,7 +20,7 @@ client/build
 
 server/dist
 server/build
-
+server/src/data
 
 # misc
 .DS_Store

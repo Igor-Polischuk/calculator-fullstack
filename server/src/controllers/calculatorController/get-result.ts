@@ -3,13 +3,15 @@ import { calculateExpression } from "@services/calculatorService/expressionCalcu
 import { ResponseFormatter } from "@utils/ResponseFormatter";
 import { Request, Response } from "express";
 import { matchedData } from "express-validator";
+import { JsonDB } from "repositories/history-repository/JsonDB";
 
-export function getResult(req: Request, res: Response): void {
+export async function getResult(req: Request, res: Response): Promise<void> {
     const { expression } = matchedData(req)
 
     try {
         const result = calculateExpression(expression)
-        const responseFormat = new ResponseFormatter({ data: { result, expression } }).json()
+        const data = { result, expression }
+        const responseFormat = new ResponseFormatter({ data }).json()
         res.send(responseFormat)
     } catch (e) {
         const error = AppError.getErrorFrom(e);
