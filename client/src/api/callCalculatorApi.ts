@@ -16,7 +16,7 @@ interface ICalculatorResponse<DataType> {
 }
 
 export async function callCalculatorApi<DataType>(options: IOption): Promise<ICalculatorResponse<DataType>> {
-    const base = 'http://192.168.0.136:3000/api/calculator/'
+    const base = 'http://localhost:3000/api/calculator/'
     const url = base + options.endpoint + (options.searchParams?.toString() || ''
     )
     const result = await makeRequest<ICalculatorResponse<DataType>>(url)
