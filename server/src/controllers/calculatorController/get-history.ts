@@ -1,10 +1,10 @@
-import { ResponseFormatter } from "@utils/ResponseFormatter";
 import { Request, Response } from "express";
-import { JsonDB } from "repositories/history-repository/JsonDB";
+
+import { ResponseFormatter } from "@utils/ResponseFormatter";
+import { calculatorHistory } from "repositories/history-repository/CalculatorHistory";
 
 export async function getHistory(req: Request, res: Response): Promise<void> {
-    const db = new JsonDB('./src/data/history.json')
-    const history = await db.getAll()
-    const responseJSON = new ResponseFormatter({ data: { history } }).json()
+    const historyData = await calculatorHistory.getAll()
+    const responseJSON = new ResponseFormatter({ data: { history: historyData } }).json()
     res.send(responseJSON)
 }
