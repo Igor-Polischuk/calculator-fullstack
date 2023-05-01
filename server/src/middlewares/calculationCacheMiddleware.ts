@@ -1,8 +1,7 @@
 import { ResponseFormatter } from "@utils/ResponseFormatter";
 import { NextFunction, Request, Response } from "express";
 import { matchedData } from "express-validator";
-import { CalculatorHistory, calculatorHistory } from "repositories/history-repository/CalculatorHistory";
-import { JsonDB } from "repositories/history-repository/JsonDB";
+import { calculatorHistory } from "repositories/history-repository/CalculatorHistory";
 
 export async function calculationCache(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { expression } = matchedData(req)
