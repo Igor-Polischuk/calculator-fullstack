@@ -74,6 +74,22 @@
         grid-auto-columns: auto;
         gap: 10px;
     }
+
+    &__history {
+        width: 100%;
+        text-align: right;
+
+        .history-block {
+            // border: 1px solid $gray;
+            padding: 5px 0;
+            cursor: pointer;
+            border-bottom: 1px solid $blue-3;
+
+            &:hover {
+                background-color: #e4e6ea;
+            }
+        }
+    }
 }
 
 @keyframes showup {

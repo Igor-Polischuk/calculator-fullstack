@@ -3,6 +3,7 @@ import { CalculatorInput } from './CalculatorInput/CalculatorInput';
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
 import { WrapperElement } from '@components/Elements/WrapperElement';
 import { IAppError, IErrorRange } from 'errors/AppError';
+import { CalculatorHistory } from './CalculatorHistory/CalculatorHistory';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
@@ -12,6 +13,8 @@ export class CalculatorContainer extends WrapperElement {
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
     private calculatorKeyboard: CalculatorKeyboard;
+    private calculatorHistory: CalculatorHistory
+
     private params: ICalculatorUIParams;
 
     constructor(params: ICalculatorUIParams) {
@@ -28,8 +31,10 @@ export class CalculatorContainer extends WrapperElement {
             onBackspace: this.onBackspace.bind(this),
             onReset: () => { this.calculatorInput.setInputValue('') },
         });
+        this.calculatorHistory = new CalculatorHistory()
 
         this.wrapper.append(
+            this.calculatorHistory.element,
             this.calculatorInput.element,
             this.calculatorOutput.element,
             this.calculatorKeyboard.element,
