@@ -7,7 +7,7 @@
     padding: 20px;
     background-color: $accent-color;
     border-radius: 5px;
-    max-width: 500px;
+    max-width: 530px;
     position: relative;
     border: 1px solid $gray;
 
@@ -23,29 +23,64 @@
         position: relative;
     }
 
+    &__display {
+        padding: 4px 10px;
+        margin: 0;
+        width: 100%;
+        height: 87px;
+        border: 2px solid $blue-3;
+        box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 5%);
+        border-radius: 5px;
+        backdrop-filter: blur(1px);
+        transition: 0.3s border-color;
+
+        &.display-error {
+            border-color: $red;
+        }
+
+        .math-input {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            color: $text-dark;
+            font-size: 34px;
+            text-align: right;
+            margin-bottom: 10px;
+
+            &::placeholder {
+                color: inherit;
+            }
+        }
+
+        .display-result {
+            font-style: italic;
+            font-weight: 400;
+            color: $text-dark;
+        }
+
+        p {
+            font-style: normal;
+            color: $gray;
+            font-size: 18px;
+        }
+    }
+
     &__result {
-        text-align: center;
+        text-align: right;
         transition: 0.3s;
         width: 100%;
-        padding: 5px 20px;
         background-color: $accent-color;
         box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 10%);
-        border-radius: 5px;
-        border: 1px solid $gray;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-20px);
         font-style: italic;
         white-space: normal;
-        overflow-y: auto;
 
         .result {
-            font-size: 18px;
+            font-size: 16px;
             color: $text-dark;
         }
 
         .error {
-            font-size: 18px;
+            font-size: 16px;
             color: $gray;
             font-weight: normal;
 
@@ -80,7 +115,6 @@
         text-align: right;
 
         .history-block {
-            // border: 1px solid $gray;
             padding: 5px 0;
             cursor: pointer;
             border-bottom: 1px solid $blue-3;
@@ -90,6 +124,10 @@
             }
         }
     }
+}
+
+.showup {
+    animation: showup 0.2s ease-in-out 1;
 }
 
 @keyframes showup {

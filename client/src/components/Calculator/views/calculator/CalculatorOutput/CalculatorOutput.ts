@@ -3,8 +3,9 @@ import { WrapperElement } from '@components/Elements/WrapperElement';
 import { ResultOutput } from './output-components/ResultParagraph';
 import { errorComponentByType } from './error-component-by-type';
 import { DefaultErrorComponent } from './output-components/DefaultErrorComponent';
-import { ErrorType } from 'errors/error-type';
 import { IAppError, IErrorRange } from 'errors/AppError';
+import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
+import { Paragraph } from '@components/Elements/Paragraph';
 
 interface IShowCalculationResultProps {
     result: number
@@ -23,11 +24,20 @@ export class CalculatorOutput extends WrapperElement {
         super({
             wrapperClassNames: 'calculator__result',
         })
+        this.showInputtedValue('0')
     }
 
     showCalculationResult(params: IShowCalculationResultProps): void {
-        const resultOutput = new ResultOutput(params)
-        this.appendOutputElement(resultOutput.element)
+        const expression = replaceMathOperators(params.expression)
+        const resultOutput = new Paragraph({ text: `${expression}=`, id: 'result-display', classNames: 'display-result showup' })
+        this.appendOutputElement(resultOutput)
+    }
+
+    showInputtedValue(inputtedExpression: string) {
+        this.updateOutput()
+        const formattedExpression = replaceMathOperators(inputtedExpression)
+        const p = new Paragraph({ text: formattedExpression, id: 'result-display' })
+        this.wrapper.append(p)
     }
 
     showErrorInfo(params: IShowErrorInfoProps): void {

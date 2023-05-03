@@ -9,7 +9,7 @@ export class CalculatorInput extends WrapperElement {
             wrapperClassNames: 'calculator__field'
         })
         this.input = new Input({
-            classNames: 'input',
+            classNames: 'math-input',
             placeholder: '0'
         })
 
@@ -17,8 +17,8 @@ export class CalculatorInput extends WrapperElement {
         this.input.onInput(this.handleInputChange.bind(this))
     }
 
-    get inputElement(): HTMLInputElement {
-        return this.input.domElement
+    get inputElement(): Input {
+        return this.input
     }
 
     get inputText(): string {
