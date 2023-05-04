@@ -9,6 +9,8 @@ export class CalculatorController implements ICalculatorController {
   constructor(model: ICalculatorModel) {
     this.model = model
     this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this))
+
+    this.fetchDataAndSetModel()
   }
 
   private async fetchDataAndSetModel() {

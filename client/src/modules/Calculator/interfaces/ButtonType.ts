@@ -1,4 +1,4 @@
-export enum ButtonType{
+export enum ButtonType {
     Char = 'char',
     Equal = 'equal',
     Backspace = 'backspace',

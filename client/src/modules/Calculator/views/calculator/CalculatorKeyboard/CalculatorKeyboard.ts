@@ -1,10 +1,11 @@
 import { ButtonList } from '@modules/Calculator/views/calculator/CalculatorKeyboard/ButtonList';
-import { getCalculatorButtons } from './getButton/getCalculatorButtons';
-import { ButtonType } from './ButtonType';
 import { WrapperElement } from '@modules/Elements/WrapperElement';
-import { getLoader } from '@modules/Loader';
+import { IButtonData } from '@modules/Calculator/models/buttonsData/generate-buttons-data';
+import { Button } from '@modules/Elements/Button';
+import { ButtonType } from '@modules/Calculator/interfaces/ButtonType';
 
 interface ICalculatorKeyboardOption {
+    buttonsData: IButtonData[]
     onEqual: () => void
     onChar: (clickedButtonValue: string) => void
     onBackspace: () => void
@@ -13,56 +14,39 @@ interface ICalculatorKeyboardOption {
 
 export class CalculatorKeyboard extends WrapperElement {
     private params: ICalculatorKeyboardOption
-    private buttons: ButtonList<ButtonType> | null = null
+    private buttons: ButtonList<ButtonType>
 
     constructor(params: ICalculatorKeyboardOption) {
         super({
             wrapperClassNames: 'calculator__keyboard'
         })
 
+        const buttons = this.createButtons(params.buttonsData)
+
         this.params = params
-        this.addButtonsToWrapper()
+        this.buttons = new ButtonList<ButtonType>(buttons)
+
+        this.wrapper.append(...buttons)
+        this.initButtonsListeners()
     }
 
-    changeKeyboardFromLoading(loading: boolean): void {
-        this.wrapper.removeElement('#loader')
 
-        if (!this.buttons) {
-            return
-        }
-
-        const buttons = this.buttons.getAll()
-
-        buttons.forEach(button => {
-            button.domElement.disabled = loading
+    private createButtons(buttonData: IButtonData[]): Button[] {
+        const buttons = buttonData.map(({ text, classNames, type, value }) => {
+            return new Button({
+                text,
+                classNames,
+                type,
+                value
+            })
         })
 
-        const [equalBtn] = this.buttons.getButtonsByType(ButtonType.Equal)
-
-        equalBtn.domElement.classList.toggle('loading')
-        equalBtn.domElement.textContent = loading ? '' : '='
-
-        loading && equalBtn.append(getLoader())
-
-    }
-
-    private async addButtonsToWrapper() {
-        this.wrapper.append(getLoader({ fullscreen: true, type: 'text' }))
-
-        this.buttons = await getCalculatorButtons()
-        this.initButtonsListeners()
-        this.wrapper.append(...this.buttons.getAll())
-
-        this.wrapper.removeElement('#loader')
+        return buttons
     }
 
     private initButtonsListeners(): void {
-        if (!this.buttons) {
-            return
-        }
-
         this.buttons.addClickListenersByType(ButtonType.Char, ({ button }) => {
-            this.params.onChar(button.metaData.action)
+            this.params.onChar(button.value || '')
         })
 
         this.buttons.addClickListenersByType(ButtonType.Equal, () => {

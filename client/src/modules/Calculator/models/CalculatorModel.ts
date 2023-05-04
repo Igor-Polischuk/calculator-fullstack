@@ -3,6 +3,7 @@ import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
 import { IAppError } from 'errors/AppError';
 import { IHistoryFormat, IOperationsData } from 'api/CalculatorAPI';
+import { IButtonData, generateButtonsData } from './buttonsData/generate-buttons-data';
 
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
@@ -12,7 +13,7 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
     private isFetchingResult: boolean = false
     private loadingData: boolean = true
     private history: IHistoryFormat[] = []
-    private operations: IOperationsData[] = []
+    private buttons: IButtonData[] = []
 
     setResult(res: number): void {
         this.result = res
@@ -43,8 +44,8 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
     }
 
     setOperations(operations: IOperationsData[]): void {
-        this.operations = operations
-        this.notifyAll(CalculatorModelEvent.OperationsChanged, operations)
+        this.buttons = generateButtonsData(operations)
+        this.notifyAll(CalculatorModelEvent.ButtonsDataGenerated, this.buttons)
     }
 
     setHistory(history: IHistoryFormat[]): void {

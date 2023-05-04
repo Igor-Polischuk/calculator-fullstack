@@ -12,8 +12,8 @@ export interface IBaseElement {
     onClick: (callback: (e: Event) => void) => void
 }
 export interface IButton extends IBaseElement {
-    metaData: Record<string, string>
     type: string
+    value?: string
 }
 
 export interface IInput extends IBaseElement {

@@ -3,14 +3,16 @@ import { WrapperElement } from '@modules/Elements/WrapperElement';
 import { IAppError } from 'errors/AppError';
 import { CalculatorHistory } from './CalculatorHistory/CalculatorHistory';
 import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
+import { IButtonData } from '@modules/Calculator/models/buttonsData/generate-buttons-data';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
 }
 
 export class CalculatorContainer extends WrapperElement {
+    private calculatorKeyboard: CalculatorKeyboard | null = null
+
     private calculatorDisplay: CalculatorDisplay
-    private calculatorKeyboard: CalculatorKeyboard;
     private calculatorHistory: CalculatorHistory
 
     private params: ICalculatorUIParams;
@@ -21,20 +23,18 @@ export class CalculatorContainer extends WrapperElement {
         })
         this.params = params;
         this.calculatorDisplay = new CalculatorDisplay()
-        // this.calculatorInput = new CalculatorInput()
-        // this.calculatorOutput = new CalculatorOutput()
-        this.calculatorKeyboard = new CalculatorKeyboard({
-            onEqual: this.onEqualButtonClicked.bind(this),
-            onChar: this.onButtonClick.bind(this),
-            onBackspace: this.onBackspace.bind(this),
-            onReset: () => { this.calculatorDisplay.setExpression('') },
-        });
+        // this.calculatorKeyboard = new CalculatorKeyboard({
+        //     onEqual: this.onEqualButtonClicked.bind(this),
+        //     onChar: this.onButtonClick.bind(this),
+        //     onBackspace: this.onBackspace.bind(this),
+        //     onReset: () => { this.calculatorDisplay.setExpression('') },
+        // });
         this.calculatorHistory = new CalculatorHistory()
 
         this.wrapper.append(
             this.calculatorHistory.element,
             this.calculatorDisplay.element,
-            this.calculatorKeyboard.element,
+            // this.calculatorKeyboard.element,
         );
     }
 
@@ -46,11 +46,21 @@ export class CalculatorContainer extends WrapperElement {
         this.calculatorDisplay.showError(error)
     }
 
-    processLoading(loading: boolean) {
-        this.calculatorKeyboard.changeKeyboardFromLoading(loading)
+    processLoading(loading: boolean): void {
+        // this.calculatorKeyboard.changeKeyboardFromLoading(loading)
     }
 
+    addKeyboard(buttonsData: IButtonData[]): void {
+        this.calculatorKeyboard = new CalculatorKeyboard({
+            buttonsData,
+            onEqual: this.onEqualButtonClicked.bind(this),
+            onChar: this.onButtonClick.bind(this),
+            onBackspace: this.onBackspace.bind(this),
+            onReset: () => { this.calculatorDisplay.setExpression('') },
+        })
 
+        this.wrapper.append(this.calculatorKeyboard.element)
+    }
 
     private onButtonClick(clickedButtonValue: string): void {
         const newInputValue = this.calculatorDisplay.inputValue + clickedButtonValue

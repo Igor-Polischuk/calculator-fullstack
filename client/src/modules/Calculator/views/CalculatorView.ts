@@ -20,6 +20,10 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.showCalculationError(error)
         })
 
+        model.subscribe(CalculatorModelEvent.ButtonsDataGenerated, buttonData => {
+            this.calculatorContainer.addKeyboard(buttonData)
+        })
+
         model.subscribe(CalculatorModelEvent.FetchedResult, loading => {
             this.calculatorContainer.processLoading(loading)
         })
