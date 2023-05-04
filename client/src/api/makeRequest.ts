@@ -1,6 +1,7 @@
 interface IOptions {
     method?: 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'CONNECT' | 'PATCH' | 'OPTIONS' | 'TRACE'
     headers?: HeadersInit
+    body?: string
 }
 
 export async function makeRequest<T>(url: string, options?: IOptions): Promise<T> {

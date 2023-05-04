@@ -2,13 +2,17 @@ import { ModelAllowedEvents, ICalculatorModel, } from '../interfaces/ICalculator
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
 import { IAppError } from 'errors/AppError';
+import { IHistoryFormat, IOperationsData } from 'api/CalculatorAPI';
 
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
     private result: number | null = null
     private expression: string | null = null
     private error: IAppError | null = null
-    private loading: boolean = false
+    private isFetchingResult: boolean = false
+    private loadingData: boolean = true
+    private history: IHistoryFormat[] = []
+    private operations: IOperationsData[] = []
 
     setResult(res: number): void {
         this.result = res
@@ -28,8 +32,23 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
         this.notifyAll(CalculatorModelEvent.ErrorChanged, errors)
     }
 
-    setLoading(loading: boolean): void {
-        this.loading = loading
-        this.notifyAll(CalculatorModelEvent.LoadingChanged, loading)
+    setFetchingResult(loading: boolean): void {
+        this.isFetchingResult = loading
+        this.notifyAll(CalculatorModelEvent.FetchedResult, loading)
+    }
+
+    setLoadingData(loading: boolean): void {
+        this.loadingData = loading
+        this.notifyAll(CalculatorModelEvent.LoadingData, loading)
+    }
+
+    setOperations(operations: IOperationsData[]): void {
+        this.operations = operations
+        this.notifyAll(CalculatorModelEvent.OperationsChanged, operations)
+    }
+
+    setHistory(history: IHistoryFormat[]): void {
+        this.history = history
+        this.notifyAll(CalculatorModelEvent.HistoryChanged, history)
     }
 }

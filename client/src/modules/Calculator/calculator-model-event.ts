@@ -2,5 +2,8 @@ export enum CalculatorModelEvent {
     ResultChanged = 'result',
     ExpressionChanged = 'expression',
     ErrorChanged = 'error',
-    LoadingChanged = 'loading'
+    FetchedResult = 'isFetchingResult',
+    LoadingData = 'loadingData',
+    HistoryChanged = 'history',
+    OperationsChanged = 'operations'
 }

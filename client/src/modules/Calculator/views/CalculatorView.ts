@@ -20,7 +20,7 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.showCalculationError(error)
         })
 
-        model.subscribe(CalculatorModelEvent.LoadingChanged, loading => {
+        model.subscribe(CalculatorModelEvent.FetchedResult, loading => {
             this.calculatorContainer.processLoading(loading)
         })
 
