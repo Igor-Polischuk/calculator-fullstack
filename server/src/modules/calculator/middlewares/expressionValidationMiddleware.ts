@@ -1,4 +1,4 @@
-import { query } from "express-validator";
+import { body } from "express-validator";
 
 import { AppError } from "@errors/AppError";
 import { ErrorType } from "@errors/error-type";
@@ -6,7 +6,7 @@ import { validationMiddleware } from "middlewares/validationMiddleware";
 import { validateExpression } from "@modules/calculator/services/expressionValidation/validateExpression";
 
 export const expressionValidation = validationMiddleware([
-    query('expression')
+    body('expression')
         .notEmpty()
         .withMessage(new AppError({
             status: 400,

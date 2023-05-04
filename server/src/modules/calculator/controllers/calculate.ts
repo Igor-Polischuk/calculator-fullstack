@@ -6,7 +6,7 @@ import { calculatorHistory } from "repositories/history-repository/CalculatorHis
 import { ResponseFormatter } from "@utils/ResponseFormatter";
 import { AppError } from "@errors/AppError";
 
-export async function getResult(req: Request, res: Response): Promise<void> {
+export async function calculate(req: Request, res: Response): Promise<void> {
     const { expression } = matchedData(req)
 
     try {
