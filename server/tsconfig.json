@@ -8,11 +8,10 @@
         "rootDir": "./src",
         "baseUrl": "./src",
         "paths": {
-            "@routers/*": ["routers/*"],
-            "@controllers/*": ["controllers/*"],
-            "@services/*": ["services/*"],
+            "@middlewares/*": ["@middlewares/*"],
+            "@modules/*": ["modules/*"],
             "@errors/*": ["errors/*"],
-            "@utils/*": ["utils/*"]
+            "@utils/*": ["utils/*"],
         },
         "resolveJsonModule": true,
         "allowJs": true,

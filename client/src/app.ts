@@ -1,4 +1,4 @@
-import { initCalculator } from '@components/Calculator'
+import { initCalculator } from '@modules/Calculator'
 import '@styles/styles.scss';
 
 initCalculator()
