@@ -4,6 +4,7 @@ import { IAppError } from 'errors/AppError';
 import { CalculatorHistory } from './CalculatorHistory/CalculatorHistory';
 import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
 import { IButtonData } from '@modules/Calculator/models/buttonsData/generate-buttons-data';
+import { IHistoryFormat } from 'api/CalculatorAPI';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
@@ -22,23 +23,23 @@ export class CalculatorContainer extends WrapperElement {
             wrapperClassNames: 'calculator'
         })
         this.params = params;
+
         this.calculatorDisplay = new CalculatorDisplay()
-        // this.calculatorKeyboard = new CalculatorKeyboard({
-        //     onEqual: this.onEqualButtonClicked.bind(this),
-        //     onChar: this.onButtonClick.bind(this),
-        //     onBackspace: this.onBackspace.bind(this),
-        //     onReset: () => { this.calculatorDisplay.setExpression('') },
-        // });
-        this.calculatorHistory = new CalculatorHistory()
+        this.calculatorHistory = new CalculatorHistory({
+            onHistoryItemClick: this.calculatorDisplay.setExpression.bind(this.calculatorDisplay)
+        })
 
         this.wrapper.append(
             this.calculatorHistory.element,
             this.calculatorDisplay.element,
-            // this.calculatorKeyboard.element,
         );
     }
 
     showCalculationResult(result: number): void {
+        this.calculatorHistory.addHistoryItem({
+            result,
+            expression: this.calculatorDisplay.inputValue
+        })
         this.calculatorDisplay.showResult(result)
     }
 
@@ -48,6 +49,10 @@ export class CalculatorContainer extends WrapperElement {
 
     processLoading(loading: boolean): void {
         // this.calculatorKeyboard.changeKeyboardFromLoading(loading)
+    }
+
+    updateHistory(history: IHistoryFormat[]): void {
+        this.calculatorHistory.setHistory(history)
     }
 
     addKeyboard(buttonsData: IButtonData[]): void {

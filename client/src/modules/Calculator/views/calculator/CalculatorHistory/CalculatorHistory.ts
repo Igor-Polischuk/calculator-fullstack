@@ -1,35 +1,43 @@
 import { WrapperElement } from "@modules/Elements/WrapperElement";
-import { ResultOutput } from "../CalculatorOutput/output-components/ResultParagraph";
-import { callCalculatorApi } from "api/callCalculatorApi";
-import { ApiEndpoint } from "api/api-endpoint";
+import { HistoryDisplay } from "./HistoryDisplay";
 
 interface IHistoryFormat {
     expression: string
     result: number
 }
 
-const fakeHistory = [{ "result": 15, "expression": "5*3" }, { "result": 89, "expression": "15*8-(4!)+(8-5*3)" }, { "result": 15, "expression": "8*3-9" }, { "result": 2, "expression": "1+1" }, { "result": -920, "expression": "56*3-4^3*(8-9*cos(pi))" }]
+interface ICalculatorHistoryParams {
+    onHistoryItemClick: (itemText: string) => void
+}
 
 export class CalculatorHistory extends WrapperElement {
-    constructor() {
+    private history: IHistoryFormat[] = []
+    private params: ICalculatorHistoryParams
+
+    constructor(params: ICalculatorHistoryParams) {
         super({
             wrapperClassNames: 'calculator__history'
         })
 
-        this.fetchHistory()
+        this.params = params
     }
 
-    private showLastEnteredExpression(history: IHistoryFormat[]) {
-        history.forEach(({ expression, result }) => {
-            const historyItem = new ResultOutput({ expression, result, classNames: 'history-block' })
-            this.wrapper.append(historyItem.element)
+    updateHistory() {
+        this.wrapper.removeElement('#history-content')
+        const historyDisplay = new HistoryDisplay({
+            history: this.history,
+            onHistoryItemClick: this.params.onHistoryItemClick
         })
+        historyDisplay.render(this.wrapper.domElement)
     }
 
-    private async fetchHistory() {
-        const data = (await callCalculatorApi<{ history: IHistoryFormat[] }>({ endpoint: ApiEndpoint.History }))
-        const history = data.data.history
+    addHistoryItem(item: IHistoryFormat): void {
+        this.history = [...this.history.slice(-4), item]
+        this.updateHistory()
+    }
 
-        this.showLastEnteredExpression(history)
+    setHistory(history: IHistoryFormat[]): void {
+        this.history = history.slice(-5)
+        this.updateHistory()
     }
 }

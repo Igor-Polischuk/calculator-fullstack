@@ -21,4 +21,12 @@ export class UnorderedList extends BaseElement {
             this.ul.appendChild(listItem)
         })
     }
+
+    appendListItem(...children: BaseElement[]): void {
+        const listItem = document.createElement('li')
+        children.forEach(child => {
+            child.render(listItem)
+        })
+        this.ul.appendChild(listItem)
+    }
 }

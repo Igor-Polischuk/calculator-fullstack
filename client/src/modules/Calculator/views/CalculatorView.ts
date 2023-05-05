@@ -28,6 +28,10 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.processLoading(loading)
         })
 
+        model.subscribe(CalculatorModelEvent.HistoryChanged, history => {
+            this.calculatorContainer.updateHistory(history)
+        })
+
         const root = document.querySelector('.container')!
         this.calculatorContainer.element.render(root)
     }
