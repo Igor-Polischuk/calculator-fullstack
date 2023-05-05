@@ -28,7 +28,7 @@ export class JsonDB implements IHistoryRepository {
 
     async setItem(item: IDBItem): Promise<void> {
         const data = await this.getAll();
-        const newData = [...data, item]
+        const newData = [...data.slice(-4), item]
         fs.writeFileSync(this.pathToFile, JSON.stringify(newData));
     }
 }
