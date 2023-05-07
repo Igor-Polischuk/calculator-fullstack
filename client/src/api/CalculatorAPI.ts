@@ -1,5 +1,5 @@
 import { AppError } from "errors/AppError"
-import { makeRequest } from "./makeRequest"
+import { RestAPI } from "./RestAPI";
 
 export enum ApiEndpoint {
     Calculate = 'calculate',
@@ -30,9 +30,14 @@ export type IHistoryFormat = {
     result: number;
 };
 
-class CalculatorAPI {
+class CalculatorAPI extends RestAPI<ApiEndpoint> {
     private static instance: CalculatorAPI;
-    private baseURL = 'http://localhost:3000/api/calculator/'
+
+    constructor() {
+        super({
+            baseURL: 'http://localhost:3000/api/calculator/'
+        })
+    }
 
     static getInstance(): CalculatorAPI {
         if (!CalculatorAPI.instance) {
@@ -43,12 +48,8 @@ class CalculatorAPI {
     }
 
     async calculateExpression(expression: string): Promise<number> {
-        const url = `${this.baseURL}${ApiEndpoint.Calculate}`
-        const response = await makeRequest<ICalculatorResponse<ICalculationData>>(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+        const response = await this.post<ICalculatorResponse<ICalculationData>>({
+            endpoint: ApiEndpoint.Calculate,
             body: JSON.stringify({ expression })
         })
 
@@ -60,15 +61,17 @@ class CalculatorAPI {
     }
 
     async getOperations(): Promise<IOperationsData[]> {
-        const url = `${this.baseURL}${ApiEndpoint.Operations}`
-        const response = await makeRequest<ICalculatorResponse<IOperationsData[]>>(url)
+        const response = await this.get<ICalculatorResponse<IOperationsData[]>>({
+            endpoint: ApiEndpoint.Operations
+        })
 
         return response.data
     }
 
     async getHistory(): Promise<IHistoryFormat[]> {
-        const url = `${this.baseURL}${ApiEndpoint.History}`
-        const response = await makeRequest<ICalculatorResponse<{ history: IHistoryFormat[] }>>(url)
+        const response = await this.get<ICalculatorResponse<{ history: IHistoryFormat[] }>>({
+            endpoint: ApiEndpoint.History
+        })
 
         return response.data.history
     }
