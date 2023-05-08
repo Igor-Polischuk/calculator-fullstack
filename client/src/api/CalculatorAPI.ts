@@ -35,7 +35,10 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
 
     constructor() {
         super({
-            baseURL: 'http://localhost:3000/api/calculator/'
+            baseURL: 'http://localhost:3000/api/calculator/',
+            defaultHeaders: {
+                'Content-Type': 'application/json'
+            }
         })
     }
 
@@ -48,9 +51,13 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
     }
 
     async calculateExpression(expression: string): Promise<number> {
-        const response = await this.post<ICalculatorResponse<ICalculationData>>({
+        const response = await this.makeRequest<ICalculatorResponse<ICalculationData>>({
             endpoint: ApiEndpoint.Calculate,
-            body: JSON.stringify({ expression })
+            cacheRequest: 1000 * 60 * 60 * 60 * 72,
+            requestOptions: {
+                method: 'POST',
+                body: { expression }
+            }
         })
 
         if (!response.success) {
@@ -61,15 +68,16 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
     }
 
     async getOperations(): Promise<IOperationsData[]> {
-        const response = await this.get<ICalculatorResponse<IOperationsData[]>>({
-            endpoint: ApiEndpoint.Operations
+        const response = await this.makeRequest<ICalculatorResponse<IOperationsData[]>>({
+            endpoint: ApiEndpoint.Operations,
+            cacheRequest: 1000 * 60 * 60 * 60 * 120
         })
 
         return response.data
     }
 
     async getHistory(): Promise<IHistoryFormat[]> {
-        const response = await this.get<ICalculatorResponse<{ history: IHistoryFormat[] }>>({
+        const response = await this.makeRequest<ICalculatorResponse<{ history: IHistoryFormat[] }>>({
             endpoint: ApiEndpoint.History
         })
 

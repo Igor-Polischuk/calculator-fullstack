@@ -1,65 +1,58 @@
+import { QueryParams } from '@utilities/QueryParams/QueryParams';
+import { Cache } from '@utilities/Cache/Cache';
 import { makeRequest } from "./makeRequest"
 
-interface IRestApiParams {
+interface IRequestParams<Endpoints> {
+    endpoint?: Endpoints
+    cacheRequest?: number
+    queryParams?: QueryParams
+    requestOptions?: {
+        method?: 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'CONNECT' | 'PATCH' | 'OPTIONS' | 'TRACE'
+        headers?: HeadersInit
+        body?: unknown
+    }
+}
+
+interface IRestAPIParams {
     baseURL: string
+    defaultHeaders: Record<string, string>;
 }
 
-interface IGetParams<Endpoints> {
-    endpoint: Endpoints
-}
+export class RestAPI<Endpoints> {
+    private baseURL: string;
+    private defaultHeaders: Record<string, string>;
+    private cache: Cache
 
-interface IPostParams<Endpoints> {
-    endpoint: Endpoints
-    body: string
-}
-
-export class RestAPI<Endpoints>{
-    private baseURL: string
-
-    constructor(params: IRestApiParams) {
-        this.baseURL = params.baseURL
+    constructor(params: IRestAPIParams) {
+        this.baseURL = params.baseURL;
+        this.defaultHeaders = params.defaultHeaders;
+        this.cache = new Cache(params.baseURL)
     }
 
-    async get<ResponseFormat>(params: IGetParams<Endpoints>): Promise<ResponseFormat> {
-        const url = `${this.baseURL}${params.endpoint}`
-        const response = await makeRequest<ResponseFormat>(url)
+    protected async makeRequest<ResponseFormat>(params: IRequestParams<Endpoints>): Promise<ResponseFormat> {
+        const url = `${this.baseURL}${params.endpoint}${params.queryParams?.toString() || ''}`
+        const method = params.requestOptions?.method || 'GET'
+        const headers = { ...this.defaultHeaders, ...params.requestOptions?.headers }
+        const body = JSON.stringify(params.requestOptions?.body)
+        const cacheKey = `${url}::${method}::${body}`
 
-        return response
-    }
+        if (params.cacheRequest && this.cache.hasItem(cacheKey)) {
+            return this.cache.getItem<ResponseFormat>(cacheKey)!
+        }
 
-    async post<ResponseFormat>(params: IPostParams<Endpoints>): Promise<ResponseFormat> {
-        const url = `${this.baseURL}${params.endpoint}`
         const response = await makeRequest<ResponseFormat>(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: params.body
+            method, headers, body
         })
 
+        if (params.cacheRequest) {
+            this.cache.setItem({
+                key: cacheKey,
+                value: response,
+                ttl: params.cacheRequest
+            })
+        }
+
         return response
+
     }
 }
-
-/**
- * const makeRequest = new Request<endpoints>({
- *  baseURL: 'http://localhost:3000/api/calculator/',
- * })
- * 
- * makeRequest.get({
- *  endpoint: '/history',
- *  query: {
- *  limit: 5
- * }
- * })
- * 
- * makeRequest.get({
- *  endpoint: '/operations',
- *  
- * })
- * 
- * makeRequest.post({
- *  endpoint: 'calculate',
- *  body: 
- * })
- */
