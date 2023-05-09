@@ -14,6 +14,7 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private async fetchDataAndSetModel() {
+    this.model.setLoadingData(true)
     const history = await calculatorAPI.getHistory()
     const operations = await calculatorAPI.getOperations()
 

@@ -5,6 +5,7 @@ import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
 import { IButtonData } from '@modules/Calculator/models/buttonsData/generate-buttons-data';
 import { IHistoryFormat } from 'api/CalculatorAPI';
 import { DivElement } from '@modules/Elements/DivElement';
+import { Loader } from '@modules/Loader';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
@@ -48,7 +49,24 @@ export class CalculatorContainer extends DivElement {
     }
 
     processLoading(loading: boolean): void {
-        // this.calculatorKeyboard.changeKeyboardFromLoading(loading)
+        Loader.addLoaderByLoading({
+            loading,
+            component: this,
+            loadingOptions: {
+                fillElement: true
+            }
+        })
+    }
+
+    calculationLoading(loading: boolean): void {
+        Loader.addLoaderByLoading({
+            loading,
+            component: this.calculatorKeyboard!,
+            loadingOptions: {
+                fillElement: true,
+                transparentBG: true
+            }
+        })
     }
 
     updateHistory(history: IHistoryFormat[]): void {

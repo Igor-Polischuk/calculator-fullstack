@@ -103,6 +103,7 @@
     }
 
     &__keyboard {
+        position: relative;
         display: grid;
         grid-template-columns: repeat(6, auto);
         grid-auto-rows: auto;

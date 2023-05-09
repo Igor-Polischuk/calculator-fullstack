@@ -4,8 +4,8 @@ import { CalculatorModel } from "./models/CalculatorModel";
 
 export function initCalculator() {
     const calculatorModel = new CalculatorModel()
-    new CalculatorController(calculatorModel)
     new CalculatorView(calculatorModel)
+    new CalculatorController(calculatorModel)
 }
 
 export { CalculatorController, CalculatorModel, CalculatorView }

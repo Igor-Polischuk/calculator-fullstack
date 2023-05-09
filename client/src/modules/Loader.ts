@@ -3,20 +3,35 @@ import { Span } from "./Elements/Span";
 
 interface ILoaderParams {
     fullscreen?: boolean
-    type?: 'text' | 'circle'
+    fillElement?: boolean
+    transparentBG?: boolean
 }
 
-export function getLoader(params?: ILoaderParams): DivElement {
-    const fullscreen = params?.fullscreen ? 'fullscreen' : ''
-    const loaderType = params?.type === 'text' ? 'loader-text' : 'loader-circle'
+interface IAddLoaderByLoadingParams {
+    loading: boolean
+    component: DivElement
+    loadingOptions: ILoaderParams
+}
 
-    const loader = new Span({
-        classNames: `${loaderType}`,
-        text: params?.type === 'text' ? 'L &nbsp; ading' : ''
-    })
+export class Loader extends DivElement {
+    private loader: Span
 
-    const loaderWrapper = new DivElement({ classNames: `loader-wrapper ${fullscreen}`, id: 'loader' })
-    loaderWrapper.append(loader)
+    constructor(params?: ILoaderParams) {
+        const fullscreenClass = params?.fullscreen ? 'fullscreen' : ''
+        const fillElementClass = params?.fillElement ? 'fill-element' : ''
+        const transparentBG = params?.transparentBG ? 'transparent-bg' : ''
 
-    return loaderWrapper
+        super({ classNames: `loader-wrapper ${fullscreenClass} ${fillElementClass} ${transparentBG}`, id: 'loader' })
+        this.loader = new Span({ classNames: `loader` })
+
+        this.append(this.loader)
+    }
+
+    static addLoaderByLoading(params: IAddLoaderByLoadingParams): void {
+        if (params.loading) {
+            params.component.append(new Loader(params.loadingOptions))
+        } else {
+            params.component.removeElement('#loader')
+        }
+    }
 }
