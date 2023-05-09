@@ -1,10 +1,10 @@
 import { IBaseElement } from '@modules/Elements/interfaces';
-import { WrapperElement } from '@modules/Elements/WrapperElement';
 import { errorComponentByType } from './error-component-by-type';
 import { DefaultErrorComponent } from './output-components/DefaultErrorComponent';
 import { IAppError, IErrorRange } from 'errors/AppError';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
 import { Paragraph } from '@modules/Elements/Paragraph';
+import { DivElement } from '@modules/Elements/DivElement';
 
 interface IShowCalculationResultProps {
     result: number
@@ -18,10 +18,10 @@ export interface IShowErrorInfoProps {
 
 }
 
-export class CalculatorOutput extends WrapperElement {
+export class CalculatorOutput extends DivElement {
     constructor() {
         super({
-            wrapperClassNames: 'calculator__result',
+            classNames: 'calculator__result',
         })
         this.showInputtedValue('0')
     }
@@ -36,23 +36,23 @@ export class CalculatorOutput extends WrapperElement {
         this.updateOutput()
         const formattedExpression = replaceMathOperators(inputtedExpression)
         const p = new Paragraph({ text: formattedExpression, id: 'result-display' })
-        this.wrapper.append(p)
+        this.append(p)
     }
 
     showErrorInfo(params: IShowErrorInfoProps): void {
         const ErrorComponentClass = errorComponentByType[params.error.type] || DefaultErrorComponent
 
         const errorComponentInstance = new ErrorComponentClass(params)
-        this.appendOutputElement(errorComponentInstance.element)
+        this.appendOutputElement(errorComponentInstance)
     }
 
     private appendOutputElement(element: IBaseElement): void {
         this.updateOutput()
-        this.wrapper.append(element)
+        this.append(element)
     }
 
     private updateOutput(): void {
-        this.wrapper.domElement.classList.add('visible')
-        this.wrapper.removeElement('#result-display')
+        this.domElement.classList.add('visible')
+        this.removeElement('#result-display')
     }
 }

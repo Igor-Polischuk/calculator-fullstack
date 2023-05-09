@@ -1,15 +1,15 @@
-import { WrapperElement } from "@modules/Elements/WrapperElement";
 import { CalculatorInput } from "../CalculatorInput/CalculatorInput";
 import { CalculatorOutput } from "../CalculatorOutput/CalculatorOutput";
 import { IAppError, IErrorRange } from "errors/AppError";
+import { DivElement } from "@modules/Elements/DivElement";
 
-export class CalculatorDisplay extends WrapperElement {
+export class CalculatorDisplay extends DivElement {
     private calculatorInput: CalculatorInput;
     private calculatorOutput: CalculatorOutput;
 
     constructor() {
         super({
-            wrapperClassNames: 'calculator__display'
+            classNames: 'calculator__display'
         })
 
         this.calculatorInput = new CalculatorInput()
@@ -17,7 +17,7 @@ export class CalculatorDisplay extends WrapperElement {
 
         this.calculatorInput.inputElement.onInput(() => this.calculatorOutput.showInputtedValue(this.calculatorInput.inputText || '0'))
 
-        this.wrapper.append(this.calculatorInput.element, this.calculatorOutput.element)
+        this.append(this.calculatorInput, this.calculatorOutput)
     }
 
     get inputValue() {
@@ -30,7 +30,7 @@ export class CalculatorDisplay extends WrapperElement {
     }
 
     showResult(result: number) {
-        this.wrapper.domElement.classList.remove('display-error')
+        this.domElement.classList.remove('display-error')
         const expression = this.calculatorInput.inputText
         this.calculatorInput.inputElement.value = result.toString()
         this.calculatorOutput.showCalculationResult({ result, expression })
@@ -38,7 +38,7 @@ export class CalculatorDisplay extends WrapperElement {
 
     showError(error: IAppError) {
         const expressionWithError = this.calculatorInput.inputText
-        this.wrapper.domElement.classList.add('display-error')
+        this.domElement.classList.add('display-error')
 
         this.calculatorOutput.showErrorInfo({
             error,

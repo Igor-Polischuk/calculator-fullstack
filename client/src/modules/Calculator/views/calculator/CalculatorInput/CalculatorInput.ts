@@ -1,19 +1,19 @@
-import { WrapperElement } from "@modules/Elements/WrapperElement";
 import { Input } from "@modules/Elements/Input";
 import { formatExpression } from "@utilities/formatText/formatExpression";
+import { DivElement } from "@modules/Elements/DivElement";
 
-export class CalculatorInput extends WrapperElement {
+export class CalculatorInput extends DivElement {
     private input: Input
     constructor() {
         super({
-            wrapperClassNames: 'calculator__field'
+            classNames: 'calculator__field'
         })
         this.input = new Input({
             classNames: 'math-input',
             placeholder: '0'
         })
 
-        this.wrapper.append(this.input)
+        this.append(this.input)
         this.input.onInput(this.handleInputChange.bind(this))
     }
 

@@ -1,8 +1,8 @@
 import { ButtonList } from '@modules/Calculator/views/calculator/CalculatorKeyboard/ButtonList';
-import { WrapperElement } from '@modules/Elements/WrapperElement';
 import { IButtonData } from '@modules/Calculator/models/buttonsData/generate-buttons-data';
 import { Button } from '@modules/Elements/Button';
 import { ButtonType } from '@modules/Calculator/interfaces/ButtonType';
+import { DivElement } from '@modules/Elements/DivElement';
 
 interface ICalculatorKeyboardOption {
     buttonsData: IButtonData[]
@@ -12,13 +12,13 @@ interface ICalculatorKeyboardOption {
     onReset: () => void
 }
 
-export class CalculatorKeyboard extends WrapperElement {
+export class CalculatorKeyboard extends DivElement {
     private params: ICalculatorKeyboardOption
     private buttons: ButtonList<ButtonType>
 
     constructor(params: ICalculatorKeyboardOption) {
         super({
-            wrapperClassNames: 'calculator__keyboard'
+            classNames: 'calculator__keyboard'
         })
 
         const buttons = this.createButtons(params.buttonsData)
@@ -26,7 +26,7 @@ export class CalculatorKeyboard extends WrapperElement {
         this.params = params
         this.buttons = new ButtonList<ButtonType>(buttons)
 
-        this.wrapper.append(...buttons)
+        this.append(...buttons)
         this.initButtonsListeners()
     }
 

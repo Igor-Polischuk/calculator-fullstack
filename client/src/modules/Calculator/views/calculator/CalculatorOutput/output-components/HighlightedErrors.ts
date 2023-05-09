@@ -1,9 +1,9 @@
-import { WrapperElement } from "@modules/Elements/WrapperElement";
 import { Span } from "@modules/Elements/Span";
 import { removeOverlappingRanges } from "@utilities/ranges/removeOverlappingRanges";
 import { IShowErrorInfoProps } from "../CalculatorOutput";
 import { HighlightedSpan } from "./HighlightedSpan";
 import { IAppError, IErrorRange } from "errors/AppError";
+import { Paragraph } from "@modules/Elements/Paragraph";
 
 interface IHighlightErrorsReduceResult {
     lastErrorIndex: number
@@ -15,7 +15,7 @@ interface IFormattedError {
     errorsStarts: number[]
 }
 
-export class HighlightedValidationErrors extends WrapperElement {
+export class HighlightedValidationErrors extends Paragraph {
     private params: IShowErrorInfoProps
     private invalidExpressionPartsIndexes: IErrorRange[]
     private errors: IAppError
@@ -25,8 +25,9 @@ export class HighlightedValidationErrors extends WrapperElement {
     constructor(highlightedErrorsParams: IShowErrorInfoProps) {
 
         super({
-            wrapperClassNames: 'error',
-            wrapperId: 'result-display'
+            classNames: 'error',
+            id: 'result-display',
+            text: ''
         })
 
         this.params = highlightedErrorsParams
@@ -36,7 +37,7 @@ export class HighlightedValidationErrors extends WrapperElement {
         this.formattedErrors = this.formatError()
 
         const errorSpans = this.highlightInvalidParts()
-        this.wrapper.append(...errorSpans)
+        this.append(...errorSpans)
     }
 
     private highlightInvalidParts(): Span[] {

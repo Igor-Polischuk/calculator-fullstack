@@ -33,6 +33,6 @@ export class CalculatorView implements ICalculatorView {
         })
 
         const root = document.querySelector('.container')!
-        this.calculatorContainer.element.render(root)
+        this.calculatorContainer.render(root)
     }
 }

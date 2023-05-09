@@ -1,5 +1,5 @@
-import { WrapperElement } from "@modules/Elements/WrapperElement";
 import { HistoryDisplay } from "./HistoryDisplay";
+import { DivElement } from "@modules/Elements/DivElement";
 
 interface IHistoryFormat {
     expression: string
@@ -10,25 +10,25 @@ interface ICalculatorHistoryParams {
     onHistoryItemClick: (itemText: string) => void
 }
 
-export class CalculatorHistory extends WrapperElement {
+export class CalculatorHistory extends DivElement {
     private history: IHistoryFormat[] = []
     private params: ICalculatorHistoryParams
 
     constructor(params: ICalculatorHistoryParams) {
         super({
-            wrapperClassNames: 'calculator__history'
+            classNames: 'calculator__history'
         })
 
         this.params = params
     }
 
     updateHistory() {
-        this.wrapper.removeElement('#history-content')
+        this.removeElement('#history-content')
         const historyDisplay = new HistoryDisplay({
             history: this.history,
             onHistoryItemClick: this.params.onHistoryItemClick
         })
-        historyDisplay.render(this.wrapper.domElement)
+        historyDisplay.render(this.domElement)
     }
 
     addHistoryItem(item: IHistoryFormat): void {
