@@ -1,7 +1,6 @@
+import { ErrorFactory } from "@errors/ErrorFactory";
 import { IExceptionObj } from "../exceptions";
 import { IOperation, IOperationParams, OperationType } from "./IOperations";
-import { AppError } from "@errors/AppError";
-import { ErrorType } from "@errors/error-type";
 
 
 export class Operation implements IOperation {
@@ -22,7 +21,7 @@ export class Operation implements IOperation {
         this.text = params.text
     }
 
-    checkException(numbers: number[], currentOperationExpression?: string): void {
+    checkException(numbers: number[], currentOperationExpression: string): void {
         if (this.exceptionHandler.length === 0) {
             return
         }
@@ -31,11 +30,7 @@ export class Operation implements IOperation {
             const isException = exception.checkException(...numbers)
 
             if (isException) {
-                throw new AppError({
-                    type: ErrorType.RuntimeError,
-                    message: `Runtime error: ${exception.exceptionMessage} in ${currentOperationExpression}`,
-                    status: 400
-                })
+                throw ErrorFactory.CalculationError(exception.exceptionMessage, currentOperationExpression)
             }
         })
     }

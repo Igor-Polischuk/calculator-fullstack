@@ -2,7 +2,7 @@ import { IExceptionObj } from "../exceptions"
 
 export interface IOperation {
     readonly calculate: (...args: number[]) => number
-    readonly checkException: (numbers: number[], errorExpression?: string) => void
+    readonly checkException: (numbers: number[], errorExpression: string) => void
     readonly reg: RegExp
     readonly priority: number
     readonly type: OperationType
