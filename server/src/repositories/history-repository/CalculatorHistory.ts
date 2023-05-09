@@ -1,7 +1,7 @@
 import { IDBItem, IHistoryRepository } from "./IHistoryRepository";
 import { JsonDB } from "./JsonDB";
 
-export class CalculatorHistory implements IHistoryRepository {
+export class CalculatorHistoryDAO implements IHistoryRepository {
     private db: JsonDB
 
     constructor(db: JsonDB) {
@@ -23,6 +23,6 @@ export class CalculatorHistory implements IHistoryRepository {
 
 const db = new JsonDB('./src/data/history.json')
 
-const calculatorHistory = new CalculatorHistory(db)
+const calculatorHistoryDAO = new CalculatorHistoryDAO(db)
 
-export { calculatorHistory }
+export { calculatorHistoryDAO }
