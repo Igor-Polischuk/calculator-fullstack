@@ -12,7 +12,7 @@ const ACTION_BUTTON_CLASS_NAME = 'button button--action'
 const NUMBER_BUTTON_CLASS_NAME = 'button button--number'
 const GET_RESULT_BUTTON_CLASS_NAME = 'button button--get-res'
 
-export function generateButtonsData(fetchedButtonData: IOperationsData[]) {
+export function generateButtonsData(fetchedButtonData: IOperationsData[]): IButtonData[] {
     const { resultBtn, removeSymbolBtn, clearBtn } = getServiceButtons()
     const numpadButtonsData = getNumpadButtons()
     const operationsButton = getOperationsButtonData(fetchedButtonData)

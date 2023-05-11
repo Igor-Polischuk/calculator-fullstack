@@ -2,7 +2,6 @@ import { IObserver } from "@utilities/Observer/IObserver"
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { IAppError } from "errors/AppError";
 import { IHistoryFormat, IOperationsData } from "api/CalculatorAPI";
-import { IButtonData } from "../models/buttonsData/generate-buttons-data";
 
 export type ModelAllowedEvents = {
     [CalculatorModelEvent.ResultChanged]: number
@@ -11,7 +10,7 @@ export type ModelAllowedEvents = {
     [CalculatorModelEvent.FetchedResult]: boolean
     [CalculatorModelEvent.LoadingData]: boolean
     [CalculatorModelEvent.HistoryChanged]: IHistoryFormat[]
-    [CalculatorModelEvent.ButtonsDataGenerated]: IButtonData[]
+    [CalculatorModelEvent.ButtonsDataGenerated]: IOperationsData[]
 };
 
 export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {

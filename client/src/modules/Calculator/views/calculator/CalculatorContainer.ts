@@ -2,8 +2,7 @@ import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
 import { IAppError } from 'errors/AppError';
 import { CalculatorHistory } from './CalculatorHistory/CalculatorHistory';
 import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
-import { IButtonData } from '@modules/Calculator/models/buttonsData/generate-buttons-data';
-import { IHistoryFormat } from 'api/CalculatorAPI';
+import { IHistoryFormat, IOperationsData } from 'api/CalculatorAPI';
 import { DivElement } from '@modules/Elements/DivElement';
 import { Loader } from '@modules/Loader';
 
@@ -61,7 +60,7 @@ export class CalculatorContainer extends DivElement {
     calculationLoading(loading: boolean): void {
         Loader.addLoaderByLoading({
             loading,
-            component: this.calculatorKeyboard!,
+            component: this,
             loadingOptions: {
                 fillElement: true,
                 transparentBG: true
@@ -73,7 +72,7 @@ export class CalculatorContainer extends DivElement {
         this.calculatorHistory.setHistory(history)
     }
 
-    addKeyboard(buttonsData: IButtonData[]): void {
+    addKeyboard(buttonsData: IOperationsData[]): void {
         this.calculatorKeyboard = new CalculatorKeyboard({
             buttonsData,
             onEqual: this.onEqualButtonClicked.bind(this),
