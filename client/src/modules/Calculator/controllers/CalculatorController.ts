@@ -10,17 +10,10 @@ export class CalculatorController implements ICalculatorController {
     this.model = model
     this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this))
 
-    this.fetchDataAndSetModel()
-  }
-
-  private async fetchDataAndSetModel() {
-    this.model.setLoadingData(true)
-    const history = await calculatorAPI.getHistory()
-    const operations = await calculatorAPI.getOperations()
-
-    this.model.setHistory(history)
-    this.model.setOperations(operations)
-    this.model.setLoadingData(false)
+    this.model.setAsyncData({
+      [CalculatorModelEvent.HistoryChanged]: () => calculatorAPI.getHistory(),
+      [CalculatorModelEvent.ButtonsDataGenerated]: () => calculatorAPI.getOperations()
+    })
   }
 
   private async calculateExpression(expression: string): Promise<void> {

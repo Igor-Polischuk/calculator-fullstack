@@ -4,6 +4,7 @@ import { Observer } from "@utilities/Observer/Observer";
 import { IAppError } from 'errors/AppError';
 import { IHistoryFormat, IOperationsData } from 'api/CalculatorAPI';
 
+type ISetAsyncDataParams = Record<CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>>
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
     private result: number | null = null
@@ -13,6 +14,29 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
     private loadingData: boolean = true
     private history: IHistoryFormat[] = []
     private buttons: IOperationsData[] = []
+
+    private eventSetterMap = {
+        [CalculatorModelEvent.ExpressionChanged]: this.setExpression,
+        [CalculatorModelEvent.ResultChanged]: this.setResult,
+        [CalculatorModelEvent.ErrorChanged]: this.setError,
+        [CalculatorModelEvent.FetchedResult]: this.setFetchingResult,
+        [CalculatorModelEvent.LoadingData]: this.setLoadingData,
+        [CalculatorModelEvent.ButtonsDataGenerated]: this.setOperations,
+        [CalculatorModelEvent.HistoryChanged]: this.setHistory,
+    };
+
+    async setAsyncData(params: Partial<ISetAsyncDataParams>): Promise<void> {
+        this.setLoadingData(true)
+        for (const [event, fetchCallback] of Object.entries(params) as [CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>][]) {
+            const data = await fetchCallback();
+            const setterMethod = this.eventSetterMap[event];
+
+            if (setterMethod) {
+                setterMethod.call(this, data as never)
+            }
+        }
+        this.setLoadingData(false)
+    }
 
     setResult(res: number): void {
         this.result = res
