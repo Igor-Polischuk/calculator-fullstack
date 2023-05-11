@@ -19,14 +19,12 @@ interface IRestAPIParams {
 }
 
 export class RestAPI<Endpoints> {
-    private baseURL: string;
+    readonly baseURL: string;
     private defaultHeaders: Record<string, string>;
-    private cache: Cache
 
     constructor(params: IRestAPIParams) {
         this.baseURL = params.baseURL;
         this.defaultHeaders = params.defaultHeaders;
-        this.cache = new Cache(params.baseURL)
     }
 
     protected async makeRequest<ResponseFormat>(params: IRequestParams<Endpoints>): Promise<ResponseFormat> {
@@ -34,23 +32,10 @@ export class RestAPI<Endpoints> {
         const method = params.requestOptions?.method || 'GET'
         const headers = { ...this.defaultHeaders, ...params.requestOptions?.headers }
         const body = JSON.stringify(params.requestOptions?.body)
-        const cacheKey = `${url}::${method}::${body}`
-
-        if (params.cacheRequest && this.cache.hasItem(cacheKey)) {
-            return this.cache.getItem<ResponseFormat>(cacheKey)!
-        }
 
         const response = await makeRequest<ResponseFormat>(url, {
             method, headers, body
         })
-
-        if (params.cacheRequest) {
-            this.cache.setItem({
-                key: cacheKey,
-                value: response,
-                ttl: params.cacheRequest
-            })
-        }
 
         return response
 

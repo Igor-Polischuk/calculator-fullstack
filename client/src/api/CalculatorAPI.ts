@@ -1,5 +1,6 @@
 import { AppError } from "errors/AppError"
 import { RestAPI } from "./RestAPI";
+import { cacheRequest } from "api/decorators/cacheRequest";
 
 export enum ApiEndpoint {
     Calculate = 'calculate',
@@ -50,10 +51,12 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
         return CalculatorAPI.instance;
     }
 
+    @cacheRequest({
+        ttl: 1000 * 60 * 60 * 60 * 72
+    })
     async calculateExpression(expression: string): Promise<number> {
         const response = await this.makeRequest<ICalculatorResponse<ICalculationData>>({
             endpoint: ApiEndpoint.Calculate,
-            cacheRequest: 1000 * 60 * 60 * 60 * 72,
             requestOptions: {
                 method: 'POST',
                 body: { expression }
@@ -67,10 +70,12 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
         return response.data.result
     }
 
+    @cacheRequest({
+        ttl: 1000 * 60 * 60 * 60 * 72
+    })
     async getOperations(): Promise<IOperationsData[]> {
         const response = await this.makeRequest<ICalculatorResponse<IOperationsData[]>>({
             endpoint: ApiEndpoint.Operations,
-            cacheRequest: 1000 * 60 * 60 * 60 * 120
         })
 
         return response.data
