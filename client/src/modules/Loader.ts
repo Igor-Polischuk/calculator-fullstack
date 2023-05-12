@@ -17,11 +17,21 @@ export class Loader extends DivElement {
     private loader: Span
 
     constructor(params?: ILoaderParams) {
-        const fullscreenClass = params?.fullscreen ? 'fullscreen' : ''
-        const fillElementClass = params?.fillElement ? 'fill-element' : ''
-        const transparentBG = params?.transparentBG ? 'transparent-bg' : ''
 
-        super({ classNames: `loader-wrapper ${fullscreenClass} ${fillElementClass} ${transparentBG}`, id: 'loader' })
+        const classList = ['loader-wrapper'];
+        const classNames: Record<string, string> = {
+            fullscreen: 'fullscreen',
+            fillElement: 'fill-element',
+            transparentBG: 'transparent-bg'
+        };
+
+        for (const [key, value] of Object.entries(params || {})) {
+            if (value && classNames[key]) {
+                classList.push(classNames[key]);
+            }
+        }
+
+        super({ classNames: classList.join(' '), id: 'loader' })
         this.loader = new Span({ classNames: `loader` })
 
         this.append(this.loader)
