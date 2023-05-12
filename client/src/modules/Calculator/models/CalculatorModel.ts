@@ -1,7 +1,7 @@
 import { ModelAllowedEvents, ICalculatorModel, } from '../interfaces/ICalculator';
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
-import { IAppError } from 'errors/AppError';
+import { AppError, IAppError } from 'errors/AppError';
 import { IHistoryFormat, IOperationsData } from 'api/CalculatorAPI';
 
 type ISetAsyncDataParams = Record<CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>>
@@ -28,11 +28,16 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
     async setAsyncData(params: Partial<ISetAsyncDataParams>): Promise<void> {
         this.setLoadingData(true)
         for (const [event, fetchCallback] of Object.entries(params) as [CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>][]) {
-            const data = await fetchCallback();
-            const setterMethod = this.eventSetterMap[event];
+            try {
+                const data = await fetchCallback();
+                const setterMethod = this.eventSetterMap[event];
 
-            if (setterMethod) {
-                setterMethod.call(this, data as never)
+                if (setterMethod) {
+                    setterMethod.call(this, data as never)
+                }
+            } catch (error: any) {
+                const appError = AppError.getErrorFrom(error)
+                this.setError(appError as AppError)
             }
         }
         this.setLoadingData(false)
