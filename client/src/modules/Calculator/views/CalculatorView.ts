@@ -20,7 +20,7 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.showCalculationError(error)
         })
 
-        model.subscribe(CalculatorModelEvent.ButtonsDataGenerated, buttonData => {
+        model.subscribe(CalculatorModelEvent.ButtonsDataChanged, buttonData => {
             this.calculatorContainer.addKeyboard(buttonData)
         })
 

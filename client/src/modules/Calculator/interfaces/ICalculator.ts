@@ -10,7 +10,7 @@ export type ModelAllowedEvents = {
     [CalculatorModelEvent.FetchedResult]: boolean
     [CalculatorModelEvent.LoadingData]: boolean
     [CalculatorModelEvent.HistoryChanged]: IHistoryFormat[]
-    [CalculatorModelEvent.ButtonsDataGenerated]: IOperationsData[]
+    [CalculatorModelEvent.ButtonsDataChanged]: IOperationsData[]
 };
 
 type ISetAsyncDataParams = Record<CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>>

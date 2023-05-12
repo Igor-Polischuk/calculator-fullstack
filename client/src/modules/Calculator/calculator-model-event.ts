@@ -5,5 +5,5 @@ export enum CalculatorModelEvent {
     FetchedResult = 'isFetchingResult',
     LoadingData = 'loadingData',
     HistoryChanged = 'history',
-    ButtonsDataGenerated = 'buttons'
+    ButtonsDataChanged = 'buttons'
 }

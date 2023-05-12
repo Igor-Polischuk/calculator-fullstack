@@ -12,7 +12,7 @@ export class CalculatorController implements ICalculatorController {
 
     this.model.setAsyncData({
       [CalculatorModelEvent.HistoryChanged]: () => calculatorAPI.getHistory(),
-      [CalculatorModelEvent.ButtonsDataGenerated]: () => calculatorAPI.getOperations()
+      [CalculatorModelEvent.ButtonsDataChanged]: () => calculatorAPI.getOperations()
     })
   }
 

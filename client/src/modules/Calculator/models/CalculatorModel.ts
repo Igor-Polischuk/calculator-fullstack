@@ -21,7 +21,7 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
         [CalculatorModelEvent.ErrorChanged]: this.setError,
         [CalculatorModelEvent.FetchedResult]: this.setFetchingResult,
         [CalculatorModelEvent.LoadingData]: this.setLoadingData,
-        [CalculatorModelEvent.ButtonsDataGenerated]: this.setOperations,
+        [CalculatorModelEvent.ButtonsDataChanged]: this.setOperations,
         [CalculatorModelEvent.HistoryChanged]: this.setHistory,
     };
 
@@ -68,7 +68,7 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
 
     setOperations(operations: IOperationsData[]): void {
         this.buttons = operations
-        this.notifyAll(CalculatorModelEvent.ButtonsDataGenerated, operations)
+        this.notifyAll(CalculatorModelEvent.ButtonsDataChanged, operations)
     }
 
     setHistory(history: IHistoryFormat[]): void {
