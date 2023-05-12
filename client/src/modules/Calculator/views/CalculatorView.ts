@@ -32,7 +32,7 @@ export class CalculatorView implements ICalculatorView {
             if (loading.loadingEvents.includes(CalculatorModelEvent.ResultChanged)) {
                 this.calculatorContainer.calculationLoading(loading.loading)
             } else {
-                this.calculatorContainer.processLoading(loading.loading)
+                this.calculatorContainer.processDataLoading(loading.loading)
             }
 
         })

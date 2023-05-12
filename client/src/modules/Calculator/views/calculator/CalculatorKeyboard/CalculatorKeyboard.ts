@@ -31,6 +31,12 @@ export class CalculatorKeyboard extends DivElement {
         this.initButtonsListeners()
     }
 
+    toggleKeyboardActivation(isDisabled: boolean): void {
+        this.buttons.getAll().forEach(button => {
+            button.domElement.disabled = isDisabled
+        })
+    }
+
 
     private createButtons(operationsData: IOperationsData[]): Button[] {
         const buttonsData = generateButtonsData(operationsData)
@@ -46,6 +52,8 @@ export class CalculatorKeyboard extends DivElement {
 
         return buttons
     }
+
+
 
     private initButtonsListeners(): void {
         this.buttons.addClickListenersByType(ButtonType.Char, ({ button }) => {

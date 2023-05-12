@@ -47,7 +47,7 @@ export class CalculatorContainer extends DivElement {
         this.calculatorDisplay.showError(error)
     }
 
-    processLoading(loading: boolean): void {
+    processDataLoading(loading: boolean): void {
         Loader.addLoaderByLoading({
             loading,
             component: this,
@@ -58,6 +58,7 @@ export class CalculatorContainer extends DivElement {
     }
 
     calculationLoading(loading: boolean): void {
+        this.calculatorKeyboard?.toggleKeyboardActivation(loading)
         Loader.addLoaderByLoading({
             loading,
             component: this.calculatorDisplay,
