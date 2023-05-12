@@ -17,18 +17,8 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private async calculateExpression(expression: string): Promise<void> {
-    this.model.setFetchingResult(true)
-    const formattedExpression = formatExpression(expression)
-
-    try {
-      const result = await calculatorAPI.calculateExpression(formattedExpression)
-      this.model.setResult(result)
-
-    } catch (error: any) {
-      const appError = AppError.getErrorFrom(error)
-      this.model.setError(appError as AppError)
-    }
-
-    this.model.setFetchingResult(false)
+    this.model.setAsyncData({
+      [CalculatorModelEvent.ResultChanged]: () => calculatorAPI.calculateExpression(expression)
+    })
   }
 }

@@ -24,17 +24,17 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.addKeyboard(buttonData)
         })
 
-        model.subscribe(CalculatorModelEvent.FetchedResult, loading => {
-
-            this.calculatorContainer.calculationLoading(loading)
-        })
-
         model.subscribe(CalculatorModelEvent.HistoryChanged, history => {
             this.calculatorContainer.updateHistory(history)
         })
 
         model.subscribe(CalculatorModelEvent.LoadingData, loading => {
-            this.calculatorContainer.processLoading(loading)
+            if (loading.loadingEvents.includes(CalculatorModelEvent.ResultChanged)) {
+                this.calculatorContainer.calculationLoading(loading.loading)
+            } else {
+                this.calculatorContainer.processLoading(loading.loading)
+            }
+
         })
 
         const root = document.querySelector('.container')!

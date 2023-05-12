@@ -22,7 +22,9 @@
         "strict": true,
         "noImplicitAny": true,
         "strictNullChecks": true,
+        "experimentalDecorators": true
     },
+    "suppressExperimentalDecorators": true,
     "include": ["src/**/*"],
     "exclude": ["node_modules"],
     "lib": ["esnext"],

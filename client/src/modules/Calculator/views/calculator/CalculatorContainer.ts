@@ -60,10 +60,9 @@ export class CalculatorContainer extends DivElement {
     calculationLoading(loading: boolean): void {
         Loader.addLoaderByLoading({
             loading,
-            component: this,
+            component: this.calculatorDisplay,
             loadingOptions: {
                 fillElement: true,
-                transparentBG: true
             }
         })
     }

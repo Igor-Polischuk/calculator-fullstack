@@ -1,4 +1,4 @@
-import { ModelAllowedEvents, ICalculatorModel, } from '../interfaces/ICalculator';
+import { ModelAllowedEvents, ICalculatorModel, ILoadingData, } from '../interfaces/ICalculator';
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
 import { AppError, IAppError } from 'errors/AppError';
@@ -6,12 +6,12 @@ import { IHistoryFormat, IOperationsData } from 'api/CalculatorAPI';
 
 type ISetAsyncDataParams = Record<CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>>
 
+
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
     private result: number | null = null
     private expression: string | null = null
     private error: IAppError | null = null
-    private isFetchingResult: boolean = false
-    private loadingData: boolean = true
+    private loadingData: ILoadingData = { loading: false, loadingEvents: [] }
     private history: IHistoryFormat[] = []
     private buttons: IOperationsData[] = []
 
@@ -19,14 +19,18 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
         [CalculatorModelEvent.ExpressionChanged]: this.setExpression,
         [CalculatorModelEvent.ResultChanged]: this.setResult,
         [CalculatorModelEvent.ErrorChanged]: this.setError,
-        [CalculatorModelEvent.FetchedResult]: this.setFetchingResult,
         [CalculatorModelEvent.LoadingData]: this.setLoadingData,
         [CalculatorModelEvent.ButtonsDataChanged]: this.setOperations,
         [CalculatorModelEvent.HistoryChanged]: this.setHistory,
     };
 
     async setAsyncData(params: Partial<ISetAsyncDataParams>): Promise<void> {
-        this.setLoadingData(true)
+        const loadingEvents = (Object.keys(params) as (CalculatorModelEvent)[])
+        this.setLoadingData({
+            loading: true,
+            loadingEvents
+        })
+
         for (const [event, fetchCallback] of Object.entries(params) as [CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>][]) {
             try {
                 const data = await fetchCallback();
@@ -39,8 +43,16 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
                 const appError = AppError.getErrorFrom(error)
                 this.setError(appError as AppError)
             }
+
+            const a = {
+                loading: true,
+                events: Object.keys(params)
+            }
         }
-        this.setLoadingData(false)
+        this.setLoadingData({
+            loading: false,
+            loadingEvents
+        })
     }
 
     setResult(res: number): void {
@@ -61,12 +73,7 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
         this.notifyAll(CalculatorModelEvent.ErrorChanged, errors)
     }
 
-    setFetchingResult(loading: boolean): void {
-        this.isFetchingResult = loading
-        this.notifyAll(CalculatorModelEvent.FetchedResult, loading)
-    }
-
-    setLoadingData(loading: boolean): void {
+    setLoadingData(loading: ILoadingData): void {
         this.loadingData = loading
         this.notifyAll(CalculatorModelEvent.LoadingData, loading)
     }
