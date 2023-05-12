@@ -17,10 +17,12 @@ export type ModelAllowedEvents = {
     [CalculatorModelEvent.ButtonsDataChanged]: IOperationsData[]
 };
 
-type ISetAsyncDataParams = Record<CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>>
+type ISetAsyncDataParams<T extends ModelAllowedEvents> = {
+    [K in keyof T]?: () => Promise<T[K]>
+}
 
 export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
-    setAsyncData(params: Partial<ISetAsyncDataParams>): void
+    setAsyncData(params: Partial<ISetAsyncDataParams<ModelAllowedEvents>>): void
     setResult: (result: number) => void
     setExpression: (expression: string) => void
     setError: (errors: IAppError) => void

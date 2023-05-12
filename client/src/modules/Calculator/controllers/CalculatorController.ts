@@ -18,7 +18,7 @@ export class CalculatorController implements ICalculatorController {
 
   private async calculateExpression(expression: string): Promise<void> {
     this.model.setAsyncData({
-      [CalculatorModelEvent.ResultChanged]: () => calculatorAPI.calculateExpression(expression)
+      [CalculatorModelEvent.ResultChanged]: async () => calculatorAPI.calculateExpression(expression)
     })
   }
 }
