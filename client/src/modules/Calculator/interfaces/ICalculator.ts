@@ -17,7 +17,7 @@ export type ModelAllowedEvents = {
     [CalculatorModelEvent.ButtonsDataChanged]: IOperationsData[]
 };
 
-type ISetAsyncDataParams<T extends ModelAllowedEvents> = {
+export type ISetAsyncDataParams<T extends ModelAllowedEvents> = {
     [K in keyof T]?: () => Promise<T[K]>
 }
 
