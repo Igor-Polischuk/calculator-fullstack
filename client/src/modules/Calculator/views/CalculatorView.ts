@@ -18,11 +18,11 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.showCalculationResult(result)
         })
         model.subscribe(CalculatorModelEvent.ErrorChanged, (error) => {
-            if (error.type === ErrorType.ServerError || error.type === ErrorType.UnexpectedError) {
-                this.calculatorContainer.showServerError(error)
-            } else {
-                this.calculatorContainer.showCalculationError(error)
-            }
+            const { type } = error;
+            const action = type === ErrorType.ServerError || type === ErrorType.UnexpectedError ?
+                "showServerError" :
+                "showCalculationError";
+            this.calculatorContainer[action](error);
         })
 
         model.subscribe(CalculatorModelEvent.ButtonsDataChanged, buttonData => {
@@ -34,11 +34,11 @@ export class CalculatorView implements ICalculatorView {
         })
 
         model.subscribe(CalculatorModelEvent.LoadingData, loading => {
-            if (loading.loadingEvents.includes(CalculatorModelEvent.ResultChanged)) {
-                this.calculatorContainer.calculationLoading(loading.loading)
-            } else {
-                this.calculatorContainer.processDataLoading(loading.loading)
-            }
+            const { loadingEvents } = loading;
+            const action = loadingEvents.includes(CalculatorModelEvent.ResultChanged) ?
+                "calculationLoading" :
+                "processDataLoading";
+            this.calculatorContainer[action](loading.loading);
         })
 
         const root = document.querySelector('.container')!
