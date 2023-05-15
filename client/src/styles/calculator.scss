@@ -147,6 +147,20 @@
     animation: showup 0.2s ease-in-out 1;
 }
 
+.server-error {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: $bg-color;
+    z-index: 100;
+}
+
 @keyframes showup {
     from {
         opacity: 0;

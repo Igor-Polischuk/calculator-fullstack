@@ -5,6 +5,7 @@ import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
 import { IHistoryFormat, IOperationsData } from 'api/CalculatorAPI';
 import { DivElement } from '@modules/Elements/DivElement';
 import { Loader } from '@modules/Loader';
+import { ServerErrorDisplay } from './ServerErrorDisplay';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
@@ -45,6 +46,10 @@ export class CalculatorContainer extends DivElement {
 
     showCalculationError(error: IAppError): void {
         this.calculatorDisplay.showError(error)
+    }
+
+    showServerError(error: IAppError): void {
+        this.append(new ServerErrorDisplay(error))
     }
 
     processDataLoading(loading: boolean): void {

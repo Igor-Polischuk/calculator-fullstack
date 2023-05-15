@@ -1,6 +1,7 @@
 import { CalculatorContainer } from './calculator/CalculatorContainer';
 import { ICalculatorModel, ICalculatorView } from "@modules/Calculator/interfaces/ICalculator";
 import { CalculatorModelEvent } from "../calculator-model-event";
+import { ErrorType } from 'errors/error-type';
 
 
 export class CalculatorView implements ICalculatorView {
@@ -17,7 +18,11 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.showCalculationResult(result)
         })
         model.subscribe(CalculatorModelEvent.ErrorChanged, (error) => {
-            this.calculatorContainer.showCalculationError(error)
+            if (error.type === ErrorType.ServerError || error.type === ErrorType.UnexpectedError) {
+                this.calculatorContainer.showServerError(error)
+            } else {
+                this.calculatorContainer.showCalculationError(error)
+            }
         })
 
         model.subscribe(CalculatorModelEvent.ButtonsDataChanged, buttonData => {
@@ -34,7 +39,6 @@ export class CalculatorView implements ICalculatorView {
             } else {
                 this.calculatorContainer.processDataLoading(loading.loading)
             }
-
         })
 
         const root = document.querySelector('.container')!
