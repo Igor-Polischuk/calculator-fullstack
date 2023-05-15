@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import { getHistory, getOperations, calculate } from "../controllers";
 import { expressionValidation } from "../middlewares/expressionValidationMiddleware";
+import { CalculatorController } from "../controllers/calculator-controller";
 
 const calculatorRouter = Router()
 
-calculatorRouter.post('/calculate', expressionValidation, calculate)
+calculatorRouter.post('/calculate', expressionValidation, CalculatorController.calculate)
 
-calculatorRouter.get('/operations', getOperations)
-calculatorRouter.get('/history', getHistory)
+calculatorRouter.get('/operations', CalculatorController.getOperations)
+calculatorRouter.get('/history', CalculatorController.getHistory)
 
 export { calculatorRouter }

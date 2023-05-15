@@ -1,7 +1,5 @@
 import { ICalculatorController, ICalculatorModel } from '@modules/Calculator/interfaces/ICalculator';
 import { CalculatorModelEvent } from '../calculator-model-event';
-import { AppError } from 'errors/AppError';
-import { formatExpression } from '@utilities/formatText/formatExpression';
 import { calculatorAPI } from 'api/CalculatorAPI';
 
 export class CalculatorController implements ICalculatorController {
