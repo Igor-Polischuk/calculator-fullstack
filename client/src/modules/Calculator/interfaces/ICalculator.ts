@@ -22,7 +22,6 @@ export type ISetAsyncDataParams<T extends ModelAllowedEvents> = {
 }
 
 export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
-    setAsyncData(params: Partial<ISetAsyncDataParams<ModelAllowedEvents>>): void
     setResult: (result: number) => void
     setExpression: (expression: string) => void
     setError: (errors: IAppError) => void

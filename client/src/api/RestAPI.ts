@@ -4,7 +4,6 @@ import { makeRequest } from "./makeRequest"
 
 interface IRequestParams<Endpoints> {
     endpoint?: Endpoints
-    cacheRequest?: number
     queryParams?: QueryParams
     requestOptions?: {
         method?: 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'CONNECT' | 'PATCH' | 'OPTIONS' | 'TRACE'

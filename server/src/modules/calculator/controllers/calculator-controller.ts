@@ -33,7 +33,6 @@ export class CalculatorController {
             const responseFormat = new ResponseFormatter({ data }).json()
 
             await calculatorHistoryDAO.setItem(data)
-
             res.send(responseFormat)
         } catch (error) {
             next(error)

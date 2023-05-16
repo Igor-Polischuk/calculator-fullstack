@@ -1,7 +1,7 @@
-import { ModelAllowedEvents, ICalculatorModel, ILoadingData, ISetAsyncDataParams, } from '../interfaces/ICalculator';
+import { ModelAllowedEvents, ICalculatorModel, ILoadingData } from '../interfaces/ICalculator';
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
-import { AppError, IAppError } from 'errors/AppError';
+import { IAppError } from 'errors/AppError';
 import { IHistoryFormat, IOperationsData } from 'api/CalculatorAPI';
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
@@ -11,44 +11,6 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
     private loadingData: ILoadingData = { loading: false, loadingEvents: [] }
     private history: IHistoryFormat[] = []
     private buttons: IOperationsData[] = []
-
-    private eventSetterMap = {
-        [CalculatorModelEvent.ExpressionChanged]: this.setExpression,
-        [CalculatorModelEvent.ResultChanged]: this.setResult,
-        [CalculatorModelEvent.ErrorChanged]: this.setError,
-        [CalculatorModelEvent.LoadingData]: this.setLoadingData,
-        [CalculatorModelEvent.ButtonsDataChanged]: this.setOperations,
-        [CalculatorModelEvent.HistoryChanged]: this.setHistory,
-    };
-
-    async setAsyncData(params: Partial<ISetAsyncDataParams<ModelAllowedEvents>>): Promise<void> {
-        const loadingEvents = (Object.keys(params) as (CalculatorModelEvent)[])
-        this.setLoadingData({
-            loading: true,
-            loadingEvents
-        })
-
-        for (const [event, fetchCallback] of Object.entries(params) as [CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>][]) {
-            try {
-                const data = await fetchCallback();
-                const setterMethod = this.eventSetterMap[event]
-                setterMethod.call(this, data as never)
-
-            } catch (error: any) {
-                const appError = AppError.getErrorFrom(error)
-                this.setError(appError as AppError)
-            }
-
-            const a = {
-                loading: true,
-                events: Object.keys(params)
-            }
-        }
-        this.setLoadingData({
-            loading: false,
-            loadingEvents
-        })
-    }
 
     setResult(res: number): void {
         this.result = res

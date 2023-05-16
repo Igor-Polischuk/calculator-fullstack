@@ -51,9 +51,9 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
         return CalculatorAPI.instance;
     }
 
-    // @cacheRequest({
-    //     ttl: 1000 * 60 * 60 * 60 * 72
-    // })
+    @cacheRequest({
+        ttl: 1000 * 60 * 60 * 60 * 72
+    })
     async calculateExpression(expression: string): Promise<number> {
         const response = await this.makeRequest<ICalculatorResponse<ICalculationData>>({
             endpoint: ApiEndpoint.Calculate,
