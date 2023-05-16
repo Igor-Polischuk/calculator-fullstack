@@ -1,7 +1,7 @@
 import { IObserver } from "@utilities/Observer/IObserver"
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { IAppError } from "errors/AppError";
-import { IHistoryFormat, IOperationsData } from "@modules/Calculator/calculator-api/CalculatorAPI";
+import { IHistoryFormat, IOperationsData } from "./ICalculatorAPI";
 
 export interface ILoadingData {
     loading: boolean

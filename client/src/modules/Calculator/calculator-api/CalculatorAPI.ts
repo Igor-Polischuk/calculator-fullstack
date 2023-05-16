@@ -1,35 +1,6 @@
-import { AppError } from "errors/AppError"
 import { cacheRequest } from "@utilities/decorators/cacheRequest";
 import { RestAPI } from "@utilities/api/RestAPI";
-
-export enum ApiEndpoint {
-    Calculate = 'calculate',
-    Operations = 'operations',
-    History = 'history'
-}
-
-
-type ICalculatorResponse<DataType> = {
-    success: boolean;
-    status: number;
-    error: AppError;
-    data: DataType;
-};
-
-type ICalculationData = {
-    result: number;
-    expression: string;
-};
-
-export type IOperationsData = {
-    operation: string;
-    operationSymbol: string;
-};
-
-export type IHistoryFormat = {
-    expression: string;
-    result: number;
-};
+import { ApiEndpoint, ICalculationData, ICalculatorResponse, IHistoryFormat, IOperationsData } from "../interfaces/ICalculatorAPI";
 
 class CalculatorAPI extends RestAPI<ApiEndpoint> {
     private static instance: CalculatorAPI;
@@ -76,6 +47,9 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
     async getOperations(): Promise<IOperationsData[]> {
         const response = await this.makeRequest<ICalculatorResponse<IOperationsData[]>>({
             endpoint: ApiEndpoint.Operations,
+            requestOptions: {
+                method: 'GET'
+            }
         })
 
         return response.data
@@ -83,7 +57,10 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
 
     async getHistory(): Promise<IHistoryFormat[]> {
         const response = await this.makeRequest<ICalculatorResponse<{ history: IHistoryFormat[] }>>({
-            endpoint: ApiEndpoint.History
+            endpoint: ApiEndpoint.History,
+            requestOptions: {
+                method: 'GET'
+            }
         })
 
         return response.data.history

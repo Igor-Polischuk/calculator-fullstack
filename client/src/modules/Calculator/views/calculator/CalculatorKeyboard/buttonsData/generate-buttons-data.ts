@@ -1,5 +1,5 @@
 import { ButtonType } from "@modules/Calculator/interfaces/ButtonType"
-import { IOperationsData } from "@modules/Calculator/calculator-api/CalculatorAPI"
+import { IOperationsData } from "@modules/Calculator/interfaces/ICalculatorAPI"
 
 export interface IButtonData {
     classNames: string

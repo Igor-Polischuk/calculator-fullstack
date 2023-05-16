@@ -1,5 +1,5 @@
-import { RestAPI } from "api/RestAPI";
 import { Cache } from "@utilities/Cache/Cache";
+import { RestAPI } from "@utilities/api/RestAPI";
 
 interface ICacheParams {
     ttl: number

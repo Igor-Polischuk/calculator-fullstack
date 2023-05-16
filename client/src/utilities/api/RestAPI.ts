@@ -5,8 +5,8 @@ import { makeRequest } from "./makeRequest"
 interface IRequestParams<Endpoints> {
     endpoint?: Endpoints
     queryParams?: QueryParams
-    requestOptions?: {
-        method?: 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'CONNECT' | 'PATCH' | 'OPTIONS' | 'TRACE'
+    requestOptions: {
+        method: 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'CONNECT' | 'PATCH' | 'OPTIONS' | 'TRACE'
         headers?: HeadersInit
         body?: unknown
     }
@@ -28,7 +28,7 @@ export class RestAPI<Endpoints> {
 
     protected async makeRequest<ResponseFormat>(params: IRequestParams<Endpoints>): Promise<ResponseFormat> {
         const url = `${this.baseURL}${params.endpoint}${params.queryParams?.toString() || ''}`
-        const method = params.requestOptions?.method || 'GET'
+        const method = params.requestOptions.method
         const headers = { ...this.defaultHeaders, ...params.requestOptions?.headers }
         const body = JSON.stringify(params.requestOptions?.body)
 

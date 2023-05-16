@@ -2,10 +2,10 @@ import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
 import { IAppError } from 'errors/AppError';
 import { CalculatorHistory } from './CalculatorHistory/CalculatorHistory';
 import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
-import { IHistoryFormat, IOperationsData } from '@modules/Calculator/calculator-api/CalculatorAPI';
 import { DivElement } from '@modules/Elements/DivElement';
 import { Loader } from '@modules/Loader';
 import { ServerErrorDisplay } from './ServerErrorDisplay';
+import { IHistoryFormat, IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
