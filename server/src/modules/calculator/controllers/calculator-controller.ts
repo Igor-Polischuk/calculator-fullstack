@@ -1,9 +1,9 @@
-import { calculatorHistoryDAO } from "repositories/history-repository/CalculatorHistory";
 import { getOperationsList } from "../services/operations-list";
 import { matchedData } from "express-validator";
 import { NextFunction, Request, Response } from "express";
 import { calculateExpression } from "../services/expressionCalculation/ExpressionCalculatorService";
 import { ResponseFormatter } from "@utils/ResponseFormatter";
+import { calculatorHistoryDAO } from "../calculatorHistoryDAO";
 
 export class CalculatorController {
 
@@ -15,9 +15,8 @@ export class CalculatorController {
 
     static async getHistory(req: Request, res: Response, next: NextFunction) {
         try {
-            const historyData = await calculatorHistoryDAO.getAll()
-            const lastFive = historyData.slice(-5)
-            const responseJSON = new ResponseFormatter({ data: { history: lastFive } }).json()
+            const history = await calculatorHistoryDAO.countHistoryItems(5)
+            const responseJSON = new ResponseFormatter({ data: { history } }).json()
 
             res.send(responseJSON)
         } catch (error) {
@@ -32,6 +31,8 @@ export class CalculatorController {
             const result = calculateExpression(expression)
             const data = { result, expression }
             const responseFormat = new ResponseFormatter({ data }).json()
+
+            await calculatorHistoryDAO.setItem(data)
 
             res.send(responseFormat)
         } catch (error) {
