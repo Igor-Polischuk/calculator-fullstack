@@ -2,7 +2,7 @@ import { ModelAllowedEvents, ICalculatorModel, ILoadingData } from '../interface
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
 import { IAppError } from 'errors/AppError';
-import { IHistoryFormat, IOperationsData } from 'api/CalculatorAPI';
+import { IHistoryFormat, IOperationsData } from '@modules/Calculator/calculator-api/CalculatorAPI';
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
     private result: number | null = null

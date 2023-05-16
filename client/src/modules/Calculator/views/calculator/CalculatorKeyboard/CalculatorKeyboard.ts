@@ -2,7 +2,7 @@ import { ButtonList } from '@modules/Calculator/views/calculator/CalculatorKeybo
 import { Button } from '@modules/Elements/Button';
 import { ButtonType } from '@modules/Calculator/interfaces/ButtonType';
 import { DivElement } from '@modules/Elements/DivElement';
-import { IOperationsData } from 'api/CalculatorAPI';
+import { IOperationsData } from '@modules/Calculator/calculator-api/CalculatorAPI';
 import { generateButtonsData } from './buttonsData/generate-buttons-data';
 
 interface ICalculatorKeyboardOption {

@@ -1,6 +1,6 @@
 import { ICalculatorController, ICalculatorModel, ISetAsyncDataParams, ModelAllowedEvents } from '@modules/Calculator/interfaces/ICalculator';
 import { CalculatorModelEvent } from '../calculator-model-event';
-import { calculatorAPI } from 'api/CalculatorAPI';
+import { calculatorAPI } from '@modules/Calculator/calculator-api/CalculatorAPI';
 import { AppError } from 'errors/AppError';
 
 export class CalculatorController implements ICalculatorController {

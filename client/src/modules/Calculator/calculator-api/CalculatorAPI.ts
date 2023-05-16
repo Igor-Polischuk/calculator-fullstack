@@ -1,6 +1,6 @@
 import { AppError } from "errors/AppError"
-import { RestAPI } from "./RestAPI";
-import { cacheRequest } from "api/decorators/cacheRequest";
+import { cacheRequest } from "@utilities/decorators/cacheRequest";
+import { RestAPI } from "@utilities/api/RestAPI";
 
 export enum ApiEndpoint {
     Calculate = 'calculate',

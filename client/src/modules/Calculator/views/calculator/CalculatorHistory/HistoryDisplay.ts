@@ -2,7 +2,7 @@ import { Paragraph } from "@modules/Elements/Paragraph";
 import { Span } from "@modules/Elements/Span";
 import { UnorderedList } from "@modules/Elements/UList";
 import { replaceMathOperators } from "@utilities/formatText/replaceMathOperators";
-import { IHistoryFormat } from "api/CalculatorAPI";
+import { IHistoryFormat } from "@modules/Calculator/calculator-api/CalculatorAPI";
 
 interface IHistoryDisplayParams {
     onHistoryItemClick: (itemText: string) => void
