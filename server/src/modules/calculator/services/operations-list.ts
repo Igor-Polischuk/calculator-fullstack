@@ -1,6 +1,6 @@
 import { allowedActions, calculatorConfig } from "./expressionCalculation/calculator-config"
 
-interface IOperationsList {
+export interface IOperationsList {
     operationSymbol: string
     operation: string
 }
