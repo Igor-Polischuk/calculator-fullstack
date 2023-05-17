@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors'
 import bodyParser from 'body-parser';
 
-import { initCalculatorModule } from '@modules/calculator';
 import { errorHandler } from 'middlewares/errorHandlerMiddleware';
+import { AppModule } from '@modules/AppModule';
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use('/api/calculator', initCalculatorModule())
+app.use(AppModule.init('/api'))
 
 app.use(errorHandler)
 
