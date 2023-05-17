@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { matchedData } from "express-validator";
 
 import { HistoryService } from "../services/HistoryService.ts/HistoryService";
@@ -14,13 +14,14 @@ export class CalculatorController {
     }
 
     @responseHandler
-    static async getHistory(req: Request, res: Response, next: NextFunction) {
+    static async getHistory(req: Request, res: Response) {
         const history = await HistoryService.getLastFiveHistoryItems()
+
         return { history }
     }
 
     @responseHandler
-    static async calculate(req: Request, res: Response, next: NextFunction) {
+    static async calculate(req: Request, res: Response) {
         const { expression } = matchedData(req)
         const result = calculateExpression(expression)
 
