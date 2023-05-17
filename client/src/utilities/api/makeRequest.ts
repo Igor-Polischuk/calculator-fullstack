@@ -1,5 +1,7 @@
+import { HTTPMethods } from "./APITypes"
+
 interface IOptions {
-    method?: 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'CONNECT' | 'PATCH' | 'OPTIONS' | 'TRACE'
+    method?: HTTPMethods
     headers?: HeadersInit
     body?: string
 }

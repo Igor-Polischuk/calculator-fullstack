@@ -28,10 +28,8 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
     async calculateExpression(expression: string): Promise<number> {
         const response = await this.makeRequest<ICalculatorResponse<ICalculationData>>({
             endpoint: ApiEndpoint.Calculate,
-            requestOptions: {
-                method: 'POST',
-                body: { expression }
-            }
+            method: 'POST',
+            body: { expression }
         })
 
         if (!response.success) {
@@ -47,9 +45,7 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
     async getOperations(): Promise<IOperationsData[]> {
         const response = await this.makeRequest<ICalculatorResponse<IOperationsData[]>>({
             endpoint: ApiEndpoint.Operations,
-            requestOptions: {
-                method: 'GET'
-            }
+            method: 'GET'
         })
 
         return response.data
@@ -58,9 +54,7 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
     async getHistory(): Promise<IHistoryFormat[]> {
         const response = await this.makeRequest<ICalculatorResponse<{ history: IHistoryFormat[] }>>({
             endpoint: ApiEndpoint.History,
-            requestOptions: {
-                method: 'GET'
-            }
+            method: 'GET'
         })
 
         return response.data.history

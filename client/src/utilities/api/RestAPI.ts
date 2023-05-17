@@ -1,21 +1,5 @@
-import { QueryParams } from '@utilities/QueryParams/QueryParams';
-import { Cache } from '@utilities/Cache/Cache';
 import { makeRequest } from "./makeRequest"
-
-interface IRequestParams<Endpoints> {
-    endpoint?: Endpoints
-    queryParams?: QueryParams
-    requestOptions: {
-        method: 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'CONNECT' | 'PATCH' | 'OPTIONS' | 'TRACE'
-        headers?: HeadersInit
-        body?: unknown
-    }
-}
-
-interface IRestAPIParams {
-    baseURL: string
-    defaultHeaders: Record<string, string>;
-}
+import { IRequestParams, IRestAPIParams } from './APITypes';
 
 export class RestAPI<Endpoints> {
     readonly baseURL: string;
@@ -28,9 +12,9 @@ export class RestAPI<Endpoints> {
 
     protected async makeRequest<ResponseFormat>(params: IRequestParams<Endpoints>): Promise<ResponseFormat> {
         const url = `${this.baseURL}${params.endpoint}${params.queryParams?.toString() || ''}`
-        const method = params.requestOptions.method
-        const headers = { ...this.defaultHeaders, ...params.requestOptions?.headers }
-        const body = JSON.stringify(params.requestOptions?.body)
+        const method = params.method
+        const headers = { ...this.defaultHeaders, ...params?.headers }
+        const body = params.method === 'POST' || params.method === 'PUT' ? JSON.stringify(params.body) : undefined
 
         const response = await makeRequest<ResponseFormat>(url, {
             method, headers, body
