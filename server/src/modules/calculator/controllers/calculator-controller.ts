@@ -3,7 +3,7 @@ import { matchedData } from "express-validator";
 import { NextFunction, Request, Response } from "express";
 import { calculateExpression } from "../services/expressionCalculation/ExpressionCalculatorService";
 import { ResponseFormatter } from "@utils/ResponseFormatter";
-import { calculatorHistoryDAO } from "../calculatorHistoryDAO";
+import { HistoryService } from "../services/HistoryService.ts/HistoryService";
 
 export class CalculatorController {
 
@@ -15,7 +15,7 @@ export class CalculatorController {
 
     static async getHistory(req: Request, res: Response, next: NextFunction) {
         try {
-            const history = await calculatorHistoryDAO.countHistoryItems(5)
+            const history = await HistoryService.getLastFiveHistoryItems()
             const responseJSON = new ResponseFormatter({ data: { history } }).json()
 
             res.send(responseJSON)
@@ -32,7 +32,7 @@ export class CalculatorController {
             const data = { result, expression }
             const responseFormat = new ResponseFormatter({ data }).json()
 
-            await calculatorHistoryDAO.setItem(data)
+            await HistoryService.addHistoryItem(data)
             res.send(responseFormat)
         } catch (error) {
             next(error)
