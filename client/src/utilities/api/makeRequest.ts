@@ -6,7 +6,7 @@ interface IOptions {
     body?: string
 }
 
-export async function makeRequest<T>(url: string, options?: IOptions): Promise<T> {
+export async function makeRequest(url: string, options?: IOptions): Promise<unknown> {
     const response = await fetch(url, options)
-    return await response.json().catch((e) => { console.log(e) })
+    return response.json()
 }

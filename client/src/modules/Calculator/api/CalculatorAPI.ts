@@ -1,8 +1,8 @@
 import { cacheRequest } from "@utilities/decorators/cacheRequest";
 import { RestAPI } from "@utilities/api/RestAPI";
-import { ApiEndpoint, ICalculationData, ICalculatorResponse, IHistoryFormat, IOperationsData } from "../interfaces/ICalculatorAPI";
+import { ICalculationData, ICalculatorResponse, IHistoryFormat, IOperationsData } from "../interfaces/ICalculatorAPI";
 
-class CalculatorAPI extends RestAPI<ApiEndpoint> {
+class CalculatorAPI extends RestAPI {
     private static instance: CalculatorAPI;
 
     constructor() {
@@ -25,39 +25,39 @@ class CalculatorAPI extends RestAPI<ApiEndpoint> {
     @cacheRequest({
         ttl: 1000 * 60 * 60 * 60 * 72
     })
-    async calculateExpression(expression: string): Promise<number> {
-        const response = await this.makeRequest<ICalculatorResponse<ICalculationData>>({
-            endpoint: ApiEndpoint.Calculate,
+    async calculateExpression(expression: string): Promise<ICalculatorResponse<ICalculationData>> {
+        const response = await this.makeRequest({
+            endpoint: 'calculate',
             method: 'POST',
             body: { expression }
-        })
+        }) as ICalculatorResponse<ICalculationData>
 
         if (!response.success) {
             throw response.error
         }
 
-        return response.data.result
+        return response
     }
 
     @cacheRequest({
         ttl: 1000 * 60 * 60 * 60 * 72
     })
-    async getOperations(): Promise<IOperationsData[]> {
-        const response = await this.makeRequest<ICalculatorResponse<IOperationsData[]>>({
-            endpoint: ApiEndpoint.Operations,
+    async getOperations(): Promise<ICalculatorResponse<IOperationsData[]>> {
+        const response = await this.makeRequest({
+            endpoint: 'operations',
             method: 'GET'
-        })
+        }) as ICalculatorResponse<IOperationsData[]>
 
-        return response.data
+        return response
     }
 
-    async getHistory(): Promise<IHistoryFormat[]> {
-        const response = await this.makeRequest<ICalculatorResponse<{ history: IHistoryFormat[] }>>({
-            endpoint: ApiEndpoint.History,
+    async getHistory(): Promise<ICalculatorResponse<{ history: IHistoryFormat[] }>> {
+        const response = await this.makeRequest({
+            endpoint: 'history',
             method: 'GET'
-        })
+        }) as ICalculatorResponse<{ history: IHistoryFormat[] }>
 
-        return response.data.history
+        return response
     }
 }
 

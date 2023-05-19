@@ -1,11 +1,10 @@
 import { ICalculatorController, ICalculatorModel, ISetAsyncDataParams, ModelAllowedEvents } from '@modules/Calculator/interfaces/ICalculator';
 import { CalculatorModelEvent } from '../calculator-model-event';
-import { calculatorAPI } from '@modules/Calculator/calculator-api/CalculatorAPI';
+import { calculatorAPI } from '@modules/Calculator/api/CalculatorAPI';
 import { AppError } from 'errors/AppError';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
-
   private eventSetterMap
 
   constructor(model: ICalculatorModel) {
@@ -13,8 +12,8 @@ export class CalculatorController implements ICalculatorController {
     this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this))
 
     this.setAsyncData({
-      [CalculatorModelEvent.HistoryChanged]: () => calculatorAPI.getHistory(),
-      [CalculatorModelEvent.ButtonsDataChanged]: () => calculatorAPI.getOperations()
+      [CalculatorModelEvent.HistoryChanged]: async () => (await calculatorAPI.getHistory()).data.history,
+      [CalculatorModelEvent.ButtonsDataChanged]: async () => (await calculatorAPI.getOperations()).data
     })
 
     this.eventSetterMap = {
@@ -29,7 +28,7 @@ export class CalculatorController implements ICalculatorController {
 
   private async calculateExpression(expression: string): Promise<void> {
     this.setAsyncData({
-      [CalculatorModelEvent.ResultChanged]: () => calculatorAPI.calculateExpression(expression)
+      [CalculatorModelEvent.ResultChanged]: async () => (await calculatorAPI.calculateExpression(expression)).data.result
     })
   }
 
@@ -40,10 +39,13 @@ export class CalculatorController implements ICalculatorController {
       loadingEvents
     })
 
-    for (const [event, fetchCallback] of Object.entries(params) as [CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>][]) {
+    for (const [event, fetchCallback] of Object.entries(params) as
+      [CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>][]) {
       try {
         const data = await fetchCallback();
         const setterMethod = this.eventSetterMap[event]
+        console.log(data);
+
         setterMethod.call(this.model, data as never)
 
       } catch (error: any) {

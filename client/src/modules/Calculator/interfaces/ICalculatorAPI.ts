@@ -1,12 +1,5 @@
 import { AppError } from "errors/AppError";
 
-export enum ApiEndpoint {
-    Calculate = 'calculate',
-    Operations = 'operations',
-    History = 'history'
-}
-
-
 export type ICalculatorResponse<DataType> = {
     success: boolean;
     status: number;

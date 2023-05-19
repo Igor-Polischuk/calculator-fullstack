@@ -2,18 +2,18 @@ import { QueryParams } from "@utilities/QueryParams/QueryParams"
 
 export type HTTPMethods = 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'CONNECT' | 'PATCH' | 'OPTIONS' | 'TRACE'
 
-export interface IBaseRequestParams<Endpoints> {
+export interface IBaseRequestParams {
     method: HTTPMethods
-    endpoint?: Endpoints
+    endpoint?: string
     queryParams?: QueryParams
     headers?: HeadersInit
 }
 
-export type RequestWithBody<Endpoints> = IBaseRequestParams<Endpoints> & { method: 'PUT' | 'POST'; body: unknown };
+export type RequestWithBody = IBaseRequestParams & { method: 'PUT' | 'POST'; body: unknown };
 
-export type RequestWithoutBody<Endpoints> = IBaseRequestParams<Endpoints> & { method: Exclude<HTTPMethods, 'PUT' | 'POST'> };
+export type RequestWithoutBody = IBaseRequestParams & { method: Exclude<HTTPMethods, 'PUT' | 'POST'> };
 
-export type IRequestParams<Endpoints> = RequestWithBody<Endpoints> | RequestWithoutBody<Endpoints>;
+export type IRequestParams = RequestWithBody | RequestWithoutBody;
 
 export interface IRestAPIParams {
     baseURL: string

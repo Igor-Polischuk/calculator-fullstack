@@ -6,7 +6,7 @@ interface ICacheParams {
 }
 
 export function cacheRequest(params: ICacheParams) {
-    return function (target: RestAPI<any>, propertyKey: string, descriptor: PropertyDescriptor) {
+    return function (target: RestAPI, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
         const url = target.constructor().baseURL
         const cache = new Cache(url)
