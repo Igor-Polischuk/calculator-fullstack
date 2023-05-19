@@ -24,7 +24,10 @@ export class CalculatorController {
     static async calculate(req: Request, res: Response) {
         const { expression } = matchedData(req)
         const result = calculateExpression(expression)
+        const expressionResult = { result, expression }
 
-        return { result, expression }
+        HistoryService.addHistoryItem(expressionResult)
+
+        return expressionResult
     }
 }

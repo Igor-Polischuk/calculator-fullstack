@@ -5,9 +5,9 @@ import { CalculatorController } from "../controllers/calculator-controller";
 
 const calculatorRouter = Router()
 
-calculatorRouter.post('/calculate', expressionValidation, CalculatorController.calculate)
+calculatorRouter.post('/calculator/calculate', expressionValidation, CalculatorController.calculate)
 
-calculatorRouter.get('/operations', CalculatorController.getOperations)
-calculatorRouter.get('/history', CalculatorController.getHistory)
+calculatorRouter.get('/calculator/operations', CalculatorController.getOperations)
+calculatorRouter.get('/calculator/history', CalculatorController.getHistory)
 
 export { calculatorRouter }
