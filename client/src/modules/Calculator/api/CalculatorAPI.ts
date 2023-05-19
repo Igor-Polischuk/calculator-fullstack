@@ -8,13 +8,12 @@ class CalculatorAPI extends RestAPI {
 
     constructor() {
         super({
-            baseURL: 'http://localhost:3000/api/calculator/',
+            baseURL: process.env.CALCULATOR_API_URL!,
             defaultHeaders: {
                 'Content-Type': 'application/json'
             }
         })
     }
-
     static getInstance(): CalculatorAPI {
         if (!CalculatorAPI.instance) {
             CalculatorAPI.instance = new CalculatorAPI();
