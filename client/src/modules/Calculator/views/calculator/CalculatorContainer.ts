@@ -5,7 +5,7 @@ import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
 import { DivElement } from '@modules/Elements/DivElement';
 import { Loader } from '@modules/Loader';
 import { ServerErrorDisplay } from './ServerErrorDisplay';
-import { IHistoryFormat, IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
+import { IHistoryItem, IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
@@ -73,7 +73,7 @@ export class CalculatorContainer extends DivElement {
         })
     }
 
-    updateHistory(history: IHistoryFormat[]): void {
+    updateHistory(history: IHistoryItem[]): void {
         this.calculatorHistory.setHistory(history)
     }
 

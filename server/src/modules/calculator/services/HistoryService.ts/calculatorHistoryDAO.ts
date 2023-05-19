@@ -13,6 +13,7 @@ export interface IHistoryRepository {
 
 export class CalculatorHistoryDAO implements IHistoryRepository {
     private db: JsonDB<IHistoryItem>
+    private maxSize = 20
 
     constructor(db: JsonDB<IHistoryItem>) {
         this.db = db
@@ -33,7 +34,7 @@ export class CalculatorHistoryDAO implements IHistoryRepository {
     async setItem(item: IHistoryItem): Promise<void> {
         await this.db.setItem(item)
 
-        if (this.db.DBsize > 5) {
+        if (this.db.DBsize > this.maxSize) {
             await this.db.pop()
         }
     }

@@ -1,7 +1,7 @@
 import { IObserver } from "@utilities/Observer/IObserver"
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { IAppError } from "errors/AppError";
-import { IHistoryFormat, IOperationsData } from "./ICalculatorAPI";
+import { IHistoryFormat, IHistoryItem, IOperationsData } from "./ICalculatorAPI";
 
 export interface ILoadingData {
     loading: boolean
@@ -13,7 +13,7 @@ export type ModelAllowedEvents = {
     [CalculatorModelEvent.ExpressionChanged]: string
     [CalculatorModelEvent.ErrorChanged]: IAppError
     [CalculatorModelEvent.LoadingData]: ILoadingData
-    [CalculatorModelEvent.HistoryChanged]: IHistoryFormat[]
+    [CalculatorModelEvent.HistoryChanged]: IHistoryItem[]
     [CalculatorModelEvent.ButtonsDataChanged]: IOperationsData[]
 };
 
@@ -27,7 +27,7 @@ export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
     setError: (errors: IAppError) => void
     setLoadingData: (loading: ILoadingData) => void
     setOperations: (operations: IOperationsData[]) => void
-    setHistory: (history: IHistoryFormat[]) => void
+    setHistory: (history: IHistoryItem[]) => void
 }
 
 export interface ICalculatorView { }

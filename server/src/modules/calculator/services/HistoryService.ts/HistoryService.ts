@@ -1,11 +1,15 @@
 import { IHistoryItem, calculatorHistoryDAO } from "./calculatorHistoryDAO";
 
 export class HistoryService {
-    static async getLastFiveHistoryItems(): Promise<IHistoryItem[]> {
-        return await calculatorHistoryDAO.countHistoryItems(5)
+    static async getLastLastHistoryItems(count: number): Promise<IHistoryItem[]> {
+        return await calculatorHistoryDAO.countHistoryItems(count)
     }
 
     static async addHistoryItem(data: IHistoryItem): Promise<void> {
         await calculatorHistoryDAO.setItem(data)
+    }
+
+    static async getHistoryLength(): Promise<number> {
+        return (await calculatorHistoryDAO.getAll()).length
     }
 }

@@ -1,6 +1,7 @@
 import { cacheRequest } from "@utilities/decorators/cacheRequest";
 import { RestAPI } from "@utilities/api/RestAPI";
 import { ICalculationData, ICalculatorResponse, IHistoryFormat, IOperationsData } from "../interfaces/ICalculatorAPI";
+import { QueryParams } from "@utilities/QueryParams/QueryParams";
 
 class CalculatorAPI extends RestAPI {
     private static instance: CalculatorAPI;
@@ -51,11 +52,12 @@ class CalculatorAPI extends RestAPI {
         return response
     }
 
-    async getHistory(): Promise<ICalculatorResponse<{ history: IHistoryFormat[] }>> {
+    async getHistory(): Promise<ICalculatorResponse<IHistoryFormat>> {
         const response = await this.makeRequest({
             endpoint: 'history',
-            method: 'GET'
-        }) as ICalculatorResponse<{ history: IHistoryFormat[] }>
+            method: 'GET',
+            queryParams: new QueryParams({ limit: 5 })
+        }) as ICalculatorResponse<IHistoryFormat>
 
         return response
     }

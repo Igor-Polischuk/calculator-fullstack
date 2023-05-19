@@ -5,6 +5,7 @@ import { HistoryService } from "../services/HistoryService.ts/HistoryService";
 import { calculateExpression } from "../services/expressionCalculation/ExpressionCalculatorService";
 import { IOperationsList, getOperationsList } from "../services/operations-list";
 import { responseHandler } from "@utils/decorators/responseHandler";
+import { ListDataResponse } from "@utils/ListDataResponse";
 
 export class CalculatorController {
 
@@ -15,9 +16,16 @@ export class CalculatorController {
 
     @responseHandler
     static async getHistory(req: Request, res: Response) {
-        const history = await HistoryService.getLastFiveHistoryItems()
+        const data = matchedData(req)
+        const limit = Number(data.limit) || 5
 
-        return { history }
+        const history = await HistoryService.getLastLastHistoryItems(limit)
+        const historyList = new ListDataResponse({
+            items: history,
+            total: await HistoryService.getHistoryLength()
+        })
+
+        return historyList
     }
 
     @responseHandler

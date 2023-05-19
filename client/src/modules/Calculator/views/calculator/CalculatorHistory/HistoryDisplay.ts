@@ -1,4 +1,4 @@
-import { IHistoryFormat } from "@modules/Calculator/interfaces/ICalculatorAPI";
+import { IHistoryFormat, IHistoryItem } from "@modules/Calculator/interfaces/ICalculatorAPI";
 import { Paragraph } from "@modules/Elements/Paragraph";
 import { Span } from "@modules/Elements/Span";
 import { UnorderedList } from "@modules/Elements/UList";
@@ -6,7 +6,7 @@ import { replaceMathOperators } from "@utilities/formatText/replaceMathOperators
 
 interface IHistoryDisplayParams {
     onHistoryItemClick: (itemText: string) => void
-    history: IHistoryFormat[]
+    history: IHistoryItem[]
 }
 
 export class HistoryDisplay extends UnorderedList {
@@ -21,7 +21,7 @@ export class HistoryDisplay extends UnorderedList {
         this.appendHistoryItems(params.history)
     }
 
-    private appendHistoryItems(history: IHistoryFormat[]) {
+    private appendHistoryItems(history: IHistoryItem[]) {
         history.forEach(({ expression, result }) => {
             const expressionBlock = new Paragraph({ text: replaceMathOperators(expression), classNames: 'history-item' })
             expressionBlock.onClick(() => this.params.onHistoryItemClick(expression))

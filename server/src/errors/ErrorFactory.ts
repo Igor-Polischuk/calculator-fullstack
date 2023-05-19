@@ -15,6 +15,13 @@ export const ErrorFactory = {
             type: ErrorType.MissingParameter
         })
     },
+    IncorrectParameter: (message: string): AppError => {
+        return new AppError({
+            message: message,
+            status: 400,
+            type: ErrorType.BadRequestError
+        })
+    },
     CalculationError: (exceptionName: string, exceptionPlace: string): AppError => {
         return new AppError({
             message: `Expression contains ${exceptionName} in ${exceptionPlace}`,

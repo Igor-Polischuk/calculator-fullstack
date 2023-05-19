@@ -17,7 +17,12 @@ export type IOperationsData = {
     operationSymbol: string;
 };
 
-export type IHistoryFormat = {
+export type IHistoryItem = {
     expression: string;
     result: number;
+}
+
+export type IHistoryFormat = {
+    items: IHistoryItem[],
+    total: number
 };

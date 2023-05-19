@@ -2,14 +2,14 @@ import { ModelAllowedEvents, ICalculatorModel, ILoadingData } from '../interface
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
 import { IAppError } from 'errors/AppError';
-import { IHistoryFormat, IOperationsData } from '../interfaces/ICalculatorAPI';
+import { IHistoryFormat, IHistoryItem, IOperationsData } from '../interfaces/ICalculatorAPI';
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
     private result: number | null = null
     private expression: string | null = null
     private error: IAppError | null = null
     private loadingData: ILoadingData = { loading: false, loadingEvents: [] }
-    private history: IHistoryFormat[] = []
+    private history: IHistoryItem[] = []
     private buttons: IOperationsData[] = []
 
     setResult(res: number): void {
@@ -40,7 +40,7 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
         this.notifyAll(CalculatorModelEvent.ButtonsDataChanged, operations)
     }
 
-    setHistory(history: IHistoryFormat[]): void {
+    setHistory(history: IHistoryItem[]): void {
         this.history = history
         this.notifyAll(CalculatorModelEvent.HistoryChanged, history)
     }
