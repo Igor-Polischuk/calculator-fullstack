@@ -19,10 +19,10 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
 
     constructor(params: IPostgreSQLParams) {
         this.pool = new Pool({
-            password: 'root',
-            port: 5432,
-            user: 'admin',
-            host: 'localhost',
+            password: process.env.POSTGRES_PASSWORD,
+            port: Number(process.env.POSTGRES_PORT),
+            user: process.env.POSTGRES_USER,
+            host: process.env.POSTGRES_HOST,
         })
 
         this.tableName = params.tableName
