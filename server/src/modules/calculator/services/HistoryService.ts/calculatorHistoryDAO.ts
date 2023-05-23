@@ -1,4 +1,6 @@
 import { JsonDB } from "repositories/JsonDB"
+import { PostgreSQL } from "repositories/PostgreSQL"
+import { IDataBase } from "repositories/database"
 
 export interface IHistoryItem {
     expression: string,
@@ -12,10 +14,10 @@ export interface IHistoryRepository {
 }
 
 export class CalculatorHistoryDAO implements IHistoryRepository {
-    private db: JsonDB<IHistoryItem>
+    private db: IDataBase<IHistoryItem>
     private maxSize = 20
 
-    constructor(db: JsonDB<IHistoryItem>) {
+    constructor(db: IDataBase<IHistoryItem>) {
         this.db = db
     }
 
@@ -33,15 +35,24 @@ export class CalculatorHistoryDAO implements IHistoryRepository {
 
     async setItem(item: IHistoryItem): Promise<void> {
         await this.db.setItem(item)
+        const length = await this.db.getLength()
+        console.log(length)
 
-        if (this.db.DBsize > this.maxSize) {
+        if (length > this.maxSize) {
             await this.db.pop()
         }
     }
 }
 
-const db = new JsonDB<IHistoryItem>('./src/data/history.json')
+const jsonDB = new JsonDB<IHistoryItem>('./src/data/history.json')
+const postgresDB = new PostgreSQL<IHistoryItem>({
+    tableName: 'history',
+    fields: [
+        { name: 'expression', type: 'TEXT', constraints: ['NOT NULL'] },
+        { name: 'result', type: 'FLOAT', constraints: ['NOT NULL'] }
+    ]
+})
 
-const calculatorHistoryDAO = new CalculatorHistoryDAO(db)
+const calculatorHistoryDAO = new CalculatorHistoryDAO(postgresDB)
 
 export { calculatorHistoryDAO }

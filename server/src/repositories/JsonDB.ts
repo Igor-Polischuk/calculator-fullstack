@@ -1,23 +1,11 @@
 import fs from 'fs'
+import { DataTypeExtended, IDataBase, IGetItemParams } from './database';
 
-interface IBaseFields {
-    id: number
-}
-
-interface IGetItemParams<DataType> {
-    field: keyof DataType
-    value: unknown
-}
-
-type DataTypeExtended<DataType> = DataType & IBaseFields;
-
-export class JsonDB<DataType> {
+export class JsonDB<DataType> implements IDataBase<DataType>{
     private pathToFile
-    private size
 
     constructor(pathToFile: string, initialData?: DataTypeExtended<DataType>[]) {
         this.pathToFile = pathToFile
-        this.size = initialData?.length || 0
 
         if (!fs.existsSync(this.pathToFile)) {
             const data: DataType[] = initialData || [];
@@ -25,18 +13,17 @@ export class JsonDB<DataType> {
         }
     }
 
-    get DBsize() {
-        return this.size
+    async getLength(): Promise<number> {
+        return (await this.getAll()).length
     }
 
     async getAll(): Promise<DataTypeExtended<DataType>[]> {
         const contents = fs.readFileSync(this.pathToFile, 'utf8');
         const data: DataTypeExtended<DataType>[] = JSON.parse(contents);
-        this.size = data.length
         return data;
     }
 
-    async count(count: number): Promise<DataType[]> {
+    async count(count: number): Promise<DataTypeExtended<DataType>[]> {
         const data = await this.getAll()
         return data.slice(-count)
     }
@@ -44,7 +31,6 @@ export class JsonDB<DataType> {
     async deleteItem(params: IGetItemParams<DataTypeExtended<DataType>>): Promise<void> {
         const data = this.getAll()
         const newData = (await data).filter(DBItem => DBItem[params.field] !== params.value)
-        this.size = newData.length
         fs.writeFileSync(this.pathToFile, JSON.stringify(newData));
     }
 
@@ -54,7 +40,6 @@ export class JsonDB<DataType> {
             const newId = item.id - 1
             return { ...item, id: newId }
         })
-        this.size = newData.length
         fs.writeFileSync(this.pathToFile, JSON.stringify(newData));
     }
 
@@ -68,7 +53,6 @@ export class JsonDB<DataType> {
         const data = await this.getAll();
         const newItem = { ...item, id: data.length }
         const newData = [...data, newItem]
-        this.size = newData.length
         fs.writeFileSync(this.pathToFile, JSON.stringify(newData));
     }
 }

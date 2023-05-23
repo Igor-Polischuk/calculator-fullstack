@@ -34,7 +34,7 @@ export class CalculatorController {
         const result = calculateExpression(expression)
         const expressionResult = { result, expression }
 
-        HistoryService.addHistoryItem(expressionResult)
+        await HistoryService.addHistoryItem(expressionResult)
 
         return expressionResult
     }
