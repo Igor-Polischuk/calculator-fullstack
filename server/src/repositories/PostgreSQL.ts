@@ -23,7 +23,6 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
             port: 5432,
             user: 'admin',
             host: 'localhost',
-            database: 'calculator'
         })
 
         this.tableName = params.tableName

@@ -1,0 +1,45 @@
+version: '3.8'
+name: calculator
+services:
+  server:
+    restart: on-failure
+    container_name: calculator-server
+    build:
+      context: ../server
+      dockerfile: ../dev-config/Dockerfile.server
+    environment:
+      DATABASE_URL: postgres://user:pass@postgres:5432/db
+      NODE_ENV: development
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../server:/app
+    depends_on:
+      - postgres
+
+  # frontend:
+  #   restart: on-failure
+  #   container_name: calculator-frontend
+  #   build:
+  #     context: ../client
+  #     dockerfile: ../dev-config/Dockerfile.frontend
+  #   environment:
+  #     NODE_ENV: development
+  #     PORT: 8080
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ../client:/app
+  #   depends_on:
+  #     - server
+
+  postgres:
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=admin
+    image: postgres:15.3-alpine3.18
+
