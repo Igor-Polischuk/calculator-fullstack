@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { DataTypeExtended, IDataBase, IGetItemParams } from './database';
+import { DataTypeExtended, IDataBase, IGetItemParams } from './IDatabase';
 
 export class JsonDB<DataType> implements IDataBase<DataType>{
     private pathToFile

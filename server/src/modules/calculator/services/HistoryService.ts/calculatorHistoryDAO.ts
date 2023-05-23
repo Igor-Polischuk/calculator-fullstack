@@ -1,6 +1,6 @@
 import { JsonDB } from "repositories/JsonDB"
 import { PostgreSQL } from "repositories/PostgreSQL"
-import { IDataBase } from "repositories/database"
+import { IDataBase } from "repositories/IDatabase"
 
 export interface IHistoryItem {
     expression: string,
