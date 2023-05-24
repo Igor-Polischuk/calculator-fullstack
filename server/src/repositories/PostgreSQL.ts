@@ -22,7 +22,7 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
             password: process.env.POSTGRES_PASSWORD,
             port: Number(process.env.POSTGRES_PORT),
             user: process.env.POSTGRES_USER,
-            host: process.env.POSTGRES_HOST,
+            host: process.env.POSTGRES_HOST || 'localhost',
         })
 
         this.tableName = params.tableName
