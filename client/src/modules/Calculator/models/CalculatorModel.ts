@@ -8,7 +8,7 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
     private result: number | null = null
     private expression: string | null = null
     private error: IAppError | null = null
-    private loadingData: ILoadingData = { loading: false, loadingEvents: [] }
+    private loadingData: ILoadingData = { loading: false, loadingEvent: '' }
     private history: IHistoryItem[] = []
     private buttons: IOperation[] = []
 

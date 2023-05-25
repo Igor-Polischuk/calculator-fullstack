@@ -1,60 +1,50 @@
-import { ICalculatorController, ICalculatorModel, ISetAsyncDataParams, ModelAllowedEvents } from '@modules/Calculator/interfaces/ICalculator';
+import { ICalculatorController, ICalculatorModel } from '@modules/Calculator/interfaces/ICalculator';
 import { CalculatorModelEvent } from '../calculator-model-event';
 import { calculatorAPI } from '@modules/Calculator/api/CalculatorAPI';
-import { AppError } from 'common/AppError/AppError';
+import { DataLoadingService } from '@utilities/DataLoadingService';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
-  private eventSetterMap
+  private dataLoadingService: DataLoadingService
 
   constructor(model: ICalculatorModel) {
     this.model = model
     this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this))
 
-    this.setAsyncData({
-      [CalculatorModelEvent.HistoryChanged]: async () => (await calculatorAPI.getHistory()).data.items,
-      [CalculatorModelEvent.ButtonsDataChanged]: async () => (await calculatorAPI.getOperations()).data.items
+    this.dataLoadingService = new DataLoadingService({
+      changeErrorStateFunction: model.setError.bind(model),
+      loadingStateFunction: model.setLoadingData.bind(model),
+      defaultLoadingEvent: 'loadingData'
     })
 
-    this.eventSetterMap = {
-      [CalculatorModelEvent.ExpressionChanged]: this.model.setExpression,
-      [CalculatorModelEvent.ResultChanged]: this.model.setResult,
-      [CalculatorModelEvent.ErrorChanged]: this.model.setError,
-      [CalculatorModelEvent.LoadingData]: this.model.setLoadingData,
-      [CalculatorModelEvent.ButtonsDataChanged]: this.model.setOperations,
-      [CalculatorModelEvent.HistoryChanged]: this.model.setHistory,
-    };
+    this.dataLoadingService.setAsyncData({
+      callbacks: [this.loadHistory.bind(this), this.loadOperation.bind(this)]
+    })
+  }
+
+  private async loadHistory() {
+    const response = await calculatorAPI.getHistory()
+    const historyList = response.data.items
+
+    this.model.setHistory(historyList)
+  }
+
+  private async loadOperation() {
+    const response = await calculatorAPI.getOperations()
+    const operationList = response.data.items
+
+    this.model.setOperations(operationList)
   }
 
   private async calculateExpression(expression: string): Promise<void> {
-    this.setAsyncData({
-      [CalculatorModelEvent.ResultChanged]: async () => (await calculatorAPI.calculateExpression(expression)).data.result
-    })
-  }
+    this.dataLoadingService.setAsyncData({
+      callbacks: [async () => {
+        const resultResponse = await calculatorAPI.calculateExpression(expression)
+        const result = resultResponse.data.result
 
-  async setAsyncData(params: Partial<ISetAsyncDataParams<ModelAllowedEvents>>): Promise<void> {
-    const loadingEvents = (Object.keys(params) as (CalculatorModelEvent)[])
-    this.model.setLoadingData({
-      loading: true,
-      loadingEvents
-    })
-
-    for (const [event, fetchCallback] of Object.entries(params) as
-      [CalculatorModelEvent, () => Promise<ModelAllowedEvents[CalculatorModelEvent]>][]) {
-      try {
-        const data = await fetchCallback();
-        const setterMethod = this.eventSetterMap[event]
-
-        setterMethod.call(this.model, data as never)
-
-      } catch (error: any) {
-        const appError = AppError.getErrorFrom(error)
-        this.model.setError(appError as AppError)
-      }
-    }
-    this.model.setLoadingData({
-      loading: false,
-      loadingEvents
+        this.model.setResult(result)
+      }],
+      loadingEvent: 'resultLoading'
     })
   }
 }

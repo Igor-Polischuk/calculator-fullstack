@@ -5,7 +5,7 @@ import { IHistoryFormat, IHistoryItem, IOperation, IOperationsData } from "./ICa
 
 export interface ILoadingData {
     loading: boolean
-    loadingEvents: (CalculatorModelEvent)[]
+    loadingEvent: string
 }
 
 export type ModelAllowedEvents = {
@@ -16,10 +16,6 @@ export type ModelAllowedEvents = {
     [CalculatorModelEvent.HistoryChanged]: IHistoryItem[]
     [CalculatorModelEvent.ButtonsDataChanged]: IOperationsData['items']
 };
-
-export type ISetAsyncDataParams<T extends ModelAllowedEvents> = {
-    [K in keyof T]?: () => Promise<T[K]>
-}
 
 export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
     setResult: (result: number) => void
