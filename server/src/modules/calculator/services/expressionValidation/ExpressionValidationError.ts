@@ -1,5 +1,5 @@
-import { AppError } from "@errors/AppError";
-import { ErrorType } from "@errors/error-type";
+import { AppError } from "@utils/AppErrors/AppError";
+import { ErrorType } from "@utils/AppErrors/error-type";
 
 export interface IExpressionValidationError {
     message: string

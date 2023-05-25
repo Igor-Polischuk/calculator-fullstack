@@ -2,7 +2,7 @@ import { body } from "express-validator";
 
 import { validationMiddleware } from "middlewares/validationMiddleware";
 import { validateExpression } from "@modules/calculator/services/expressionValidation/validateExpression";
-import { ErrorFactory } from "@errors/ErrorFactory";
+import { ErrorFactory } from "@utils/AppErrors/ErrorFactory";
 
 export const expressionValidation = validationMiddleware([
     body('expression')

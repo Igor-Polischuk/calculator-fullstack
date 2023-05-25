@@ -1,4 +1,4 @@
-import { ErrorFactory } from "@errors/ErrorFactory";
+import { ErrorFactory } from "@utils/AppErrors/ErrorFactory";
 import { query } from "express-validator";
 import { validationMiddleware } from "middlewares/validationMiddleware";
 

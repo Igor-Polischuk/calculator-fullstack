@@ -3,7 +3,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser';
 
 import { errorHandler } from 'middlewares/errorHandlerMiddleware';
-import { initModules } from '@modules/initModules';
+import { initModules } from '@modules/index';
 
 const app = express();
 

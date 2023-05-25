@@ -1,4 +1,4 @@
-import { AppError } from '@errors/AppError';
+import { AppError } from '@utils/AppErrors/AppError';
 import { Pool } from "pg";
 import { DataTypeExtended, IDataBase, IGetItemParams } from './IDatabase';
 

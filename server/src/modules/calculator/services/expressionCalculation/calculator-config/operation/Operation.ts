@@ -1,4 +1,4 @@
-import { ErrorFactory } from "@errors/ErrorFactory";
+import { ErrorFactory } from "@utils/AppErrors/ErrorFactory";
 import { IExceptionObj } from "../exceptions";
 import { IOperation, IOperationParams, OperationType } from "./IOperations";
 

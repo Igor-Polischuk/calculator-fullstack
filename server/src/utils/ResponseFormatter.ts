@@ -1,4 +1,4 @@
-import { AppError } from "@errors/AppError"
+import { AppError } from "@utils/AppErrors/AppError"
 
 interface IResponseFormatterParams {
     status?: number

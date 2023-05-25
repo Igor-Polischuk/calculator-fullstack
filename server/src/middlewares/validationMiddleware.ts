@@ -1,4 +1,4 @@
-import { AppError } from "@errors/AppError";
+import { AppError } from "@utils/AppErrors/AppError";
 import { ResponseFormatter } from "@utils/ResponseFormatter";
 import { NextFunction, Request, Response } from "express";
 import { ValidationChain, validationResult } from "express-validator";
