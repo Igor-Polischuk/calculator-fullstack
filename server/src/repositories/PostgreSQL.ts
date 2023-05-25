@@ -50,7 +50,7 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
     async setItem(item: DataType): Promise<void> {
         const columns = Object.keys(item as object).join(', ')
         const values = Object.values(item as object).map(item => `'${item}'`).join(', ')
-        const query = `INSERT INTO ${this.tableName} (${columns}) VALUES (${values})`
+        const query = `INSERT INTO ${this.tableName} (${columns}, updated_at) VALUES (${values}, CURRENT_TIMESTAMP)`
 
         await this.query(query)
     }
@@ -68,7 +68,7 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
     }
 
     async pop(): Promise<void> {
-        const query = 'DELETE FROM history WHERE id = (SELECT MIN(id) FROM history)'
+        const query = `DELETE FROM history WHERE created_at = (SELECT MIN(created_at) FROM ${this.tableName})`
 
         await this.query(query)
     }
@@ -85,8 +85,11 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
 
     private async createTable(params: IPostgreSQLParams) {
         const id = { name: 'id', type: 'SERIAL', constraints: ['PRIMARY KEY '] }
-        const fieldsWithId = [...params.fields, id]
+        const created = { name: 'created_at', type: 'TIMESTAMP ', constraints: ['DEFAULT', 'CURRENT_TIMESTAMP'] }
+        const updated = { name: 'updated_at', type: 'TIMESTAMP ', constraints: ['DEFAULT', 'CURRENT_TIMESTAMP'] }
+        const fieldsWithId = [...params.fields, id, created, updated]
         const fieldsQuery = fieldsWithId.map(field => this.getFieldQuery(field)).join(', ');
+
         const query = `CREATE TABLE IF NOT EXISTS "${params.tableName}" (${fieldsQuery});`;
 
         await this.query(query)
