@@ -1,7 +1,7 @@
 import { CalculatorInput } from "../CalculatorInput/CalculatorInput";
 import { CalculatorOutput } from "../CalculatorOutput/CalculatorOutput";
-import { IAppError, IErrorRange } from "errors/AppError";
-import { DivElement } from "@modules/Elements/DivElement";
+import { IAppError, IErrorRange } from "common/AppError/AppError";
+import { DivElement } from "common/Elements/DivElement";
 
 export class CalculatorDisplay extends DivElement {
     private calculatorInput: CalculatorInput;

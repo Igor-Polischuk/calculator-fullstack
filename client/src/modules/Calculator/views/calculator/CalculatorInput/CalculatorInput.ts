@@ -1,6 +1,6 @@
-import { Input } from "@modules/Elements/Input";
+import { Input } from "common/Elements/Input";
 import { formatExpression } from "@utilities/formatText/formatExpression";
-import { DivElement } from "@modules/Elements/DivElement";
+import { DivElement } from "common/Elements/DivElement";
 
 export class CalculatorInput extends DivElement {
     private input: Input

@@ -1,5 +1,5 @@
 import { HistoryDisplay } from "./HistoryDisplay";
-import { DivElement } from "@modules/Elements/DivElement";
+import { DivElement } from "common/Elements/DivElement";
 
 interface IHistoryFormat {
     expression: string

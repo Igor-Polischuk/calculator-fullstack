@@ -1,7 +1,7 @@
 import { CalculatorContainer } from './calculator/CalculatorContainer';
 import { ICalculatorModel, ICalculatorView } from "@modules/Calculator/interfaces/ICalculator";
 import { CalculatorModelEvent } from "../calculator-model-event";
-import { ErrorType } from 'errors/error-type';
+import { ErrorType } from 'common/AppError/error-type';
 
 
 export class CalculatorView implements ICalculatorView {

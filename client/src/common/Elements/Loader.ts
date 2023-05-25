@@ -1,5 +1,5 @@
-import { DivElement } from "./Elements/DivElement";
-import { Span } from "./Elements/Span";
+import { DivElement } from "./DivElement";
+import { Span } from "./Span";
 
 interface ILoaderParams {
     fullscreen?: boolean

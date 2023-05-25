@@ -1,4 +1,4 @@
-import { ErrorType } from "errors/error-type";
+import { ErrorType } from "common/AppError/error-type";
 import { ErrorMessage } from "./output-components/ErrorMessage";
 import { HighlightedValidationErrors } from "./output-components/HighlightedErrors";
 

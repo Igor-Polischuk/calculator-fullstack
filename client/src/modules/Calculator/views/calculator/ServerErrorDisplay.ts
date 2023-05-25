@@ -1,6 +1,6 @@
-import { DivElement } from "@modules/Elements/DivElement";
-import { Paragraph } from "@modules/Elements/Paragraph";
-import { IAppError } from "errors/AppError";
+import { DivElement } from "common/Elements/DivElement";
+import { Paragraph } from "common/Elements/Paragraph";
+import { IAppError } from "common/AppError/AppError";
 
 export class ServerErrorDisplay extends DivElement {
     constructor(error: IAppError) {

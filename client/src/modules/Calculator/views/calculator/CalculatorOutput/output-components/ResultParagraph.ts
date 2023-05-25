@@ -1,6 +1,6 @@
-import { Span } from "@modules/Elements/Span";
+import { Span } from "common/Elements/Span";
 import { replaceMathOperators } from "@utilities/formatText/replaceMathOperators";
-import { Paragraph } from "@modules/Elements/Paragraph";
+import { Paragraph } from "common/Elements/Paragraph";
 
 interface IResultParagraphParams {
     expression: string

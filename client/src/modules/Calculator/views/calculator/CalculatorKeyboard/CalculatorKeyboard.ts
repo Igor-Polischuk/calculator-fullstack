@@ -1,7 +1,7 @@
 import { ButtonList } from '@modules/Calculator/views/calculator/CalculatorKeyboard/ButtonList';
-import { Button } from '@modules/Elements/Button';
+import { Button } from 'common/Elements/Button';
 import { ButtonType } from '@modules/Calculator/interfaces/ButtonType';
-import { DivElement } from '@modules/Elements/DivElement';
+import { DivElement } from 'common/Elements/DivElement';
 import { generateButtonsData } from './buttonsData/generate-buttons-data';
 import { IOperation, IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
 

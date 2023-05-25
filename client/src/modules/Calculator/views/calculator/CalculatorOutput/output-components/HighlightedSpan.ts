@@ -1,4 +1,4 @@
-import { Span } from "@modules/Elements/Span";
+import { Span } from "common/Elements/Span";
 import { uppercaseFirstLetter } from "@utilities/formatText/uppercaseFirstLetter";
 
 interface IHighlightedSpanProps {

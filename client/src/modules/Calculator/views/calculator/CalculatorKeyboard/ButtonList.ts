@@ -1,4 +1,4 @@
-import { Button } from '@modules/Elements/Button';
+import { Button } from 'common/Elements/Button';
 
 
 export class ButtonList<ButtonTypes extends string>{

@@ -1,9 +1,9 @@
-import { Span } from "@modules/Elements/Span";
+import { Span } from "common/Elements/Span";
 import { removeOverlappingRanges } from "@utilities/ranges/removeOverlappingRanges";
 import { IShowErrorInfoProps } from "../CalculatorOutput";
 import { HighlightedSpan } from "./HighlightedSpan";
-import { IAppError, IErrorRange } from "errors/AppError";
-import { Paragraph } from "@modules/Elements/Paragraph";
+import { IAppError, IErrorRange } from "common/AppError/AppError";
+import { Paragraph } from "common/Elements/Paragraph";
 
 interface IHighlightErrorsReduceResult {
     lastErrorIndex: number

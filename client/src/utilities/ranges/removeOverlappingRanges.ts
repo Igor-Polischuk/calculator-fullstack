@@ -1,4 +1,4 @@
-import { IErrorRange } from "errors/AppError";
+import { IErrorRange } from "common/AppError/AppError";
 
 export function removeOverlappingRanges(ranges: IErrorRange[]): IErrorRange[] {
   if (ranges.length < 2) {

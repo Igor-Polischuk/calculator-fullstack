@@ -1,6 +1,6 @@
 import { IObserver } from "@utilities/Observer/IObserver"
 import { CalculatorModelEvent } from "../calculator-model-event";
-import { IAppError } from "errors/AppError";
+import { IAppError } from "common/AppError/AppError";
 import { IHistoryFormat, IHistoryItem, IOperation, IOperationsData } from "./ICalculatorAPI";
 
 export interface ILoadingData {

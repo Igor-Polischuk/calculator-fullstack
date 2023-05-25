@@ -1,10 +1,10 @@
-import { IBaseElement } from '@modules/Elements/interfaces';
+import { IBaseElement } from 'common/Elements/interfaces';
 import { errorComponentByType } from './error-component-by-type';
 import { DefaultErrorComponent } from './output-components/DefaultErrorComponent';
-import { IAppError, IErrorRange } from 'errors/AppError';
+import { IAppError, IErrorRange } from 'common/AppError/AppError';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
-import { Paragraph } from '@modules/Elements/Paragraph';
-import { DivElement } from '@modules/Elements/DivElement';
+import { Paragraph } from 'common/Elements/Paragraph';
+import { DivElement } from 'common/Elements/DivElement';
 
 interface IShowCalculationResultProps {
     result: number

@@ -1,4 +1,4 @@
-import { Paragraph } from "@modules/Elements/Paragraph";
+import { Paragraph } from "common/Elements/Paragraph";
 import { IShowErrorInfoProps } from "../CalculatorOutput";
 
 export class ErrorMessage extends Paragraph {

@@ -1,7 +1,7 @@
 import { ModelAllowedEvents, ICalculatorModel, ILoadingData } from '../interfaces/ICalculator';
 import { CalculatorModelEvent } from "../calculator-model-event";
 import { Observer } from "@utilities/Observer/Observer";
-import { IAppError } from 'errors/AppError';
+import { IAppError } from 'common/AppError/AppError';
 import { IHistoryFormat, IHistoryItem, IOperation, IOperationsData } from '../interfaces/ICalculatorAPI';
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {

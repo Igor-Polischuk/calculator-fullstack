@@ -1,4 +1,4 @@
-import { AppError } from "errors/AppError";
+import { AppError } from "common/AppError/AppError";
 
 export type ICalculatorResponse<DataType> = {
     success: boolean;

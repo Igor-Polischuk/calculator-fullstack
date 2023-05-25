@@ -1,9 +1,9 @@
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
-import { IAppError } from 'errors/AppError';
+import { IAppError } from 'common/AppError/AppError';
 import { CalculatorHistory } from './CalculatorHistory/CalculatorHistory';
 import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
-import { DivElement } from '@modules/Elements/DivElement';
-import { Loader } from '@modules/Loader';
+import { DivElement } from 'common/Elements/DivElement';
+import { Loader } from 'common/Elements/Loader';
 import { ServerErrorDisplay } from './ServerErrorDisplay';
 import { IHistoryItem, IOperation, IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
 
