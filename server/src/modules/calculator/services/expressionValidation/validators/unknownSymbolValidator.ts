@@ -1,5 +1,5 @@
 import { ValidationError } from "../validation-error"
-import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes"
+import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes/getSubstringsIndexes"
 import { incorrectFunctionNameValidator } from "./incorrectFunctionNameValidator"
 import { IExpressionValidationError } from "../ExpressionValidationError"
 import { searchAllowedOperationsRegStr } from "../../expressionCalculation/calculator-config"

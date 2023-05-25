@@ -1,6 +1,6 @@
 import { ValidationError } from "../validation-error"
 import { regexPatterns } from "../../helpers/regex"
-import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes"
+import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes/getSubstringsIndexes"
 import { IExpressionValidationError } from "../ExpressionValidationError"
 
 

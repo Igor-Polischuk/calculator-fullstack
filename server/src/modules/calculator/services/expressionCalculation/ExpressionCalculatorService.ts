@@ -3,7 +3,7 @@ import { hasBrackets } from "../helpers/brackets/hasBrackets";
 import { unwrapBracketInExpression } from "../helpers/brackets/unwrapExpressionTerms";
 import { getNumbersFromExpression } from "../helpers/expressionDataParsers/getNumbersFromExpression";
 import { getOperationsFromExpression } from "../helpers/expressionDataParsers/getOperationsFromExpression";
-import { formatDecimal } from "../helpers/formatDecimal";
+import { formatDecimal } from "../helpers/formatDecimal/formatDecimal";
 import { formatExpression } from "../helpers/formatText/formatExpression";
 import { calculatorConfig } from "./calculator-config";
 

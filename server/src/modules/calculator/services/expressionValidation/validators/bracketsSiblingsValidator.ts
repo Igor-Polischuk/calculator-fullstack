@@ -1,7 +1,7 @@
 import { ValidationError } from "../validation-error"
 import { IErrorRange, IExpressionValidationError } from "../ExpressionValidationError"
 import { regexPatterns } from "../../helpers/regex"
-import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes"
+import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes/getSubstringsIndexes"
 
 export function bracketsSiblingsValidator(expression: string): IExpressionValidationError | undefined {
     const wrongOpenBracketSiblings = expression.match(regexPatterns.OPEN_BRACKETS_ADJACENT_SYMBOLS)
