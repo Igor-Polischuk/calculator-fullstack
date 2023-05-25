@@ -3,7 +3,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser';
 
 import { errorHandler } from 'middlewares/errorHandlerMiddleware';
-import { initModules } from '@modules/index';
+import { appModule } from '@modules/index';
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(initModules('/api'))
+app.use(appModule)
 
 app.use(errorHandler)
 

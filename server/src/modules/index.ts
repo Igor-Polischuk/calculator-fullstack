@@ -13,3 +13,5 @@ export function initModules(baseUrl = '') {
 
     return appRouter
 }
+
+export const appModule = initModules('/api') 
