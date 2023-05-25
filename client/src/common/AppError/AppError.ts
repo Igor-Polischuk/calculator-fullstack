@@ -1,26 +1,7 @@
+import { IAppError, IAppErrorParams, IExpressionValidationError } from "./IAppError";
 import { ErrorType } from "./error-type"
 
-export interface IAppError {
-    message: string
-    type: ErrorType
-    failedValidations: IExpressionValidationError[]
-}
 
-export interface IExpressionValidationError {
-    message: string
-    errorPlace: IErrorRange[]
-}
-
-export interface IErrorRange {
-    from: number
-    to: number
-}
-
-interface IAppErrorParams {
-    message?: string
-    type?: ErrorType
-    failedValidations?: IExpressionValidationError[]
-}
 
 export class AppError implements IAppError {
     message: string

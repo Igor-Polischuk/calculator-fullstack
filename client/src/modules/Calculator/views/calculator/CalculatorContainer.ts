@@ -1,5 +1,5 @@
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
-import { IAppError } from 'common/AppError/AppError';
+import { IAppError } from 'common/AppError/IAppError';
 import { CalculatorHistory } from './CalculatorHistory/CalculatorHistory';
 import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
 import { DivElement } from 'common/Elements/DivElement';

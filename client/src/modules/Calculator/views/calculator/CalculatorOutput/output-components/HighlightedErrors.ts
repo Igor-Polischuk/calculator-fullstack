@@ -2,7 +2,7 @@ import { Span } from "common/Elements/Span";
 import { removeOverlappingRanges } from "@utilities/ranges/removeOverlappingRanges";
 import { IShowErrorInfoProps } from "../CalculatorOutput";
 import { HighlightedSpan } from "./HighlightedSpan";
-import { IAppError, IErrorRange } from "common/AppError/AppError";
+import { IAppError, IErrorRange } from "common/AppError/IAppError";
 import { Paragraph } from "common/Elements/Paragraph";
 
 interface IHighlightErrorsReduceResult {

@@ -1,4 +1,4 @@
-import { IErrorRange } from "common/AppError/AppError"
+import { IErrorRange } from "common/AppError/IAppError"
 
 export function findSubstringIndexes(str: string, substr: string, startIndex = 0): IErrorRange {
   const index = str.indexOf(substr, startIndex)

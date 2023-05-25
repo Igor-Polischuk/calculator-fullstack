@@ -1,6 +1,6 @@
 import { CalculatorInput } from "../CalculatorInput/CalculatorInput";
 import { CalculatorOutput } from "../CalculatorOutput/CalculatorOutput";
-import { IAppError, IErrorRange } from "common/AppError/AppError";
+import { IAppError, IErrorRange } from "common/AppError/IAppError";
 import { DivElement } from "common/Elements/DivElement";
 
 export class CalculatorDisplay extends DivElement {

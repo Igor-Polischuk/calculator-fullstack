@@ -1,7 +1,7 @@
 import { IBaseElement } from 'common/Elements/interfaces';
 import { errorComponentByType } from './error-component-by-type';
 import { DefaultErrorComponent } from './output-components/DefaultErrorComponent';
-import { IAppError, IErrorRange } from 'common/AppError/AppError';
+import { IAppError, IErrorRange } from 'common/AppError/IAppError';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
 import { Paragraph } from 'common/Elements/Paragraph';
 import { DivElement } from 'common/Elements/DivElement';
