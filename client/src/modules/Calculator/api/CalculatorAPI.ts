@@ -42,11 +42,11 @@ class CalculatorAPI extends RestAPI {
     @cacheRequest({
         ttl: 1000 * 60 * 60 * 60 * 72
     })
-    async getOperations(): Promise<ICalculatorResponse<IOperationsData[]>> {
+    async getOperations(): Promise<ICalculatorResponse<IOperationsData>> {
         const response = await this.makeRequest({
             endpoint: 'operations',
             method: 'GET'
-        }) as ICalculatorResponse<IOperationsData[]>
+        }) as ICalculatorResponse<IOperationsData>
 
         return response
     }

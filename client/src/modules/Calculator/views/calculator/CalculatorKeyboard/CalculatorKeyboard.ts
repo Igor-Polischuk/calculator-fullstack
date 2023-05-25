@@ -3,10 +3,10 @@ import { Button } from '@modules/Elements/Button';
 import { ButtonType } from '@modules/Calculator/interfaces/ButtonType';
 import { DivElement } from '@modules/Elements/DivElement';
 import { generateButtonsData } from './buttonsData/generate-buttons-data';
-import { IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
+import { IOperation, IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
 
 interface ICalculatorKeyboardOption {
-    buttonsData: IOperationsData[]
+    buttonsData: IOperation[]
     onEqual: () => void
     onChar: (clickedButtonValue: string) => void
     onBackspace: () => void
@@ -38,7 +38,7 @@ export class CalculatorKeyboard extends DivElement {
     }
 
 
-    private createButtons(operationsData: IOperationsData[]): Button[] {
+    private createButtons(operationsData: IOperation[]): Button[] {
         const buttonsData = generateButtonsData(operationsData)
 
         const buttons = buttonsData.map(({ text, classNames, type, value }) => {

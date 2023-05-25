@@ -12,9 +12,14 @@ export type ICalculationData = {
     expression: string;
 };
 
-export type IOperationsData = {
+export interface IOperation {
     operation: string;
     operationSymbol: string;
+}
+
+export type IOperationsData = {
+    items: IOperation[]
+    total: number
 };
 
 export type IHistoryItem = {

@@ -5,7 +5,7 @@ import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
 import { DivElement } from '@modules/Elements/DivElement';
 import { Loader } from '@modules/Loader';
 import { ServerErrorDisplay } from './ServerErrorDisplay';
-import { IHistoryItem, IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
+import { IHistoryItem, IOperation, IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;
@@ -77,7 +77,7 @@ export class CalculatorContainer extends DivElement {
         this.calculatorHistory.setHistory(history)
     }
 
-    addKeyboard(buttonsData: IOperationsData[]): void {
+    addKeyboard(buttonsData: IOperation[]): void {
         this.calculatorKeyboard = new CalculatorKeyboard({
             buttonsData,
             onEqual: this.onEqualButtonClicked.bind(this),

@@ -1,5 +1,5 @@
 import { ButtonType } from "@modules/Calculator/interfaces/ButtonType"
-import { IOperationsData } from "@modules/Calculator/interfaces/ICalculatorAPI"
+import { IOperation, IOperationsData } from "@modules/Calculator/interfaces/ICalculatorAPI"
 
 export interface IButtonData {
     classNames: string
@@ -12,7 +12,7 @@ const ACTION_BUTTON_CLASS_NAME = 'button button--action'
 const NUMBER_BUTTON_CLASS_NAME = 'button button--number'
 const GET_RESULT_BUTTON_CLASS_NAME = 'button button--get-res'
 
-export function generateButtonsData(fetchedButtonData: IOperationsData[]): IButtonData[] {
+export function generateButtonsData(fetchedButtonData: IOperation[]): IButtonData[] {
     const { resultBtn, removeSymbolBtn, clearBtn } = getServiceButtons()
     const numpadButtonsData = getNumpadButtons()
     const operationsButton = getOperationsButtonData(fetchedButtonData)
@@ -61,7 +61,7 @@ function getNumpadButtons(): IButtonData[] {
     })
 }
 
-function getOperationsButtonData(fetchedButtonData: IOperationsData[]): Record<string, IButtonData> {
+function getOperationsButtonData(fetchedButtonData: IOperation[]): Record<string, IButtonData> {
     const buttons = fetchedButtonData.reduce<Record<string, IButtonData>>((buttonsObj, operation) => {
         buttonsObj[operation.operation] = {
             text: operation.operationSymbol,

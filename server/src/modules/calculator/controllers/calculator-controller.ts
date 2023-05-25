@@ -10,8 +10,12 @@ import { ListDataResponse } from "@utils/ListDataResponse";
 export class CalculatorController {
 
     @responseHandler
-    static getOperations(req: Request, res: Response): IOperationsList[] {
-        return getOperationsList()
+    static getOperations(req: Request, res: Response): ListDataResponse {
+        const operations = getOperationsList()
+        return new ListDataResponse({
+            items: operations,
+            total: operations.length
+        })
     }
 
     @responseHandler
