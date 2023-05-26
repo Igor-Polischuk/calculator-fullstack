@@ -6,7 +6,7 @@ import { CalculatorService } from "../services/CalculatorService";
 import { responseHandler } from "@utils/decorators/responseHandler";
 import { IListDataResponseParams } from "interfaces/IListData";
 import { IHistoryItem } from "../services/HistoryService.ts/calculatorHistoryDAO";
-import { IOperationsList } from "../services/interfaces";
+import { IOperationsList } from "../services/interfaces/IOperationList";
 
 export class CalculatorController {
 
