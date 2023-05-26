@@ -1,7 +1,7 @@
 import { ValidationError } from "../validation-error"
 import { regexPatterns } from "../../helpers/regex"
 import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes"
-import { IExpressionValidationError } from "../ExpressionValidationError"
+import { IExpressionValidationError } from "@utils/AppErrors/ExpressionValidationError"
 
 
 export function pointValidator(expression: string): IExpressionValidationError | undefined

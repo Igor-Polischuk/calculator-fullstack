@@ -1,6 +1,6 @@
+import { IExpressionValidationError } from "@utils/AppErrors/ExpressionValidationError"
 import { functionReg } from "../../calculator-config"
 import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes"
-import { IExpressionValidationError } from "../ExpressionValidationError"
 import { ValidationError } from "../validation-error"
 
 

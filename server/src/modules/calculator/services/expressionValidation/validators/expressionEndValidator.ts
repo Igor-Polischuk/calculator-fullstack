@@ -1,5 +1,5 @@
+import { IExpressionValidationError } from "@utils/AppErrors/ExpressionValidationError"
 import { regexPatterns } from "../../helpers/regex"
-import { IExpressionValidationError } from "../ExpressionValidationError"
 import { ValidationError } from "../validation-error"
 
 

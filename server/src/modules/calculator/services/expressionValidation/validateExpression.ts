@@ -1,3 +1,4 @@
+import { ExpressionValidationError, IExpressionValidationError } from "@utils/AppErrors/ExpressionValidationError"
 import {
     bracketsOrderValidator,
     pointValidator,
@@ -10,7 +11,6 @@ import {
     functionValidator
 } from "./validators"
 
-import { ExpressionValidationError, IExpressionValidationError } from "./ExpressionValidationError"
 
 type ValidateFunction = (expression: string) => IExpressionValidationError | undefined
 

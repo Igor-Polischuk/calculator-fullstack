@@ -1,8 +1,8 @@
 import { ValidationError } from "../validation-error"
 import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes"
 import { incorrectFunctionNameValidator } from "./incorrectFunctionNameValidator"
-import { IExpressionValidationError } from "../ExpressionValidationError"
 import { searchAllowedOperationsRegStr } from "../../calculator-config"
+import { IExpressionValidationError } from "@utils/AppErrors/ExpressionValidationError"
 
 export function unknownSymbolValidator(expression: string): IExpressionValidationError | undefined {
     const unknownSymbolReg = new RegExp(`[^0-9${searchAllowedOperationsRegStr}().]`, "g")

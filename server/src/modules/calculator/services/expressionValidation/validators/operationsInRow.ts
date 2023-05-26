@@ -1,7 +1,7 @@
 import { regexPatterns } from "../../helpers/regex"
 import { ValidationError } from "../validation-error"
 import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes"
-import { IExpressionValidationError } from "../ExpressionValidationError"
+import { IExpressionValidationError } from "@utils/AppErrors/ExpressionValidationError"
 
 
 export function operationsInRow(expression: string): IExpressionValidationError | undefined {

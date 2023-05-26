@@ -1,4 +1,4 @@
-import { IExpressionValidationError } from "../ExpressionValidationError"
+import { IExpressionValidationError } from "@utils/AppErrors/ExpressionValidationError"
 import { ValidationError } from "../validation-error"
 
 

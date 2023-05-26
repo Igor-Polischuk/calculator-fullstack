@@ -1,7 +1,7 @@
+import { IExpressionValidationError } from "@utils/AppErrors/ExpressionValidationError"
 import { calculatorConfig } from "../../calculator-config"
 import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes"
 import { regexPatterns } from "../../helpers/regex"
-import { IExpressionValidationError } from "../ExpressionValidationError"
 import { ValidationError } from "../validation-error"
 
 export function incorrectFunctionNameValidator(expression: string): IExpressionValidationError | undefined {
