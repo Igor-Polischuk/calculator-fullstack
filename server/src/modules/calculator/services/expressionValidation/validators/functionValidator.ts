@@ -1,5 +1,5 @@
-import { functionReg } from "../../expressionCalculation/calculator-config"
-import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes/getSubstringsIndexes"
+import { functionReg } from "../../calculator-config"
+import { getSubstringsIndexes } from "../../helpers/getSubstringsIndexes"
 import { IExpressionValidationError } from "../ExpressionValidationError"
 import { ValidationError } from "../validation-error"
 

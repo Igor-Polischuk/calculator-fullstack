@@ -1,5 +1,5 @@
 import { IErrorRange } from "../../expressionValidation/ExpressionValidationError"
-import { findSubstringIndexes } from "../findSubstringIndexes/findSubstringIndexes"
+import { findSubstringIndexes } from "../findSubstringIndexes"
 
 export function getSubstringsIndexes(substrings: string[], inputString: string): IErrorRange[] {
     return substrings.reduce<IErrorRange[]>((indexesAcc, invalidPart) => {

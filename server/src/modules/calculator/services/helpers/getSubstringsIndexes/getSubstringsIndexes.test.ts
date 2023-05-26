@@ -1,4 +1,4 @@
-import { getSubstringsIndexes } from "./getSubstringsIndexes"
+import { getSubstringsIndexes } from "."
 
 describe('Test getSubstringsIndexes function', () => {
     test('Standard script, substring indexes in a row', () => {

@@ -1,4 +1,4 @@
-import { findSubstringIndexes } from "./findSubstringIndexes"
+import { findSubstringIndexes } from "."
 
 describe('Test findSubstringIndexes function', () => {
     test('Standard script, substring indexes in a row', () => {

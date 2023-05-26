@@ -1,4 +1,4 @@
-import { getOperationsFromExpression } from "./getOperationsFromExpression"
+import { getOperationsFromExpression } from "."
 
 describe('Test getOperationsFromExpression function:', () => {
     test('Expression without allowed operations', () => {

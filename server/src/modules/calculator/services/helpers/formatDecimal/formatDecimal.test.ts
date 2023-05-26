@@ -1,4 +1,4 @@
-import { formatDecimal } from "./formatDecimal"
+import { formatDecimal } from "."
 
 describe('Test format decimal function', () => {
     test('the function returns a value with a certain number of decimal places', () => {

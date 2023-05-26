@@ -1,4 +1,4 @@
-import { getNumbersFromExpression } from "./getNumbersFromExpression"
+import { getNumbersFromExpression } from "."
 
 describe('Test getNumbersFromExpression function:', () => {
     test('String without numbers', () => {

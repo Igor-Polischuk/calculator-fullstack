@@ -2,8 +2,8 @@ import { Priority } from './priority';
 import { Operation } from "./operation/Operation";
 import { IOperation, OperationType } from './operation/IOperations';
 import { exceptions } from './exceptions';
-import { regularWithParam } from '../../helpers/regex';
-import { factorial } from '../../helpers/math/factorial';
+import { regularWithParam } from '../helpers/regex';
+import { factorial } from '../math/factorial';
 
 
 export const calculatorConfig: Record<string, IOperation> = {
