@@ -8,25 +8,21 @@
 .pnp.js
 .firebase
 
+logs/
+
 # testing
 /coverage
 
 # production
-/dist
-/build
+dist/
+build/
 
-client/dist
-client/build
-
-server/dist
-server/build
 server/src/data
 
 # misc
 .DS_Store
 
-server/.env
-client/.env
+.env
 
 .env.local
 .env.development.local
