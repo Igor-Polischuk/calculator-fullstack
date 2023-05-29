@@ -7,6 +7,7 @@ import { responseHandler } from "@utils/decorators/responseHandler";
 import { IListDataResponseParams } from "interfaces/IListData";
 import { IHistoryItem } from "../services/HistoryService.ts/calculatorHistoryDAO";
 import { IOperationsList } from "../services/interfaces/IOperationList";
+import { calculatorLog } from "../utils/calculatorLog";
 
 export class CalculatorController {
 
@@ -36,8 +37,14 @@ export class CalculatorController {
     @responseHandler
     static async calculate(req: Request, res: Response) {
         const { expression } = matchedData(req)
+
+        calculatorLog.info(`Calculate expression: ${expression}`)
+
         const result = CalculatorService.calculateExpression(expression)
         const expressionResult = { result, expression }
+
+        calculatorLog.info(`Calculation result: ${expression} = ${result}`)
+
 
         await HistoryService.addHistoryItem(expressionResult)
 

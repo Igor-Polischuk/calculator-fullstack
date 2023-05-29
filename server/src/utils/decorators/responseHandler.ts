@@ -1,3 +1,4 @@
+import { AppError } from "@utils/AppErrors/AppError";
 import { ResponseFormatter } from "@utils/ResponseFormatter";
 import { NextFunction, Request, Response } from "express";
 
@@ -18,8 +19,10 @@ export function responseHandler(target: any, key: string, descriptor: PropertyDe
 
             const responseFormat = new ResponseFormatter({ data: result }).json();
             res.send(responseFormat);
-        } catch (error) {
-            next(error);
+        } catch (err) {
+            const error = AppError.getErrorFrom(err);
+            const responseFormat = new ResponseFormatter({ error }).json();
+            res.status(error.status).send(responseFormat);
         }
     }
 
