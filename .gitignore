@@ -14,8 +14,6 @@ logs/
 /coverage
 
 # production
-dist/
-build/
 
 server/src/data
 

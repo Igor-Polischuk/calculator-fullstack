@@ -14,6 +14,8 @@ export class CalculatorController {
     @responseHandler
     static getOperations(req: Request, res: Response): IListDataResponseParams<IOperationsList> {
         const operations = CalculatorService.getOperations()
+        calculatorLog.info(`Getting operations`)
+
         return {
             items: operations,
             total: operations.length
@@ -44,7 +46,6 @@ export class CalculatorController {
         const expressionResult = { result, expression }
 
         calculatorLog.info(`Calculation result: ${expression} = ${result}`)
-
 
         await HistoryService.addHistoryItem(expressionResult)
 
