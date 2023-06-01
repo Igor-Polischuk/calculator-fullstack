@@ -10,13 +10,13 @@ import {
     bracketsSiblingsValidator,
     functionValidator
 } from "./validators"
-import { calculatorLog } from "@modules/calculator/utils/calculatorLog"
+import { logger } from "common/logger"
 
 
 type ValidateFunction = (expression: string) => IExpressionValidationError | undefined
 
 export function validateExpression(expression: string): true {
-    calculatorLog.info(`Validate expression: ${expression}`)
+    logger.info(`Getting operations`).info(`Validate expression: ${expression}`)
 
     const validateResult = validate(expression, [
         pointValidator,
@@ -30,7 +30,7 @@ export function validateExpression(expression: string): true {
         functionValidator
     ])
     if (validateResult.length > 0) {
-        calculatorLog.warn(`Expression invalid: ${JSON.stringify(validateResult)}`)
+        logger.info(`Getting operations`).warn(`Expression invalid: ${JSON.stringify(validateResult)}`)
         throw new ExpressionValidationError(validateResult)
     }
 

@@ -5,7 +5,7 @@ import expressWinston from 'express-winston'
 
 import { errorHandler } from 'middlewares/errorHandlerMiddleware';
 import { appModule } from '@modules/index';
-import { appLogger, errorLogger } from 'common/loggers';
+import { logger } from 'common/logger';
 
 const app = express();
 
@@ -15,13 +15,15 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(expressWinston.logger({
-    winstonInstance: appLogger,
+    winstonInstance: logger,
     statusLevels: true
 }))
 
 app.use(appModule)
+app.get('/error', () => {
+    throw new Error('Blyaaaa')
+})
 
-app.use(errorLogger)
 app.use(errorHandler)
 
 app.listen(PORT, () => {
