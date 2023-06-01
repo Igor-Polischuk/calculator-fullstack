@@ -1,50 +1,55 @@
 import { ICalculatorController, ICalculatorModel } from '@modules/Calculator/interfaces/ICalculator';
 import { CalculatorModelEvent } from '../calculator-model-event';
 import { calculatorAPI } from '@modules/Calculator/api/CalculatorAPI';
-import { DataLoadingService } from '@utilities/DataLoadingService';
+import { AppError } from 'common/AppError/AppError';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
-  private dataLoadingService: DataLoadingService
 
   constructor(model: ICalculatorModel) {
     this.model = model
     this.model.subscribe(CalculatorModelEvent.ExpressionChanged, this.calculateExpression.bind(this))
-
-    this.dataLoadingService = new DataLoadingService({
-      changeErrorStateFunction: model.setError.bind(model),
-      loadingStateFunction: model.setLoadingData.bind(model),
-      defaultLoadingEvent: 'loadingData'
-    })
-
-    this.dataLoadingService.setAsyncData({
-      callbacks: [this.loadHistory.bind(this), this.loadOperation.bind(this)]
-    })
+    this.loadData()
   }
 
-  private async loadHistory() {
-    const response = await calculatorAPI.getHistory()
-    const historyList = response.data.items
+  private async loadData() {
+    const historyResponse = await this.handleApiRequest(calculatorAPI.getHistory.bind(calculatorAPI))
+    const operationsResponse = await this.handleApiRequest(calculatorAPI.getOperations.bind(calculatorAPI))
 
-    this.model.setHistory(historyList)
-  }
-
-  private async loadOperation() {
-    const response = await calculatorAPI.getOperations()
-    const operationList = response.data.items
-
-    this.model.setOperations(operationList)
+    this.model.setHistory(historyResponse.data.items)
+    this.model.setOperations(operationsResponse.data.items)
   }
 
   private async calculateExpression(expression: string): Promise<void> {
-    this.dataLoadingService.setAsyncData({
-      callbacks: [async () => {
-        const resultResponse = await calculatorAPI.calculateExpression(expression)
-        const result = resultResponse.data.result
+    const resultResponse = await this.handleApiRequest(() => calculatorAPI.calculateExpression(expression), 'resultLoading')
 
-        this.model.setResult(result)
-      }],
-      loadingEvent: 'resultLoading'
-    })
+    this.model.setResult(resultResponse.data.result)
   }
+
+
+  private async handleApiRequest<T extends (...args: any[]) => any>
+    (apiFunction: T, loadingEvent = 'loadingData'): Promise<ReturnType<T>> {
+
+    this.model.setLoadingData({
+      loading: true,
+      loadingEvent: loadingEvent
+    })
+
+    let result: ReturnType<T> | undefined
+
+    try {
+      result = await apiFunction()
+    } catch (err) {
+      const error = AppError.getErrorFrom(err)
+      this.model.setError(error)
+    }
+
+    this.model.setLoadingData({
+      loading: false,
+      loadingEvent: loadingEvent
+    })
+
+    return result as ReturnType<T>
+  }
+
 }

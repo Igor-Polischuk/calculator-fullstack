@@ -4,7 +4,7 @@ import { IModule } from "interfaces/IModules";
 
 const modules: IModule[] = [calculatorModule]
 
-export function initModules(baseUrl = '') {
+function initModules(baseUrl = '') {
     const appRouter = Router()
 
     modules.forEach(module => {
