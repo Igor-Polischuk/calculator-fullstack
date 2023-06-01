@@ -4,7 +4,7 @@ import { IModule } from "interfaces/IModules";
 
 const modules: IModule[] = [calculatorModule]
 
-function initModules(baseUrl = '') {
+export function initModules(baseUrl = '') {
     const appRouter = Router()
 
     modules.forEach(module => {
@@ -13,5 +13,3 @@ function initModules(baseUrl = '') {
 
     return appRouter
 }
-
-export const appModule = initModules('/api') 

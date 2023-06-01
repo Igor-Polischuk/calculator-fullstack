@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import expressWinston from 'express-winston'
 
 import { errorHandler } from 'middlewares/errorHandlerMiddleware';
-import { appModule } from '@modules/index';
+import { initModules } from '@modules/index';
 import { logger } from 'common/logger';
 
 const app = express();
@@ -19,9 +19,9 @@ app.use(expressWinston.logger({
     statusLevels: true
 }))
 
-app.use(appModule)
+app.use(initModules('/api'))
 app.get('/error', () => {
-    throw new Error('Blyaaaa')
+    throw new Error('errer')
 })
 
 app.use(errorHandler)
