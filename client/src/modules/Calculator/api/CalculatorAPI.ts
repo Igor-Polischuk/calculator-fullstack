@@ -1,7 +1,8 @@
 import { cacheRequest } from "@utilities/decorators/cacheRequest";
 import { RestAPI } from "@utilities/api/RestAPI";
-import { ICalculationData, ICalculatorResponse, IHistoryFormat, IOperationsData } from "../interfaces/ICalculatorAPI";
 import { QueryParams } from "@utilities/QueryParams/QueryParams";
+
+import { ICalculationData, ICalculatorResponse, IHistoryFormat, IOperationsData } from "../interfaces/ICalculatorAPI";
 
 class CalculatorAPI extends RestAPI {
     private static instance: CalculatorAPI;

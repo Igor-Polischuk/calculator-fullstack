@@ -1,7 +1,8 @@
 import { ICalculatorController, ICalculatorModel } from '@modules/Calculator/interfaces/ICalculator';
-import { CalculatorModelEvent } from '../calculator-model-event';
 import { calculatorAPI } from '@modules/Calculator/api/CalculatorAPI';
-import { AppError } from 'common/AppError/AppError';
+import { AppError } from '@common/AppError/AppError';
+
+import { CalculatorModelEvent } from '../models/calculator-model-event';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel

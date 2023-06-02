@@ -4,6 +4,7 @@
     "paths": {
       "@modules/*": ["modules/*"],
       "@utilities/*": ["utilities/*"],
+      "@common/*": ["common/*"],
 
     },
     "outDir": "./dist/",
