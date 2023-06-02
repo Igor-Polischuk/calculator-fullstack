@@ -1,6 +1,7 @@
-import { AppError } from '@utils/AppErrors/AppError';
 import { Pool } from "pg";
+
 import { DataTypeExtended, IDataBase, IGetItemParams } from './IDatabase';
+import { AppError } from '@utils/AppErrors/AppError';
 
 interface ITableFields {
     name: string

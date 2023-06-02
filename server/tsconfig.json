@@ -8,10 +8,11 @@
         "rootDir": "./src",
         "baseUrl": "./src",
         "paths": {
-            "@middlewares/*": ["@middlewares/*"],
+            "@middlewares/*": ["middlewares/*"],
             "@modules/*": ["modules/*"],
             "@errors/*": ["errors/*"],
             "@utils/*": ["utils/*"],
+            "@common/*": ["common/*"],
         },
         "resolveJsonModule": true,
         "allowJs": true,

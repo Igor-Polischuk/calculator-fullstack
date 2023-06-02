@@ -3,9 +3,9 @@ import cors from 'cors'
 import bodyParser from 'body-parser';
 import expressWinston from 'express-winston'
 
-import { errorHandler } from 'middlewares/errorHandlerMiddleware';
-import { initModules } from '@modules/index';
-import { logger } from 'common/logger';
+import { errorHandler } from '@middlewares/errorHandlerMiddleware';
+import { logger } from '@common/logger';
+import { initModules } from './modules';
 
 const app = express();
 
@@ -20,9 +20,6 @@ app.use(expressWinston.logger({
 }))
 
 app.use(initModules('/api'))
-app.get('/error', () => {
-    throw new Error('errer')
-})
 
 app.use(errorHandler)
 

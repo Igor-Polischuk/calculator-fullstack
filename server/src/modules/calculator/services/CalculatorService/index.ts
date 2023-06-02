@@ -1,12 +1,15 @@
-import { getMostNestedBrackets } from "../helpers/brackets/getMostNestedBrackets";
-import { hasBrackets } from "../helpers/brackets/hasBrackets";
-import { unwrapBracketInExpression } from "../helpers/brackets/unwrapExpressionTerms";
-import { getNumbersFromExpression } from "../helpers/getNumberFromExpression";
-import { getOperationsFromExpression } from "../helpers/getOperationsFromExpression";
-import { formatDecimal } from "../helpers/formatDecimal";
+import {
+    getMostNestedBrackets,
+    hasBrackets,
+    unwrapBracketInExpression,
+    getNumbersFromExpression,
+    getOperationsFromExpression,
+    formatDecimal,
+    formatExpression
+} from '../helpers'
+
 import { allowedActions, calculatorConfig } from "../calculator-config";
 import { IOperationsList } from "../interfaces/IOperationList";
-import { formatExpression } from "../helpers/text-formatting/formatExpression";
 
 export class CalculatorService {
     static calculateExpression(expression: string): number {

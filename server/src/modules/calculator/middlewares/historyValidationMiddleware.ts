@@ -1,6 +1,6 @@
 import { ErrorFactory } from "@utils/AppErrors/ErrorFactory";
+import { validationMiddleware } from "@middlewares/validationMiddleware";
 import { query } from "express-validator";
-import { validationMiddleware } from "middlewares/validationMiddleware";
 
 const limitError = ErrorFactory.IncorrectParameter('The "limit" parameter must take integer values ​​from 1 to 20')
 
