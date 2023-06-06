@@ -9,7 +9,6 @@ export const errorHandler = (err: any, req: Request, res: Response, next: NextFu
         method: req.method,
         statusCode: res.statusCode,
         message: err.message,
-        stack: err.stack,
     }
 
     logger.error('Error occurred', { meta })

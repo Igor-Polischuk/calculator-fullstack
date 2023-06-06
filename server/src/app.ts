@@ -20,6 +20,9 @@ app.use(expressWinston.logger({
 }))
 
 app.use(initModules('/api'))
+app.get('/error', () => {
+    throw new Error('ded')
+})
 
 app.use(errorHandler)
 

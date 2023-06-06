@@ -16,7 +16,7 @@ import { logger } from "common/logger"
 type ValidateFunction = (expression: string) => IExpressionValidationError | undefined
 
 export function validateExpression(expression: string): true {
-    logger.info(`Getting operations`).info(`Validate expression: ${expression}`)
+    logger.info(`Validate expression: ${expression}`)
 
     const validateResult = validate(expression, [
         pointValidator,
@@ -30,7 +30,7 @@ export function validateExpression(expression: string): true {
         functionValidator
     ])
     if (validateResult.length > 0) {
-        logger.info(`Getting operations`).warn(`Expression invalid: ${JSON.stringify(validateResult)}`)
+        logger.warn(`Expression invalid: ${JSON.stringify(validateResult)}`)
         throw new ExpressionValidationError(validateResult)
     }
 
