@@ -12,7 +12,7 @@ export type ModelAllowedEvents = {
     [CalculatorModelEvent.ResultChanged]: number
     [CalculatorModelEvent.ExpressionChanged]: string
     [CalculatorModelEvent.ErrorChanged]: IAppError
-    [CalculatorModelEvent.LoadingData]: ILoadingData
+    [CalculatorModelEvent.LoadingData]: boolean
     [CalculatorModelEvent.HistoryChanged]: IHistoryItem[]
     [CalculatorModelEvent.ButtonsDataChanged]: IOperationsData['items']
 };
@@ -21,7 +21,7 @@ export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
     setResult: (result: number) => void
     setExpression: (expression: string) => void
     setError: (errors: IAppError) => void
-    setLoadingData: (loading: ILoadingData) => void
+    setLoading: (loading: boolean) => void
     setOperations: (operations: IOperation[]) => void
     setHistory: (history: IHistoryItem[]) => void
 }

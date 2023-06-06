@@ -9,7 +9,7 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
     private result: number | null = null
     private expression: string | null = null
     private error: IAppError | null = null
-    private loadingData: ILoadingData = { loading: false, loadingEvent: '' }
+    private loadingData: boolean = false
     private history: IHistoryItem[] = []
     private buttons: IOperation[] = []
 
@@ -31,7 +31,7 @@ export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICa
         this.notifyAll(CalculatorModelEvent.ErrorChanged, errors)
     }
 
-    setLoadingData(loading: ILoadingData): void {
+    setLoading(loading: boolean): void {
         this.loadingData = loading
         this.notifyAll(CalculatorModelEvent.LoadingData, loading)
     }

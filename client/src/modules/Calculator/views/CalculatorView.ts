@@ -35,11 +35,7 @@ export class CalculatorView implements ICalculatorView {
         })
 
         model.subscribe(CalculatorModelEvent.LoadingData, loading => {
-            const { loadingEvent } = loading;
-            const action = loadingEvent === 'resultLoading' ?
-                "calculationLoading" :
-                "processDataLoading";
-            this.calculatorContainer[action](loading.loading);
+            this.calculatorContainer.processDataLoading(loading)
         })
 
         const root = document.querySelector('.container')!

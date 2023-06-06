@@ -17,40 +17,33 @@ export class CalculatorController implements ICalculatorController {
     const historyResponse = await this.handleApiRequest(calculatorAPI.getHistory.bind(calculatorAPI))
     const operationsResponse = await this.handleApiRequest(calculatorAPI.getOperations.bind(calculatorAPI))
 
-    this.model.setHistory(historyResponse.data.items)
-    this.model.setOperations(operationsResponse.data.items)
+    if (historyResponse && operationsResponse) {
+      this.model.setHistory(historyResponse.data.items)
+      this.model.setOperations(operationsResponse.data.items)
+    }
   }
 
   private async calculateExpression(expression: string): Promise<void> {
-    const resultResponse = await this.handleApiRequest(() => calculatorAPI.calculateExpression(expression), 'resultLoading')
+    const resultResponse = await this.handleApiRequest(() => calculatorAPI.calculateExpression(expression))
 
-    this.model.setResult(resultResponse.data.result)
+    resultResponse && this.model.setResult(resultResponse.data.result)
   }
 
 
-  private async handleApiRequest<T extends (...args: any[]) => any>
-    (apiFunction: T, loadingEvent = 'loadingData'): Promise<ReturnType<T>> {
-
-    this.model.setLoadingData({
-      loading: true,
-      loadingEvent: loadingEvent
-    })
-
-    let result: ReturnType<T> | undefined
-
+  private async handleApiRequest<T extends (...args: any[]) => any>(apiFunction: T): Promise<ReturnType<T> | undefined> {
     try {
-      result = await apiFunction()
+      this.model.setLoading(true)
+      const result = await apiFunction()
+
+      return result as ReturnType<T>
+
     } catch (err) {
       const error = AppError.getErrorFrom(err)
       this.model.setError(error)
+
+    } finally {
+      this.model.setLoading(false)
     }
-
-    this.model.setLoadingData({
-      loading: false,
-      loadingEvent: loadingEvent
-    })
-
-    return result as ReturnType<T>
   }
 
 }
