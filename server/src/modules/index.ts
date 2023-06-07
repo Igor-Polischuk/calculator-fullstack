@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { calculatorModule } from "./calculator";
-import { IModule } from "interfaces/IModules";
+import { IModule } from "@modules/common/interfaces/IModules";
+import { commonModule } from "./common";
 
-const modules: IModule[] = [calculatorModule]
+const modules: IModule[] = [calculatorModule, commonModule]
 
 export function initModules(baseUrl = '') {
     const appRouter = Router()

@@ -1,7 +1,7 @@
 import { AppError } from '@utils/AppErrors/AppError';
 import { ResponseFormatter } from '@utils/ResponseFormatter';
 import { NextFunction, Request, Response } from 'express';
-import { logger } from 'common/logger';
+import { logger } from '@modules/common/logger';
 
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     const meta = {

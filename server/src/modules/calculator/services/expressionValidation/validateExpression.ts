@@ -10,7 +10,7 @@ import {
     bracketsSiblingsValidator,
     functionValidator
 } from "./validators"
-import { logger } from "common/logger"
+import { logger } from "@modules/common/logger"
 
 
 type ValidateFunction = (expression: string) => IExpressionValidationError | undefined

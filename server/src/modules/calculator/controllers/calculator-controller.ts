@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { matchedData } from "express-validator";
 
 import { responseHandler } from "@utils/decorators/responseHandler";
-import { logger } from "@common/logger";
+import { logger } from "@modules/common/logger";
 
 import { HistoryService } from "../services/HistoryService.ts/HistoryService";
 import { CalculatorService } from "../services/CalculatorService";
-import { IListDataResponseParams } from "interfaces/IListData";
+import { IListDataResponseParams } from "@modules/common/interfaces/IListData";
 import { IHistoryItem } from "../services/HistoryService.ts/calculatorHistoryDAO";
 import { IOperationsList } from "../services/interfaces/IOperationList";
 
