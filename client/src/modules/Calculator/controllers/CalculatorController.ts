@@ -3,6 +3,7 @@ import { calculatorAPI } from '@modules/Calculator/api/CalculatorAPI';
 import { AppError } from '@common/AppError/AppError';
 
 import { CalculatorModelEvent } from '../models/calculator-model-event';
+import { logger } from '@common/Logger/Logger';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
@@ -38,6 +39,8 @@ export class CalculatorController implements ICalculatorController {
       return result as ReturnType<T>
 
     } catch (err) {
+      logger.addLog('warn', `Catched error in calculator controller: ${apiFunction.name}`, err)
+
       const error = AppError.getErrorFrom(err)
       this.model.setError(error)
 

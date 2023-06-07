@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { body } from "express-validator"
+import { body, matchedData } from "express-validator"
 import winston from "winston"
 
 import { validationMiddleware } from "@middlewares/validationMiddleware"
@@ -16,7 +16,7 @@ const clientLogger = winston.createLogger({
 
 export class ClientLogController {
     static saveLog(req: Request, res: Response) {
-        const message = req.body.message
+        const { message } = matchedData(req)
         clientLogger.info(message)
         res.send('logged')
     }

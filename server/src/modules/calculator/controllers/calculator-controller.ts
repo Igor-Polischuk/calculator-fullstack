@@ -33,7 +33,7 @@ export class CalculatorController {
         const history = await HistoryService.getLastLastHistoryItems(limit)
         const historyList = {
             items: history,
-            total: await HistoryService.getHistoryLength()
+            total: await HistoryService.getHistoryLength(),
         }
 
         return historyList

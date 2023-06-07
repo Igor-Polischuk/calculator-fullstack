@@ -1,3 +1,5 @@
+import { logger } from "@common/Logger/Logger"
+
 interface ISetParams {
     key: string
     value: unknown
@@ -27,6 +29,8 @@ export class Cache {
     setItem({ key, value, ttl }: ISetParams): void {
         const expires = ttl ? Date.now() + ttl : Date.now()
 
+        logger.addLog('info', `Set item to cache by key: ${key}`)
+
         const cache: typeof this.cacheObject = {
             ...this.cacheObject, [key]: {
                 expires,
@@ -39,6 +43,8 @@ export class Cache {
     }
 
     getItem<DataType>(key: string): DataType | null {
+        logger.addLog('info', `Get item from cache by key: ${key}`)
+
         return this.hasItem(key) ? this.cacheObject[key].value as DataType : null
     }
 

@@ -11,7 +11,7 @@ export class RestAPI {
     }
 
     protected async makeRequest(params: IRequestParams): Promise<unknown> {
-        const url = `${this.baseURL}${params.endpoint}${params.queryParams?.toString() || ''}`
+        const url = `${this.baseURL}${params.endpoint || ''}${params.queryParams?.toString() || ''}`
         const method = params.method
         const headers = { ...this.defaultHeaders, ...params?.headers }
         const body = params.method === 'POST' || params.method === 'PUT' ? JSON.stringify(params.body) : undefined

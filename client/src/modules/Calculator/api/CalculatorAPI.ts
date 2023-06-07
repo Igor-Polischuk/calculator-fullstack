@@ -3,6 +3,7 @@ import { RestAPI } from "@utilities/api/RestAPI";
 import { QueryParams } from "@utilities/QueryParams/QueryParams";
 
 import { ICalculationData, ICalculatorResponse, IHistoryFormat, IOperationsData } from "../interfaces/ICalculatorAPI";
+import { logger } from "@common/Logger/Logger";
 
 class CalculatorAPI extends RestAPI {
     private static instance: CalculatorAPI;
@@ -27,6 +28,8 @@ class CalculatorAPI extends RestAPI {
     //     ttl: 1000 * 60 * 60 * 60 * 72
     // })
     async calculateExpression(expression: string): Promise<ICalculatorResponse<ICalculationData>> {
+        logger.addLog('info', `Send request for calculate: ${expression}`)
+
         const response = await this.makeRequest({
             endpoint: 'calculate',
             method: 'POST',
@@ -44,6 +47,8 @@ class CalculatorAPI extends RestAPI {
         ttl: 1000 * 60 * 60 * 60 * 72
     })
     async getOperations(): Promise<ICalculatorResponse<IOperationsData>> {
+        logger.addLog('info', `Send request for getting operation`)
+
         const response = await this.makeRequest({
             endpoint: 'operations',
             method: 'GET'
@@ -53,6 +58,8 @@ class CalculatorAPI extends RestAPI {
     }
 
     async getHistory(): Promise<ICalculatorResponse<IHistoryFormat>> {
+        logger.addLog('info', `Send request for getting operation`)
+
         const response = await this.makeRequest({
             endpoint: 'history',
             method: 'GET',
