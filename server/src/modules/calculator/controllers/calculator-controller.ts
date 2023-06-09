@@ -1,14 +1,14 @@
-import { Request, Response } from "express";
 import { matchedData } from "express-validator";
+import { Request, Response } from "express";
 
+import { IListDataResponseParams } from "@modules/common/interfaces/IListData";
 import { responseHandler } from "@utils/decorators/responseHandler";
 import { logger } from "@modules/common/logger";
 
-import { HistoryService } from "../services/HistoryService.ts/HistoryService";
-import { CalculatorService } from "../services/CalculatorService";
-import { IListDataResponseParams } from "@modules/common/interfaces/IListData";
 import { IHistoryItem } from "../services/HistoryService.ts/calculatorHistoryDAO";
+import { HistoryService } from "../services/HistoryService.ts/HistoryService";
 import { IOperationsList } from "../services/interfaces/IOperationList";
+import { CalculatorService } from "../services/CalculatorService";
 
 export class CalculatorController {
 
@@ -30,7 +30,7 @@ export class CalculatorController {
 
         logger.info(`Getting history`)
 
-        const history = await HistoryService.getLastLastHistoryItems(limit)
+        const history = await HistoryService.countHistoryItems(limit)
         const historyList = {
             items: history,
             total: await HistoryService.getHistoryLength(),

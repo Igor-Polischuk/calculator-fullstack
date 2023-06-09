@@ -1,11 +1,12 @@
+import { IHistoryItem, IOperation } from '@modules/Calculator/interfaces/ICalculatorAPI';
+import { DivElement } from '@common/Elements/DivElement';
+import { IAppError } from '@common/AppError/IAppError';
+import { Loader } from '@common/Elements/Loader';
+
 import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
-import { IAppError } from 'common/AppError/IAppError';
 import { CalculatorHistory } from './CalculatorHistory/CalculatorHistory';
 import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
-import { DivElement } from 'common/Elements/DivElement';
-import { Loader } from 'common/Elements/Loader';
 import { ServerErrorDisplay } from './ServerErrorDisplay';
-import { IHistoryItem, IOperation, IOperationsData } from '@modules/Calculator/interfaces/ICalculatorAPI';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;

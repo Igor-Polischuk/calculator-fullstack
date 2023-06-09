@@ -1,13 +1,16 @@
 import { cacheRequest } from "@utilities/decorators/cacheRequest";
 import { RestAPI } from "@utilities/api/RestAPI";
 import { QueryParams } from "@utilities/QueryParams/QueryParams";
-
-import { ICalculationData, ICalculatorResponse, IHistoryFormat, IOperationsData } from "../interfaces/ICalculatorAPI";
 import { logger } from "@common/Logger/Logger";
 
-class CalculatorAPI extends RestAPI {
-    private static instance: CalculatorAPI;
+import {
+    ICalculationData,
+    ICalculatorResponse,
+    IHistoryFormat,
+    IOperationsData
+} from "../interfaces/ICalculatorAPI";
 
+class CalculatorAPI extends RestAPI {
     constructor() {
         super({
             baseURL: process.env.CALCULATOR_API_URL!,
@@ -16,17 +19,10 @@ class CalculatorAPI extends RestAPI {
             }
         })
     }
-    static getInstance(): CalculatorAPI {
-        if (!CalculatorAPI.instance) {
-            CalculatorAPI.instance = new CalculatorAPI();
-        }
 
-        return CalculatorAPI.instance;
-    }
-
-    // @cacheRequest({
-    //     ttl: 1000 * 60 * 60 * 60 * 72
-    // })
+    @cacheRequest({
+        ttl: 1000 * 60 * 60 * 60 * 72
+    })
     async calculateExpression(expression: string): Promise<ICalculatorResponse<ICalculationData>> {
         logger.addLog('info', `Send request for calculate: ${expression}`)
 
@@ -70,4 +66,4 @@ class CalculatorAPI extends RestAPI {
     }
 }
 
-export const calculatorAPI = CalculatorAPI.getInstance()
+export const calculatorAPI = new CalculatorAPI()

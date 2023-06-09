@@ -11,13 +11,9 @@ class LogApi extends RestAPI {
     }
 
     async sendLogs(message: string) {
-        const payload = {
-            message: message
-        };
-
         await this.makeRequest({
             method: 'POST',
-            body: payload
+            body: { message }
         })
     }
 }

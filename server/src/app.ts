@@ -6,12 +6,10 @@ import expressWinston from 'express-winston'
 import { errorHandler } from '@middlewares/errorHandlerMiddleware';
 import { logger } from '@modules/common/logger';
 import { initModules } from './modules';
-import winston from 'winston';
 
 const app = express();
 
 const PORT = process.env.PORT || 8080
-const infoFormat = winston.format.printf(({ level, message }) => `${level}: ${message}`);
 
 app.use(cors())
 app.use(bodyParser.json())
@@ -22,9 +20,6 @@ app.use(expressWinston.logger({
 }))
 
 app.use(initModules('/api'))
-app.get('/error', () => {
-    throw new Error('ded')
-})
 
 app.use(errorHandler)
 

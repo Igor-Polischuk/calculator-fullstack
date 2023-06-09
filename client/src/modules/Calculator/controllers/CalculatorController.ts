@@ -1,9 +1,9 @@
 import { ICalculatorController, ICalculatorModel } from '@modules/Calculator/interfaces/ICalculator';
 import { calculatorAPI } from '@modules/Calculator/api/CalculatorAPI';
 import { AppError } from '@common/AppError/AppError';
+import { logger } from '@common/Logger/Logger';
 
 import { CalculatorModelEvent } from '../models/calculator-model-event';
-import { logger } from '@common/Logger/Logger';
 
 export class CalculatorController implements ICalculatorController {
   private model: ICalculatorModel
@@ -15,8 +15,8 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private async loadData() {
-    const historyResponse = await this.handleApiRequest(calculatorAPI.getHistory.bind(calculatorAPI))
-    const operationsResponse = await this.handleApiRequest(calculatorAPI.getOperations.bind(calculatorAPI))
+    const historyResponse = await this.handleLoadingWhileRequest(calculatorAPI.getHistory.bind(calculatorAPI))
+    const operationsResponse = await this.handleLoadingWhileRequest(calculatorAPI.getOperations.bind(calculatorAPI))
 
     if (historyResponse && operationsResponse) {
       this.model.setHistory(historyResponse.data.items)
@@ -25,13 +25,15 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private async calculateExpression(expression: string): Promise<void> {
-    const resultResponse = await this.handleApiRequest(() => calculatorAPI.calculateExpression(expression))
+    const resultResponse = await this.handleLoadingWhileRequest(() => calculatorAPI.calculateExpression(expression))
 
-    resultResponse && this.model.setResult(resultResponse.data.result)
+    if (resultResponse) {
+      this.model.setResult(resultResponse.data.result)
+    }
   }
 
 
-  private async handleApiRequest<T extends (...args: any[]) => any>(apiFunction: T): Promise<ReturnType<T> | undefined> {
+  private async handleLoadingWhileRequest<T extends (...args: any[]) => any>(apiFunction: T): Promise<ReturnType<T> | undefined> {
     try {
       this.model.setLoading(true)
       const result = await apiFunction()
