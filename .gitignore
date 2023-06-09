@@ -14,13 +14,13 @@ logs/
 /coverage
 
 # production
-# /dist
-# /build
+/dist
+/build
 
-# /client/dist
-# /client/build
+/client/dist
+/client/build
 
-# /server/dist
+/server/dist
 /server/build
 /server/src/data
 
