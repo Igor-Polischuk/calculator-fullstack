@@ -54,7 +54,7 @@ class CalculatorAPI extends RestAPI {
     }
 
     async getHistory(): Promise<ICalculatorResponse<IHistoryFormat>> {
-        logger.addLog('info', `Send request for getting operation`)
+        logger.addLog('info', `Send request for History operation`)
 
         const response = await this.makeRequest({
             endpoint: 'history',

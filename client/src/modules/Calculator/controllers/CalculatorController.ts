@@ -15,8 +15,11 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private async loadData() {
-    const historyResponse = await this.handleLoadingWhileRequest(calculatorAPI.getHistory.bind(calculatorAPI))
-    const operationsResponse = await this.handleLoadingWhileRequest(calculatorAPI.getOperations.bind(calculatorAPI))
+    const getHistory = this.handleRequestWithLoading(calculatorAPI.getHistory.bind(calculatorAPI))
+    const getOperations = this.handleRequestWithLoading(calculatorAPI.getOperations.bind(calculatorAPI))
+
+    const historyResponse = await getHistory()
+    const operationsResponse = await getOperations()
 
     if (historyResponse && operationsResponse) {
       this.model.setHistory(historyResponse.data.items)
@@ -25,7 +28,8 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private async calculateExpression(expression: string): Promise<void> {
-    const resultResponse = await this.handleLoadingWhileRequest(() => calculatorAPI.calculateExpression(expression))
+    const calculateExpression = this.handleRequestWithLoading(calculatorAPI.calculateExpression.bind(calculatorAPI))
+    const resultResponse = await calculateExpression(expression)
 
     if (resultResponse) {
       this.model.setResult(resultResponse.data.result)
@@ -33,22 +37,23 @@ export class CalculatorController implements ICalculatorController {
   }
 
 
-  private async handleLoadingWhileRequest<T extends (...args: any[]) => any>(apiFunction: T): Promise<ReturnType<T> | undefined> {
-    try {
-      this.model.setLoading(true)
-      const result = await apiFunction()
+  private handleRequestWithLoading<T extends (...args: any[]) => any>(apiFunction: T) {
+    return async (...args: Parameters<T>) => {
+      try {
+        this.model.setLoading(true)
+        const result = await apiFunction(...args)
 
-      return result as ReturnType<T>
+        return result as ReturnType<T>
 
-    } catch (err) {
-      logger.addLog('warn', `Catched error in calculator controller: ${apiFunction.name}`, err)
+      } catch (err) {
+        logger.addLog('warn', `Catched error in calculator controller: ${apiFunction.name}`, err)
 
-      const error = AppError.getErrorFrom(err)
-      this.model.setError(error)
+        const error = AppError.getErrorFrom(err)
+        this.model.setError(error)
 
-    } finally {
-      this.model.setLoading(false)
+      } finally {
+        this.model.setLoading(false)
+      }
     }
   }
-
 }
