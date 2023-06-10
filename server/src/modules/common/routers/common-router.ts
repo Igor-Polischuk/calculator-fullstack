@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { ClientLogController } from "../controllers/client-log-controller";
+import { clientLogController } from "../controllers/client-log-controller";
 
 const commonRouter = Router()
 
-commonRouter.post('/log', ClientLogController.validateClientLogRequest, ClientLogController.saveLog)
+commonRouter.post('/log', clientLogController.validateClientLogRequest, clientLogController.saveLog)
 
 export { commonRouter }
