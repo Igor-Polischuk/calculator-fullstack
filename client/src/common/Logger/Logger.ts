@@ -9,8 +9,8 @@ interface ILogger {
 
 class Logger implements ILogger {
     private logs: string[]
-    private maxLogCount = 10
-    private logSendingTome = 1000 * 120
+    private maxLogCount = Number(process.env.MAX_SAVING_LOG)
+    private logSendingTime = Number(process.env.TIME_TO_SEND_LOG)
 
     constructor() {
         this.logs = this.getLogs()
@@ -50,7 +50,7 @@ class Logger implements ILogger {
             }
 
             this.sendLogs()
-        }, this.logSendingTome)
+        }, this.logSendingTime)
     }
 
 }
