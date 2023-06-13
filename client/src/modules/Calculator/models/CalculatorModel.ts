@@ -1,9 +1,9 @@
 import { Observer } from "@utilities/Observer/Observer";
 import { IAppError } from '@common/AppError/IAppError';
 
-import { IHistoryItem, IOperation } from '../interfaces/ICalculatorAPI';
-import { ModelAllowedEvents, ICalculatorModel, ILoadingData } from '../interfaces/ICalculator';
 import { CalculatorModelEvent } from "./calculator-model-event";
+import { IHistoryItem, IOperation } from '../interfaces/ICalculatorAPI';
+import { ModelAllowedEvents, ICalculatorModel } from '../interfaces/ICalculator';
 
 export class CalculatorModel extends Observer<ModelAllowedEvents> implements ICalculatorModel {
     private result: number | null = null
