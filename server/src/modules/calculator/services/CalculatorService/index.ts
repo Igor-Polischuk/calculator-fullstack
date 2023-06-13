@@ -11,8 +11,8 @@ import {
 import { allowedActions, calculatorConfig } from "../calculator-config";
 import { IOperationsList } from "../interfaces/IOperationList";
 
-export class CalculatorService {
-    static calculateExpression(expression: string): number {
+class CalculatorService {
+    calculateExpression(expression: string): number {
         const formattedExpression = formatExpression(expression)
         const result = this.processBracketedExpression(formattedExpression)
         const precision = process.env.PRECISION || 7
@@ -20,7 +20,7 @@ export class CalculatorService {
         return formatDecimal(Number(result), Number(precision))
     }
 
-    static processBracketedExpression(expression: string): string {
+    processBracketedExpression(expression: string): string {
         const bracketsExpressions = getMostNestedBrackets(expression)
 
         const replacedMostNestedBrackets = bracketsExpressions.reduce<string>(
@@ -35,7 +35,7 @@ export class CalculatorService {
             : this.calculateUnbracketedExpression(replacedMostNestedBrackets)
     }
 
-    static calculateUnbracketedExpression(expression: string): string {
+    calculateUnbracketedExpression(expression: string): string {
         const expressionOperators = getOperationsFromExpression(expression)
         const orderedOperations = expressionOperators.sort(
             (a, b) => calculatorConfig[b].priority - calculatorConfig[a].priority,
@@ -61,7 +61,7 @@ export class CalculatorService {
         return result
     }
 
-    static getOperations() {
+    getOperations() {
         return allowedActions.reduce<IOperationsList[]>((operationsDataAcc, currentOperation) => {
             const operationData = calculatorConfig[currentOperation]
             const buttonText = {
@@ -72,3 +72,5 @@ export class CalculatorService {
         }, [])
     }
 }
+
+export const calculatorService = new CalculatorService()

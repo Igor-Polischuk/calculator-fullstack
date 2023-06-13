@@ -6,15 +6,15 @@ import { responseHandler } from "@utils/decorators/responseHandler";
 import { logger } from "@modules/common/logger";
 
 import { IHistoryItem } from "../services/HistoryService/calculatorHistoryDAO";
-import { HistoryService } from "../services/HistoryService/HistoryService";
+import { historyService } from "../services/HistoryService/HistoryService";
 import { IOperationsList } from "../services/interfaces/IOperationList";
-import { CalculatorService } from "../services/CalculatorService";
+import { calculatorService } from "../services/CalculatorService";
 
-export class CalculatorController {
+class CalculatorController {
 
     @responseHandler
-    static getOperations(req: Request, res: Response): IListDataResponseParams<IOperationsList> {
-        const operations = CalculatorService.getOperations()
+    getOperations(req: Request, res: Response): IListDataResponseParams<IOperationsList> {
+        const operations = calculatorService.getOperations()
         logger.info(`Getting operations`)
 
         return {
@@ -24,34 +24,36 @@ export class CalculatorController {
     }
 
     @responseHandler
-    static async getHistory(req: Request, res: Response): Promise<IListDataResponseParams<IHistoryItem>> {
+    async getHistory(req: Request, res: Response): Promise<IListDataResponseParams<IHistoryItem>> {
         const data = matchedData(req)
         const limit = Number(data.limit) || 5
 
         logger.info(`Getting history`)
 
-        const history = await HistoryService.countHistoryItems(limit)
+        const history = await historyService.countHistoryItems(limit)
         const historyList = {
             items: history,
-            total: await HistoryService.getHistoryLength(),
+            total: await historyService.getHistoryLength(),
         }
 
         return historyList
     }
 
     @responseHandler
-    static async calculate(req: Request, res: Response) {
+    async calculate(req: Request, res: Response) {
         const { expression } = matchedData(req)
 
         logger.info(`Calculate expression: ${expression}`)
 
-        const result = CalculatorService.calculateExpression(expression)
+        const result = calculatorService.calculateExpression(expression)
         const expressionResult = { result, expression }
 
         logger.info(`Calculation result: ${expression} = ${result}`)
 
-        await HistoryService.addHistoryItem(expressionResult)
+        await historyService.addHistoryItem(expressionResult)
 
         return expressionResult
     }
 }
+
+export const calculatorController = new CalculatorController()
