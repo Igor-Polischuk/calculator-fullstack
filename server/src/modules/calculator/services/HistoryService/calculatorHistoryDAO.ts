@@ -7,13 +7,13 @@ export interface IHistoryItem {
     result: number
 }
 
-export interface IHistoryRepository {
+export interface IHistoryDAO {
     setItem: (item: IHistoryItem) => Promise<void>
     getAll: () => Promise<IHistoryItem[]>
     countHistoryItems: (count: number) => Promise<IHistoryItem[]>
 }
 
-export class CalculatorHistoryDAO implements IHistoryRepository {
+class CalculatorHistoryDAO implements IHistoryDAO {
     private db: IDataBase<IHistoryItem>
     private maxSize = 20
 
@@ -40,7 +40,6 @@ export class CalculatorHistoryDAO implements IHistoryRepository {
     async setItem(item: IHistoryItem): Promise<void> {
         await this.db.setItem(item)
         const length = await this.db.getLength()
-        console.log(length)
 
         if (length > this.maxSize) {
             await this.db.pop()
