@@ -43,6 +43,12 @@ export class JsonDB<DataType> implements IDataBase<DataType>{
         fs.writeFileSync(this.pathToFile, JSON.stringify(newData));
     }
 
+    async removeLast(): Promise<void> {
+        const data = await this.getAll()
+        const newData = data.slice(0, -1)
+        fs.writeFileSync(this.pathToFile, JSON.stringify(newData));
+    }
+
     async getItem(params: IGetItemParams<DataTypeExtended<DataType>>): Promise<DataType | null> {
         const data = await this.getAll();
         const item = data.find(DBItem => DBItem[params.field] === params.value)

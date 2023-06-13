@@ -1,6 +1,6 @@
-import { JsonDB } from "repositories/JsonDB"
-import { PostgreSQL } from "repositories/PostgreSQL"
-import { IDataBase } from "repositories/IDatabase"
+import { JsonDB } from "@repositories/JsonDB"
+import { PostgreSQL } from "@repositories/PostgreSQL"
+import { IDataBase } from "@repositories/IDatabase"
 
 export interface IHistoryItem {
     expression: string,
@@ -27,6 +27,10 @@ export class CalculatorHistoryDAO implements IHistoryRepository {
 
     async countHistoryItems(count: number): Promise<IHistoryItem[]> {
         return this.db.count(count)
+    }
+
+    async removeLast(): Promise<void> {
+        await this.db.removeLast()
     }
 
     async getItem(expression: string): Promise<IHistoryItem | null> {

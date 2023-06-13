@@ -14,6 +14,7 @@ export interface IDataBase<DataType> {
     getAll(): Promise<DataTypeExtended<DataType>[]>
     count(count: number): Promise<DataTypeExtended<DataType>[]>
     pop(): Promise<void>
+    removeLast(): Promise<void>
     setItem(item: DataType): Promise<void>
     deleteItem(params: IGetItemParams<DataType>): Promise<void>
     getItem(params: IGetItemParams<DataType>): Promise<DataType | null>

@@ -1,5 +1,4 @@
 import { Pool } from "pg";
-
 import { DataTypeExtended, IDataBase, IGetItemParams } from './IDatabase';
 import { AppError } from '@utils/AppErrors/AppError';
 
@@ -21,7 +20,7 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
     constructor(params: IPostgreSQLParams) {
         this.pool = new Pool({
             password: process.env.POSTGRES_PASSWORD,
-            port: Number(process.env.POSTGRES_PORT),
+            port: Number(process.env.POSTGRES_PORT) || 5432,
             user: process.env.POSTGRES_USER,
             host: process.env.POSTGRES_HOST || 'localhost',
         })
@@ -70,6 +69,12 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
 
     async pop(): Promise<void> {
         const query = `DELETE FROM history WHERE created_at = (SELECT MIN(created_at) FROM ${this.tableName})`
+
+        await this.query(query)
+    }
+
+    async removeLast(): Promise<void> {
+        const query = `DELETE FROM history WHERE created_at = (SELECT MAX(created_at) FROM ${this.tableName})`
 
         await this.query(query)
     }

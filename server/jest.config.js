@@ -11,5 +11,8 @@ module.exports = {
     "^@modules/(.*)$": "<rootDir>/src/modules/$1",
     "^@errors/(.*)$": "<rootDir>/src/errors/$1",
     "^@utils/(.*)$": "<rootDir>/src/utils/$1",
+    "^@utils/(.*)$": "<rootDir>/src/utils/$1",
+    "^@common/(.*)$": "<rootDir>/src/modules/common/$1",
+    "^@repositories/(.*)$": "<rootDir>/src/repositories/$1",
   },
 };

@@ -11,6 +11,7 @@ import {
     functionValidator
 } from "./validators"
 import { logger } from "@modules/common/logger"
+import { removeSpaces } from "../helpers/text-formatting/removeSpaces"
 
 
 type ValidateFunction = (expression: string) => IExpressionValidationError | undefined
@@ -18,7 +19,9 @@ type ValidateFunction = (expression: string) => IExpressionValidationError | und
 export function validateExpression(expression: string): true {
     logger.info(`Validate expression: ${expression}`)
 
-    const validateResult = validate(expression, [
+    const expressionWithoutSpaces = removeSpaces(expression)
+
+    const validateResult = validate(expressionWithoutSpaces, [
         pointValidator,
         bracketsOrderValidator,
         bracketsSiblingsValidator,

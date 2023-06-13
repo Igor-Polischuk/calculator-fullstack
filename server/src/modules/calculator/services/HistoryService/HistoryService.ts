@@ -9,6 +9,10 @@ export class HistoryService {
         await calculatorHistoryDAO.setItem(data)
     }
 
+    static async removeLast(): Promise<void> {
+        await calculatorHistoryDAO.removeLast()
+    }
+
     static async getHistoryLength(): Promise<number> {
         return (await calculatorHistoryDAO.getAll()).length
     }
