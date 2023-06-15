@@ -2,7 +2,7 @@ import { Request, Response } from "express"
 import { body, matchedData } from "express-validator"
 import winston from "winston"
 
-import { validationMiddleware } from "@middlewares/validationMiddleware"
+import { requestValidator } from "@utils/requestValidator"
 import { responseHandler } from "@utils/decorators/responseHandler"
 import { ErrorFactory } from "@utils/AppErrors/ErrorFactory"
 
@@ -25,7 +25,7 @@ class ClientLogController {
         return 'Log is success'
     }
 
-    validateClientLogRequest = validationMiddleware([
+    validateClientLogRequest = requestValidator([
         body('message')
             .notEmpty()
             .withMessage(ErrorFactory.MissingParameterError('message', 'body'))

@@ -3,7 +3,7 @@ import { ResponseFormatter } from "@utils/ResponseFormatter";
 import { NextFunction, Request, Response } from "express";
 import { ValidationChain, validationResult } from "express-validator";
 
-export function validationMiddleware(validations: ValidationChain[]): (req: Request, res: Response, next: NextFunction) => Promise<void> {
+export function requestValidator(validations: ValidationChain[]): (req: Request, res: Response, next: NextFunction) => Promise<void> {
     return async (req: Request, res: Response, next: NextFunction) => {
         for (let validation of validations) {
             const result = await validation.run(req);

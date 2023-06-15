@@ -1,10 +1,10 @@
 import { ErrorFactory } from "@utils/AppErrors/ErrorFactory";
-import { validationMiddleware } from "@middlewares/validationMiddleware";
+import { requestValidator } from "@utils/requestValidator";
 import { query } from "express-validator";
 
 const limitError = ErrorFactory.IncorrectParameter('The "limit" parameter must take integer values ​​from 1 to 20')
 
-export const historyValidation = validationMiddleware([
+export const historyValidation = requestValidator([
     query('limit')
         .optional()
         .isNumeric()
