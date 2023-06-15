@@ -33,7 +33,7 @@ export function validateExpression(expression: string): true {
         functionValidator
     ])
     if (validateResult.length > 0) {
-        logger.warn(`Expression invalid: ${JSON.stringify(validateResult)}`)
+        logger.info(`Expression invalid: ${expression}`)
         throw new ExpressionValidationError(validateResult)
     }
 
