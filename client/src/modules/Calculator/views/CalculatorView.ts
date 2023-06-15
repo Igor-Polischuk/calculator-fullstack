@@ -34,7 +34,7 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.updateHistory(history)
         })
 
-        model.subscribe(CalculatorModelEvent.LoadingData, loading => {
+        model.subscribe('loading', loading => {
             this.calculatorContainer.processDataLoading(loading)
         })
 

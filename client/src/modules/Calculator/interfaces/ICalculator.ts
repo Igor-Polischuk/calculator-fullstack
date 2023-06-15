@@ -1,22 +1,18 @@
-import { IObserver } from "@utilities/Observer/IObserver"
 import { CalculatorModelEvent } from "../models/calculator-model-event";
 import { IAppError } from "common/AppError/IAppError";
 import { IHistoryItem, IOperation, IOperationsData } from "./ICalculatorAPI";
+import { IAsyncModel } from "@utilities/AsyncModel/IAsyncModel";
 
 export type ModelAllowedEvents = {
     [CalculatorModelEvent.ResultChanged]: number
     [CalculatorModelEvent.ExpressionChanged]: string
-    [CalculatorModelEvent.ErrorChanged]: IAppError
-    [CalculatorModelEvent.LoadingData]: boolean
     [CalculatorModelEvent.HistoryChanged]: IHistoryItem[]
     [CalculatorModelEvent.ButtonsDataChanged]: IOperationsData['items']
 };
 
-export interface ICalculatorModel extends IObserver<ModelAllowedEvents> {
+export interface ICalculatorModel extends IAsyncModel<ModelAllowedEvents> {
     setResult: (result: number) => void
     setExpression: (expression: string) => void
-    setError: (errors: IAppError) => void
-    setLoading: (loading: boolean) => void
     setOperations: (operations: IOperation[]) => void
     setHistory: (history: IHistoryItem[]) => void
 }
