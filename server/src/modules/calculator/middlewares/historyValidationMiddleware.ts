@@ -11,4 +11,5 @@ export const historyValidation = requestValidator([
         .withMessage(limitError)
         .isInt({ min: 1, max: 20 })
         .withMessage(limitError)
+        .default(5)
 ])

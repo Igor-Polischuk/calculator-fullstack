@@ -10,7 +10,7 @@ export interface IHistoryItem {
 export interface IHistoryDAO {
     setItem: (item: IHistoryItem) => Promise<void>
     getAll: () => Promise<IHistoryItem[]>
-    countHistoryItems: (count: number) => Promise<IHistoryItem[]>
+    getHistory: (count: number) => Promise<IHistoryItem[]>
 }
 
 class CalculatorHistoryDAO implements IHistoryDAO {
@@ -25,8 +25,8 @@ class CalculatorHistoryDAO implements IHistoryDAO {
         return this.db.getAll()
     }
 
-    async countHistoryItems(count: number): Promise<IHistoryItem[]> {
-        return this.db.count(count)
+    async getHistory(limit: number): Promise<IHistoryItem[]> {
+        return this.db.count(limit)
     }
 
     async removeLast(): Promise<void> {

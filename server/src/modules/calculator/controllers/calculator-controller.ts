@@ -25,12 +25,12 @@ class CalculatorController {
 
     @responseHandler
     async getHistory(req: Request, res: Response): Promise<IListDataResponseParams<IHistoryItem>> {
-        const data = matchedData(req)
+        const data = matchedData(req) as { limit: string }
         const limit = Number(data.limit) || 5
 
-        logger.info(`Getting history`)
+        logger.info(`Getting history with limit: ${limit}`)
 
-        const history = await historyService.countHistoryItems(limit)
+        const history = await historyService.getHistory(limit)
         const historyList = {
             items: history,
             total: await historyService.getHistoryLength(),
@@ -41,7 +41,7 @@ class CalculatorController {
 
     @responseHandler
     async calculate(req: Request, res: Response) {
-        const { expression } = matchedData(req)
+        const { expression } = matchedData(req) as { expression: string }
 
         logger.info(`Calculate expression: ${expression}`)
 

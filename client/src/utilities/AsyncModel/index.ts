@@ -1,23 +1,22 @@
 import { IEventMap } from "@utilities/Observer/IObserver";
-import { IAsyncModel, IAsyncModelParams, IBaseEvents, LoadingMap } from "./IAsyncModel";
-import { Observer } from "@utilities/Observer";
 import { AppError } from "@common/AppError/AppError";
+import { Observer } from "@utilities/Observer";
 import { logger } from "@common/Logger/Logger";
 
+import { IAsyncModel, IBaseEvents } from "./IAsyncModel";
+
 export class AsyncModel<Events extends IEventMap> extends Observer<Events & IBaseEvents> implements IAsyncModel<Events & IBaseEvents>{
-    protected loading: boolean;
+    protected loading: boolean = false;
     protected error: AppError | null = null
 
-    constructor(params: IAsyncModelParams) {
+    constructor() {
         super();
-        this.loading = params.loading;
     }
 
     setLoading(loading: boolean): void {
         this.loading = loading
         this.notifyAll('loading', loading as Events['loading'])
     }
-
 
     setError(error: AppError): void {
         this.error = error

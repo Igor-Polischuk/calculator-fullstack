@@ -1,5 +1,4 @@
 import { IAppError } from '@common/AppError/IAppError';
-import { Observer } from "@utilities/Observer";
 
 import { CalculatorModelEvent } from "./calculator-model-event";
 import { IHistoryItem, IOperation } from '../interfaces/ICalculatorAPI';
@@ -13,7 +12,7 @@ export class CalculatorModel extends AsyncModel<ModelAllowedEvents> implements I
     private buttons: IOperation[] = []
 
     constructor() {
-        super({ loading: false })
+        super()
     }
 
     setResult(res: number): void {

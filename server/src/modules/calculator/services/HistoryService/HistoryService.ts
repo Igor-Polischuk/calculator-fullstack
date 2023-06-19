@@ -1,12 +1,23 @@
+import { logger } from "@modules/common/logger";
 import { IHistoryItem, calculatorHistoryDAO } from "./calculatorHistoryDAO";
 
 export class HistoryService {
-    async countHistoryItems(count: number): Promise<IHistoryItem[]> {
-        return await calculatorHistoryDAO.countHistoryItems(count)
+    async getHistory(limit = 5): Promise<IHistoryItem[]> {
+        try {
+            return await calculatorHistoryDAO.getHistory(limit)
+        } catch (error) {
+            logger.error(`Error while getting history with limit ${limit} at HistoryService`)
+            throw error
+        }
     }
 
     async addHistoryItem(data: IHistoryItem): Promise<void> {
-        await calculatorHistoryDAO.setItem(data)
+        try {
+            await calculatorHistoryDAO.setItem(data)
+        } catch (error) {
+            logger.error(`Error while setting new item ${data} at HistoryService`)
+            throw error
+        }
     }
 
     async removeLast(): Promise<void> {
