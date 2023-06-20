@@ -1,4 +1,3 @@
-import { AppError } from "@common/AppError/AppError"
 import { logApi } from "./LogApi"
 
 type LogLevel = 'info' | 'warn' | 'error'

@@ -25,7 +25,7 @@ class CalculatorController {
     @responseHandler
     async getHistory(req: Request, res: Response): Promise<IListDataResponseParams<IHistoryItem>> {
         const data = matchedData(req) as { limit: string }
-        const limit = Number(data.limit) || 5
+        const limit = Number(data.limit)
 
         const history = await historyService.getHistory(limit)
         const historyList = {

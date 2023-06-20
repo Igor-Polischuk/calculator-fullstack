@@ -15,7 +15,7 @@ export interface IHistoryDAO {
 
 class CalculatorHistoryDAO implements IHistoryDAO {
     private db: IDataBase<IHistoryItem>
-    private maxSize = 20
+    private maxSize = Number(process.env.CALCULATOR_HISTORY_MAX_SIZE)
 
     constructor(db: IDataBase<IHistoryItem>) {
         this.db = db

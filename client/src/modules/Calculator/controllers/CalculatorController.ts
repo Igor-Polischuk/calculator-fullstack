@@ -1,7 +1,5 @@
 import { ICalculatorController, ICalculatorModel } from '@modules/Calculator/interfaces/ICalculator';
 import { calculatorAPI } from '@modules/Calculator/api/CalculatorAPI';
-import { AppError } from '@common/AppError/AppError';
-import { logger } from '@common/Logger/Logger';
 
 import { CalculatorModelEvent } from '../models/calculator-model-event';
 
