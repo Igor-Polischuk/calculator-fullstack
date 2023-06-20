@@ -4,7 +4,7 @@ import { logApi } from "./LogApi"
 type LogLevel = 'info' | 'warn' | 'error'
 
 interface ILogger {
-    addLog: (level: LogLevel, message: string, meta?: any) => void
+    log: (level: LogLevel, message: string, meta?: any) => void
 }
 
 class Logger implements ILogger {
@@ -17,21 +17,34 @@ class Logger implements ILogger {
         this.sendByTime()
     }
 
-    addLog(level: LogLevel, message: string, meta?: any): void {
-        const timestamp = new Date().toISOString();
-        const log = `[${timestamp}] ${level} => ${message} ${meta ? JSON.stringify(meta) : ''}`
+    log(level: LogLevel, message: string, meta?: any): void {
+        const log = this.createLogText(level, message, meta)
 
-        this.logs = [...this.logs, log]
+        this.saveLog(log)
 
-        localStorage.setItem('logs', JSON.stringify(this.logs))
-
-        if (this.logs.length >= this.maxLogCount || level === 'error') {
+        if (this.shouldSendLogs(level)) {
             this.sendLogs()
         }
     }
 
+    private createLogText(level: LogLevel, message: string, meta?: any): string {
+        const timestamp = new Date().toISOString();
+        const log = `[${timestamp}] ${level} => ${message} ${meta ? JSON.stringify(meta) : ''}`
+
+        return log
+    }
+
     private getLogs(): string[] {
         return JSON.parse(localStorage.getItem("logs") || "[]")
+    }
+
+    private saveLog(log: string): void {
+        this.logs = [...this.logs, log];
+        localStorage.setItem('logs', JSON.stringify(this.logs));
+    }
+
+    private shouldSendLogs(level: LogLevel): boolean {
+        return this.logs.length >= this.maxLogCount || level === 'error';
     }
 
     private sendLogs() {

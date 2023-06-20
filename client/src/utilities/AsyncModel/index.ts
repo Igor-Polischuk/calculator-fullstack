@@ -33,7 +33,7 @@ export class AsyncModel<Events extends IEventMap> extends Observer<Events & IBas
                 return result as ReturnType<T>
 
             } catch (err) {
-                logger.addLog('warn', `Catched error in loading handled function: ${apiFunction.name}`, err)
+                logger.log('warn', `Catched error in loading handled function: ${apiFunction.name}`, err)
 
                 const error = AppError.getErrorFrom(err)
                 this.setError(error)

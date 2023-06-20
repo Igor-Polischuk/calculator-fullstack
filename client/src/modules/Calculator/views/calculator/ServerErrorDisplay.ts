@@ -7,7 +7,7 @@ export class ServerErrorDisplay extends DivElement {
     constructor(error: IAppError) {
         super({ classNames: 'server-error' })
 
-        logger.addLog('error', `Show server-error block`, error)
+        logger.log('error', `Show server-error block`, error)
 
         const messageParagraph = new Paragraph({ text: 'Internal server error' })
         const hintParagraph = new Paragraph({ text: 'Please try later' })

@@ -24,7 +24,7 @@ class CalculatorAPI extends RestAPI {
         ttl: 1000 * 60 * 60 * 60 * 72
     })
     async calculateExpression(expression: string): Promise<ICalculatorResponse<ICalculationData>> {
-        logger.addLog('info', `Send request for calculate: ${expression}`)
+        logger.log('info', `Send request for calculate: ${expression}`)
 
         const response = await this.makeRequest({
             endpoint: 'calculate',
@@ -43,7 +43,7 @@ class CalculatorAPI extends RestAPI {
         ttl: 1000 * 60 * 60 * 60 * 72
     })
     async getOperations(): Promise<ICalculatorResponse<IOperationsData>> {
-        logger.addLog('info', `Send request for getting operation`)
+        logger.log('info', `Send request for getting operation`)
 
         const response = await this.makeRequest({
             endpoint: 'operations',
@@ -54,7 +54,7 @@ class CalculatorAPI extends RestAPI {
     }
 
     async getHistory(): Promise<ICalculatorResponse<IHistoryFormat>> {
-        logger.addLog('info', `Send request for History operation`)
+        logger.log('info', `Send request for History operation`)
 
         const response = await this.makeRequest({
             endpoint: 'history',
