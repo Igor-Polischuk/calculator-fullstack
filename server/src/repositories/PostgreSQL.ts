@@ -1,6 +1,7 @@
 import { Pool } from "pg";
 import { DataTypeExtended, IDataBase, IGetItemParams } from './IDatabase';
 import { AppError } from '@utils/AppErrors/AppError';
+import { logger } from "@modules/common/logger";
 
 interface ITableFields {
     name: string
@@ -18,12 +19,17 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
     private tableName
 
     constructor(params: IPostgreSQLParams) {
-        this.pool = new Pool({
-            password: process.env.POSTGRES_PASSWORD,
-            port: Number(process.env.POSTGRES_PORT) || 5432,
-            user: process.env.POSTGRES_USER,
-            host: process.env.POSTGRES_HOST || 'localhost',
-        })
+        try {
+            this.pool = new Pool({
+                password: process.env.POSTGRES_PASSWORD,
+                port: Number(process.env.POSTGRES_PORT) || 5432,
+                user: process.env.POSTGRES_USER,
+                host: process.env.POSTGRES_HOST || 'localhost',
+            })
+        } catch (err) {
+            logger.error('Failed connection to database', err)
+            console.log(err);
+        }
 
         this.tableName = params.tableName
         this.createTable(params)
@@ -81,7 +87,7 @@ export class PostgreSQL<DataType> implements IDataBase<DataType>{
 
     private async query<T>(queryString: string): Promise<T> {
         try {
-            const res = await this.pool.query(queryString)
+            const res = await this.pool!.query(queryString)
             return res.rows as T
         } catch (err) {
             console.log(err);
