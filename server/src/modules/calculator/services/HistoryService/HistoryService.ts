@@ -5,7 +5,7 @@ export class HistoryService {
     async getHistory(limit = 5): Promise<IHistoryItem[]> {
         try {
             logger.info(`Getting history with limit: ${limit}`)
-            return await calculatorHistoryDAO.getHistory(limit)
+            return calculatorHistoryDAO.getHistory(limit)
         } catch (error) {
             logger.error(`Error while getting history with limit ${limit} at HistoryService`, error)
             throw error

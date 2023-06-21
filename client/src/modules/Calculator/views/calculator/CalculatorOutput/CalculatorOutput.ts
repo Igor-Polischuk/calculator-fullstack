@@ -19,16 +19,21 @@ export interface IShowErrorInfoProps {
 }
 
 export class CalculatorOutput extends DivElement {
+    private maxTextLength = 40
+
     constructor() {
         super({
             classNames: 'calculator__result',
         })
-        this.showInputtedValue('0')
+        this.showInputtedValue('')
     }
 
     showCalculationResult(params: IShowCalculationResultProps): void {
         const expression = replaceMathOperators(params.expression)
-        const resultOutput = new Paragraph({ text: `${expression}=`, id: 'result-display', classNames: 'display-result showup' })
+        // const text = this.sliceLongString(`${expression}=`)
+        const text = `${expression}=`
+
+        const resultOutput = new Paragraph({ text, id: 'result-display', classNames: 'display-result showup' })
         this.appendOutputElement(resultOutput)
     }
 
@@ -49,6 +54,10 @@ export class CalculatorOutput extends DivElement {
     private appendOutputElement(element: IBaseElement): void {
         this.updateOutput()
         this.append(element)
+    }
+
+    private sliceLongString(text: string) {
+        return `...${text.substring(text.length - this.maxTextLength)}`
     }
 
     private updateOutput(): void {

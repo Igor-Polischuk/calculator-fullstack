@@ -18,10 +18,19 @@ export class HistoryDisplay extends UnorderedList {
 
         this.params = params
 
-        this.appendHistoryItems(params.history)
+        if (params.history.length > 0) {
+            this.showHistoryList(params.history)
+        } else {
+            this.showEmptyHistoryMessage()
+        }
     }
 
-    private appendHistoryItems(history: IHistoryItem[]) {
+    private showEmptyHistoryMessage() {
+        const message = new Paragraph({ text: 'No history items yet', classNames: 'history-empty' })
+        this.append(message)
+    }
+
+    private showHistoryList(history: IHistoryItem[]) {
         history.forEach(({ expression, result }) => {
             const expressionBlock = new Paragraph({ text: replaceMathOperators(expression), classNames: 'history-item' })
             expressionBlock.onClick(() => this.params.onHistoryItemClick(expression))

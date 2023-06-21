@@ -15,9 +15,9 @@ export class CalculatorDisplay extends DivElement {
         this.calculatorInput = new CalculatorInput()
         this.calculatorOutput = new CalculatorOutput()
 
-        this.calculatorInput.inputElement.onInput(() => this.calculatorOutput.showInputtedValue(this.calculatorInput.inputText || '0'))
+        this.calculatorInput.inputElement.onInput(() => this.calculatorOutput.showInputtedValue(' '))
 
-        this.append(this.calculatorInput, this.calculatorOutput)
+        this.append(this.calculatorOutput, this.calculatorInput)
     }
 
     get inputValue() {
@@ -26,7 +26,6 @@ export class CalculatorDisplay extends DivElement {
 
     setExpression(expression: string): void {
         this.calculatorInput.setInputValue(expression)
-        this.calculatorOutput.showInputtedValue(expression || '0')
     }
 
     showResult(result: number) {
