@@ -5,7 +5,7 @@ import expressWinston from 'express-winston'
 
 import { errorHandler } from '@middlewares/errorHandlerMiddleware';
 import { logger } from '@modules/common/logger';
-import { initModules } from './modules';
+import { appRouter } from './modules';
 
 const app = express();
 
@@ -19,7 +19,7 @@ app.use(expressWinston.logger({
     statusLevels: true,
 }))
 
-app.use(initModules('/api'))
+app.use(appRouter)
 
 app.use(errorHandler)
 

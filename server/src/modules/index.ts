@@ -5,12 +5,10 @@ import { commonModule } from "./common";
 
 const modules: IModule[] = [calculatorModule, commonModule]
 
-export function initModules(baseUrl = '') {
-    const appRouter = Router()
+const appRouter = Router()
 
-    modules.forEach(module => {
-        appRouter.use(`${baseUrl}`, module.router)
-    })
+modules.forEach(module => {
+    appRouter.use(`/api`, module.router)
+})
 
-    return appRouter
-}
+export { appRouter }
