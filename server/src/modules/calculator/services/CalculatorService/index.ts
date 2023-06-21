@@ -10,10 +10,12 @@ import {
 
 import { allowedActions, calculatorConfig } from "../calculator-config";
 import { IOperationsList } from "../interfaces/IOperationList";
+import { validateExpression } from '../expressionValidation/validateExpression';
 
 class CalculatorService {
     calculateExpression(expression: string): number {
         const formattedExpression = formatExpression(expression)
+        validateExpression(formattedExpression)
         const result = this.processBracketedExpression(formattedExpression)
         const precision = process.env.PRECISION || 7
 

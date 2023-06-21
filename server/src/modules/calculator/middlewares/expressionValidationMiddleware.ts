@@ -1,12 +1,13 @@
 import { body } from "express-validator";
 
-import { requestValidator } from "@utils/requestValidator";
-import { validateExpression } from "@modules/calculator/services/expressionValidation/validateExpression";
 import { ErrorFactory } from "@utils/AppErrors/ErrorFactory";
+import { requestValidator } from "@utils/requestValidator";
 
-export const expressionValidation = requestValidator([
+export const expressionValidationMiddleware = requestValidator([
     body('expression')
         .notEmpty()
         .withMessage(ErrorFactory.MissingParameterError('expression', 'body'))
-        .custom(validateExpression)
+        .isString()
+        .isLength({ max: 1500 })
+        .withMessage(ErrorFactory.IncorrectParameter('The expression must be a string of up to 1500 characters'))
 ])
