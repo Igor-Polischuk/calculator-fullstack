@@ -13,7 +13,7 @@ import { calculatorService } from "../services/CalculatorService";
 class CalculatorController {
 
     @responseHandler
-    getOperations(req: Request, res: Response): IListDataResponseParams<IOperationsList> {
+    getOperations(): IListDataResponseParams<IOperationsList> {
         const operations = calculatorService.getOperations()
 
         return {
@@ -23,7 +23,7 @@ class CalculatorController {
     }
 
     @responseHandler
-    async getHistory(req: Request, res: Response): Promise<IListDataResponseParams<IHistoryItem>> {
+    async getHistory(req: Request): Promise<IListDataResponseParams<IHistoryItem>> {
         const data = matchedData(req) as { limit: string }
         const limit = Number(data.limit)
 
@@ -37,7 +37,7 @@ class CalculatorController {
     }
 
     @responseHandler
-    async calculate(req: Request, res: Response) {
+    async calculate(req: Request) {
         const { expression } = matchedData(req) as { expression: string }
 
         logger.info(`Calculate expression: ${expression}`)
