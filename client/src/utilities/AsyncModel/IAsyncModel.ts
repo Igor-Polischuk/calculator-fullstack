@@ -9,10 +9,9 @@ export interface IBaseEvents {
 }
 
 export interface IAsyncModel<Events extends IEventMap> extends IObserver<Events & IBaseEvents & Record<string, IBaseEvents>> {
-    setLoading(loading: boolean): void
     setError(error: AppError): void
     getLoadingHandledFunction<T extends (...args: any[]) => any>(apiFunction: T, loadingEvent: string): (...args: Parameters<T>) => Promise<ReturnType<T> | undefined>
-    setLoadingEvent(loadingEvent: string, newState: IBaseEvents): void
+    setLoading(loadingEvent: string, newState: IBaseEvents): void
     subscribeOnLoadingEvent(loadingEvent: string, callback: (loadingState: IBaseEvents) => void): void
 }
 

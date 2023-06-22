@@ -6,7 +6,6 @@ import { logger } from "@common/Logger/Logger";
 import { IAsyncModel, IBaseEvents } from "./IAsyncModel";
 
 export class AsyncModel<Events extends IEventMap> extends Observer<Events & IBaseEvents & Record<string, IBaseEvents>> implements IAsyncModel<Events & IBaseEvents>{
-    protected loading: boolean = false;
     protected error: AppError | null = null
 
     protected loadingMap: Record<string, IBaseEvents> = {}
@@ -26,15 +25,10 @@ export class AsyncModel<Events extends IEventMap> extends Observer<Events & IBas
         this.subscribe(loadingEvent, () => callback(this.loadingMap[loadingEvent]))
     }
 
-    setLoadingEvent(loadingEvent: string, newState: IBaseEvents): void {
+    setLoading(loadingEvent: string, newState: IBaseEvents): void {
         this.loadingMap[loadingEvent] = newState
 
         this.notifyAll(loadingEvent, newState as Events[string])
-    }
-
-    setLoading(loading: boolean): void {
-        this.loading = loading
-        this.notifyAll('loading', loading as Events['loading'])
     }
 
     setError(error: AppError): void {
@@ -46,7 +40,7 @@ export class AsyncModel<Events extends IEventMap> extends Observer<Events & IBas
         : (...args: Parameters<T>) => Promise<ReturnType<T> | undefined> {
         return async (...args: Parameters<T>) => {
             try {
-                this.setLoadingEvent(loadingEvent, { error: null, loading: true })
+                this.setLoading(loadingEvent, { error: null, loading: true })
                 const result = await apiFunction(...args)
 
                 return result as ReturnType<T>
@@ -58,7 +52,7 @@ export class AsyncModel<Events extends IEventMap> extends Observer<Events & IBas
                 this.setError(error)
 
             } finally {
-                this.setLoadingEvent(loadingEvent, { error: null, loading: false })
+                this.setLoading(loadingEvent, { error: null, loading: false })
             }
         }
     }
