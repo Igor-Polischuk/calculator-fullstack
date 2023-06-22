@@ -1,61 +1,47 @@
-import { JsonDB } from "@repositories/JsonDB"
-import { PostgreSQL } from "@repositories/PostgreSQL"
-import { IDataBase } from "@repositories/IDatabase"
+import { calculatorDatabaseConnection } from "@modules/database"
 
 export interface IHistoryItem {
-    expression: string,
+    expression: string
     result: number
 }
 
-export interface IHistoryDAO {
-    setItem: (item: IHistoryItem) => Promise<void>
-    getAll: () => Promise<IHistoryItem[]>
-    getHistory: (count: number) => Promise<IHistoryItem[]>
-}
+export class CalculatorHistoryDAO {
+    private tableName = 'calculatorHistory'
 
-class CalculatorHistoryDAO implements IHistoryDAO {
-    private db: IDataBase<IHistoryItem>
-    private maxSize = Number(process.env.CALCULATOR_HISTORY_MAX_SIZE)
+    async getHistory(limit?: number): Promise<IHistoryItem[]> {
+        const query = `SELECT * from "${this.tableName}"`
+        const history = await calculatorDatabaseConnection.query<IHistoryItem[]>(query)
 
-    constructor(db: IDataBase<IHistoryItem>) {
-        this.db = db
+        return history.slice(history.length - (limit || history.length))
     }
 
-    async getAll(): Promise<IHistoryItem[]> {
-        return this.db.getAll()
+    async getLength(): Promise<number> {
+        const query = `SELECT COUNT(*) AS row_count FROM "${this.tableName}"`
+
+        return calculatorDatabaseConnection.query<number>(query)
     }
 
-    async getHistory(limit: number): Promise<IHistoryItem[]> {
-        return this.db.count(limit)
+
+    async createHistoryItem(item: IHistoryItem): Promise<void> {
+        const query = `INSERT INTO "${this.tableName}" (expression, result, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP)`
+        const values = [item.expression, item.result];
+
+        await calculatorDatabaseConnection.query(query, values)
     }
 
-    async removeLast(): Promise<void> {
-        await this.db.removeLast()
+    async getHistoryItem(expression: string): Promise<IHistoryItem | null> {
+        const query = `SELECT * FROM "${this.tableName}" WHERE expression = '${expression}'`
+
+        return (await calculatorDatabaseConnection.query<IHistoryItem[]>(query))[0]
     }
 
-    async getItem(expression: string): Promise<IHistoryItem | null> {
-        return this.db.getItem({ field: "expression", value: expression });
-    }
+    async deleteHistoryItem(condition: string): Promise<void> {
+        const query = `DELETE FROM "${this.tableName}" WHERE ${condition}`
 
-    async setItem(item: IHistoryItem): Promise<void> {
-        await this.db.setItem(item)
-        const length = await this.db.getLength()
-
-        if (length > this.maxSize) {
-            await this.db.pop()
-        }
+        await calculatorDatabaseConnection.query(query)
     }
 }
 
-const jsonDB = new JsonDB<IHistoryItem>('./src/data/history.json')
-const postgresDB = new PostgreSQL<IHistoryItem>({
-    tableName: 'history',
-    fields: [
-        { name: 'expression', type: 'TEXT', constraints: ['NOT NULL'] },
-        { name: 'result', type: 'FLOAT', constraints: ['NOT NULL'] }
-    ]
-})
-
-const calculatorHistoryDAO = new CalculatorHistoryDAO(postgresDB)
+const calculatorHistoryDAO = new CalculatorHistoryDAO()
 
 export { calculatorHistoryDAO }

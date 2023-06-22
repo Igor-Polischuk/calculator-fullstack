@@ -1,7 +1,9 @@
 import { logger } from "@modules/common/logger";
-import { IHistoryItem, calculatorHistoryDAO } from "./calculatorHistoryDAO";
+import { IHistoryItem, calculatorHistoryDAO } from "./CalculatorHistoryDAO";
 
 export class HistoryService {
+    private maxHistoryLength = Number(process.env.CALCULATOR_HISTORY_MAX_SIZE)
+
     async getHistory(limit = 5): Promise<IHistoryItem[]> {
         try {
             logger.info(`Getting history with limit: ${limit}`)
@@ -14,25 +16,23 @@ export class HistoryService {
 
     async addHistoryItem(data: IHistoryItem): Promise<void> {
         try {
-            await calculatorHistoryDAO.setItem(data)
+            await calculatorHistoryDAO.createHistoryItem(data)
+
+            const historyLength = await this.getHistoryLength()
+
+            if (historyLength > this.maxHistoryLength) {
+                calculatorHistoryDAO.deleteHistoryItem('created_at = (SELECT MIN(created_at) FROM calculatorHistory)')
+            }
+
         } catch (error) {
             logger.error(`Error while setting new item ${data} at HistoryService`, error)
             throw error
         }
     }
 
-    async removeLast(): Promise<void> {
-        try {
-            await calculatorHistoryDAO.removeLast()
-        } catch (error) {
-            logger.error(`Error while removing last item from history at HistoryService`, error)
-            throw error
-        }
-    }
-
     async getHistoryLength(): Promise<number> {
         try {
-            return (await calculatorHistoryDAO.getAll()).length
+            return calculatorHistoryDAO.getLength()
         } catch (error) {
             logger.error(`Failed get history length at HistoryService`, error)
             throw error

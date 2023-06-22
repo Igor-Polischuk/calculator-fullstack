@@ -1,7 +1,17 @@
 import fs from 'fs'
-import { DataTypeExtended, IDataBase, IGetItemParams } from './IDatabase';
 
-export class JsonDB<DataType> implements IDataBase<DataType>{
+export interface IBaseFields {
+    id: number
+}
+
+export interface IGetItemParams<DataType> {
+    field: keyof DataType
+    value: unknown
+}
+
+export type DataTypeExtended<DataType> = DataType & IBaseFields;
+
+export class JsonDB<DataType> {
     private pathToFile
 
     constructor(pathToFile: string, initialData?: DataTypeExtended<DataType>[]) {

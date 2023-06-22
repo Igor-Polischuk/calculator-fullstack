@@ -5,7 +5,7 @@ import { IListDataResponseParams } from "@modules/common/interfaces/IListData";
 import { responseHandler } from "@utils/decorators/responseHandler";
 import { logger } from "@modules/common/logger";
 
-import { IHistoryItem } from "../services/HistoryService/calculatorHistoryDAO";
+import { IHistoryItem } from "../services/HistoryService/CalculatorHistoryDAO";
 import { historyService } from "../services/HistoryService/HistoryService";
 import { IOperationsList } from "../services/interfaces/IOperationList";
 import { calculatorService } from "../services/CalculatorService";
