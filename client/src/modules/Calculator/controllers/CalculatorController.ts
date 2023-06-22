@@ -13,8 +13,8 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private async loadData() {
-    const getHistory = this.model.getLoadingHandledFunction(calculatorAPI.getHistory.bind(calculatorAPI))
-    const getOperations = this.model.getLoadingHandledFunction(calculatorAPI.getOperations.bind(calculatorAPI))
+    const getHistory = this.model.getLoadingHandledFunction(calculatorAPI.getHistory.bind(calculatorAPI), CalculatorModelEvent.BaseDataLoadingChanged)
+    const getOperations = this.model.getLoadingHandledFunction(calculatorAPI.getOperations.bind(calculatorAPI), CalculatorModelEvent.BaseDataLoadingChanged)
 
     const historyResponse = await getHistory()
     const operationsResponse = await getOperations()
@@ -26,7 +26,7 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private async calculateExpression(expression: string): Promise<void> {
-    const calculateExpression = this.model.getLoadingHandledFunction(calculatorAPI.calculateExpression.bind(calculatorAPI))
+    const calculateExpression = this.model.getLoadingHandledFunction(calculatorAPI.calculateExpression.bind(calculatorAPI), CalculatorModelEvent.ResultLoadingChanged)
     const resultResponse = await calculateExpression(expression)
 
     if (resultResponse) {

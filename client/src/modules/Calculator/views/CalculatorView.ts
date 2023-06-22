@@ -19,6 +19,10 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.showCalculationResult(result)
         })
         model.subscribe(CalculatorModelEvent.ErrorChanged, (error) => {
+            if (!error) {
+                return
+            }
+
             const { type } = error;
             const action = type === ErrorType.ServerError || type === ErrorType.UnexpectedError ?
                 "showServerError" :
@@ -34,8 +38,12 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.updateHistory(history)
         })
 
-        model.subscribe('loading', loading => {
-            this.calculatorContainer.processDataLoading(loading)
+        model.subscribe(CalculatorModelEvent.BaseDataLoadingChanged, loading => {
+            this.calculatorContainer.processDataLoading(loading.loading)
+        })
+
+        model.subscribe(CalculatorModelEvent.ResultLoadingChanged, loading => {
+            this.calculatorContainer.calculationLoading(loading.loading)
         })
 
         const root = document.querySelector('.container')!

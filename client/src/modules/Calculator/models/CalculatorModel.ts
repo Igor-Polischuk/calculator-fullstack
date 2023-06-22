@@ -12,7 +12,7 @@ export class CalculatorModel extends AsyncModel<ModelAllowedEvents> implements I
     private buttons: IOperation[] = []
 
     constructor() {
-        super()
+        super([CalculatorModelEvent.ResultLoadingChanged, CalculatorModelEvent.BaseDataLoadingChanged])
     }
 
     setResult(res: number): void {

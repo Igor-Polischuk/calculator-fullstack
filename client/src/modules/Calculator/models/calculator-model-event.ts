@@ -4,5 +4,7 @@ export enum CalculatorModelEvent {
     ErrorChanged = 'error',
     LoadingData = 'loadingData',
     HistoryChanged = 'history',
-    ButtonsDataChanged = 'buttons'
+    ButtonsDataChanged = 'buttons',
+    ResultLoadingChanged = 'ResultLoading',
+    BaseDataLoadingChanged = 'dataLoading'
 }
