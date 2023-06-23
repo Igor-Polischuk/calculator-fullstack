@@ -1,8 +1,8 @@
-import { IHistoryFormat, IHistoryItem } from "@modules/Calculator/interfaces/ICalculatorAPI";
-import { Paragraph } from "common/Elements/Paragraph";
-import { Span } from "common/Elements/Span";
-import { UnorderedList } from "common/Elements/UList";
 import { replaceMathOperators } from "@utilities/formatText/replaceMathOperators";
+import { IHistoryItem } from "@common/api/IHistoryAPI";
+import { Paragraph } from "@common/Elements/Paragraph";
+import { UnorderedList } from "@common/Elements/UList";
+import { Span } from "@common/Elements/Span";
 
 interface IHistoryDisplayParams {
     onHistoryItemClick: (itemText: string) => void

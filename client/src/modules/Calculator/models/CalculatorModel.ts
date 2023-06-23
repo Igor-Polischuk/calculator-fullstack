@@ -1,9 +1,10 @@
 import { IAppError } from '@common/AppError/IAppError';
 
 import { CalculatorModelEvent } from "./calculator-model-event";
-import { IHistoryItem, IOperation } from '../interfaces/ICalculatorAPI';
+import { IOperation } from '../interfaces/ICalculatorAPI';
 import { ModelAllowedEvents, ICalculatorModel } from '../interfaces/ICalculator';
 import { AsyncModel } from '@utilities/AsyncModel';
+import { IHistoryItem } from '@common/api/IHistoryAPI';
 
 export class CalculatorModel extends AsyncModel<ModelAllowedEvents> implements ICalculatorModel {
     private result: number | null = null

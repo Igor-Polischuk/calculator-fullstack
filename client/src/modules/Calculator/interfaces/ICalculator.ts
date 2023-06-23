@@ -1,6 +1,6 @@
+import { IHistoryItem } from "@common/api/IHistoryAPI";
 import { CalculatorModelEvent } from "../models/calculator-model-event";
-import { IAppError } from "common/AppError/IAppError";
-import { IHistoryItem, IOperation, IOperationsData } from "./ICalculatorAPI";
+import { IOperation, IOperationsData } from "./ICalculatorAPI";
 import { IAsyncModel } from "@utilities/AsyncModel/IAsyncModel";
 
 export type ModelAllowedEvents = {

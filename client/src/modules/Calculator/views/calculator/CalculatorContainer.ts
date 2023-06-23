@@ -1,4 +1,4 @@
-import { IHistoryItem, IOperation } from '@modules/Calculator/interfaces/ICalculatorAPI';
+import { IOperation } from '@modules/Calculator/interfaces/ICalculatorAPI';
 import { DivElement } from '@common/Elements/DivElement';
 import { IAppError } from '@common/AppError/IAppError';
 import { Loader } from '@common/Elements/Loader';
@@ -7,6 +7,7 @@ import { CalculatorKeyboard } from './CalculatorKeyboard/CalculatorKeyboard';
 import { CalculatorHistory } from './CalculatorHistory/CalculatorHistory';
 import { CalculatorDisplay } from './CalculatorDisplay/CalculatorDisplay';
 import { ServerErrorDisplay } from './ServerErrorDisplay';
+import { IHistoryItem } from '@common/api/IHistoryAPI';
 
 interface ICalculatorUIParams {
     onEqual: (expression: string) => void;

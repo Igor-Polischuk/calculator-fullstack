@@ -21,13 +21,3 @@ export type IOperationsData = {
     items: IOperation[]
     total: number
 };
-
-export type IHistoryItem = {
-    expression: string;
-    result: number;
-}
-
-export type IHistoryFormat = {
-    items: IHistoryItem[],
-    total: number
-};

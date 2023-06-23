@@ -1,3 +1,4 @@
+import { historyAPI } from '@common/api/HistoryAPI';
 import { ICalculatorController, ICalculatorModel } from '@modules/Calculator/interfaces/ICalculator';
 import { calculatorAPI } from '@modules/Calculator/api/CalculatorAPI';
 
@@ -13,14 +14,14 @@ export class CalculatorController implements ICalculatorController {
   }
 
   private async loadData() {
-    const getHistory = this.model.getLoadingHandledFunction(calculatorAPI.getHistory.bind(calculatorAPI), CalculatorModelEvent.BaseDataLoadingChanged)
+    const getHistory = this.model.getLoadingHandledFunction(historyAPI.getCalculationHistory.bind(historyAPI), CalculatorModelEvent.BaseDataLoadingChanged)
     const getOperations = this.model.getLoadingHandledFunction(calculatorAPI.getOperations.bind(calculatorAPI), CalculatorModelEvent.BaseDataLoadingChanged)
 
     const historyResponse = await getHistory()
     const operationsResponse = await getOperations()
 
     if (historyResponse && operationsResponse) {
-      this.model.setHistory(historyResponse.data.items)
+      this.model.setHistory([])
       this.model.setOperations(operationsResponse.data.items)
     }
   }
