@@ -17,10 +17,10 @@ export class CalculatorHistoryDAO {
         let query = `SELECT * from "${this.tableName}"`
 
         if (limit) {
-            query += ` LIMIT ${limit}`
+            query += ` ORDER BY id DESC LIMIT ${limit}`
         }
 
-        const history = await database.query<IHistoryItem[]>(query)
+        const history = (await database.query<IHistoryItem[]>(query)).reverse()
 
         return history
     }
