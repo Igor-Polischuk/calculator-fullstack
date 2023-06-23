@@ -21,7 +21,7 @@ export class CalculatorController implements ICalculatorController {
     const operationsResponse = await getOperations()
 
     if (historyResponse && operationsResponse) {
-      this.model.setHistory([])
+      this.model.setHistory(historyResponse.data.items)
       this.model.setOperations(operationsResponse.data.items)
     }
   }

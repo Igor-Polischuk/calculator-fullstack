@@ -3,6 +3,7 @@ import { ICalculatorModel, ICalculatorView } from "@modules/Calculator/interface
 
 import { CalculatorModelEvent } from "../models/calculator-model-event";
 import { CalculatorContainer } from './calculator/CalculatorContainer';
+import { container } from 'webpack';
 
 
 export class CalculatorView implements ICalculatorView {
@@ -18,17 +19,6 @@ export class CalculatorView implements ICalculatorView {
         model.subscribe(CalculatorModelEvent.ResultChanged, (result) => {
             this.calculatorContainer.showCalculationResult(result)
         })
-        model.subscribe(CalculatorModelEvent.ErrorChanged, (error) => {
-            if (!error) {
-                return
-            }
-
-            const { type } = error;
-            const action = type === ErrorType.ServerError || type === ErrorType.UnexpectedError ?
-                "showServerError" :
-                "showCalculationError";
-            this.calculatorContainer[action](error);
-        })
 
         model.subscribe(CalculatorModelEvent.ButtonsDataChanged, buttonData => {
             this.calculatorContainer.addKeyboard(buttonData)
@@ -38,12 +28,20 @@ export class CalculatorView implements ICalculatorView {
             this.calculatorContainer.updateHistory(history)
         })
 
-        model.subscribe(CalculatorModelEvent.BaseDataLoadingChanged, loading => {
-            this.calculatorContainer.processDataLoading(loading.loading)
+        model.subscribe(CalculatorModelEvent.BaseDataLoadingChanged, loadingComponent => {
+            this.calculatorContainer.processDataLoading(loadingComponent.isLoading)
+
+            if (loadingComponent.error) {
+                this.calculatorContainer.showServerError(loadingComponent.error)
+            }
         })
 
-        model.subscribe(CalculatorModelEvent.ResultLoadingChanged, loading => {
-            this.calculatorContainer.calculationLoading(loading.loading)
+        model.subscribe(CalculatorModelEvent.ResultLoadingChanged, loadingComponent => {
+            this.calculatorContainer.calculationLoading(loadingComponent.isLoading)
+
+            if (loadingComponent.error) {
+                this.calculatorContainer.showCalculationError(loadingComponent.error)
+            }
         })
 
         const root = document.querySelector('.container')!

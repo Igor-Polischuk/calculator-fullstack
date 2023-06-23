@@ -8,25 +8,25 @@ import { IAsyncModel, IBaseEvents } from "./IAsyncModel";
 export class AsyncModel<Events extends IEventMap> extends Observer<Events & IBaseEvents & Record<string, IBaseEvents>> implements IAsyncModel<Events & IBaseEvents>{
     protected error: AppError | null = null
 
-    protected loadingMap: Record<string, IBaseEvents> = {}
+    protected loadingComponents: Record<string, IBaseEvents> = {}
 
     constructor(loadingEvents: string[]) {
         super();
 
         loadingEvents.forEach(loadingEventName => {
-            this.loadingMap[loadingEventName] = {
+            this.loadingComponents[loadingEventName] = {
                 error: null,
-                loading: false
+                isLoading: false
             }
         })
     }
 
     subscribeOnLoadingEvent(loadingEvent: string, callback: (loadingState: IBaseEvents) => void): void {
-        this.subscribe(loadingEvent, () => callback(this.loadingMap[loadingEvent]))
+        this.subscribe(loadingEvent, () => callback(this.loadingComponents[loadingEvent]))
     }
 
-    setLoading(loadingEvent: string, newState: IBaseEvents): void {
-        this.loadingMap[loadingEvent] = newState
+    setLoadingState(loadingEvent: string, newState: IBaseEvents): void {
+        this.loadingComponents[loadingEvent] = newState
 
         this.notifyAll(loadingEvent, newState as Events[string])
     }
@@ -40,7 +40,7 @@ export class AsyncModel<Events extends IEventMap> extends Observer<Events & IBas
         : (...args: Parameters<T>) => Promise<ReturnType<T> | undefined> {
         return async (...args: Parameters<T>) => {
             try {
-                this.setLoading(loadingEvent, { error: null, loading: true })
+                this.setLoadingState(loadingEvent, { error: null, isLoading: true })
                 const result = await apiFunction(...args)
 
                 return result as ReturnType<T>
@@ -49,10 +49,11 @@ export class AsyncModel<Events extends IEventMap> extends Observer<Events & IBas
                 logger.log('warn', `Catched error in loading handled function: ${apiFunction.name}`, err)
 
                 const error = AppError.getErrorFrom(err)
-                this.setError(error)
+                this.setLoadingState(loadingEvent, { error, isLoading: false })
 
             } finally {
-                this.setLoading(loadingEvent, { error: null, loading: false })
+                const error = this.loadingComponents[loadingEvent].error
+                this.setLoadingState(loadingEvent, { error, isLoading: false })
             }
         }
     }
