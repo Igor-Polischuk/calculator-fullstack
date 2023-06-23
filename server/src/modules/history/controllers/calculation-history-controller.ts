@@ -2,14 +2,12 @@ import { Request } from "express";
 import { matchedData } from "express-validator";
 
 import { IListDataResponseParams } from "@modules/common/interfaces/IListData";
-import { responseHandler } from "@utils/decorators/responseHandler";
-import { logger } from "@modules/common/logger";
 import { IHistoryItem } from "@modules/history/DAO/calculator-history-dao";
+import { responseHandler } from "@utils/decorators/responseHandler";
+
 import { calculatioNHistoryService } from "../services/calculation-history";
 
 class CalculationHistoryController {
-
-    @responseHandler
 
     @responseHandler
     async getHistory(req: Request): Promise<IListDataResponseParams<IHistoryItem>> {
