@@ -14,10 +14,15 @@ export class CalculatorHistoryDAO {
     }
 
     async getHistory(limit?: number): Promise<IHistoryItem[]> {
-        const query = `SELECT * from "${this.tableName}"`
+        let query = `SELECT * from "${this.tableName}"`
+
+        if (limit) {
+            query += ` LIMIT ${limit}`
+        }
+
         const history = await database.query<IHistoryItem[]>(query)
 
-        return history.slice(history.length - (limit || history.length))
+        return history
     }
 
     async getLength(): Promise<number> {
