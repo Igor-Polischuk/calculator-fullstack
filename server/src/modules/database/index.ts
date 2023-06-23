@@ -1,6 +1,5 @@
-import { Connection } from "./Connection"
-import { calculatorHistoryModel } from "./models/CalculatorHistoryModel"
-
+import { Connection } from "./Services/Connection"
+import { SQLDatabase } from "./Services/SQLDatabase"
 
 const calculatorDatabaseConnection = new Connection({
     password: process.env.POSTGRES_PASSWORD,
@@ -9,6 +8,6 @@ const calculatorDatabaseConnection = new Connection({
     host: process.env.POSTGRES_HOST || 'localhost',
 })
 
-calculatorDatabaseConnection.createTable('calculatorHistory', calculatorHistoryModel)
+const database = new SQLDatabase(calculatorDatabaseConnection)
 
-export { calculatorDatabaseConnection }
+export { database }

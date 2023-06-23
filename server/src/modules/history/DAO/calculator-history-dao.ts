@@ -1,4 +1,5 @@
-import { calculatorDatabaseConnection } from "@modules/database"
+import { database } from "@modules/database"
+import { calculatorHistoryModel } from "../models/calculation-history"
 
 export interface IHistoryItem {
     expression: string
@@ -8,9 +9,13 @@ export interface IHistoryItem {
 export class CalculatorHistoryDAO {
     private tableName = 'calculatorHistory'
 
+    constructor() {
+        database.createTable(this.tableName, calculatorHistoryModel)
+    }
+
     async getHistory(limit?: number): Promise<IHistoryItem[]> {
         const query = `SELECT * from "${this.tableName}"`
-        const history = await calculatorDatabaseConnection.query<IHistoryItem[]>(query)
+        const history = await database.query<IHistoryItem[]>(query)
 
         return history.slice(history.length - (limit || history.length))
     }
@@ -18,7 +23,7 @@ export class CalculatorHistoryDAO {
     async getLength(): Promise<number> {
         const query = `SELECT COUNT(*) AS row_count FROM "${this.tableName}"`
 
-        return calculatorDatabaseConnection.query<number>(query)
+        return database.query<number>(query)
     }
 
 
@@ -26,19 +31,19 @@ export class CalculatorHistoryDAO {
         const query = `INSERT INTO "${this.tableName}" (expression, result, updated_at) VALUES ($1, $2, CURRENT_TIMESTAMP)`
         const values = [item.expression, item.result];
 
-        await calculatorDatabaseConnection.query(query, values)
+        await database.query(query, values)
     }
 
     async getHistoryItem(expression: string): Promise<IHistoryItem | null> {
         const query = `SELECT * FROM "${this.tableName}" WHERE expression = '${expression}'`
 
-        return (await calculatorDatabaseConnection.query<IHistoryItem[]>(query))[0]
+        return (await database.query<IHistoryItem[]>(query))[0]
     }
 
     async deleteHistoryItem(condition: string): Promise<void> {
         const query = `DELETE FROM "${this.tableName}" WHERE ${condition}`
 
-        await calculatorDatabaseConnection.query(query)
+        await database.query(query)
     }
 }
 

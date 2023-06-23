@@ -1,7 +1,7 @@
 import { logger } from "@modules/common/logger";
-import { IHistoryItem, calculatorHistoryDAO } from "./CalculatorHistoryDAO";
+import { IHistoryItem, calculatorHistoryDAO } from "../DAO/calculator-history-dao";
 
-export class HistoryService {
+export class CalculatioNHistoryService {
     private maxHistoryLength = Number(process.env.CALCULATOR_HISTORY_MAX_SIZE)
 
     async getHistory(limit = 5): Promise<IHistoryItem[]> {
@@ -41,4 +41,4 @@ export class HistoryService {
     }
 }
 
-export const historyService = new HistoryService()
+export const calculatioNHistoryService = new CalculatioNHistoryService()

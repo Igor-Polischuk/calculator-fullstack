@@ -1,25 +1,18 @@
-import { Pool, PoolConfig } from "pg";
-import { logger } from "@modules/common/logger";
-import { ITableFields, Model } from "./Interfaces";
 import { AppError } from "@utils/AppErrors/AppError";
+import { Connection } from "./Connection";
+import { logger } from "@modules/common/logger";
+import { ITableFields, Model } from "../Interfaces";
 
+export class SQLDatabase {
+    private connection
 
-export class Connection {
-    private pool
-
-    constructor(connectionParams: PoolConfig) {
-        try {
-            this.pool = new Pool(connectionParams)
-        } catch (err) {
-            logger.error('Failed connection to database', err)
-            console.log(err);
-            throw AppError.getErrorFrom(err)
-        }
+    constructor(connection: Connection) {
+        this.connection = connection
     }
 
     async query<T>(queryString: string, values?: any[]): Promise<T> {
         try {
-            const res = await this.pool!.query(queryString, values)
+            const res = await this.connection.pool.query(queryString, values)
             return res.rows as T
         } catch (err) {
             console.log(err);
