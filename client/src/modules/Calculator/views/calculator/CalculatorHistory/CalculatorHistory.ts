@@ -14,19 +14,51 @@ export class CalculatorHistory extends DivElement {
     private history: IHistoryFormat[] = []
     private params: ICalculatorHistoryParams
 
+    private visible = false
+
     constructor(params: ICalculatorHistoryParams) {
         super({
             classNames: 'calculator__history'
         })
 
         this.params = params
+        this.wasClickedHistory()
+    }
+
+    showHistory() {
+        this.domElement.classList.add('active')
+        this.visible = true
+    }
+
+    hideHistory() {
+        this.domElement.classList.remove('active')
+        this.visible = false
+    }
+
+    wasClickedHistory() {
+        window.addEventListener('click', (e) => {
+            if (!this.visible) {
+                return
+            }
+
+            const targetElement = e.target as HTMLElement;
+            const isHistoryElement = targetElement.closest('.calculator__history');
+
+            isHistoryElement || targetElement.classList.contains('history-icon')
+                ? this.showHistory()
+                : this.hideHistory()
+
+        })
     }
 
     updateHistory() {
         this.removeElement('#history-content')
         const historyDisplay = new HistoryDisplay({
             history: this.history,
-            onHistoryItemClick: this.params.onHistoryItemClick
+            onHistoryItemClick: (text: string) => {
+                this.params.onHistoryItemClick(text)
+                this.hideHistory()
+            }
         })
         historyDisplay.render(this.domElement)
     }

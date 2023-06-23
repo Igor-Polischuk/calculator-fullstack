@@ -25,6 +25,7 @@
 
     &__display {
         padding: 4px 10px;
+        padding-left: 40px;
         margin: 0;
         width: 100%;
         height: 75px;
@@ -37,6 +38,21 @@
         flex-direction: column;
         justify-content: space-between;
         overflow: hidden;
+
+        .history-icon {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: 0.3s opacity;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
 
         &.display-error {
             border-color: $red;
@@ -115,11 +131,20 @@
     }
 
     &__history {
-        width: 100%;
+        background-color: $bg-color;
+        width: 60%;
         border-radius: 5px;
         border: 1px solid $blue-3;
         height: 175px;
-        position: relative;
+        position: absolute;
+        z-index: 15;
+        top: 50px;
+        left: 20px;
+        display: none;
+
+        &.active {
+            display: block;
+        }
 
         .history-block {
             height: 100%;

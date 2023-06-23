@@ -32,6 +32,8 @@ export class CalculatorContainer extends DivElement {
             onHistoryItemClick: this.calculatorDisplay.setExpression.bind(this.calculatorDisplay)
         })
 
+        this.calculatorDisplay.setHistoryIconClick(this.calculatorHistory.showHistory.bind(this.calculatorHistory))
+
         this.append(
             this.calculatorHistory,
             this.calculatorDisplay,
