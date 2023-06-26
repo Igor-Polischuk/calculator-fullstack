@@ -5,6 +5,7 @@ import { IAppError, IErrorRange } from 'common/AppError/IAppError';
 import { replaceMathOperators } from '@utilities/formatText/replaceMathOperators';
 import { Paragraph } from 'common/Elements/Paragraph';
 import { DivElement } from 'common/Elements/DivElement';
+import { cutText } from '@utilities/formatText/cutText';
 
 interface IShowCalculationResultProps {
     result: number
@@ -19,7 +20,7 @@ export interface IShowErrorInfoProps {
 }
 
 export class CalculatorOutput extends DivElement {
-    private maxTextLength = 40
+    private maxTextLength = 50
 
     constructor() {
         super({
@@ -30,8 +31,9 @@ export class CalculatorOutput extends DivElement {
 
     showCalculationResult(params: IShowCalculationResultProps): void {
         const expression = replaceMathOperators(params.expression)
-        // const text = this.sliceLongString(`${expression}=`)
-        const text = `${expression}=`
+        const text = cutText(`${expression}=`, this.maxTextLength)
+        console.log(expression);
+        console.log(text);
 
         const resultOutput = new Paragraph({ text, id: 'result-display', classNames: 'display-result showup' })
         this.appendOutputElement(resultOutput)

@@ -3,6 +3,7 @@ import { IHistoryItem } from "@common/api/IHistoryAPI";
 import { Paragraph } from "@common/Elements/Paragraph";
 import { UnorderedList } from "@common/Elements/UList";
 import { Span } from "@common/Elements/Span";
+import { cutText } from "@utilities/formatText/cutText";
 
 interface IHistoryDisplayParams {
     onHistoryItemClick: (itemText: string) => void
@@ -32,7 +33,8 @@ export class HistoryDisplay extends UnorderedList {
 
     private showHistoryList(history: IHistoryItem[]) {
         history.forEach(({ expression, result }) => {
-            const expressionBlock = new Paragraph({ text: replaceMathOperators(expression), classNames: 'history-item' })
+            const cutExpression = cutText(expression, 20)
+            const expressionBlock = new Paragraph({ text: replaceMathOperators(cutExpression), classNames: 'history-item' })
             expressionBlock.onClick(() => this.params.onHistoryItemClick(expression))
             const separator = new Span({ text: '=' })
             const resultBlock = new Paragraph({ text: `${result}`, classNames: 'history-item' })

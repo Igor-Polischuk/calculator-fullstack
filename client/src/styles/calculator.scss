@@ -135,12 +135,13 @@
         width: 60%;
         border-radius: 5px;
         border: 1px solid $blue-3;
-        height: 175px;
+        height: auto;
         position: absolute;
         z-index: 15;
         top: 50px;
-        left: 20px;
+        left: 25px;
         display: none;
+        box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.3);
 
         &.active {
             display: block;
@@ -154,11 +155,10 @@
         }
 
         .history-empty {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            width: 100%;
             color: $gray;
+            text-align: center;
+            padding: 10px 0;
         }
 
         li {

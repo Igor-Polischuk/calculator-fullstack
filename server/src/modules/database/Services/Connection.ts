@@ -1,6 +1,5 @@
 import { Pool, PoolConfig } from "pg";
 import { logger } from "@modules/common/logger";
-import { ITableFields, Model } from "../Interfaces";
 import { AppError } from "@utils/AppErrors/AppError";
 
 
